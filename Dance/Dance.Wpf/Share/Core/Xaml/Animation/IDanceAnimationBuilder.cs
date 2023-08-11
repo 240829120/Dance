@@ -31,7 +31,8 @@ namespace Dance.Wpf
         /// <summary>
         /// 提交
         /// </summary>
+        /// <param name="name">名称</param>
         /// <returns>是否被取消</returns>
-        void Commit();
+        void Commit(string name);
     }
 }

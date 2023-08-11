@@ -22,10 +22,11 @@
 		<Folder Include="Platforms\Android\" />
 		<Folder Include="Platforms\MacCatalyst\" />
 		<Folder Include="Platforms\Windows\" />
-		<Folder Include="Share\Xaml\Widgets\" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Aether.Physics2D" Version="1.7.0" />
+		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
 	</ItemGroup>
 
@@ -34,6 +35,30 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<MauiXaml Update="Share\Xaml\Widgets\Core\Button\DanceButton.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Core\CheckBox\DanceCheckBox.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Core\CollectionView\DanceCollectionView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Navigation\DanceNavigationView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Preview\ImagePreview\DanceImagePreview.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Preview\OperateView\DanceOperateView.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Preview\ResourcePreview\DanceResourcePreview.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
+		<MauiXaml Update="Share\Xaml\Widgets\Preview\VideoPreview\DanceVideoPreview.xaml">
+		  <Generator>MSBuild:Compile</Generator>
+		</MauiXaml>
 		<MauiXaml Update="Themes\Generic.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</MauiXaml>

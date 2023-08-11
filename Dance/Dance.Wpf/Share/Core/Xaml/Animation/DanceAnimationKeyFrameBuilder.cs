@@ -40,8 +40,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 提交
         /// </summary>
+        /// <param name="name">名称</param>
         /// <returns>是否被取消</returns>
-        public void Commit()
+        public void Commit(string name)
         {
             foreach (var item in this.PropertyDic)
             {
@@ -50,6 +51,7 @@ namespace Dance.Wpf
                 this.Storyboard.Children.Add(timeline);
             }
 
+            this.Storyboard.Name = name;
             this.Storyboard.Begin(this.Element);
         }
     }

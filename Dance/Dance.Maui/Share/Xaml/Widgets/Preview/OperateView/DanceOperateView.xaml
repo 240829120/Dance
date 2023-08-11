@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"                    
+                    xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui">
+
+    <Style TargetType="local:DanceOperateView">
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border StrokeThickness="0" BackgroundColor="Transparent">
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Path=ShowCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceOperateView},Mode=FindAncestor}}" />
+                            <SwipeGestureRecognizer Direction="Left" Command="{Binding Path=ShowCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceOperateView},Mode=FindAncestor}}"/>
+                            <SwipeGestureRecognizer Direction="Right" Command="{Binding Path=ShowCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceOperateView},Mode=FindAncestor}}"/>
+                            <SwipeGestureRecognizer Direction="Up" Command="{Binding Path=ShowCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceOperateView},Mode=FindAncestor}}"/>
+                            <SwipeGestureRecognizer Direction="Down" Command="{Binding Path=ShowCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceOperateView},Mode=FindAncestor}}"/>
+                            <PointerGestureRecognizer PointerMovedCommand="{Binding Path=ShowCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceOperateView},Mode=FindAncestor}}" />
+                        </Border.GestureRecognizers>
+                        <ContentPresenter></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

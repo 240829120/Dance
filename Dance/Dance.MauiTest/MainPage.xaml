@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:maui="clr-namespace:Dance.Maui;assembly=Dance.Maui"
+             x:Class="Dance.MauiTest.MainPage">
+
+    <Grid RowDefinitions="*,*" BackgroundColor="Transparent">
+        <!--<xaml:NavigationView x:Name="lv" SwitchMode="RotationCenter_Opacity" SwitchEasing="{x:Static Easing.SpringOut}" IsShowNavigationBar="True" xaml:NavigationSwitchRotationOption.Angle="360" SwitchDuration="00:00:02" >
+        <xaml:NavigationView.ItemTemplate>
+            <DataTemplate>
+                <xaml:NavigationItem>
+                    <Image Source="{Binding}" Aspect="AspectFit"></Image>
+                </xaml:NavigationItem>
+            </DataTemplate>
+        </xaml:NavigationView.ItemTemplate>
+    </xaml:NavigationView>-->
+
+        <!--<xaml:DriftEffect Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill"></xaml:DriftEffect>-->
+
+
+        <!--<xaml:VideoPreview Source="https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d548f2a7814d458f85451be0bd0d11b5.mp4?type=video/mp4"  PlaybackMode="All"></xaml:VideoPreview>-->
+
+        <!--<xaml:ContentButton Command="{Binding Path=ClickCommand}">
+        <Ellipse WidthRequest="300" HeightRequest="300" Fill="Red"></Ellipse>
+    </xaml:ContentButton>-->
+
+        <!--<xaml:ContentCheckBox>
+        <xaml:ContentCheckBox.CheckedContent>
+            <Ellipse WidthRequest="300" HeightRequest="300" Fill="Red"></Ellipse>
+        </xaml:ContentCheckBox.CheckedContent>
+        <xaml:ContentCheckBox.UnCheckedContent>
+            <Ellipse WidthRequest="300" HeightRequest="300" Fill="Yellow"></Ellipse>
+        </xaml:ContentCheckBox.UnCheckedContent>
+    </xaml:ContentCheckBox>-->
+
+        <maui:DancePhysicsLayout x:Name="layout" Grid.RowSpan="2" IsRunning="True">
+            <maui:DancePhysicsJointGraphicsView></maui:DancePhysicsJointGraphicsView>
+
+            <Rectangle x:Name="r1" WidthRequest="200" HeightRequest="40" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="Red"></GradientStop>
+                        <GradientStop Offset="1" Color="Yellow"></GradientStop>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+                <maui:DancePhysicsLayout.Body>
+                    <maui:DanceBody x:Name="bodyA" LinearVelocity="100,0" Position="100,0" AngularVelocity="1">
+                        <maui:DanceRectangleFixture Width="200" Height="40"></maui:DanceRectangleFixture>
+                    </maui:DanceBody>
+                </maui:DancePhysicsLayout.Body>
+            </Rectangle>
+
+            <Ellipse WidthRequest="40" HeightRequest="40">
+                <Ellipse.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="Blue"></GradientStop>
+                        <GradientStop Offset="1" Color="Green"></GradientStop>
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+                <maui:DancePhysicsLayout.Body>
+                    <maui:DanceBody x:Name="bodyB" LinearVelocity="-100,0" Position="500,0" AngularVelocity="0">
+                        <maui:DanceCircleFixture Radius="20" Friction="0.8"></maui:DanceCircleFixture>
+                    </maui:DanceBody>
+                </maui:DancePhysicsLayout.Body>
+            </Ellipse>
+
+            <Grid WidthRequest="40" HeightRequest="100">
+                <Rectangle WidthRequest="40" HeightRequest="40" VerticalOptions="Start" Fill="Pink"></Rectangle>
+                <Rectangle WidthRequest="40" HeightRequest="40" VerticalOptions="End" Fill="Orange"></Rectangle>
+
+                <maui:DancePhysicsLayout.Body>
+                    <maui:DanceBody x:Name="body" LinearVelocity="0,0" Position="300,0" AngularVelocity="1">
+                        <maui:DanceRectangleFixture Width="40" Height="40" Position="0,-30"></maui:DanceRectangleFixture>
+                        <maui:DanceRectangleFixture Width="40" Height="40" Position="0,30"></maui:DanceRectangleFixture>
+                    </maui:DanceBody>
+                </maui:DancePhysicsLayout.Body>
+            </Grid>
+
+            <Path WidthRequest="80" HeightRequest="80" Data="M 40,0 L 80,80 0,80Z" Fill="Orange">
+                <maui:DancePhysicsLayout.Body>
+                    <maui:DanceBody Position="600,0">
+                        <maui:DancePolygonFixture Points="0,-40 40,40 -40,40"></maui:DancePolygonFixture>
+                    </maui:DanceBody>
+                </maui:DancePhysicsLayout.Body>
+            </Path>
+
+            <Rectangle WidthRequest="800" HeightRequest="40" Fill="gray">
+                <maui:DancePhysicsLayout.Body>
+                    <maui:DanceBody Position="400,420" BodyType="Static">
+                        <maui:DanceRectangleFixture Width="800" Height="40"></maui:DanceRectangleFixture>
+                    </maui:DanceBody>
+                </maui:DancePhysicsLayout.Body>
+                <maui:DancePhysicsLayout.Joints>
+                    <maui:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference bodyB}" AnchorA="-96,-20"
+                                           StrokeDashPattern="2,2"
+                                           StrokeColor="Red" StrokeSize="2"></maui:DanceDistanceJoint>
+                    <maui:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference body}" AnchorB="0,-50"
+                                           StrokeDashPattern="2,2"
+                                           StrokeColor="Pink" StrokeSize="2"></maui:DanceDistanceJoint>
+                </maui:DancePhysicsLayout.Joints>
+            </Rectangle>
+
+            <Rectangle WidthRequest="400" HeightRequest="200" Fill="skyblue" Opacity="0.4" Margin="800,400,0,0" HorizontalOptions="Start" VerticalOptions="Start">
+                <maui:DancePhysicsLayout.Controllers>
+                    <maui:DanceBuoyancyController WorldLowerBound="800,400" WorldUpperBound="1200,600" Density="0.9"></maui:DanceBuoyancyController>
+                </maui:DancePhysicsLayout.Controllers>
+            </Rectangle>
+
+        </maui:DancePhysicsLayout>
+
+    </Grid>
+
+</ContentPage>

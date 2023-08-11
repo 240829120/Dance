@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"                    
+                    xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui">
+
+    <Style TargetType="local:DanceImagePreview">
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Image Source="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceImagePreview},Mode=FindAncestor}}"
+                               Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceImagePreview},Mode=FindAncestor}}"></Image>
+                        <Image Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceImagePreview},Mode=FindAncestor}}"
+                               Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceImagePreview},Mode=FindAncestor}}"></Image>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui"
+                    xmlns:scg="clr-namespace:System.Collections.Generic;assembly=netstandard">
+
+    <local:DanceObject2ObjectConverter x:Key="Object2ObjectConverter_Bool" DefaultTo="{x:Boolean False}">
+        <local:DanceObject2ObjectConverter.Maps>
+            <scg:List x:TypeArguments="local:Object2ObjectMap">
+                <local:DanceObject2ObjectMap From="{x:Boolean True}" To="{x:Boolean True}"></local:DanceObject2ObjectMap>
+                <local:DanceObject2ObjectMap From="{x:Boolean False}" To="{x:Boolean False}"></local:DanceObject2ObjectMap>
+            </scg:List>
+        </local:DanceObject2ObjectConverter.Maps>
+    </local:DanceObject2ObjectConverter>
+
+    <local:DanceObject2ObjectConverter x:Key="Object2ObjectConverter_Bool_Reverse" DefaultTo="{x:Boolean False}">
+        <local:DanceObject2ObjectConverter.Maps>
+            <scg:List x:TypeArguments="local:Object2ObjectMap">
+                <local:DanceObject2ObjectMap From="{x:Boolean True}" To="{x:Boolean False}"></local:DanceObject2ObjectMap>
+                <local:DanceObject2ObjectMap From="{x:Boolean False}" To="{x:Boolean True}"></local:DanceObject2ObjectMap>
+            </scg:List>
+        </local:DanceObject2ObjectConverter.Maps>
+    </local:DanceObject2ObjectConverter>
+
+    <Style TargetType="local:LogicCheckBox">
+        <Setter Property="Background" Value="{x:Null}"></Setter>
+        <Setter Property="BackgroundColor" Value="{x:Null}"></Setter>
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <ContentView Content="{Binding Path=CheckedContent,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor}}"
+                                     IsVisible="{Binding Path=IsChecked,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Bool}}"></ContentView>
+                        <ContentView Content="{Binding Path=UnCheckedContent,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor}}"
+                                     IsVisible="{Binding Path=IsChecked,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Bool_Reverse}}"></ContentView>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger TargetType="local:LogicCheckBox" Property="IsEnabled" Value="False">
+                <Setter Property="InputTransparent" Value="True"></Setter>
+                <Setter Property="Opacity" Value="0.4"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

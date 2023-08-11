@@ -3,13 +3,13 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                     x:Class="Dance.Maui.Generic">
     <ResourceDictionary.MergedDictionaries>
-        <!--<ResourceDictionary Source="../Src/Widgets/Logic/LogicButton/LogicButton.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Logic/LogicCheckBox/LogicCheckBox.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Logic/LogicCollectionView/LogicCollectionView.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Navigation/NavigationView.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Preview/OperateView/OperateView.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Preview/ImagePreview/ImagePreview.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Preview/VideoPreview/VideoPreview.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="../Src/Widgets/Preview/ResourcePreview/ResourcePreview.xaml"></ResourceDictionary>-->
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Core/Button/DanceButton.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Core/CheckBox/DanceCheckBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Core/CollectionView/DanceCollectionView.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Navigation/DanceNavigationView.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/OperateView/DanceOperateView.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/ImagePreview/DanceImagePreview.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/VideoPreview/DanceVideoPreview.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/ResourcePreview/DanceResourcePreview.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

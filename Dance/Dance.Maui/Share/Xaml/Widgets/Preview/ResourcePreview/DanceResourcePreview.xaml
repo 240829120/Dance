@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui">
+
+    <ControlTemplate x:Key="ImagePreview">
+        <local:DanceImagePreview Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceResourcePreview},Mode=FindAncestor}}"
+                                 BackgroundSource="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceResourcePreview},Mode=FindAncestor}}"
+                                 Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceResourcePreview},Mode=FindAncestor}}"></local:DanceImagePreview>
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="VideoPreview">
+        <local:VideoPreview Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:ResourcePreview},Mode=FindAncestor}}"
+                            BackgroundSource="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:ResourcePreview},Mode=FindAncestor}}"
+                            Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:ResourcePreview},Mode=FindAncestor}}"></local:VideoPreview>
+    </ControlTemplate>
+
+    <Style TargetType="local:DanceResourcePreview">
+        <Setter Property="ControlTemplate" Value="{StaticResource ImagePreview}"></Setter>
+        <Style.Triggers>
+            <Trigger TargetType="local:DanceResourcePreview" Property="PreviewType" Value="Video">
+                <Setter Property="ControlTemplate" Value="{StaticResource VideoPreview}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

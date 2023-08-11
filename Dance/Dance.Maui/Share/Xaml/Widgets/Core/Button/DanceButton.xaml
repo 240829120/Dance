@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui">
+
+    <Style TargetType="local:LogicButton">
+        <Setter Property="Background" Value="{x:Null}"></Setter>
+        <Setter Property="BackgroundColor" Value="{x:Null}"></Setter>
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ContentPresenter></ContentPresenter>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger TargetType="local:LogicButton" Property="IsEnabled" Value="False">
+                <Setter Property="InputTransparent" Value="True"></Setter>
+                <Setter Property="Opacity" Value="0.4"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>

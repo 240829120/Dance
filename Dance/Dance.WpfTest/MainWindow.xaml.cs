@@ -38,7 +38,7 @@ namespace Dance.WpfTest
                                                         new DanceAnimationKeyFrame<double>(0, 4))
                        .Color("(Border.Background).(SolidColorBrush.Color)", null, new DanceAnimationKeyFrame<Color>(Colors.Red, 0),
                                                                                   new DanceAnimationKeyFrame<Color>(Colors.Yellow, 2))
-                       .Commit();
+                       .Commit("TEST");
 
         }
 
