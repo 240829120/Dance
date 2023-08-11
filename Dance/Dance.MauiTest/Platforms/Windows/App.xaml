@@ -4,5 +4,56 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:maui="using:Microsoft.Maui"
     xmlns:local="using:Dance.MauiTest.WinUI">
+    <maui:MauiWinUIApplication.Resources>
 
+        <Style x:Key="WindowChromeStyle" TargetType="ContentControl">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContentControl">
+                        <Grid x:Name="LayoutRoot" Background="Transparent">
+                            <ContentPresenter x:Name="ClientAreaPresenter"
+                                              Content="{TemplateBinding Content}"
+                                              ContentTemplate="{TemplateBinding ContentTemplate}"
+                                              ContentTransitions="{TemplateBinding ContentTransitions}"
+                                              Foreground="{TemplateBinding Foreground}" />
+                            <Grid x:Name="TitleBarMinMaxCloseContainer"
+                                  HorizontalAlignment="Right"
+                                  VerticalAlignment="Top"
+                                  Visibility="{Binding CaptionVisibility, RelativeSource={RelativeSource TemplatedParent}}">
+                                <Grid x:Name="MinMaxCloseContainer"
+                                      HorizontalAlignment="Right"
+                                      VerticalAlignment="Top"
+                                      ColumnDefinitions="Auto,Auto,Auto">
+
+                                    <!--  最小化  -->
+                                    <Button x:Name="MinimizeButton"
+                                            Grid.Column="0"
+                                            AutomationProperties.AutomationId="_MinimizeButton"
+                                            AutomationProperties.Name="Minimize"
+                                            Content="最小化">
+                                    </Button>
+
+                                    <!--  最大化  -->
+                                    <Button x:Name="MaximizeButton"
+                                            Grid.Column="1"
+                                            AutomationProperties.AutomationId="_MaximizeButton"
+                                            AutomationProperties.Name="Maximize"
+                                            Content="最大化">
+                                    </Button>
+
+                                    <!--  关闭  -->
+                                    <Button x:Name="CloseButton"
+                                            Grid.Column="2"
+                                            AutomationProperties.AutomationId="_CloseButton"
+                                            AutomationProperties.Name="Close"
+                                            Content="关闭">
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </maui:MauiWinUIApplication.Resources>
 </maui:MauiWinUIApplication>
