@@ -44,15 +44,15 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="PlaybackMode_Easy">
-        <local:DanceOperateView IsKeepShow="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}">
+        <local:DanceOperateView IsKeepShow="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}">
             <Grid Opacity="0.8">
-                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}"
-                                   Command="{Binding Path=PlayCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}">
+                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}"
+                                   Command="{Binding Path=PlayCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}">
                     <Image WidthRequest="48" HeightRequest="48" VerticalOptions="Center" HorizontalOptions="Center" Source="play.png" Aspect="AspectFill"></Image>
                 </local:DanceButton>
 
-                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Pause}}"
-                                   Command="{Binding Path=PauseCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}">
+                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Pause}}"
+                                   Command="{Binding Path=PauseCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}">
                     <Image WidthRequest="48" HeightRequest="48" VerticalOptions="Center" HorizontalOptions="Center" Source="pause.png" Aspect="AspectFill"></Image>
                 </local:DanceButton>
             </Grid>
@@ -60,27 +60,27 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="PlaybackMode_All">
-        <local:DanceOperateView IsKeepShow="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}">
+        <local:DanceOperateView IsKeepShow="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}">
             <Grid Opacity="0.8">
-                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}"
-                                     Command="{Binding Path=PlayCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}">
+                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Play}}"
+                                     Command="{Binding Path=PlayCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}">
                     <Image WidthRequest="48" HeightRequest="48" VerticalOptions="Center" HorizontalOptions="Center" Source="play.png" Aspect="AspectFill"></Image>
                 </local:DanceButton>
 
-                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Pause}}"
-                                     Command="{Binding Path=PauseCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}">
+                <local:DanceButton IsVisible="{Binding Path=MediaState,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Pause}}"
+                                     Command="{Binding Path=PauseCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}">
                     <Image WidthRequest="48" HeightRequest="48" VerticalOptions="Center" HorizontalOptions="Center" Source="pause.png" Aspect="AspectFill"></Image>
                 </local:DanceButton>
 
                 <Grid HeightRequest="30" VerticalOptions="End" ColumnDefinitions="4*,30,*" BackgroundColor="#22000000">
 
                     <Slider x:Name="slider" Minimum="0" MinimumTrackColor="White" MaximumTrackColor="#66000000" ThumbColor="White" Margin="0,0,10,0"
-                            Maximum="{Binding Path=Duration,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource TimeSpan2DoubleConverter_Position}}"
-                            Value="{Binding Path=Position,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource TimeSpan2DoubleConverter_Position}}"
-                            DragStartedCommand="{Binding Path=PositionDragStartedCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                            DragCompletedCommand="{Binding Path=PositionDragCompletedCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"></Slider>
+                            Maximum="{Binding Path=Duration,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource TimeSpan2DoubleConverter_Position}}"
+                            Value="{Binding Path=Position,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource TimeSpan2DoubleConverter_Position}}"
+                            DragStartedCommand="{Binding Path=PositionDragStartedCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                            DragCompletedCommand="{Binding Path=PositionDragCompletedCommand,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"></Slider>
 
-                    <local:DanceCheckBox Grid.Column="1" IsChecked="{Binding Path=IsMute,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}">
+                    <local:DanceCheckBox Grid.Column="1" IsChecked="{Binding Path=IsMute,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}">
                         <local:DanceCheckBox.CheckedContent>
                             <Image Source="mute.png"></Image>
                         </local:DanceCheckBox.CheckedContent>
@@ -90,7 +90,7 @@
                     </local:DanceCheckBox>
 
                     <Slider Grid.Column="2" Minimum="0" Maximum="1" MinimumTrackColor="White" MaximumTrackColor="#66000000" ThumbColor="White" Margin="10,0,10,0"
-                            Value="{Binding Path=Volume,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"></Slider>
+                            Value="{Binding Path=Volume,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"></Slider>
 
                 </Grid>
 
@@ -101,9 +101,9 @@
     <local:DanceObject2ObjectConverter x:Key="Object2ObjectConverter_PlaybackMode">
         <local:DanceObject2ObjectConverter.Maps>
             <scg:List x:TypeArguments="local:DanceObject2ObjectMap">
-                <local:DanceObject2ObjectMap From="{x:Static Member=local:VideoPreviewPlaybackMode.None}" To="{StaticResource PlaybackMode_None}"></local:DanceObject2ObjectMap>
-                <local:DanceObject2ObjectMap From="{x:Static Member=local:VideoPreviewPlaybackMode.Easy}" To="{StaticResource PlaybackMode_Easy}"></local:DanceObject2ObjectMap>
-                <local:DanceObject2ObjectMap From="{x:Static Member=local:VideoPreviewPlaybackMode.All}" To="{StaticResource PlaybackMode_All}"></local:DanceObject2ObjectMap>
+                <local:DanceObject2ObjectMap From="{x:Static Member=local:DanceVideoPreviewPlaybackMode.None}" To="{StaticResource PlaybackMode_None}"></local:DanceObject2ObjectMap>
+                <local:DanceObject2ObjectMap From="{x:Static Member=local:DanceVideoPreviewPlaybackMode.Easy}" To="{StaticResource PlaybackMode_Easy}"></local:DanceObject2ObjectMap>
+                <local:DanceObject2ObjectMap From="{x:Static Member=local:DanceVideoPreviewPlaybackMode.All}" To="{StaticResource PlaybackMode_All}"></local:DanceObject2ObjectMap>
             </scg:List>
         </local:DanceObject2ObjectConverter.Maps>
     </local:DanceObject2ObjectConverter>
@@ -111,24 +111,24 @@
     <!-- ======================================================================================================  -->
     <!-- Style -->
 
-    <Style TargetType="local:VideoPreview">
+    <Style TargetType="local:DanceVideoPreview">
         <Setter Property="ControlTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <Grid x:Name="PART_Root">
-                        <Image Source="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                               Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}">
+                        <Image Source="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                               Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}">
                         </Image>
                         <toolkit:MediaElement x:Name="PART_MediaElement"
-                                              Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                                              Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                                              ShouldAutoPlay="{Binding Path=ShouldAutoPlay,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                                              ShouldMute="{Binding Path=IsMute,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                                              CurrentState="{Binding Path=MediaState,Mode=OneWayToSource,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                                              Duration="{Binding Path=Duration,Mode=OneWayToSource,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
-                                              Volume="{Binding Path=Volume,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor}}"
+                                              Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                                              Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                                              ShouldAutoPlay="{Binding Path=ShouldAutoPlay,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                                              ShouldMute="{Binding Path=IsMute,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                                              CurrentState="{Binding Path=MediaState,Mode=OneWayToSource,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                                              Duration="{Binding Path=Duration,Mode=OneWayToSource,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
+                                              Volume="{Binding Path=Volume,Mode=TwoWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor}}"
                                               BackgroundColor="Transparent" ShouldShowPlaybackControls="False"></toolkit:MediaElement>
-                        <TemplatedView ControlTemplate="{Binding Path=PlaybackMode,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:VideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_PlaybackMode}}" />
+                        <TemplatedView ControlTemplate="{Binding Path=PlaybackMode,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceVideoPreview},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_PlaybackMode}}" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

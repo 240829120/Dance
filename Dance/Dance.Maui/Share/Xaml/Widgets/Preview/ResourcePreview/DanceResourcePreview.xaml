@@ -10,9 +10,9 @@
     </ControlTemplate>
 
     <ControlTemplate x:Key="VideoPreview">
-        <local:VideoPreview Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:ResourcePreview},Mode=FindAncestor}}"
-                            BackgroundSource="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:ResourcePreview},Mode=FindAncestor}}"
-                            Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:ResourcePreview},Mode=FindAncestor}}"></local:VideoPreview>
+        <local:DanceVideoPreview Source="{Binding Path=Source,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceResourcePreview},Mode=FindAncestor}}"
+                                 BackgroundSource="{Binding Path=BackgroundSource,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceResourcePreview},Mode=FindAncestor}}"
+                                 Aspect="{Binding Path=Aspect,Mode=OneWay,Source={RelativeSource AncestorType={x:Type local:DanceResourcePreview},Mode=FindAncestor}}"></local:DanceVideoPreview>
     </ControlTemplate>
 
     <Style TargetType="local:DanceResourcePreview">

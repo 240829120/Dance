@@ -4,7 +4,7 @@
                     xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui"
                     xmlns:scg="clr-namespace:System.Collections.Generic;assembly=netstandard">
 
-    <Style TargetType="local:LogicCollectionItem">
+    <Style TargetType="local:DanceCollectionItem">
         <Setter Property="ControlTemplate">
             <Setter.Value>
                 <ControlTemplate>
@@ -14,13 +14,13 @@
         </Setter>
     </Style>
 
-    <Style TargetType="local:LogicCollectionView">
+    <Style TargetType="local:DanceCollectionView">
         <Setter Property="ControlTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <StackLayout Orientation="Vertical"
-                                 BindableLayout.ItemsSource="{Binding Path=ItemsSource,Source={RelativeSource AncestorType={x:Type local:LogicCollectionView},Mode=FindAncestor}}"
-                                 BindableLayout.ItemTemplate="{Binding Path=ItemTemplate,Source={RelativeSource AncestorType={x:Type local:LogicCollectionView},Mode=FindAncestor}}">
+                                 BindableLayout.ItemsSource="{Binding Path=ItemsSource,Source={RelativeSource AncestorType={x:Type local:DanceCollectionView},Mode=FindAncestor}}"
+                                 BindableLayout.ItemTemplate="{Binding Path=ItemTemplate,Source={RelativeSource AncestorType={x:Type local:DanceCollectionView},Mode=FindAncestor}}">
                     </StackLayout>
                 </ControlTemplate>
             </Setter.Value>

@@ -5,35 +5,35 @@
              x:Class="Dance.MauiTest.MainPage">
 
     <Grid RowDefinitions="*,*" BackgroundColor="Transparent">
-        <!--<xaml:NavigationView x:Name="lv" SwitchMode="RotationCenter_Opacity" SwitchEasing="{x:Static Easing.SpringOut}" IsShowNavigationBar="True" xaml:NavigationSwitchRotationOption.Angle="360" SwitchDuration="00:00:02" >
-        <xaml:NavigationView.ItemTemplate>
-            <DataTemplate>
-                <xaml:NavigationItem>
-                    <Image Source="{Binding}" Aspect="AspectFit"></Image>
-                </xaml:NavigationItem>
-            </DataTemplate>
-        </xaml:NavigationView.ItemTemplate>
-    </xaml:NavigationView>-->
+        <maui:DanceNavigationView x:Name="lv" SwitchMode="RotationCenter_Opacity" SwitchEasing="{x:Static Easing.SpringOut}" IsShowNavigationBar="True" maui:DanceNavigationSwitchRotationOption.Angle="360" SwitchDuration="00:00:02" >
+            <maui:DanceNavigationView.ItemTemplate>
+                <DataTemplate>
+                    <maui:DanceNavigationItem>
+                        <Image Source="{Binding}" Aspect="AspectFit"></Image>
+                    </maui:DanceNavigationItem>
+                </DataTemplate>
+            </maui:DanceNavigationView.ItemTemplate>
+        </maui:DanceNavigationView>
 
-        <!--<xaml:DriftEffect Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill"></xaml:DriftEffect>-->
+        <!--<maui:DriftEffect Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill"></maui:DriftEffect>-->
 
 
-        <!--<xaml:VideoPreview Source="https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d548f2a7814d458f85451be0bd0d11b5.mp4?type=video/mp4"  PlaybackMode="All"></xaml:VideoPreview>-->
+        <!--<maui:DanceVideoPreview Source="https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d548f2a7814d458f85451be0bd0d11b5.mp4?type=video/mp4"  PlaybackMode="All"></maui:DanceVideoPreview>-->
 
-        <!--<xaml:ContentButton Command="{Binding Path=ClickCommand}">
-        <Ellipse WidthRequest="300" HeightRequest="300" Fill="Red"></Ellipse>
-    </xaml:ContentButton>-->
-
-        <!--<xaml:ContentCheckBox>
-        <xaml:ContentCheckBox.CheckedContent>
+        <!--<maui:DanceButton Command="{Binding Path=ClickCommand}">
             <Ellipse WidthRequest="300" HeightRequest="300" Fill="Red"></Ellipse>
-        </xaml:ContentCheckBox.CheckedContent>
-        <xaml:ContentCheckBox.UnCheckedContent>
-            <Ellipse WidthRequest="300" HeightRequest="300" Fill="Yellow"></Ellipse>
-        </xaml:ContentCheckBox.UnCheckedContent>
-    </xaml:ContentCheckBox>-->
+        </maui:DanceButton>-->
 
-        <maui:DancePhysicsLayout x:Name="layout" Grid.RowSpan="2" IsRunning="True">
+        <!--<maui:DanceCheckBox WidthRequest="30" HeightRequest="30">
+            <maui:DanceCheckBox.CheckedContent>
+                <Ellipse WidthRequest="30" HeightRequest="30" Fill="Red"></Ellipse>
+            </maui:DanceCheckBox.CheckedContent>
+            <maui:DanceCheckBox.UnCheckedContent>
+                <Ellipse WidthRequest="30" HeightRequest="30" Fill="Yellow"></Ellipse>
+            </maui:DanceCheckBox.UnCheckedContent>
+        </maui:DanceCheckBox>-->
+
+        <!--<maui:DancePhysicsLayout x:Name="layout" Grid.RowSpan="2" IsRunning="True">
             <maui:DancePhysicsJointGraphicsView></maui:DancePhysicsJointGraphicsView>
 
             <Rectangle x:Name="r1" WidthRequest="200" HeightRequest="40" >
@@ -106,7 +106,7 @@
                 </maui:DancePhysicsLayout.Controllers>
             </Rectangle>
 
-        </maui:DancePhysicsLayout>
+        </maui:DancePhysicsLayout>-->
 
     </Grid>
 

@@ -6,7 +6,7 @@
 
     <local:DanceObject2ObjectConverter x:Key="Object2ObjectConverter_Bool" DefaultTo="{x:Boolean False}">
         <local:DanceObject2ObjectConverter.Maps>
-            <scg:List x:TypeArguments="local:Object2ObjectMap">
+            <scg:List x:TypeArguments="local:DanceObject2ObjectMap">
                 <local:DanceObject2ObjectMap From="{x:Boolean True}" To="{x:Boolean True}"></local:DanceObject2ObjectMap>
                 <local:DanceObject2ObjectMap From="{x:Boolean False}" To="{x:Boolean False}"></local:DanceObject2ObjectMap>
             </scg:List>
@@ -15,30 +15,30 @@
 
     <local:DanceObject2ObjectConverter x:Key="Object2ObjectConverter_Bool_Reverse" DefaultTo="{x:Boolean False}">
         <local:DanceObject2ObjectConverter.Maps>
-            <scg:List x:TypeArguments="local:Object2ObjectMap">
+            <scg:List x:TypeArguments="local:DanceObject2ObjectMap">
                 <local:DanceObject2ObjectMap From="{x:Boolean True}" To="{x:Boolean False}"></local:DanceObject2ObjectMap>
                 <local:DanceObject2ObjectMap From="{x:Boolean False}" To="{x:Boolean True}"></local:DanceObject2ObjectMap>
             </scg:List>
         </local:DanceObject2ObjectConverter.Maps>
     </local:DanceObject2ObjectConverter>
 
-    <Style TargetType="local:LogicCheckBox">
+    <Style TargetType="local:DanceCheckBox">
         <Setter Property="Background" Value="{x:Null}"></Setter>
         <Setter Property="BackgroundColor" Value="{x:Null}"></Setter>
         <Setter Property="ControlTemplate">
             <Setter.Value>
                 <ControlTemplate>
                     <Grid>
-                        <ContentView Content="{Binding Path=CheckedContent,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor}}"
-                                     IsVisible="{Binding Path=IsChecked,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Bool}}"></ContentView>
-                        <ContentView Content="{Binding Path=UnCheckedContent,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor}}"
-                                     IsVisible="{Binding Path=IsChecked,Source={RelativeSource AncestorType={x:Type local:LogicCheckBox},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Bool_Reverse}}"></ContentView>
+                        <ContentView Content="{Binding Path=CheckedContent,Source={RelativeSource AncestorType={x:Type local:DanceCheckBox},Mode=FindAncestor}}"
+                                     IsVisible="{Binding Path=IsChecked,Source={RelativeSource AncestorType={x:Type local:DanceCheckBox},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Bool}}"></ContentView>
+                        <ContentView Content="{Binding Path=UnCheckedContent,Source={RelativeSource AncestorType={x:Type local:DanceCheckBox},Mode=FindAncestor}}"
+                                     IsVisible="{Binding Path=IsChecked,Source={RelativeSource AncestorType={x:Type local:DanceCheckBox},Mode=FindAncestor},Converter={StaticResource Object2ObjectConverter_Bool_Reverse}}"></ContentView>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
-            <Trigger TargetType="local:LogicCheckBox" Property="IsEnabled" Value="False">
+            <Trigger TargetType="local:DanceCheckBox" Property="IsEnabled" Value="False">
                 <Setter Property="InputTransparent" Value="True"></Setter>
                 <Setter Property="Opacity" Value="0.4"></Setter>
             </Trigger>
