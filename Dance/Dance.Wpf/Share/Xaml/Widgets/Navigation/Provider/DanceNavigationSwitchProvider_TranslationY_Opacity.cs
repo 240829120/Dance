@@ -28,13 +28,15 @@ namespace Dance.Wpf
         /// <param name="duration">持续时间</param>
         protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
+            CreateRenderTransformGroup(view);
+
             if (outIndex == null || inIndex > outIndex)
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
+                    .Double("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)", easing, new DanceAnimationKeyFrame<double>(navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
             }
             else
@@ -43,7 +45,7 @@ namespace Dance.Wpf
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(-navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
+                    .Double("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)", easing, new DanceAnimationKeyFrame<double>(-navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
             }
         }
@@ -57,15 +59,17 @@ namespace Dance.Wpf
         /// <param name="view">退出导航视图项</param>
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
-        protected override void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, Easing easing, TimeSpan duration)
+        protected override void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
+            CreateRenderTransformGroup(view);
+
             if (inIndex == null || inIndex > outIndex)
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-navigation.Height, duration))
+                    .Double("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)", easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-navigation.Height, duration))
                     .Commit("OUT");
             }
             else
@@ -74,7 +78,7 @@ namespace Dance.Wpf
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(navigation.Height, duration))
+                    .Double("(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)", easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(navigation.Height, duration))
                     .Commit("OUT");
             }
         }
@@ -85,16 +89,16 @@ namespace Dance.Wpf
         /// <param name="navigation">导航</param>
         public override void UpSwiped(DanceNavigationView navigation)
         {
-            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count <= 1)
+            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count() <= 1)
                 return;
 
             int oldIndex = navigation.ItemsSource.IndexOf(navigation.SelectedItem);
             int newIndex = oldIndex + 1;
-            newIndex = Math.Min(newIndex, navigation.ItemsSource.Count - 1);
+            newIndex = Math.Min(newIndex, navigation.ItemsSource.Count() - 1);
             if (newIndex == oldIndex)
                 return;
 
-            navigation.SelectedItem = navigation.ItemsSource[newIndex];
+            navigation.SelectedItem = navigation.ItemsSource.GetItemAt(newIndex);
         }
 
         /// <summary>
@@ -103,7 +107,7 @@ namespace Dance.Wpf
         /// <param name="navigation">导航</param>
         public override void DownSwiped(DanceNavigationView navigation)
         {
-            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count <= 1)
+            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count() <= 1)
                 return;
 
             int oldIndex = navigation.ItemsSource.IndexOf(navigation.SelectedItem);
@@ -112,7 +116,7 @@ namespace Dance.Wpf
             if (newIndex == oldIndex)
                 return;
 
-            navigation.SelectedItem = navigation.ItemsSource[newIndex];
+            navigation.SelectedItem = navigation.ItemsSource.GetItemAt(newIndex);
         }
     }
 }

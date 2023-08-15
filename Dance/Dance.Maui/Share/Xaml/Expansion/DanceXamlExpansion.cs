@@ -18,7 +18,7 @@ namespace Dance
         /// <typeparam name="T">元素类型</typeparam>
         /// <param name="element">查找开始元素</param>
         /// <returns>祖先元素</returns>
-        public static T? GetVisualElementParent<T>(this Element element) where T : Element
+        public static T? GetVisualTreeParent<T>(this Element element) where T : Element
         {
             if (element == null)
                 return null;
@@ -34,12 +34,12 @@ namespace Dance
         }
 
         /// <summary>
-        /// 获取子元素
+        /// 获取后代元素
         /// </summary>
         /// <typeparam name="T">元素类型</typeparam>
         /// <param name="element">查找开始元素</param>
         /// <returns>子元素集合</returns>
-        public static IReadOnlyList<T> GetVisualElementChildren<T>(this Element element) where T : Element
+        public static IReadOnlyList<T> GetVisualTreeDescendants<T>(this Element element) where T : Element
         {
             return element.GetVisualTreeDescendants().Where(p => p is T).Select(p => (T)p).ToList();
         }

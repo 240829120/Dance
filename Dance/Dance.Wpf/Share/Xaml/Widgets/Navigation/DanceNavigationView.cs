@@ -1,16 +1,13 @@
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Platform;
-using Microsoft.Maui.Converters;
-using Microsoft.Maui.Platform;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace Dance.Wpf;
 
@@ -40,6 +37,31 @@ public class DanceNavigationView : ItemsControl
     // ========================================================================================================
     // Property
 
+    #region SelectedItem -- 当前选中项
+
+    /// <summary>
+    /// 当前选中项
+    /// </summary>
+    public object? SelectedItem
+    {
+        get { return (object?)GetValue(SelectedItemProperty); }
+        set { SetValue(SelectedItemProperty, value); }
+    }
+
+    /// <summary>
+    /// 当前选中项
+    /// </summary>
+    public static readonly DependencyProperty SelectedItemProperty =
+        DependencyProperty.Register("SelectedItem", typeof(object), typeof(DanceNavigationView), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+        {
+            if (s is not DanceNavigationView view)
+                return;
+
+            ProviderDic[view.SwitchMode].Switch(view, e.OldValue, e.NewValue);
+        })));
+
+    #endregion
+
     #region SwitchMode -- 切换模式
 
     /// <summary>
@@ -47,15 +69,15 @@ public class DanceNavigationView : ItemsControl
     /// </summary>
     public DanceNavigationSwitchMode SwitchMode
     {
-        get => (DanceNavigationSwitchMode)GetValue(SwitchModeProperty);
-        set => SetValue(SwitchModeProperty, value);
+        get { return (DanceNavigationSwitchMode)GetValue(SwitchModeProperty); }
+        set { SetValue(SwitchModeProperty, value); }
     }
 
     /// <summary>
     /// 切换模式
     /// </summary>
-    public static readonly BindableProperty SwitchModeProperty =
-        BindableProperty.Create(nameof(SwitchMode), typeof(DanceNavigationSwitchMode), typeof(DanceNavigationView), DanceNavigationSwitchMode.Opacity);
+    public static readonly DependencyProperty SwitchModeProperty =
+        DependencyProperty.Register("SwitchMode", typeof(DanceNavigationSwitchMode), typeof(DanceNavigationView), new PropertyMetadata(DanceNavigationSwitchMode.Opacity));
 
     #endregion
 
@@ -66,15 +88,15 @@ public class DanceNavigationView : ItemsControl
     /// </summary>
     public TimeSpan SwitchDuration
     {
-        get => (TimeSpan)GetValue(SwitchDurationProperty);
-        set => SetValue(SwitchDurationProperty, value);
+        get { return (TimeSpan)GetValue(SwitchDurationProperty); }
+        set { SetValue(SwitchDurationProperty, value); }
     }
 
     /// <summary>
     /// 切换持续时间
     /// </summary>
-    public static readonly BindableProperty SwitchDurationProperty =
-        BindableProperty.Create(nameof(SwitchMode), typeof(TimeSpan), typeof(DanceNavigationView), TimeSpan.FromSeconds(0.7));
+    public static readonly DependencyProperty SwitchDurationProperty =
+        DependencyProperty.Register("SwitchDuration", typeof(TimeSpan), typeof(DanceNavigationView), new PropertyMetadata(TimeSpan.FromSeconds(0.7)));
 
     #endregion
 
@@ -83,17 +105,17 @@ public class DanceNavigationView : ItemsControl
     /// <summary>
     /// 切换过渡函数
     /// </summary>
-    public Easing SwitchEasing
+    public IEasingFunction SwitchEasing
     {
-        get => (Easing)GetValue(SwitchEasingProperty);
-        set => SetValue(SwitchEasingProperty, value);
+        get { return (IEasingFunction)GetValue(SwitchEasingProperty); }
+        set { SetValue(SwitchEasingProperty, value); }
     }
 
     /// <summary>
     /// 切换过渡函数
     /// </summary>
-    public static readonly BindableProperty SwitchEasingProperty =
-        BindableProperty.Create(nameof(SwitchMode), typeof(Easing), typeof(DanceNavigationView), Easing.CubicInOut);
+    public static readonly DependencyProperty SwitchEasingProperty =
+        DependencyProperty.Register("SwitchEasing", typeof(IEasingFunction), typeof(DanceNavigationView), new PropertyMetadata(null));
 
     #endregion
 
@@ -104,30 +126,17 @@ public class DanceNavigationView : ItemsControl
     /// </summary>
     public bool IsShowNavigationBar
     {
-        get => (bool)GetValue(IsShowNavigationBarProperty);
-        set => SetValue(IsShowNavigationBarProperty, value);
+        get { return (bool)GetValue(IsShowNavigationBarProperty); }
+        set { SetValue(IsShowNavigationBarProperty, value); }
     }
 
     /// <summary>
     /// 是否显示导航条
     /// </summary>
-    public static readonly BindableProperty IsShowNavigationBarProperty =
-        BindableProperty.Create(nameof(IsShowNavigationBar), typeof(bool), typeof(DanceNavigationView), false);
+    public static readonly DependencyProperty IsShowNavigationBarProperty =
+        DependencyProperty.Register("IsShowNavigationBar", typeof(bool), typeof(DanceNavigationView), new PropertyMetadata(false));
 
     #endregion
-
-    // ========================================================================================================
-    // Override
-
-    /// <summary>
-    /// 当选中项发生改变时触发
-    /// </summary>
-    /// <param name="oldValue">旧值</param>
-    /// <param name="newValue">新值</param>
-    protected override void OnSelectedItemChagned(object oldValue, object newValue)
-    {
-        ProviderDic[this.SwitchMode].Switch(this, oldValue, newValue);
-    }
 
     // ========================================================================================================
     // Internal Function
@@ -163,5 +172,4 @@ public class DanceNavigationView : ItemsControl
     {
         ProviderDic[this.SwitchMode].DownSwiped(this);
     }
-
 }

@@ -83,7 +83,7 @@ namespace Dance.Maui
                     if (o is not VisualElement visual)
                         return;
 
-                    if (visual.GetVisualElementParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
+                    if (visual.GetVisualTreeParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
                         return;
 
                     if (_old is DanceBody oldValue)
@@ -132,7 +132,7 @@ namespace Dance.Maui
                     if (o is not VisualElement visual)
                         return;
 
-                    if (visual.GetVisualElementParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
+                    if (visual.GetVisualTreeParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
                         return;
 
                     if (_old is IList<DanceJoint> oldValue)
@@ -181,7 +181,7 @@ namespace Dance.Maui
                     if (o is not VisualElement visual)
                         return;
 
-                    if (visual.GetVisualElementParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
+                    if (visual.GetVisualTreeParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
                         return;
 
                     if (_old is IList<DanceController> oldValue)

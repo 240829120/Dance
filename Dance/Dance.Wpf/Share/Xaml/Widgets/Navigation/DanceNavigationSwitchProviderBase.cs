@@ -4,6 +4,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
@@ -32,11 +34,10 @@ namespace Dance.Wpf
             int? outIndex = oldValue == null ? null : navigation.ItemsSource.IndexOf(oldValue);
             int? inIndex = newValue == null ? null : navigation.ItemsSource.IndexOf(newValue);
 
-            IReadOnlyList<DanceNavigationItem> items = navigation.GetVisualElementChildren<DanceNavigationItem>();
+            IReadOnlyList<DanceNavigationItem> items = navigation.GetVisualTreeDescendants<DanceNavigationItem>();
 
-            DanceNavigationItem? oldView = oldValue == null ? null : items.FirstOrDefault(p => p.BindingContext == oldValue);
-            DanceNavigationItem? newView = newValue == null ? null : items.FirstOrDefault(p => p.BindingContext == newValue);
-
+            DanceNavigationItem? oldView = oldValue == null ? null : items.FirstOrDefault(p => p.DataContext == oldValue);
+            DanceNavigationItem? newView = newValue == null ? null : items.FirstOrDefault(p => p.DataContext == newValue);
 
             if (oldView != null)
             {
@@ -70,6 +71,24 @@ namespace Dance.Wpf
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
         protected abstract void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration);
+
+        /// <summary>
+        /// 创建渲染变换组
+        /// </summary>
+        /// <param name="view">导航视图项</param>
+        protected static void CreateRenderTransformGroup(DanceNavigationItem view)
+        {
+            if (view.RenderTransform is TransformGroup)
+                return;
+
+            TransformGroup group = new();
+            group.Children.Add(new ScaleTransform());
+            group.Children.Add(new SkewTransform());
+            group.Children.Add(new RotateTransform());
+            group.Children.Add(new TranslateTransform());
+
+            view.RenderTransform = group;
+        }
 
         /// <summary>
         /// 左扫

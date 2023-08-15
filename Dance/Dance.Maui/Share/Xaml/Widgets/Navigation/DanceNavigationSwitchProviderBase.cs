@@ -31,7 +31,7 @@ namespace Dance.Maui
             int? outIndex = oldValue == null ? null : navigation.ItemsSource.IndexOf(oldValue);
             int? inIndex = newValue == null ? null : navigation.ItemsSource.IndexOf(newValue);
 
-            IReadOnlyList<DanceNavigationItem> items = navigation.GetVisualElementChildren<DanceNavigationItem>();
+            IReadOnlyList<DanceNavigationItem> items = navigation.GetVisualTreeDescendants<DanceNavigationItem>();
 
             DanceNavigationItem? oldView = oldValue == null ? null : items.FirstOrDefault(p => p.BindingContext == oldValue);
             DanceNavigationItem? newView = newValue == null ? null : items.FirstOrDefault(p => p.BindingContext == newValue);

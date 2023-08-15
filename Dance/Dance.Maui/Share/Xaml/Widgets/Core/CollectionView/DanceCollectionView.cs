@@ -114,7 +114,7 @@ namespace Dance.Maui
         /// <param name="newValue">新值</param>
         protected virtual void OnSelectedItemChagned(object oldValue, object newValue)
         {
-            IReadOnlyList<DanceCollectionItem> items = this.GetVisualElementChildren<DanceCollectionItem>();
+            IReadOnlyList<DanceCollectionItem> items = this.GetVisualTreeDescendants<DanceCollectionItem>();
             foreach (DanceCollectionItem item in items)
             {
                 item.IsSelected = item.BindingContext == newValue;

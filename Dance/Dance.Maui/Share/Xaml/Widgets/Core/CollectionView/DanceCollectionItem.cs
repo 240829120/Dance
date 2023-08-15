@@ -61,7 +61,7 @@ namespace Dance.Maui
         /// </summary>
         private void LogicCollectionItem_Loaded(object? sender, EventArgs e)
         {
-            this.LogicCollectionView = this.GetVisualElementParent<DanceCollectionView>();
+            this.LogicCollectionView = this.GetVisualTreeParent<DanceCollectionView>();
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace Dance.Maui
                 case SelectionMode.Single:
                     if (this.IsSelected)
                         break;
-                    IReadOnlyList<DanceCollectionItem> items = this.LogicCollectionView.GetVisualElementChildren<DanceCollectionItem>();
+                    IReadOnlyList<DanceCollectionItem> items = this.LogicCollectionView.GetVisualTreeDescendants<DanceCollectionItem>();
                     foreach (DanceCollectionItem item in items)
                     {
                         item.IsSelected = this == item;

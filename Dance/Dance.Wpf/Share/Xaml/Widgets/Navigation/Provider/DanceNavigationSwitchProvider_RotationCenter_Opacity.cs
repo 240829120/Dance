@@ -28,8 +28,8 @@ namespace Dance.Wpf
         /// <param name="duration">持续时间</param>
         protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
-            view.AnchorX = 0.5;
-            view.AnchorY = 0.5;
+            CreateRenderTransformGroup(view);
+            view.RenderTransformOrigin = new System.Windows.Point(0.5, 0.5);
 
             double angle = DanceNavigationSwitchRotationOption.GetAngle(navigation);
 
@@ -37,9 +37,9 @@ namespace Dance.Wpf
             view.CreateKeyFrameAnimation()
                 .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                 .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
-                .Double(DanceNavigationItem.RotationProperty, easing, new DanceAnimationKeyFrame<double>(-angle, 0), new DanceAnimationKeyFrame<double>(0, duration))
-                .Double(DanceNavigationItem.ScaleXProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
-                .Double(DanceNavigationItem.ScaleYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
+                .Double("(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)", easing, new DanceAnimationKeyFrame<double>(-angle, 0), new DanceAnimationKeyFrame<double>(0, duration))
+                .Double("(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)", easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
+                .Double("(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)", easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                 .Commit("IN");
         }
 
@@ -67,16 +67,16 @@ namespace Dance.Wpf
         /// <param name="navigation">导航</param>
         public override void LeftSwiped(DanceNavigationView navigation)
         {
-            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count <= 1)
+            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count() <= 1)
                 return;
 
             int oldIndex = navigation.ItemsSource.IndexOf(navigation.SelectedItem);
             int newIndex = oldIndex + 1;
-            newIndex = Math.Min(newIndex, navigation.ItemsSource.Count - 1);
+            newIndex = Math.Min(newIndex, navigation.ItemsSource.Count() - 1);
             if (newIndex == oldIndex)
                 return;
 
-            navigation.SelectedItem = navigation.ItemsSource[newIndex];
+            navigation.SelectedItem = navigation.ItemsSource.GetItemAt(newIndex);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace Dance.Wpf
         /// <param name="navigation">导航</param>
         public override void RightSwiped(DanceNavigationView navigation)
         {
-            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count <= 1)
+            if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count() <= 1)
                 return;
 
             int oldIndex = navigation.ItemsSource.IndexOf(navigation.SelectedItem);
@@ -94,7 +94,7 @@ namespace Dance.Wpf
             if (newIndex == oldIndex)
                 return;
 
-            navigation.SelectedItem = navigation.ItemsSource[newIndex];
+            navigation.SelectedItem = navigation.ItemsSource.GetItemAt(newIndex);
         }
     }
 }
