@@ -18,8 +18,4 @@
 		<ProjectReference Include="..\Dance\Dance.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<Folder Include="Share\Xaml\Widgets\Core\" />
-	</ItemGroup>
-
 </Project>
