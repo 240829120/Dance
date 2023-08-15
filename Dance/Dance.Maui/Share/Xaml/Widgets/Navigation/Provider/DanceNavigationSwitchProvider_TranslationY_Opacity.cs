@@ -29,7 +29,7 @@ namespace Dance.Maui
         {
             if (outIndex == null || inIndex > outIndex)
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
@@ -38,7 +38,7 @@ namespace Dance.Maui
             }
             else
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
@@ -60,7 +60,7 @@ namespace Dance.Maui
         {
             if (inIndex == null || inIndex > outIndex)
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
@@ -69,7 +69,7 @@ namespace Dance.Maui
             }
             else
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))

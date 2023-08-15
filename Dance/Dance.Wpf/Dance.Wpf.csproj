@@ -8,11 +8,18 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Share\Core\Xaml\**" />
+	  <EmbeddedResource Remove="Share\Core\Xaml\**" />
+	  <None Remove="Share\Core\Xaml\**" />
+	  <Page Remove="Share\Core\Xaml\**" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<ProjectReference Include="..\Dance\Dance.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Share\Core\Xaml\Widgets\" />
+		<Folder Include="Share\Xaml\Widgets\Core\" />
 	</ItemGroup>
 
 </Project>

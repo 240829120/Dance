@@ -52,6 +52,13 @@ namespace Dance.Wpf
             }
 
             this.Storyboard.Name = name;
+
+            DanceAnimationManager.AddAnimation(this.Element, name, this.Storyboard);
+            this.Storyboard.Completed += (s, e) =>
+            {
+                DanceAnimationManager.RemoveAnimation(this.Element, name);
+            };
+
             this.Storyboard.Begin(this.Element);
         }
     }

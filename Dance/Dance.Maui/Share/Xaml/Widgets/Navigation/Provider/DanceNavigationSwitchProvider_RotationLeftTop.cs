@@ -33,7 +33,7 @@ namespace Dance.Maui
 
             if (outIndex == null || inIndex > outIndex)
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
                     .Double(DanceNavigationItem.RotationProperty, easing, new DanceAnimationKeyFrame<double>(-angle, 0), new DanceAnimationKeyFrame<double>(0, duration))
@@ -41,7 +41,7 @@ namespace Dance.Maui
             }
             else
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
                     .Double(DanceNavigationItem.RotationProperty, easing, new DanceAnimationKeyFrame<double>(angle, 0), new DanceAnimationKeyFrame<double>(0, duration))
@@ -66,7 +66,7 @@ namespace Dance.Maui
 
             if (inIndex == null || inIndex > outIndex)
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
                     .Double(DanceNavigationItem.RotationProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(angle, duration))
@@ -74,7 +74,7 @@ namespace Dance.Maui
             }
             else
             {
-                view.CancelAnimations();
+                view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
                     .Double(DanceNavigationItem.RotationProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-angle, duration))

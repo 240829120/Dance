@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
-namespace Dance.Maui
+namespace Dance.Wpf
 {
     /// <summary>
-    /// 导航切换 -- 垂直移动
+    /// 导航切换 -- 垂直移动和透明度
     /// </summary>
-    public class DanceNavigationSwitchProvider_TranslationY : DanceNavigationSwitchProviderBase
+    public class DanceNavigationSwitchProvider_TranslationY_Opacity : DanceNavigationSwitchProviderBase
     {
         /// <summary>
         /// 切换模式
         /// </summary>
-        public override DanceNavigationSwitchMode SwitchMode => DanceNavigationSwitchMode.TranslationY;
+        public override DanceNavigationSwitchMode SwitchMode => DanceNavigationSwitchMode.TranslationY_Opacity;
 
         /// <summary>
         /// 执行进入动画
@@ -25,12 +26,13 @@ namespace Dance.Maui
         /// <param name="view">进入导航视图项</param>
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
-        protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, Easing easing, TimeSpan duration)
+        protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
             if (outIndex == null || inIndex > outIndex)
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
                     .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
@@ -39,6 +41,7 @@ namespace Dance.Maui
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
                     .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(-navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
@@ -60,6 +63,7 @@ namespace Dance.Maui
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
                     .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-navigation.Height, duration))
                     .Commit("OUT");
@@ -68,6 +72,7 @@ namespace Dance.Maui
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
                     .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(navigation.Height, duration))
                     .Commit("OUT");

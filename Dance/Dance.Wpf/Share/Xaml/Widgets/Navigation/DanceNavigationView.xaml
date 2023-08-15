@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:local="clr-namespace:Dance.Maui;assembly=Dance.Maui"
+                    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit">
+
+    <Style x:Key="NavigationSelectItem" TargetType="local:DanceCollectionItem">
+        <Setter Property="Margin" Value="10,0,10,0"></Setter>
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Ellipse Fill="#88000000" WidthRequest="10" HeightRequest="10"></Ellipse>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger TargetType="local:DanceCollectionItem" Property="IsSelected" Value="True">
+                <Setter Property="ControlTemplate">
+                    <Setter.Value>
+                        <ControlTemplate>
+                            <Ellipse Fill="#AAFFFFFF" WidthRequest="10" HeightRequest="10"></Ellipse>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="NavigationSelect" TargetType="local:DanceCollectionView">
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <StackLayout Orientation="Horizontal"
+                                 BindableLayout.ItemsSource="{Binding Path=ItemsSource,Source={RelativeSource AncestorType={x:Type local:DanceCollectionView},Mode=FindAncestor}}"
+                                 BindableLayout.ItemTemplate="{Binding Path=ItemTemplate,Source={RelativeSource AncestorType={x:Type local:DanceCollectionView},Mode=FindAncestor}}">
+                    </StackLayout>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:DanceCollectionItem">
+        <Setter Property="IsVisible" Value="False"></Setter>
+        <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <ContentPresenter></ContentPresenter>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:DanceNavigationView">
+        <Setter Property="BackgroundColor" Value="Transparent"></Setter>
+        <Setter Property="ControlTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Grid>
+                        <Grid BindableLayout.ItemsSource="{Binding Path=ItemsSource,Source={RelativeSource AncestorType={x:Type local:DanceNavigationView},Mode=FindAncestor}}"
+                              BindableLayout.ItemTemplate="{Binding Path=ItemTemplate,Source={RelativeSource AncestorType={x:Type local:DanceNavigationView},Mode=FindAncestor}}"
+                              VerticalOptions="Fill" HorizontalOptions="Fill" IsClippedToBounds="True">
+                        </Grid>
+
+                        <local:DanceCollectionView ItemsSource="{Binding Path=ItemsSource,Source={RelativeSource AncestorType={x:Type local:DanceNavigationView},Mode=FindAncestor}}"
+                                                   SelectedItem="{Binding Path=SelectedItem,Source={RelativeSource AncestorType={x:Type local:DanceNavigationView},Mode=FindAncestor},Mode=TwoWay}"
+                                                   IsVisible="{Binding Path=IsShowNavigationBar,Source={RelativeSource AncestorType={x:Type local:DanceNavigationView},Mode=FindAncestor}}"
+                                                   Style="{StaticResource NavigationSelect}" VerticalOptions="End" HorizontalOptions="Center" Margin="0,0,0,10" BackgroundColor="{x:Null}">
+                            <local:DanceCollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <local:DanceCollectionItem Style="{StaticResource NavigationSelectItem}"></local:DanceCollectionItem>
+                                </DataTemplate>
+                            </local:DanceCollectionView.ItemTemplate>
+                        </local:DanceCollectionView>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

@@ -1,20 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
-namespace Dance.Maui
+namespace Dance.Wpf
 {
     /// <summary>
-    /// 导航切换 -- 垂直移动
+    /// 导航切换 -- 水平移动和透明度
     /// </summary>
-    public class DanceNavigationSwitchProvider_TranslationY : DanceNavigationSwitchProviderBase
+    public class DanceNavigationSwitchProvider_TranslationX_Opacity : DanceNavigationSwitchProviderBase
     {
         /// <summary>
         /// 切换模式
         /// </summary>
-        public override DanceNavigationSwitchMode SwitchMode => DanceNavigationSwitchMode.TranslationY;
+        public override DanceNavigationSwitchMode SwitchMode => DanceNavigationSwitchMode.TranslationX_Opacity;
 
         /// <summary>
         /// 执行进入动画
@@ -25,22 +27,24 @@ namespace Dance.Maui
         /// <param name="view">进入导航视图项</param>
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
-        protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, Easing easing, TimeSpan duration)
+        protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
             if (outIndex == null || inIndex > outIndex)
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
+                    .Double(DanceNavigationItem.TranslationXProperty, easing, new DanceAnimationKeyFrame<double>(navigation.Width, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
             }
             else
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(1, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(-navigation.Height, 0), new DanceAnimationKeyFrame<double>(0, duration))
+                    .Double(DanceNavigationItem.TranslationXProperty, easing, new DanceAnimationKeyFrame<double>(-navigation.Width, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
             }
         }
@@ -54,31 +58,33 @@ namespace Dance.Maui
         /// <param name="view">退出导航视图项</param>
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
-        protected override void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, Easing easing, TimeSpan duration)
+        protected override void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
             if (inIndex == null || inIndex > outIndex)
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-navigation.Height, duration))
+                    .Double(DanceNavigationItem.TranslationXProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-navigation.Width, duration))
                     .Commit("OUT");
             }
             else
             {
-                view.ClearKeyFrameAnimation();
+                view.CancelAnimations();
                 view.CreateKeyFrameAnimation()
+                    .Double(DanceNavigationItem.OpacityProperty, easing, new DanceAnimationKeyFrame<double>(1, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
-                    .Double(DanceNavigationItem.TranslationYProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(navigation.Height, duration))
+                    .Double(DanceNavigationItem.TranslationXProperty, easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(navigation.Width, duration))
                     .Commit("OUT");
             }
         }
 
         /// <summary>
-        /// 上扫
+        /// 左扫
         /// </summary>
         /// <param name="navigation">导航</param>
-        public override void UpSwiped(DanceNavigationView navigation)
+        public override void LeftSwiped(DanceNavigationView navigation)
         {
             if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count <= 1)
                 return;
@@ -93,10 +99,10 @@ namespace Dance.Maui
         }
 
         /// <summary>
-        /// 下扫
+        /// 右扫
         /// </summary>
         /// <param name="navigation">导航</param>
-        public override void DownSwiped(DanceNavigationView navigation)
+        public override void RightSwiped(DanceNavigationView navigation)
         {
             if (navigation.SelectedItem == null || navigation.ItemsSource == null || navigation.ItemsSource.Count <= 1)
                 return;

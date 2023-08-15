@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Animation;
 
-namespace Dance.Maui
+namespace Dance.Wpf
 {
     /// <summary>
     /// 导航切换 -- 中心旋转和透明度
@@ -25,7 +26,7 @@ namespace Dance.Maui
         /// <param name="view">进入导航视图项</param>
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
-        protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, Easing easing, TimeSpan duration)
+        protected override void ExecuteIn(int inIndex, int? outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
             view.AnchorX = 0.5;
             view.AnchorY = 0.5;
@@ -51,7 +52,7 @@ namespace Dance.Maui
         /// <param name="view">退出导航视图项</param>
         /// <param name="easing">过渡函数</param>
         /// <param name="duration">持续时间</param>
-        protected override void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, Easing easing, TimeSpan duration)
+        protected override void ExecuteOut(int? inIndex, int outIndex, DanceNavigationView navigation, DanceNavigationItem view, IEasingFunction easing, TimeSpan duration)
         {
             view.ClearKeyFrameAnimation();
             view.CreateKeyFrameAnimation()

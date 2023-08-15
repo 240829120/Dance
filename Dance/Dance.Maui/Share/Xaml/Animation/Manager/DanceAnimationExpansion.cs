@@ -26,5 +26,24 @@ namespace Dance.Maui
 
             return new DanceAnimationKeyFrameBuilder(element);
         }
+
+        /// <summary>
+        /// 取消关键帧动画
+        /// </summary>
+        /// <param name="element">元素</param>
+        /// <param name="names">名称</param>
+        public static void CnacelKeyFrameAnimation(this VisualElement element, params string[] names)
+        {
+            DanceAnimationManager.RemoveAnimation(element, names);
+        }
+
+        /// <summary>
+        /// 清理关键帧动画
+        /// </summary>
+        /// <param name="element">元素</param>
+        public static void ClearKeyFrameAnimation(this VisualElement element)
+        {
+            DanceAnimationManager.ClearAnimation(element);
+        }
     }
 }

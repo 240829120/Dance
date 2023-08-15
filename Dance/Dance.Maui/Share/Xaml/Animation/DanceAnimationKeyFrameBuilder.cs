@@ -72,9 +72,14 @@ namespace Dance.Maui
             if (this.Animation == null || this.Duration == null || this.Duration.Value == TimeSpan.Zero)
                 return Task.FromResult(true);
 
-            TaskCompletionSource<bool> task = new();
+            DanceAnimationManager.AddAnimation(this.Element, name, this.Animation);
 
-            this.Animation.Commit(this.Element, name, 16, (uint)this.Duration.Value.TotalMilliseconds, null, (v, c) => task.SetResult(c));
+            TaskCompletionSource<bool> task = new();
+            this.Animation.Commit(this.Element, name, 16, (uint)this.Duration.Value.TotalMilliseconds, null, (v, c) =>
+            {
+                task.SetResult(c);
+                DanceAnimationManager.RemoveAnimation(this.Element, name);
+            });
 
             return task.Task;
         }

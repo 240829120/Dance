@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using System.Windows;
+using System.Xml.Linq;
 
 namespace Dance.Wpf
 {
@@ -24,6 +24,25 @@ namespace Dance.Wpf
                 throw new ArgumentNullException(nameof(element));
 
             return new DanceAnimationKeyFrameBuilder(element);
+        }
+
+        /// <summary>
+        /// 取消关键帧动画
+        /// </summary>
+        /// <param name="element">元素</param>
+        /// <param name="names">名称</param>
+        public static void CnacelKeyFrameAnimation(this FrameworkElement element, params string[] names)
+        {
+            DanceAnimationManager.RemoveAnimation(element, names);
+        }
+
+        /// <summary>
+        /// 清理关键帧动画
+        /// </summary>
+        /// <param name="element">元素</param>
+        public static void ClearKeyFrameAnimation(this FrameworkElement element)
+        {
+            DanceAnimationManager.ClearAnimation(element);
         }
     }
 }
