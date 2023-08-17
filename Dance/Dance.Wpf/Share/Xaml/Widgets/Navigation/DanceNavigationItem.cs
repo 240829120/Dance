@@ -10,21 +10,33 @@ public class DanceNavigationItem : ContentControl
 {
     public DanceNavigationItem()
     {
-        this.GestureRecognizers.Add(new SwipeGestureRecognizer { Direction = SwipeDirection.Left, Command = new RelayCommand(this.LeftSwiped) });
-        this.GestureRecognizers.Add(new SwipeGestureRecognizer { Direction = SwipeDirection.Right, Command = new RelayCommand(this.RightSwiped) });
-        this.GestureRecognizers.Add(new SwipeGestureRecognizer { Direction = SwipeDirection.Up, Command = new RelayCommand(this.UpSwiped) });
-        this.GestureRecognizers.Add(new SwipeGestureRecognizer { Direction = SwipeDirection.Down, Command = new RelayCommand(this.DownSwiped) });
+        DanceSwipeGestureRecognizer swipe = new();
+        swipe.Swiped += Swipe_Swiped;
+
+        DanceGestureRecognizer.SetSwipe(this, swipe);
     }
 
     // ========================================================================================================
     // Private Function
+
+    private void Swipe_Swiped(object sender, DanceSwipeGestureRecognizerEventArgs e)
+    {
+        switch (e.Direction)
+        {
+            case DanceSwipeGestureRecognizerDirection.Up: this.UpSwiped(); break;
+            case DanceSwipeGestureRecognizerDirection.Down: this.DownSwiped(); break;
+            case DanceSwipeGestureRecognizerDirection.Left: this.LeftSwiped(); break;
+            case DanceSwipeGestureRecognizerDirection.Right: this.RightSwiped(); break;
+            default: break;
+        }
+    }
 
     /// <summary>
     /// ×óÉ¨
     /// </summary>
     private void LeftSwiped()
     {
-        if (this.LogicCollectionView is not DanceNavigationView navigation)
+        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.LeftSwiped();
@@ -35,7 +47,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void RightSwiped()
     {
-        if (this.LogicCollectionView is not DanceNavigationView navigation)
+        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.RightSwiped();
@@ -46,7 +58,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void UpSwiped()
     {
-        if (this.LogicCollectionView is not DanceNavigationView navigation)
+        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.UpSwiped();
@@ -57,7 +69,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void DownSwiped()
     {
-        if (this.LogicCollectionView is not DanceNavigationView navigation)
+        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.DownSwiped();

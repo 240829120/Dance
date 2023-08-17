@@ -1,6 +1,7 @@
 ﻿using Dance.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,21 +32,35 @@ namespace Dance.WpfTest
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            this.border.CreateKeyFrameAnimation()
-                       .Thickness(Border.MarginProperty, null, new DanceAnimationKeyFrame<Thickness>(new Thickness(0, 0, 0, 0), 0),
-                                                          new DanceAnimationKeyFrame<Thickness>(new Thickness(100, 0, 0, 0), 2))
-                       .Double(Border.OpacityProperty, null, new DanceAnimationKeyFrame<double>(1, 0),
-                                                        new DanceAnimationKeyFrame<double>(0, 4))
-                       .Color("(Border.Background).(SolidColorBrush.Color)", null, new DanceAnimationKeyFrame<Color>(Colors.Red, 0),
-                                                                                  new DanceAnimationKeyFrame<Color>(Colors.Yellow, 2))
-                       .Commit("TEST");
+            //this.border.CreateKeyFrameAnimation()
+            //           .Thickness(Border.MarginProperty, null, new DanceAnimationKeyFrame<Thickness>(new Thickness(0, 0, 0, 0), 0),
+            //                                              new DanceAnimationKeyFrame<Thickness>(new Thickness(100, 0, 0, 0), 2))
+            //           .Double(Border.OpacityProperty, null, new DanceAnimationKeyFrame<double>(1, 0),
+            //                                            new DanceAnimationKeyFrame<double>(0, 4))
+            //           .Color("(Border.Background).(SolidColorBrush.Color)", null, new DanceAnimationKeyFrame<Color>(Colors.Red, 0),
+            //                                                                      new DanceAnimationKeyFrame<Color>(Colors.Yellow, 2))
+            //           .Commit("TEST");
 
+            List<string> list = new();
+
+            list.Add("https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d3f5d1ca626d44dbba2527c04a97708e.jpg");
+            list.Add("https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/a9560038774d4b8aa82ddef95cfdfd94.jpg");
+            list.Add("https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/1c31356f394e4fe998f5fbf248bea7bd.jpeg");
+
+            //this.lv.SetValue(BindableLayout.ItemsSourceProperty, this.list);
+            this.lv.ItemsSource = list;
+            this.lv.SelectedItem = list.FirstOrDefault();
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
             DanceDomain.Current.Dispose();
             Application.Current.Shutdown();
+        }
+
+        private void DanceSwipeGestureRecognizer_Swiped(object sender, DanceSwipeGestureRecognizerEventArgs e)
+        {
+            Debug.WriteLine(e.Direction);
         }
     }
 }

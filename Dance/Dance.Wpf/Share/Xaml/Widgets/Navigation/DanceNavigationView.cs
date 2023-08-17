@@ -139,6 +139,19 @@ public class DanceNavigationView : ItemsControl
     #endregion
 
     // ========================================================================================================
+    // Protected Override
+
+    protected override bool IsItemItsOwnContainerOverride(object item)
+    {
+        return item is DanceNavigationItem;
+    }
+
+    protected override DependencyObject GetContainerForItemOverride()
+    {
+        return new DanceNavigationItem();
+    }
+
+    // ========================================================================================================
     // Internal Function
 
     /// <summary>

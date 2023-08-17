@@ -10,7 +10,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 手势识别
     /// </summary>
-    public interface IDanceGestureRecognizer : IDisposable
+    public interface IDanceGestureRecognizer
     {
         /// <summary>
         /// 注册
@@ -21,7 +21,6 @@ namespace Dance.Wpf
         /// <summary>
         /// 注销
         /// </summary>
-        /// <param name="element">元素</param>
-        void UnRegister(FrameworkElement element);
+        void UnRegister();
     }
 }

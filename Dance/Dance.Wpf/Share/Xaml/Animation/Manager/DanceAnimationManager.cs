@@ -38,7 +38,6 @@ namespace Dance.Wpf
         public static readonly DependencyProperty AnimationInfoDicProperty =
             DependencyProperty.RegisterAttached("AnimationInfoDic", typeof(ConcurrentDictionary<string, DanceAnimationInfo>), typeof(DanceAnimationManager), new PropertyMetadata(null));
 
-
         #endregion
 
         /// <summary>
@@ -50,6 +49,11 @@ namespace Dance.Wpf
         public static void AddAnimation(FrameworkElement element, string name, Storyboard animation)
         {
             ConcurrentDictionary<string, DanceAnimationInfo> dic = GetAnimationInfoDic(element);
+            if (dic == null)
+            {
+                dic = new();
+                SetAnimationInfoDic(element, dic);
+            }
 
             dic[name] = new DanceAnimationInfo(name, animation);
         }
@@ -62,6 +66,8 @@ namespace Dance.Wpf
         public static void RemoveAnimation(FrameworkElement element, params string[] names)
         {
             ConcurrentDictionary<string, DanceAnimationInfo> dic = GetAnimationInfoDic(element);
+            if (dic == null)
+                return;
 
             foreach (string name in names)
             {
@@ -80,6 +86,8 @@ namespace Dance.Wpf
         public static void ClearAnimation(FrameworkElement element)
         {
             ConcurrentDictionary<string, DanceAnimationInfo> dic = GetAnimationInfoDic(element);
+            if (dic == null)
+                return;
 
             while (!dic.IsEmpty)
             {

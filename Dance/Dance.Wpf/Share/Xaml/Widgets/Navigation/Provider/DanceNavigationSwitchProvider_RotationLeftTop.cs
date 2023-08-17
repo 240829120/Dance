@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
@@ -36,7 +37,7 @@ namespace Dance.Wpf
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
-                    .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
+                    .Object(DanceNavigationItem.VisibilityProperty, easing, new DanceAnimationKeyFrame<object>(Visibility.Visible, 0), new DanceAnimationKeyFrame<object>(Visibility.Visible, duration))
                     .Double("(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)", easing, new DanceAnimationKeyFrame<double>(-angle, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
             }
@@ -44,7 +45,7 @@ namespace Dance.Wpf
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
-                    .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(true, duration))
+                    .Object(DanceNavigationItem.VisibilityProperty, easing, new DanceAnimationKeyFrame<object>(Visibility.Visible, 0), new DanceAnimationKeyFrame<object>(Visibility.Visible, duration))
                     .Double("(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)", easing, new DanceAnimationKeyFrame<double>(angle, 0), new DanceAnimationKeyFrame<double>(0, duration))
                     .Commit("IN");
             }
@@ -69,7 +70,7 @@ namespace Dance.Wpf
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
-                    .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
+                    .Object(DanceNavigationItem.VisibilityProperty, easing, new DanceAnimationKeyFrame<object>(Visibility.Visible, 0), new DanceAnimationKeyFrame<object>(Visibility.Collapsed, duration))
                     .Double("(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)", easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(angle, duration))
                     .Commit("OUT");
             }
@@ -77,7 +78,7 @@ namespace Dance.Wpf
             {
                 view.ClearKeyFrameAnimation();
                 view.CreateKeyFrameAnimation()
-                    .Bool(DanceNavigationItem.IsVisibleProperty, easing, new DanceAnimationKeyFrame<bool>(true, 0), new DanceAnimationKeyFrame<bool>(false, duration))
+                    .Object(DanceNavigationItem.VisibilityProperty, easing, new DanceAnimationKeyFrame<object>(Visibility.Visible, 0), new DanceAnimationKeyFrame<object>(Visibility.Collapsed, duration))
                     .Double("(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)", easing, new DanceAnimationKeyFrame<double>(0, 0), new DanceAnimationKeyFrame<double>(-angle, duration))
                     .Commit("OUT");
             }

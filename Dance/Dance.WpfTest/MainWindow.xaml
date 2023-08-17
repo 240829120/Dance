@@ -3,10 +3,17 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wpf="clr-namespace:Dance.Wpf;assembly=Dance.Wpf"
         xmlns:local="clr-namespace:Dance.WpfTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Border x:Name="border" Width="80" Height="40" Background="Red"></Border>
+        <wpf:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX">
+            <wpf:DanceNavigationView.ItemTemplate>
+                <DataTemplate>
+                    <Image Source="{Binding}"></Image>
+                </DataTemplate>
+            </wpf:DanceNavigationView.ItemTemplate>
+        </wpf:DanceNavigationView>
     </Grid>
 </Window>

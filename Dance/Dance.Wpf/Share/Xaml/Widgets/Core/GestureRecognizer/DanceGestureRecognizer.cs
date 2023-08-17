@@ -11,24 +11,47 @@ namespace Dance.Wpf
     /// <summary>
     /// 手势识别控件
     /// </summary>
-    public class DanceGestureRecognizer : ContentControl
+    public class DanceGestureRecognizer : DependencyObject
     {
-        #region GestureRecognizers -- 手势识别器集合
+        #region Swipe -- 轻扫
 
         /// <summary>
-        /// 手势识别器集合
+        /// 获取轻扫
         /// </summary>
-        public IList<IDanceGestureRecognizer> GestureRecognizers
+        /// <param name="obj">对象</param>
+        /// <returns>轻扫手势</returns>
+        public static DanceSwipeGestureRecognizer GetSwipe(DependencyObject obj)
         {
-            get { return (IList<IDanceGestureRecognizer>)GetValue(GestureRecognizersProperty); }
-            set { SetValue(GestureRecognizersProperty, value); }
+            return (DanceSwipeGestureRecognizer)obj.GetValue(SwipeProperty);
         }
 
         /// <summary>
-        /// 手势识别器集合
+        /// 设置轻扫
         /// </summary>
-        public static readonly DependencyProperty GestureRecognizersProperty =
-            DependencyProperty.Register("GestureRecognizers", typeof(IList<IDanceGestureRecognizer>), typeof(DanceGestureRecognizer), new PropertyMetadata(null));
+        /// <param name="obj">对象</param>
+        /// <param name="value">轻扫手势</param>
+        public static void SetSwipe(DependencyObject obj, DanceSwipeGestureRecognizer value)
+        {
+            obj.SetValue(SwipeProperty, value);
+        }
+
+        /// <summary>
+        /// 轻扫
+        /// </summary>
+        public static readonly DependencyProperty SwipeProperty =
+            DependencyProperty.RegisterAttached("Swipe", typeof(DanceSwipeGestureRecognizer), typeof(DanceGestureRecognizer), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (e.OldValue is IDanceGestureRecognizer oldValue)
+                {
+                    oldValue.UnRegister();
+                }
+
+                if (s is FrameworkElement element && e.NewValue is IDanceGestureRecognizer newValue)
+                {
+                    newValue.Register(element);
+                }
+
+            })));
 
         #endregion
     }
