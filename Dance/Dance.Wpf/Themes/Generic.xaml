@@ -3,4 +3,5 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/Navigation/DanceNavigationView.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
+
 </ResourceDictionary>

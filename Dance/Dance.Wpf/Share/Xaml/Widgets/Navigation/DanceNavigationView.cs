@@ -32,6 +32,8 @@ public class DanceNavigationView : ItemsControl
         ProviderDic.Add(DanceNavigationSwitchMode.RotationLeftTop, new DanceNavigationSwitchProvider_RotationLeftTop());
         ProviderDic.Add(DanceNavigationSwitchMode.RotationLeftTop_Opacity, new DanceNavigationSwitchProvider_RotationLeftTop_Opacity());
         ProviderDic.Add(DanceNavigationSwitchMode.RotationCenter_Opacity, new DanceNavigationSwitchProvider_RotationCenter_Opacity());
+
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceNavigationView), new FrameworkPropertyMetadata(typeof(DanceNavigationView)));
     }
 
     // ========================================================================================================

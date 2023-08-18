@@ -39,9 +39,30 @@
         </Setter>
     </Style>
 
+    <Style TargetType="{x:Type local:DanceNavigationItem}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Visibility" Value="Collapsed"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DanceNavigationItem}">
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter></ContentPresenter>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style TargetType="{x:Type local:DanceNavigationView}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="SwitchMode" Value="TranslationX_Opacity"></Setter>
+        <Setter Property="SwitchEasing">
+            <Setter.Value>
+                <CubicEase EasingMode="EaseInOut"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

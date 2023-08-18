@@ -1,4 +1,5 @@
-using CommunityToolkit.Mvvm.Input;
+using System;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Dance.Wpf;
@@ -8,6 +9,11 @@ namespace Dance.Wpf;
 /// </summary>
 public class DanceNavigationItem : ContentControl
 {
+    static DanceNavigationItem()
+    {
+        DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceNavigationItem), new FrameworkPropertyMetadata(typeof(DanceNavigationItem)));
+    }
+
     public DanceNavigationItem()
     {
         DanceSwipeGestureRecognizer swipe = new();

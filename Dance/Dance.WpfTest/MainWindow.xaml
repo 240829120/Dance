@@ -8,10 +8,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <wpf:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX">
+        <wpf:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX_Opacity">
             <wpf:DanceNavigationView.ItemTemplate>
                 <DataTemplate>
-                    <Image Source="{Binding}"></Image>
+                    <Image Source="{Binding}" Stretch="UniformToFill"></Image>
                 </DataTemplate>
             </wpf:DanceNavigationView.ItemTemplate>
         </wpf:DanceNavigationView>
