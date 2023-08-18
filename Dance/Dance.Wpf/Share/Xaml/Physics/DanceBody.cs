@@ -4,6 +4,8 @@ using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Markup;
 using tainicom.Aether.Physics2D.Common;
 using tainicom.Aether.Physics2D.Dynamics;
 
@@ -25,6 +27,11 @@ namespace Dance.Wpf
         /// </summary>
         public Body? Body { get; private set; }
 
+        public DanceBody()
+        {
+            this.Fixtures = new();
+        }
+
         #region BodyType -- 类型
 
         /// <summary>
@@ -32,15 +39,15 @@ namespace Dance.Wpf
         /// </summary>
         public BodyType BodyType
         {
-            get => (BodyType)GetValue(WidthProperty);
-            set => SetValue(WidthProperty, value);
+            get { return (BodyType)GetValue(BodyTypeProperty); }
+            set { SetValue(BodyTypeProperty, value); }
         }
 
         /// <summary>
         /// 类型
         /// </summary>
-        public static readonly BindableProperty WidthProperty =
-            BindableProperty.Create(nameof(BodyType), typeof(BodyType), typeof(DanceBody), BodyType.Dynamic);
+        public static readonly DependencyProperty BodyTypeProperty =
+            DependencyProperty.Register("BodyType", typeof(BodyType), typeof(DanceBody), new PropertyMetadata(BodyType.Dynamic));
 
         #endregion
 
@@ -49,17 +56,17 @@ namespace Dance.Wpf
         /// <summary>
         /// 碰撞体集合
         /// </summary>
-        public IList<DanceFixture> Fixtures
+        public DanceFixtureCollection Fixtures
         {
-            get => (IList<DanceFixture>)GetValue(FixturesProperty);
-            set => SetValue(FixturesProperty, value);
+            get { return (DanceFixtureCollection)GetValue(FixturesProperty); }
+            set { SetValue(FixturesProperty, value); }
         }
 
         /// <summary>
         /// 碰撞体集合
         /// </summary>
-        public static readonly BindableProperty FixturesProperty =
-            BindableProperty.Create(nameof(Fixtures), typeof(IList<DanceFixture>), typeof(DanceBody), defaultValueCreator: b => new List<DanceFixture>());
+        public static readonly DependencyProperty FixturesProperty =
+            DependencyProperty.Register("Fixtures", typeof(DanceFixtureCollection), typeof(DanceBody), new PropertyMetadata(null));
 
         #endregion
 
@@ -70,15 +77,15 @@ namespace Dance.Wpf
         /// </summary>
         public DanceVector LinearVelocity
         {
-            get => (DanceVector)GetValue(LinearVelocityProperty);
-            set => SetValue(LinearVelocityProperty, value);
+            get { return (DanceVector)GetValue(LinearVelocityProperty); }
+            set { SetValue(LinearVelocityProperty, value); }
         }
 
         /// <summary>
         /// 线速度
         /// </summary>
-        public static readonly BindableProperty LinearVelocityProperty =
-            BindableProperty.Create(nameof(LinearVelocity), typeof(DanceVector), typeof(DanceBody), DanceVector.Zero);
+        public static readonly DependencyProperty LinearVelocityProperty =
+            DependencyProperty.Register("LinearVelocity", typeof(DanceVector), typeof(DanceBody), new PropertyMetadata(DanceVector.Zero));
 
         #endregion
 
@@ -89,15 +96,15 @@ namespace Dance.Wpf
         /// </summary>
         public float AngularVelocity
         {
-            get => (float)GetValue(AngularVelocityProperty);
-            set => SetValue(AngularVelocityProperty, value);
+            get { return (float)GetValue(AngularVelocityProperty); }
+            set { SetValue(AngularVelocityProperty, value); }
         }
 
         /// <summary>
         /// 角速度
         /// </summary>
-        public static readonly BindableProperty AngularVelocityProperty =
-            BindableProperty.Create(nameof(AngularVelocity), typeof(float), typeof(DanceBody), 0f);
+        public static readonly DependencyProperty AngularVelocityProperty =
+            DependencyProperty.Register("AngularVelocity", typeof(float), typeof(DanceBody), new PropertyMetadata(0f));
 
         #endregion
 
@@ -108,15 +115,15 @@ namespace Dance.Wpf
         /// </summary>
         public float LinearDamping
         {
-            get => (float)GetValue(LinearDampingProperty);
-            set => SetValue(LinearDampingProperty, value);
+            get { return (float)GetValue(LinearDampingProperty); }
+            set { SetValue(LinearDampingProperty, value); }
         }
 
         /// <summary>
         /// 线速度阻尼
         /// </summary>
-        public static readonly BindableProperty LinearDampingProperty =
-            BindableProperty.Create(nameof(LinearDamping), typeof(float), typeof(DanceBody), 0f);
+        public static readonly DependencyProperty LinearDampingProperty =
+            DependencyProperty.Register("LinearDamping", typeof(float), typeof(DanceBody), new PropertyMetadata(0f));
 
         #endregion
 
@@ -127,15 +134,15 @@ namespace Dance.Wpf
         /// </summary>
         public float AngularDamping
         {
-            get => (float)GetValue(AngularDampingProperty);
-            set => SetValue(AngularDampingProperty, value);
+            get { return (float)GetValue(AngularDampingProperty); }
+            set { SetValue(AngularDampingProperty, value); }
         }
 
         /// <summary>
         /// 角速度阻尼
         /// </summary>
-        public static readonly BindableProperty AngularDampingProperty =
-            BindableProperty.Create(nameof(AngularDamping), typeof(float), typeof(DanceBody), 0f);
+        public static readonly DependencyProperty AngularDampingProperty =
+            DependencyProperty.Register("AngularDamping", typeof(float), typeof(DanceBody), new PropertyMetadata(0f));
 
         #endregion
 
@@ -146,15 +153,15 @@ namespace Dance.Wpf
         /// </summary>
         public DancePoint Position
         {
-            get => (DancePoint)GetValue(PositionProperty);
-            set => SetValue(PositionProperty, value);
+            get { return (DancePoint)GetValue(PositionProperty); }
+            set { SetValue(PositionProperty, value); }
         }
 
         /// <summary>
         /// 位置
         /// </summary>
-        public static readonly BindableProperty PositionProperty =
-            BindableProperty.Create(nameof(Position), typeof(DancePoint), typeof(DanceBody), DancePoint.Zero);
+        public static readonly DependencyProperty PositionProperty =
+            DependencyProperty.Register("Position", typeof(DancePoint), typeof(DanceBody), new PropertyMetadata(DancePoint.Zero));
 
         #endregion
 
@@ -165,15 +172,15 @@ namespace Dance.Wpf
         /// </summary>
         public float Rotation
         {
-            get => (float)GetValue(RotationProperty);
-            set => SetValue(RotationProperty, value);
+            get { return (float)GetValue(RotationProperty); }
+            set { SetValue(RotationProperty, value); }
         }
 
         /// <summary>
         /// 旋转角度
         /// </summary>
-        public static readonly BindableProperty RotationProperty =
-            BindableProperty.Create(nameof(Rotation), typeof(float), typeof(DanceBody), 0f);
+        public static readonly DependencyProperty RotationProperty =
+            DependencyProperty.Register("Rotation", typeof(float), typeof(DanceBody), new PropertyMetadata(0f));
 
         #endregion
 
@@ -184,15 +191,15 @@ namespace Dance.Wpf
         /// </summary>
         public bool IgnoreGravity
         {
-            get => (bool)GetValue(IgnoreGravityProperty);
-            set => SetValue(IgnoreGravityProperty, value);
+            get { return (bool)GetValue(IgnoreGravityProperty); }
+            set { SetValue(IgnoreGravityProperty, value); }
         }
 
         /// <summary>
         /// 忽略重力
         /// </summary>
-        public static readonly BindableProperty IgnoreGravityProperty =
-            BindableProperty.Create(nameof(IgnoreGravity), typeof(bool), typeof(DanceBody), false);
+        public static readonly DependencyProperty IgnoreGravityProperty =
+            DependencyProperty.Register("IgnoreGravity", typeof(bool), typeof(DanceBody), new PropertyMetadata(false));
 
         #endregion
 

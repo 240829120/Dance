@@ -8,12 +8,87 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <wpf:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX_Opacity">
+        <!--<wpf:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX_Opacity">
             <wpf:DanceNavigationView.ItemTemplate>
                 <DataTemplate>
                     <Image Source="{Binding}" Stretch="UniformToFill"></Image>
                 </DataTemplate>
             </wpf:DanceNavigationView.ItemTemplate>
-        </wpf:DanceNavigationView>
+        </wpf:DanceNavigationView>-->
+
+        <wpf:DancePhysicsLayout x:Name="layout" Grid.RowSpan="2" IsRunning="True">
+            <wpf:DancePhysicsJointGraphicsView></wpf:DancePhysicsJointGraphicsView>
+
+            <Rectangle x:Name="r1" Width="200" Height="40" >
+                <Rectangle.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="Red"></GradientStop>
+                        <GradientStop Offset="1" Color="Yellow"></GradientStop>
+                    </LinearGradientBrush>
+                </Rectangle.Fill>
+                <wpf:DancePhysicsLayout.Body>
+                    <wpf:DanceBody x:Name="bodyA" LinearVelocity="100,0" Position="100,0" AngularVelocity="1">
+                        <wpf:DanceRectangleFixture Width="200" Height="40"></wpf:DanceRectangleFixture>
+                    </wpf:DanceBody>
+                </wpf:DancePhysicsLayout.Body>
+            </Rectangle>
+
+            <Ellipse Width="40" Height="40">
+                <Ellipse.Fill>
+                    <LinearGradientBrush>
+                        <GradientStop Offset="0" Color="Blue"></GradientStop>
+                        <GradientStop Offset="1" Color="Green"></GradientStop>
+                    </LinearGradientBrush>
+                </Ellipse.Fill>
+                <wpf:DancePhysicsLayout.Body>
+                    <wpf:DanceBody x:Name="bodyB" LinearVelocity="-100,0" Position="500,0" AngularVelocity="0">
+                        <wpf:DanceCircleFixture Radius="20" Friction="0.8"></wpf:DanceCircleFixture>
+                    </wpf:DanceBody>
+                </wpf:DancePhysicsLayout.Body>
+            </Ellipse>
+
+            <Grid Width="40" Height="100">
+                <Rectangle Width="40" Height="40" VerticalAlignment="Top" Fill="Pink"></Rectangle>
+                <Rectangle Width="40" Height="40" VerticalAlignment="Bottom" Fill="Orange"></Rectangle>
+
+                <wpf:DancePhysicsLayout.Body>
+                    <wpf:DanceBody x:Name="body" LinearVelocity="0,0" Position="300,0" AngularVelocity="1">
+                        <wpf:DanceRectangleFixture Width="40" Height="40" Position="0,-30"></wpf:DanceRectangleFixture>
+                        <wpf:DanceRectangleFixture Width="40" Height="40" Position="0,30"></wpf:DanceRectangleFixture>
+                    </wpf:DanceBody>
+                </wpf:DancePhysicsLayout.Body>
+            </Grid>
+
+            <Path Width="80" Height="80" Data="M 40,0 L 80,80 0,80Z" Fill="Orange">
+                <wpf:DancePhysicsLayout.Body>
+                    <wpf:DanceBody Position="600,0">
+                        <wpf:DancePolygonFixture Points="0,-40 40,40 -40,40"></wpf:DancePolygonFixture>
+                    </wpf:DanceBody>
+                </wpf:DancePhysicsLayout.Body>
+            </Path>
+
+            <Rectangle Width="800" Height="40" Fill="gray">
+                <wpf:DancePhysicsLayout.Body>
+                    <wpf:DanceBody Position="400,420" BodyType="Static">
+                        <wpf:DanceRectangleFixture Width="800" Height="40"></wpf:DanceRectangleFixture>
+                    </wpf:DanceBody>
+                </wpf:DancePhysicsLayout.Body>
+                <wpf:DancePhysicsLayout.Joints>
+                    <wpf:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference bodyB}" AnchorA="-96,-20"
+                                   StrokeDashPattern="2,2"
+                                   StrokeColor="Red" StrokeSize="2"></wpf:DanceDistanceJoint>
+                    <wpf:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference body}" AnchorB="0,-50"
+                                   StrokeDashPattern="2,2"
+                                   StrokeColor="Pink" StrokeSize="2"></wpf:DanceDistanceJoint>
+                </wpf:DancePhysicsLayout.Joints>
+            </Rectangle>
+
+            <Rectangle Width="400" Height="200" Fill="skyblue" Opacity="0.4" Margin="800,400,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                <wpf:DancePhysicsLayout.Controllers>
+                    <wpf:DanceBuoyancyController WorldLowerBound="800,400" WorldUpperBound="1200,600" Density="0.9"></wpf:DanceBuoyancyController>
+                </wpf:DancePhysicsLayout.Controllers>
+            </Rectangle>
+
+        </wpf:DancePhysicsLayout>
     </Grid>
 </Window>

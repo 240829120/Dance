@@ -11,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 物理关节绘制
     /// </summary>
-    public class DancePhysicsJointGraphicsDrawable : Control
+    public class DancePhysicsJointGraphicsView : Control
     {
         /// <summary>
         /// 物理布局

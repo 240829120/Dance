@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using tainicom.Aether.Physics2D.Dynamics;
 
 namespace Dance.Wpf
@@ -19,15 +20,15 @@ namespace Dance.Wpf
         /// </summary>
         public DancePoint Position
         {
-            get => (DancePoint)GetValue(PositionProperty);
-            set => SetValue(PositionProperty, value);
+            get { return (DancePoint)GetValue(PositionProperty); }
+            set { SetValue(PositionProperty, value); }
         }
 
         /// <summary>
         /// 位置
         /// </summary>
-        public static readonly BindableProperty PositionProperty =
-            BindableProperty.Create(nameof(Position), typeof(DancePoint), typeof(DanceFixture), DancePoint.Zero);
+        public static readonly DependencyProperty PositionProperty =
+            DependencyProperty.Register("Position", typeof(DancePoint), typeof(DanceFixture), new PropertyMetadata(DancePoint.Zero));
 
         #endregion
 
@@ -38,15 +39,15 @@ namespace Dance.Wpf
         /// </summary>
         public float Density
         {
-            get => (float)GetValue(DensityProperty);
-            set => SetValue(DensityProperty, value);
+            get { return (float)GetValue(DensityProperty); }
+            set { SetValue(DensityProperty, value); }
         }
 
         /// <summary>
         /// 密度
         /// </summary>
-        public static readonly BindableProperty DensityProperty =
-            BindableProperty.Create(nameof(Density), typeof(float), typeof(DanceCircleFixture), 1f);
+        public static readonly DependencyProperty DensityProperty =
+            DependencyProperty.Register("Density", typeof(float), typeof(DanceFixture), new PropertyMetadata(1f));
 
         #endregion
 
@@ -57,15 +58,15 @@ namespace Dance.Wpf
         /// </summary>
         public float Restitution
         {
-            get => (float)GetValue(RestitutionProperty);
-            set => SetValue(RestitutionProperty, value);
+            get { return (float)GetValue(RestitutionProperty); }
+            set { SetValue(RestitutionProperty, value); }
         }
 
         /// <summary>
         /// 弹力系数
         /// </summary>
-        public static readonly BindableProperty RestitutionProperty =
-            BindableProperty.Create(nameof(Restitution), typeof(float), typeof(DanceCircleFixture), 0.1f);
+        public static readonly DependencyProperty RestitutionProperty =
+            DependencyProperty.Register("Restitution", typeof(float), typeof(DanceFixture), new PropertyMetadata(0.1f));
 
         #endregion
 
@@ -76,15 +77,15 @@ namespace Dance.Wpf
         /// </summary>
         public float Friction
         {
-            get => (float)GetValue(FrictionProperty);
-            set => SetValue(FrictionProperty, value);
+            get { return (float)GetValue(FrictionProperty); }
+            set { SetValue(FrictionProperty, value); }
         }
 
         /// <summary>
         /// 摩擦力系数
         /// </summary>
-        public static readonly BindableProperty FrictionProperty =
-            BindableProperty.Create(nameof(Friction), typeof(float), typeof(DanceCircleFixture), 0.4f);
+        public static readonly DependencyProperty FrictionProperty =
+            DependencyProperty.Register("Friction", typeof(float), typeof(DanceFixture), new PropertyMetadata(0.4f));
 
         #endregion
 

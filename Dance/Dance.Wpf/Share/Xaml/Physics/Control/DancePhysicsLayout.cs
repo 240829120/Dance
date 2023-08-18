@@ -15,6 +15,7 @@ using System.Windows.Controls;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.Animation;
+using System.Collections;
 
 namespace Dance.Wpf
 {
@@ -106,9 +107,9 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="obj">元素</param>
         /// <returns>值</returns>
-        public static IList<DanceJoint> GetJoints(DependencyObject obj)
+        public static DanceJointCollection GetJoints(DependencyObject obj)
         {
-            return (IList<DanceJoint>)obj.GetValue(JointsProperty);
+            return (DanceJointCollection)obj.GetValue(JointsProperty);
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="obj">元素</param>
         /// <param name="value">值</param>
-        public static void SetJoints(DependencyObject obj, IList<DanceJoint> value)
+        public static void SetJoints(DependencyObject obj, DanceJointCollection value)
         {
             obj.SetValue(JointsProperty, value);
         }
@@ -125,7 +126,7 @@ namespace Dance.Wpf
         /// 关节元素集合
         /// </summary>
         public static readonly DependencyProperty JointsProperty =
-            DependencyProperty.RegisterAttached("Joints", typeof(IList<DanceJoint>), typeof(DancePhysicsLayout), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            DependencyProperty.RegisterAttached("Joints", typeof(DanceJointCollection), typeof(DancePhysicsLayout), new DancePropertyMetadata(() => new DanceJointCollection(), new PropertyChangedCallback((s, e) =>
             {
                 if (s is not FrameworkElement visual)
                     return;
@@ -133,11 +134,11 @@ namespace Dance.Wpf
                 if (visual.GetVisualTreeParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
                     return;
 
-                if (e.OldValue is IList<DanceJoint> oldValue)
+                if (e.OldValue is DanceJointCollection oldValue)
                 {
                     layout.RemoveJoints(oldValue);
                 }
-                if (e.NewValue is IList<DanceJoint> newValue)
+                if (e.NewValue is DanceJointCollection newValue)
                 {
                     layout.AddJoints(newValue);
                 }
@@ -152,9 +153,9 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="obj">元素</param>
         /// <returns>值</returns>
-        public static IList<DanceController> GetControllers(DependencyObject obj)
+        public static DanceControllerCollection GetControllers(DependencyObject obj)
         {
-            return (IList<DanceController>)obj.GetValue(ControllersProperty);
+            return (DanceControllerCollection)obj.GetValue(ControllersProperty);
         }
 
         /// <summary>
@@ -162,7 +163,7 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="obj">元素</param>
         /// <param name="value">值</param>
-        public static void SetControllers(DependencyObject obj, IList<DanceController> value)
+        public static void SetControllers(DependencyObject obj, DanceControllerCollection value)
         {
             obj.SetValue(ControllersProperty, value);
         }
@@ -171,7 +172,7 @@ namespace Dance.Wpf
         /// 获取控制器集合
         /// </summary>
         public static readonly DependencyProperty ControllersProperty =
-            DependencyProperty.RegisterAttached("Controllers", typeof(IList<DanceController>), typeof(DancePhysicsLayout), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            DependencyProperty.RegisterAttached("Controllers", typeof(DanceControllerCollection), typeof(DancePhysicsLayout), new DancePropertyMetadata(() => new DanceControllerCollection(), new PropertyChangedCallback((s, e) =>
             {
                 if (s is not FrameworkElement visual)
                     return;
@@ -179,11 +180,11 @@ namespace Dance.Wpf
                 if (visual.GetVisualTreeParent<DancePhysicsLayout>() is not DancePhysicsLayout layout)
                     return;
 
-                if (e.OldValue is IList<DanceController> oldValue)
+                if (e.OldValue is DanceControllerCollection oldValue)
                 {
                     layout.RemoveControllers(oldValue);
                 }
-                if (e.NewValue is IList<DanceController> newValue)
+                if (e.NewValue is DanceControllerCollection newValue)
                 {
                     layout.AddControllers(newValue);
                 }

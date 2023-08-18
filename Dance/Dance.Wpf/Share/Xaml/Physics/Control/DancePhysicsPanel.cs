@@ -51,7 +51,7 @@ namespace Dance.Wpf
 
                     visual.Arrange(rect);
                 }
-                else if (visual is DancePhysicsJointGraphicsDrawable graphicsView)
+                else if (visual is DancePhysicsJointGraphicsView graphicsView)
                 {
                     visual.Arrange(new Rect(finalSize));
                     graphicsView.InvalidateVisual();
