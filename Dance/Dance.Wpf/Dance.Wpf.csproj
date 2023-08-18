@@ -9,17 +9,21 @@
 
 	<ItemGroup>
 	  <Compile Remove="Share\Core\Xaml\**" />
+	  <Compile Remove="Share\Xaml\Widgets\Preview\**" />
 	  <EmbeddedResource Remove="Share\Core\Xaml\**" />
+	  <EmbeddedResource Remove="Share\Xaml\Widgets\Preview\**" />
 	  <None Remove="Share\Core\Xaml\**" />
+	  <None Remove="Share\Xaml\Widgets\Preview\**" />
 	  <Page Remove="Share\Core\Xaml\**" />
+	  <Page Remove="Share\Xaml\Widgets\Preview\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Aether.Physics2D" Version="1.7.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Dance\Dance.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Share\Xaml\Widgets\Preview\" />
 	</ItemGroup>
 
 </Project>
