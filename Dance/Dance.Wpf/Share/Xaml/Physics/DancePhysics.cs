@@ -13,9 +13,6 @@ namespace Dance.Wpf
     /// </summary>
     public abstract class DancePhysics : DependencyObject
     {
-        /// <summary>
-        /// 所属世界
-        /// </summary>
-        internal World? OwnerWorld { get; set; }
+
     }
 }

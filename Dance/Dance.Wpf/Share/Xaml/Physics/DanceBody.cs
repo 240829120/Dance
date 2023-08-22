@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -56,9 +57,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 碰撞体集合
         /// </summary>
-        public DanceFixtureCollection Fixtures
+        public List<DanceFixture> Fixtures
         {
-            get { return (DanceFixtureCollection)GetValue(FixturesProperty); }
+            get { return (List<DanceFixture>)GetValue(FixturesProperty); }
             set { SetValue(FixturesProperty, value); }
         }
 
@@ -66,7 +67,7 @@ namespace Dance.Wpf
         /// 碰撞体集合
         /// </summary>
         public static readonly DependencyProperty FixturesProperty =
-            DependencyProperty.Register("Fixtures", typeof(DanceFixtureCollection), typeof(DanceBody), new PropertyMetadata(null));
+            DependencyProperty.Register("Fixtures", typeof(List<DanceFixture>), typeof(DanceBody), new PropertyMetadata(null));
 
         #endregion
 
