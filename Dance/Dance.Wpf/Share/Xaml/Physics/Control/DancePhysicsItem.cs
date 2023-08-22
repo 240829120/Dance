@@ -25,24 +25,10 @@ namespace Dance.Wpf
             this.Controllers = new();
         }
 
-        #region Owner -- 所属
-
         /// <summary>
         /// 所属
         /// </summary>
-        public DancePhysicsItemsControl Owner
-        {
-            get { return (DancePhysicsItemsControl)GetValue(OwnerProperty); }
-            set { SetValue(OwnerProperty, value); }
-        }
-
-        /// <summary>
-        /// 所属
-        /// </summary>
-        public static readonly DependencyProperty OwnerProperty =
-            DependencyProperty.Register("Owner", typeof(DancePhysicsItemsControl), typeof(DancePhysicsItem), new PropertyMetadata(null));
-
-        #endregion
+        internal DancePhysicsItemsControl? Owner;
 
         #region Body -- 刚体
 

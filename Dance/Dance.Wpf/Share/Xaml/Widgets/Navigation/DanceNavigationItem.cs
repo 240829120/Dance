@@ -42,7 +42,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void LeftSwiped()
     {
-        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
+        if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.LeftSwiped();
@@ -53,7 +53,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void RightSwiped()
     {
-        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
+        if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.RightSwiped();
@@ -64,7 +64,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void UpSwiped()
     {
-        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
+        if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.UpSwiped();
@@ -75,7 +75,7 @@ public class DanceNavigationItem : ContentControl
     /// </summary>
     private void DownSwiped()
     {
-        if (XamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
+        if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
         navigation.DownSwiped();

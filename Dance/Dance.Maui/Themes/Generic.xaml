@@ -11,5 +11,6 @@
         <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/ImagePreview/DanceImagePreview.xaml"></ResourceDictionary>
         <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/VideoPreview/DanceVideoPreview.xaml"></ResourceDictionary>
         <ResourceDictionary Source="../Share/Xaml/Widgets/Preview/ResourcePreview/DanceResourcePreview.xaml"></ResourceDictionary>
+
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

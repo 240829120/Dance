@@ -20,24 +20,10 @@ namespace Dance.Wpf
             this.Unloaded += DancePhysicsItemPanel_Unloaded;
         }
 
-        #region Owner -- 所属
-
         /// <summary>
         /// 所属
         /// </summary>
-        public DancePhysicsItemsControl? Owner
-        {
-            get { return (DancePhysicsItemsControl?)GetValue(OwnerProperty); }
-            set { SetValue(OwnerProperty, value); }
-        }
-
-        /// <summary>
-        /// 所属
-        /// </summary>
-        public static readonly DependencyProperty OwnerProperty =
-            DependencyProperty.Register("Owner", typeof(DancePhysicsItemsControl), typeof(DancePhysicsItemPanel), new PropertyMetadata(null));
-
-        #endregion
+        private DancePhysicsItemsControl? Owner;
 
         /// <summary>
         /// 更新时间
@@ -58,10 +44,10 @@ namespace Dance.Wpf
         {
             base.OnVisualChildrenChanged(visualAdded, visualRemoved);
 
+            this.Owner ??= DanceXamlExpansion.GetVisualTreeParent<DancePhysicsItemsControl>(this);
+
             if (this.Owner == null)
-            {
-                this.Owner = XamlExpansion.GetVisualTreeParent<DancePhysicsItemsControl>(this);
-            }
+                return;
 
             if (visualRemoved is DancePhysicsItem removed)
             {

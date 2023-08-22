@@ -12,9 +12,6 @@ namespace Dance.Maui
     /// </summary>
     public abstract class DancePhysics : BindableObject
     {
-        /// <summary>
-        /// 所属世界
-        /// </summary>
-        internal World? OwnerWorld { get; set; }
+
     }
 }

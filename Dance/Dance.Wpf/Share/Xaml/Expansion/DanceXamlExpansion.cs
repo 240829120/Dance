@@ -11,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// Xaml扩展
     /// </summary>
-    public static class XamlExpansion
+    public static class DanceXamlExpansion
     {
         /// <summary>
         /// 使用可视化树查找父级控件
