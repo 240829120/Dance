@@ -12,7 +12,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 物理引擎时间线
     /// </summary>
-    public class DancePhysicsTimeLine : Timeline
+    public class DancePhysicsTimeLine : AnimationTimeline
     {
         /// <summary>
         /// 物理引擎时间线
@@ -21,12 +21,19 @@ namespace Dance.Wpf
         public DancePhysicsTimeLine(DancePhysicsLayout layout)
         {
             this.Layout = layout;
+            this.Duration = new Duration(TimeSpan.FromDays(1));
+            this.FillBehavior = FillBehavior.HoldEnd;
         }
 
         /// <summary>
         /// 物理引擎布局
         /// </summary>
         public DancePhysicsLayout Layout { get; private set; }
+
+        /// <summary>
+        /// 目标属性类型
+        /// </summary>
+        public override Type TargetPropertyType => typeof(long);
 
         /// <summary>
         /// 创建实例
@@ -37,21 +44,19 @@ namespace Dance.Wpf
             return new DancePhysicsTimeLine(this.Layout);
         }
 
-        /// <summary>
-        /// 创建时刻
-        /// </summary>
-        /// <returns>时刻</returns>
-        protected override Clock AllocateClock()
+        public override object GetCurrentValue(object defaultOriginValue, object defaultDestinationValue, AnimationClock animationClock)
         {
-            return new DanceActionClock(this, this.Update);
-        }
+            if (this.Layout != null)
+            {
+                if (this.Layout.ItemsPanel == null)
+                {
+                    this.Layout.ItemsPanel = XamlExpansion.GetVisualTreeDescendants<DancePhysicsPanel>(Layout)?.FirstOrDefault();
+                }
+            }
 
-        /// <summary>
-        /// 更新
-        /// </summary>
-        private void Update()
-        {
-            this.Layout?.InvalidateArrange();
+            this.Layout?.ItemsPanel?.InvalidateVisual();
+
+            return base.GetCurrentValue(defaultOriginValue, defaultDestinationValue, animationClock);
         }
     }
 }

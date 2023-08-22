@@ -30,10 +30,20 @@ namespace Dance.Wpf
             this.World.JointRemoved += this.OnJointRemoved;
         }
 
+        static DancePhysicsLayout()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DancePhysicsLayout), new FrameworkPropertyMetadata(typeof(DancePhysicsLayout)));
+        }
+
         /// <summary>
         /// 关节信息
         /// </summary>
         internal ConcurrentDictionary<Joint, DanceJoint> JointDic = new();
+
+        /// <summary>
+        /// 子项容器
+        /// </summary>
+        internal DancePhysicsPanel? ItemsPanel;
 
         #region World -- 物理世界
 
@@ -126,7 +136,7 @@ namespace Dance.Wpf
         /// 关节元素集合
         /// </summary>
         public static readonly DependencyProperty JointsProperty =
-            DependencyProperty.RegisterAttached("Joints", typeof(DanceJointCollection), typeof(DancePhysicsLayout), new DancePropertyMetadata(() => new DanceJointCollection(), new PropertyChangedCallback((s, e) =>
+            DependencyProperty.RegisterAttached("Joints", typeof(DanceJointCollection), typeof(DancePhysicsLayout), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not FrameworkElement visual)
                     return;
@@ -172,7 +182,7 @@ namespace Dance.Wpf
         /// 获取控制器集合
         /// </summary>
         public static readonly DependencyProperty ControllersProperty =
-            DependencyProperty.RegisterAttached("Controllers", typeof(DanceControllerCollection), typeof(DancePhysicsLayout), new DancePropertyMetadata(() => new DanceControllerCollection(), new PropertyChangedCallback((s, e) =>
+            DependencyProperty.RegisterAttached("Controllers", typeof(DanceControllerCollection), typeof(DancePhysicsLayout), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not FrameworkElement visual)
                     return;
@@ -224,8 +234,11 @@ namespace Dance.Wpf
                 if (isRunning)
                 {
                     layout.RunningAnimation = new Storyboard();
-                    layout.RunningAnimation.Children.Add(new DancePhysicsTimeLine(layout));
-                    layout.RunningAnimation.Begin();
+                    DancePhysicsTimeLine timeLine = new(layout);
+                    Storyboard.SetTargetProperty(timeLine, new PropertyPath(DancePhysicsLayout.StepProperty));
+                    layout.RunningAnimation.Children.Add(timeLine);
+                    layout.RunningAnimation.Duration = new Duration(TimeSpan.FromDays(1));
+                    layout.RunningAnimation.Begin(layout);
                 }
                 else
                 {
@@ -233,6 +246,25 @@ namespace Dance.Wpf
                     layout.RunningAnimation = null;
                 }
             })));
+
+        #endregion
+
+        #region Step -- 步数
+
+        /// <summary>
+        /// 步数
+        /// </summary>
+        public long Step
+        {
+            get { return (long)GetValue(StepProperty); }
+            set { SetValue(StepProperty, value); }
+        }
+
+        /// <summary>
+        /// 步数
+        /// </summary>
+        public static readonly DependencyProperty StepProperty =
+            DependencyProperty.Register("Step", typeof(long), typeof(DancePhysics), new PropertyMetadata(0L));
 
         #endregion
 
@@ -261,6 +293,16 @@ namespace Dance.Wpf
                     this.OnChildRemoved(item);
                 }
             }
+
+            // 重置
+            if (e.Action == NotifyCollectionChangedAction.Reset)
+            {
+                foreach (FrameworkElement item in this.Items)
+                {
+                    this.OnChildRemoved(item);
+                    this.OnChildAdded(item);
+                }
+            }
         }
 
         /// <summary>
@@ -268,6 +310,13 @@ namespace Dance.Wpf
         /// </summary>
         private void OnChildAdded(FrameworkElement child)
         {
+            child.RenderTransformOrigin = new Point(0.5, 0.5);
+
+            if (child is DancePhysicsJointGraphicsView graphicsView)
+            {
+                graphicsView.Layout = this;
+            }
+
             if (GetBody(child) is DanceBody bodyElement)
             {
                 this.AddBody(bodyElement);
@@ -311,7 +360,11 @@ namespace Dance.Wpf
         /// <param name="bodyElement">体元素</param>
         private void AddBody(DanceBody bodyElement)
         {
+            if (bodyElement.OwnerWorld != null)
+                return;
+
             this.World.Add(bodyElement.GetOrCreateBody());
+            bodyElement.OwnerWorld = this.World;
         }
 
         /// <summary>
@@ -320,6 +373,9 @@ namespace Dance.Wpf
         /// <param name="bodyElement">体元素</param>
         private void RemoveBody(DanceBody bodyElement)
         {
+            if (bodyElement.OwnerWorld != this.World)
+                return;
+
             this.World.Remove(bodyElement.GetOrCreateBody());
         }
 
@@ -331,11 +387,15 @@ namespace Dance.Wpf
         {
             foreach (DanceJoint jointElement in jointElements)
             {
+                if (jointElement.OwnerWorld != null)
+                    continue;
+
                 Joint? joint = jointElement.GetOrCreateJoint(this.World);
                 if (joint == null)
                     continue;
 
                 this.JointDic.TryAdd(joint, jointElement);
+                jointElement.OwnerWorld = this.World;
             }
         }
 
@@ -347,11 +407,16 @@ namespace Dance.Wpf
         {
             foreach (DanceJoint jointElement in jointElements)
             {
+                if (jointElement.OwnerWorld != this.World)
+                    continue;
+
                 Joint? joint = jointElement.GetOrCreateJoint(this.World);
                 if (joint == null)
                     continue;
 
                 this.World.Remove(joint);
+                this.JointDic.TryRemove(joint, out _);
+                jointElement.OwnerWorld = null;
             }
         }
 
@@ -363,7 +428,11 @@ namespace Dance.Wpf
         {
             foreach (DanceController controllerElement in controllerElements)
             {
+                if (controllerElement.OwnerWorld != null)
+                    continue;
+
                 this.World.Add(controllerElement.GetOrCreateController(this.World));
+                controllerElement.OwnerWorld = this.World;
             }
         }
 
@@ -375,7 +444,11 @@ namespace Dance.Wpf
         {
             foreach (DanceController controllerElement in controllerElements)
             {
+                if (controllerElement.OwnerWorld != this.World)
+                    continue;
+
                 this.World.Remove(controllerElement.GetOrCreateController(this.World));
+                controllerElement.OwnerWorld = null;
             }
         }
 
