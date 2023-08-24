@@ -22,12 +22,6 @@ namespace Dance
         }
 
         /// <summary>
-        /// 当前领域
-        /// </summary>
-        [NotNull]
-        public static TDomain? Current { get; set; }
-
-        /// <summary>
         /// Ioc构建器
         /// </summary>
         public DanceIocBuilder IocBuilder { get; } = new();

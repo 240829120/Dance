@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -29,5 +30,11 @@ namespace Dance.Wpf
             // 阻塞
             this.Builders.Add(new DanceDomainBuilder_Blocking());
         }
+
+        /// <summary>
+        /// 当前领域
+        /// </summary>
+        [NotNull]
+        public static DanceDomain? Current { get; set; }
     }
 }
