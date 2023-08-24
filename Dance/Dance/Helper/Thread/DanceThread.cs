@@ -25,12 +25,12 @@ namespace Dance
         /// <summary>
         /// 上下文
         /// </summary>
-        public DanceThreadContext Context { get; private set; } = new();
+        public DanceThreadContext? Context { get; private set; }
 
         /// <summary>
         /// 行为
         /// </summary>
-        public Action<DanceThreadContext>? Action { get; private set; }
+        public Action<DanceThreadContext> Action { get; private set; }
 
         /// <summary>
         /// 线程
@@ -42,9 +42,12 @@ namespace Dance
         /// </summary>
         public void Start()
         {
-            this.Context.IsCancel = false;
-            this.Context.Exception = null;
+            if (this.Context != null && !this.Context.IsCancel)
+            {
+                throw new Exception("dance thread is running.");
+            }
 
+            this.Context = new();
             this.Thread = new(this.ExecuteAction)
             {
                 IsBackground = true
@@ -57,7 +60,12 @@ namespace Dance
         /// </summary>
         public void Stop()
         {
-            this.Context.IsCancel = true;
+            if (this.Context != null)
+            {
+                this.Context.IsCancel = true;
+            }
+
+            this.Context = null;
             this.Thread = null;
         }
 
@@ -76,14 +84,18 @@ namespace Dance
         {
             try
             {
-                if (this.Action == null)
+                if (this.Context == null)
                     return;
 
                 this.Action(this.Context);
             }
             catch (Exception ex)
             {
-                this.Context.Exception = ex;
+                if (this.Context != null)
+                {
+                    this.Context.Exception = ex;
+                }
+
                 log.Error(ex);
             }
         }
