@@ -19,11 +19,15 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Aether.Physics2D" Version="1.7.0" />
+	  <PackageReference Include="Aether.Physics2D" Version="2.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Dance\Dance.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Share\Xaml\Particle\Generator\" />
 	</ItemGroup>
 
 </Project>
