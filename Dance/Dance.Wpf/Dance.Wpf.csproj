@@ -20,14 +20,11 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Aether.Physics2D" Version="2.0.0" />
+	  <PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.5" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Dance\Dance.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Share\Xaml\Particle\Generator\" />
 	</ItemGroup>
 
 </Project>

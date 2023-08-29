@@ -1,8 +1,11 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace Dance.Wpf
 {
@@ -14,18 +17,43 @@ namespace Dance.Wpf
         /// <summary>
         /// 位置
         /// </summary>
-        public DancePoint Position { get; set; }
+        public SKPoint Position { get; set; }
 
         /// <summary>
         /// 速度
         /// </summary>
-        public DanceVector Vector { get; set; }
+        public SKPoint3 Vector { get; set; }
 
         /// <summary>
-        /// 角速度
+        /// 创建时间
         /// </summary>
-        public DanceVector AngularVelocity { get; set; }
+        public DateTime GeneratTime { get; set; }
 
+        /// <summary>
+        /// 持续时间
+        /// </summary>
+        public TimeSpan Duration { get; set; }
 
+        /// <summary>
+        /// X轴旋转
+        /// </summary>
+        public float RotateX { get; set; }
+
+        /// <summary>
+        /// Y轴旋转
+        /// </summary>
+        public float RotateY { get; set; }
+
+        /// <summary>
+        /// Z轴旋转
+        /// </summary>
+        public float RotateZ { get; set; }
+
+        /// <summary>
+        /// 绘制
+        /// </summary>
+        /// <param name="size">可绘制区域</param>
+        /// <param name="canvas">绘制上下文</param>
+        public abstract void Draw(SKSize size, SKCanvas canvas);
     }
 }

@@ -1,0 +1,89 @@
+﻿using SkiaSharp;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+
+namespace Dance.Wpf
+{
+    /// <summary>
+    /// 粒子层
+    /// </summary>
+    public class DanceParticleLayer : DependencyObject
+    {
+        public DanceParticleLayer()
+        {
+            this.Controllers = new();
+        }
+
+        #region Controllers -- 粒子控制器
+
+        /// <summary>
+        /// 粒子控制器
+        /// </summary>
+        public DanceParticleControllerCollection Controllers
+        {
+            get { return (DanceParticleControllerCollection)GetValue(ControllersProperty); }
+            set { SetValue(ControllersProperty, value); }
+        }
+
+        /// <summary>
+        /// 粒子控制器
+        /// </summary>
+        public static readonly DependencyProperty ControllersProperty =
+            DependencyProperty.Register("Controllers", typeof(DanceParticleControllerCollection), typeof(DanceParticleLayer), new PropertyMetadata(null));
+
+        #endregion
+
+        /// <summary>
+        /// 生成
+        /// </summary>
+        /// <param name="dt">渲染时间</param>
+        public void Generat(TimeSpan dt)
+        {
+            foreach (IDanceParticleController controller in this.Controllers)
+            {
+                controller.Generat(dt);
+            }
+        }
+
+        /// <summary>
+        /// 步骤
+        /// </summary>
+        /// <param name="dt">时间</param>
+        public void Step(TimeSpan dt)
+        {
+            foreach (IDanceParticleController controller in this.Controllers)
+            {
+                controller.Step(dt);
+            }
+        }
+
+        /// <summary>
+        /// 销毁
+        /// </summary>
+        /// <param name="dt">渲染时间</param>
+        public void Destory(TimeSpan dt)
+        {
+            foreach (IDanceParticleController controller in this.Controllers)
+            {
+                controller.Destory(dt);
+            }
+        }
+
+        /// <summary>
+        /// 绘制
+        /// </summary>
+        /// <param name="size">绘制区域</param>
+        /// <param name="canvas">画布</param>
+        public void Draw(SKSize size, SKCanvas canvas)
+        {
+            foreach (IDanceParticleController controller in this.Controllers)
+            {
+                controller.Draw(size, canvas);
+            }
+        }
+    }
+}

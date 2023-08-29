@@ -47,20 +47,48 @@ namespace Dance
         /// </summary>
         public float Y;
 
-        public static bool TryParse(string value, out DancePoint point2F)
+        /// <summary>
+        /// 尝试转化
+        /// </summary>
+        /// <param name="value">字符串</param>
+        /// <param name="point">转化后的点</param>
+        /// <returns>是否成功转化</returns>
+        public static bool TryParse(string value, out DancePoint point)
         {
             if (!string.IsNullOrEmpty(value))
             {
                 string[] array = value.Split(',');
                 if (array.Length == 2 && float.TryParse(array[0], NumberStyles.Number, CultureInfo.InvariantCulture, out var result) && float.TryParse(array[1], NumberStyles.Number, CultureInfo.InvariantCulture, out var result2))
                 {
-                    point2F = new DancePoint(result, result2);
+                    point = new DancePoint(result, result2);
                     return true;
                 }
             }
 
-            point2F = default;
+            point = default;
             return false;
+        }
+
+        /// <summary>
+        /// 点和向量相加
+        /// </summary>
+        /// <param name="point">点</param>
+        /// <param name="vector">向量</param>
+        /// <returns></returns>
+        public static DancePoint operator +(DancePoint point, DanceVector vector)
+        {
+            return new DancePoint(point.X + vector.X, point.Y + vector.Y);
+        }
+
+        /// <summary>
+        /// 点和向量相加
+        /// </summary
+        /// <param name="vector">向量</param>
+        /// <param name="point">点</param>
+        /// <returns></returns>
+        public static DancePoint operator +(DanceVector vector, DancePoint point)
+        {
+            return new DancePoint(point.X + vector.X, point.Y + vector.Y);
         }
     }
 

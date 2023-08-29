@@ -47,20 +47,48 @@ namespace Dance
         /// </summary>
         public float Y;
 
-        public static bool TryParse(string value, out DanceVector vector2F)
+        /// <summary>
+        /// 尝试转化
+        /// </summary>
+        /// <param name="value">字符串</param>
+        /// <param name="vector">转化后的向量</param>
+        /// <returns>是否成功转化</returns>
+        public static bool TryParse(string value, out DanceVector vector)
         {
             if (!string.IsNullOrEmpty(value))
             {
                 string[] array = value.Split(',');
                 if (array.Length == 2 && float.TryParse(array[0], NumberStyles.Number, CultureInfo.InvariantCulture, out var result) && float.TryParse(array[1], NumberStyles.Number, CultureInfo.InvariantCulture, out var result2))
                 {
-                    vector2F = new DanceVector(result, result2);
+                    vector = new DanceVector(result, result2);
                     return true;
                 }
             }
 
-            vector2F = default;
+            vector = default;
             return false;
+        }
+
+        /// <summary>
+        /// 点和向量相加
+        /// </summary>
+        /// <param name="vector">向量</param>
+        /// <param name="multiple">倍数</param>
+        /// <returns>向量</returns>
+        public static DanceVector operator *(DanceVector vector, float multiple)
+        {
+            return new DanceVector(vector.X * multiple, vector.Y * multiple);
+        }
+
+        /// <summary>
+        /// 点和向量相加
+        /// </summary>
+        /// <param name="multiple">倍数</param>
+        /// <param name="vector">向量</param>
+        /// <returns>向量</returns>
+        public static DanceVector operator *(float multiple, DanceVector vector)
+        {
+            return new DanceVector(vector.X * multiple, vector.Y * multiple);
         }
     }
 

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 粒子创建器
+    /// 粒子层集合
     /// </summary>
-    public interface IDanceParticleGenerator
+    public class DanceParticleLayerCollection : List<DanceParticleLayer>
     {
     }
 }
