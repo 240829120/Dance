@@ -15,16 +15,6 @@ namespace Dance.Wpf
     public abstract class DanceParticleBase : DanceObject, IDanceParticle
     {
         /// <summary>
-        /// 位置
-        /// </summary>
-        public SKPoint Position { get; set; }
-
-        /// <summary>
-        /// 速度
-        /// </summary>
-        public SKPoint3 Vector { get; set; }
-
-        /// <summary>
         /// 创建时间
         /// </summary>
         public DateTime GeneratTime { get; set; }
@@ -33,6 +23,26 @@ namespace Dance.Wpf
         /// 持续时间
         /// </summary>
         public TimeSpan Duration { get; set; }
+
+        /// <summary>
+        /// X坐标
+        /// </summary>
+        public float X { get; set; }
+
+        /// <summary>
+        /// Y坐标
+        /// </summary>
+        public float Y { get; set; }
+
+        /// <summary>
+        /// X轴平移速度
+        /// </summary>
+        public float TranslateSpeedX { get; set; }
+
+        /// <summary>
+        /// Y轴平移速度
+        /// </summary>
+        public float TranslateSpeedY { get; set; }
 
         /// <summary>
         /// X轴旋转
@@ -48,6 +58,26 @@ namespace Dance.Wpf
         /// Z轴旋转
         /// </summary>
         public float RotateZ { get; set; }
+
+        /// <summary>
+        /// X轴旋转速度
+        /// </summary>
+        public float RotateSpeedX { get; set; }
+
+        /// <summary>
+        /// Y轴旋转速度
+        /// </summary>
+        public float RotateSpeedY { get; set; }
+
+        /// <summary>
+        /// Z轴旋转速度
+        /// </summary>
+        public float RotateSpeedZ { get; set; }
+
+        /// <summary>
+        /// 画笔
+        /// </summary>
+        public SKPaint Paint { get; set; } = new SKPaint() { IsAntialias = true, Color = SKColors.Red, Style = SKPaintStyle.Fill };
 
         /// <summary>
         /// 绘制

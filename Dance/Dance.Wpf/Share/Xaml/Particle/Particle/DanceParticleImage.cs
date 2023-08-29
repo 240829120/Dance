@@ -12,7 +12,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 图片粒子
     /// </summary>
-    public class DanceImageParticle : DanceParticleBase
+    public class DanceParticleImage : DanceParticleBase
     {
         /// <summary>
         /// 源
@@ -36,10 +36,10 @@ namespace Dance.Wpf
         /// <param name="canvas">绘制上下文</param>
         public override void Draw(SKSize size, SKCanvas canvas)
         {
-            float left = this.Position.X - this.Width / 2f;
-            float right = this.Position.X + this.Width / 2f;
-            float top = this.Position.Y - this.Height / 2f;
-            float bottom = this.Position.Y + this.Height / 2f;
+            float left = this.X - this.Width / 2f;
+            float right = this.X + this.Width / 2f;
+            float top = this.Y - this.Height / 2f;
+            float bottom = this.Y + this.Height / 2f;
 
             canvas.DrawImage(this.Source, new SKRect(left, top, right, bottom));
         }

@@ -40,9 +40,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 粒子层集合
         /// </summary>
-        public DanceParticleLayerCollection Layers
+        public List<DanceParticleLayer> Layers
         {
-            get { return (DanceParticleLayerCollection)GetValue(LayersProperty); }
+            get { return (List<DanceParticleLayer>)GetValue(LayersProperty); }
             set { SetValue(LayersProperty, value); }
         }
 
@@ -50,7 +50,7 @@ namespace Dance.Wpf
         /// 粒子层集合
         /// </summary>
         public static readonly DependencyProperty LayersProperty =
-            DependencyProperty.Register("Layers", typeof(DanceParticleLayerCollection), typeof(DanceParticleLayerCollection), new PropertyMetadata(null));
+            DependencyProperty.Register("Layers", typeof(List<DanceParticleLayer>), typeof(DanceParticlePanel), new PropertyMetadata(null));
 
         #endregion
 
@@ -106,7 +106,7 @@ namespace Dance.Wpf
             {
                 layer.Step(dt);
                 layer.Destory(dt);
-                layer.Generat(dt);
+                layer.Generate(dt);
 
                 layer.Draw(e.Info.Size, e.Surface.Canvas);
             }

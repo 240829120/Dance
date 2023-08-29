@@ -5,19 +5,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Media;
 
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 圆形粒子
+    /// 矩形粒子
     /// </summary>
-    public class DanceCircleParticle : DanceParticleBase
+    public class DanceParticleRectangle : DanceParticleBase
     {
         /// <summary>
-        /// 半径
+        /// 宽度
         /// </summary>
-        public float Radius { get; set; }
+        public float Width { get; set; }
+
+        /// <summary>
+        /// 高度
+        /// </summary>
+        public float Height { get; set; }
 
         /// <summary>
         /// 绘制
@@ -26,7 +32,7 @@ namespace Dance.Wpf
         /// <param name="canvas">绘制上下文</param>
         public override void Draw(SKSize size, SKCanvas canvas)
         {
-            canvas.DrawCircle(new SKPoint(this.Position.X, this.Position.Y), this.Radius, this.Paint);
+            canvas.DrawRect(this.X, this.Y, this.Width, this.Height, this.Paint);
         }
     }
 }

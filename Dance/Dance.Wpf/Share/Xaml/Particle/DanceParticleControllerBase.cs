@@ -9,14 +9,69 @@ using System.Windows;
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 粒子构建器基类
+    /// 粒子控制器基类
     /// </summary>
     public abstract class DanceParticleControllerBase : DependencyObject, IDanceParticleController
     {
         /// <summary>
+        /// 生成数量
+        /// </summary>
+        private float GenerateCount;
+
+        /// <summary>
         /// 粒子集合
         /// </summary>
         protected List<IDanceParticle> Particles = new(100);
+
+        /// <summary>
+        /// 随机数
+        /// </summary>
+        protected Random Random = new();
+
+        #region Generator -- 粒子构建器
+
+        /// <summary>
+        /// 粒子构建器
+        /// </summary>
+        public IDanceParticleGenerator Generator
+        {
+            get { return (IDanceParticleGenerator)GetValue(GeneratorProperty); }
+            set { SetValue(GeneratorProperty, value); }
+        }
+
+        /// <summary>
+        /// 粒子构建器
+        /// </summary>
+        public static readonly DependencyProperty GeneratorProperty =
+            DependencyProperty.Register("Generator", typeof(IDanceParticleGenerator), typeof(DanceParticleControllerBase), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceParticleControllerBase controller)
+                    return;
+
+                controller.GenerateCount = 0;
+
+            })));
+
+        #endregion
+
+        #region GenerateSpeed -- 生成速度
+
+        /// <summary>
+        /// 生成速度
+        /// </summary>
+        public float GenerateSpeed
+        {
+            get { return (float)GetValue(GenerateSpeedProperty); }
+            set { SetValue(GenerateSpeedProperty, value); }
+        }
+
+        /// <summary>
+        /// 生成速度
+        /// </summary>
+        public static readonly DependencyProperty GenerateSpeedProperty =
+            DependencyProperty.Register("GenerateSpeed", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
 
         #region Duration -- 持续时间
 
@@ -155,7 +210,31 @@ namespace Dance.Wpf
         /// 生成
         /// </summary>
         /// <param name="dt">渲染时间</param>
-        public abstract void Generat(TimeSpan dt);
+        /// <returns>新生成的粒子</returns>
+        public virtual IList<IDanceParticle> Generate(TimeSpan dt)
+        {
+            List<IDanceParticle> list = new();
+
+            this.GenerateCount += this.GenerateSpeed;
+            if (this.GenerateCount < 1f || this.Generator == null)
+                return list;
+
+            int count = (int)this.GenerateCount;
+            this.GenerateCount -= count;
+
+            for (int i = 0; i < count; i++)
+            {
+                IDanceParticle particle = this.Generator.Generate();
+                particle.GeneratTime = DateTime.Now;
+                particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
+
+                list.Add(particle);
+            }
+
+            this.Particles.AddRange(list);
+
+            return list;
+        }
 
         /// <summary>
         /// 步骤
@@ -163,7 +242,20 @@ namespace Dance.Wpf
         /// <param name="dt">渲染时间</param>
         public void Step(TimeSpan dt)
         {
+            float seconds = (float)dt.TotalSeconds;
 
+            foreach (IDanceParticle particle in this.Particles)
+            {
+                particle.X += seconds * particle.TranslateSpeedX;
+                particle.Y += seconds * particle.TranslateSpeedY;
+                particle.RotateX += seconds * particle.RotateSpeedX;
+                particle.RotateY += seconds * particle.RotateSpeedY;
+                particle.RotateZ += seconds * particle.RotateSpeedZ;
+
+                particle.RotateX %= 360f;
+                particle.RotateY %= 360f;
+                particle.RotateZ %= 360f;
+            }
         }
 
         /// <summary>
@@ -178,7 +270,7 @@ namespace Dance.Wpf
 
             foreach (IDanceParticle particle in this.Particles)
             {
-                if (particle.GeneratTime + particle.Duration < now)
+                if (now < particle.GeneratTime + particle.Duration)
                     continue;
 
                 removeList.Add(particle);
@@ -199,12 +291,23 @@ namespace Dance.Wpf
         {
             foreach (IDanceParticle particle in this.Particles)
             {
+                // Translate center to origin
+                SKMatrix matrix = SKMatrix.CreateTranslation(particle.X, particle.Y);
+
+                // Use 3D matrix for 3D rotations and perspective
                 SKMatrix44 matrix44 = SKMatrix44.CreateIdentity();
-                matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX));
+                matrix.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX).Matrix);
                 matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 1, 0, particle.RotateY));
                 matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 0, 1, particle.RotateZ));
 
-                canvas.SetMatrix(matrix44.Matrix);
+                SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
+                perspectiveMatrix[3, 2] = -1 / 250f;
+                matrix44.PostConcat(perspectiveMatrix);
+
+                matrix = matrix.PostConcat(matrix44.Matrix);
+
+                // Set the matrix and display the bitmap
+                canvas.SetMatrix(matrix);
                 particle.Draw(size, canvas);
                 canvas.ResetMatrix();
             }

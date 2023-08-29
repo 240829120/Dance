@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1400">
     <Grid>
+        <!-- 导航测试 -->
         <!--<wpf:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX_Opacity">
             <wpf:DanceNavigationView.ItemTemplate>
                 <DataTemplate>
@@ -17,7 +18,8 @@
             </wpf:DanceNavigationView.ItemTemplate>
         </wpf:DanceNavigationView>-->
 
-        <wpf:DancePhysicsItemsControl x:Name="layout" Grid.RowSpan="2" StepSpeed="2">
+        <!-- 物理引擎测试 -->
+        <!--<wpf:DancePhysicsItemsControl x:Name="layout" Grid.RowSpan="2" StepSpeed="2">
             <wpf:DancePhysicsItemJointGraphics></wpf:DancePhysicsItemJointGraphics>
 
             <wpf:DancePhysicsItem>
@@ -104,6 +106,25 @@
                 </wpf:DancePhysicsItem.Controllers>
             </wpf:DancePhysicsItem>
 
-        </wpf:DancePhysicsItemsControl>
+        </wpf:DancePhysicsItemsControl>-->
+
+        <!-- 粒子引擎测试 -->
+        <Border Background="SkyBlue" Width="800">
+            <wpf:DanceParticlePanel>
+                <wpf:DanceParticlePanel.Layers>
+                    <wpf:DanceParticleLayer>
+                        <wpf:DanceParticleLayer.Controllers>
+                            <wpf:DanceParticleControllerLinner TranslateSpeedX="-10,10" TranslateSpeedY="-10,-30" 
+                                                               RotationSpeedX="2,30" RotationSpeedY="2,30" RotationSpeedZ="2,30"
+                                                               Duration="30,60">
+                                <wpf:DanceParticleControllerLinner.Generator>
+                                    <wpf:DanceParticleCircleGenerator></wpf:DanceParticleCircleGenerator>
+                                </wpf:DanceParticleControllerLinner.Generator>
+                            </wpf:DanceParticleControllerLinner>
+                        </wpf:DanceParticleLayer.Controllers>
+                    </wpf:DanceParticleLayer>
+                </wpf:DanceParticlePanel.Layers>
+            </wpf:DanceParticlePanel>
+        </Border>
     </Grid>
 </Window>

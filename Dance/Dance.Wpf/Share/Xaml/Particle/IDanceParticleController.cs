@@ -16,7 +16,8 @@ namespace Dance.Wpf
         /// 生成
         /// </summary>
         /// <param name="dt">渲染时间</param>
-        void Generat(TimeSpan dt);
+        /// <returns>新生成的粒子</returns>
+        IList<IDanceParticle> Generate(TimeSpan dt);
 
         /// <summary>
         /// 步骤

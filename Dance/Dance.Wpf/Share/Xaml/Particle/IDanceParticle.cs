@@ -16,16 +16,6 @@ namespace Dance.Wpf
     public interface IDanceParticle : IDisposable
     {
         /// <summary>
-        /// 位置
-        /// </summary>
-        SKPoint Position { get; set; }
-
-        /// <summary>
-        /// 速度
-        /// </summary>
-        SKPoint3 Vector { get; set; }
-
-        /// <summary>
         /// 创建时间
         /// </summary>
         DateTime GeneratTime { get; set; }
@@ -34,6 +24,26 @@ namespace Dance.Wpf
         /// 持续时间
         /// </summary>
         TimeSpan Duration { get; set; }
+
+        /// <summary>
+        /// X坐标
+        /// </summary>
+        float X { get; set; }
+
+        /// <summary>
+        /// Y坐标
+        /// </summary>
+        float Y { get; set; }
+
+        /// <summary>
+        /// X轴平移速度
+        /// </summary>
+        float TranslateSpeedX { get; set; }
+
+        /// <summary>
+        /// Y轴平移速度
+        /// </summary>
+        float TranslateSpeedY { get; set; }
 
         /// <summary>
         /// X轴旋转
@@ -49,6 +59,21 @@ namespace Dance.Wpf
         /// Z轴旋转
         /// </summary>
         float RotateZ { get; set; }
+
+        /// <summary>
+        /// X轴旋转速度
+        /// </summary>
+        float RotateSpeedX { get; set; }
+
+        /// <summary>
+        /// Y轴旋转速度
+        /// </summary>
+        float RotateSpeedY { get; set; }
+
+        /// <summary>
+        /// Z轴旋转速度
+        /// </summary>
+        float RotateSpeedZ { get; set; }
 
         /// <summary>
         /// 绘制

@@ -23,9 +23,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 粒子控制器
         /// </summary>
-        public DanceParticleControllerCollection Controllers
+        public List<DanceParticleControllerBase> Controllers
         {
-            get { return (DanceParticleControllerCollection)GetValue(ControllersProperty); }
+            get { return (List<DanceParticleControllerBase>)GetValue(ControllersProperty); }
             set { SetValue(ControllersProperty, value); }
         }
 
@@ -33,7 +33,7 @@ namespace Dance.Wpf
         /// 粒子控制器
         /// </summary>
         public static readonly DependencyProperty ControllersProperty =
-            DependencyProperty.Register("Controllers", typeof(DanceParticleControllerCollection), typeof(DanceParticleLayer), new PropertyMetadata(null));
+            DependencyProperty.Register("Controllers", typeof(List<DanceParticleControllerBase>), typeof(DanceParticleLayer), new PropertyMetadata(null));
 
         #endregion
 
@@ -41,11 +41,11 @@ namespace Dance.Wpf
         /// 生成
         /// </summary>
         /// <param name="dt">渲染时间</param>
-        public void Generat(TimeSpan dt)
+        public void Generate(TimeSpan dt)
         {
             foreach (IDanceParticleController controller in this.Controllers)
             {
-                controller.Generat(dt);
+                controller.Generate(dt);
             }
         }
 
