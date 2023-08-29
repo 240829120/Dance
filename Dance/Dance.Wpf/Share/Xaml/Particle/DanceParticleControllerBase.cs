@@ -295,16 +295,16 @@ namespace Dance.Wpf
                 SKMatrix matrix = SKMatrix.CreateTranslation(particle.X, particle.Y);
 
                 // Use 3D matrix for 3D rotations and perspective
-                SKMatrix44 matrix44 = SKMatrix44.CreateIdentity();
-                matrix.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX).Matrix);
-                matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 1, 0, particle.RotateY));
-                matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 0, 1, particle.RotateZ));
+                //SKMatrix44 matrix44 = SKMatrix44.CreateIdentity();
+                //matrix.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX).Matrix);
+                //matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 1, 0, particle.RotateY));
+                //matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 0, 1, particle.RotateZ));
 
-                SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
-                perspectiveMatrix[3, 2] = -1 / 250f;
-                matrix44.PostConcat(perspectiveMatrix);
+                //SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
+                //perspectiveMatrix[3, 2] = -1 / 250f;
+                //matrix44.PostConcat(perspectiveMatrix);
 
-                matrix = matrix.PostConcat(matrix44.Matrix);
+                //matrix = matrix.PostConcat(matrix44.Matrix);
 
                 // Set the matrix and display the bitmap
                 canvas.SetMatrix(matrix);
