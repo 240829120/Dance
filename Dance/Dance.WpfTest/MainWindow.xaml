@@ -112,12 +112,13 @@
         <Border Background="SkyBlue" Width="800">
             <wpf:DanceParticlePanel>
                 <wpf:DanceParticleLayer>
-                    <wpf:DanceParticleControllerLinner TranslateSpeedX="20,100" TranslateSpeedY="100,200" 
-                                                       RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
-                                                       Duration="5,8" GenerateSpeed="0.5">
+                    <wpf:DanceParticleControllerBox TranslateSpeedX="20,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
+                                                    RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
+                                                    X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
+                                                    Duration="5,8" GenerateSpeed="0.5">
                         <wpf:DanceParticleImageleGenerator Source="C:\Users\win\Desktop\flower.png" Width="5,50" Height="5,50"></wpf:DanceParticleImageleGenerator>
                         <!--<wpf:DanceParticleRectangleGenerator></wpf:DanceParticleRectangleGenerator>-->
-                    </wpf:DanceParticleControllerLinner>
+                    </wpf:DanceParticleControllerBox>
                 </wpf:DanceParticleLayer>
             </wpf:DanceParticlePanel>
         </Border>

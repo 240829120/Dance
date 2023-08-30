@@ -35,6 +35,11 @@ namespace Dance.Wpf
         public float Y { get; set; }
 
         /// <summary>
+        /// Z坐标
+        /// </summary>
+        public float Z { get; set; }
+
+        /// <summary>
         /// X轴平移速度
         /// </summary>
         public float TranslateSpeedX { get; set; }
@@ -43,6 +48,11 @@ namespace Dance.Wpf
         /// Y轴平移速度
         /// </summary>
         public float TranslateSpeedY { get; set; }
+
+        /// <summary>
+        /// Z轴平移速度
+        /// </summary>
+        public float TranslateSpeedZ { get; set; }
 
         /// <summary>
         /// X轴旋转

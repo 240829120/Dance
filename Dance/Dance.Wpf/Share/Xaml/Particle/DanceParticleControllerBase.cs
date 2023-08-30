@@ -242,7 +242,7 @@ namespace Dance.Wpf
         /// 透视变换值
         /// </summary>
         public static readonly DependencyProperty PerspectiveProperty =
-            DependencyProperty.Register("Perspective", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(-0.0001f));
+            DependencyProperty.Register("Perspective", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(-0.001f));
 
         #endregion
 
@@ -288,6 +288,7 @@ namespace Dance.Wpf
             {
                 particle.X += seconds * particle.TranslateSpeedX;
                 particle.Y += seconds * particle.TranslateSpeedY;
+                particle.Z += seconds * particle.TranslateSpeedZ;
                 particle.RotateX += seconds * particle.RotateSpeedX;
                 particle.RotateY += seconds * particle.RotateSpeedY;
                 particle.RotateZ += seconds * particle.RotateSpeedZ;
@@ -338,7 +339,7 @@ namespace Dance.Wpf
                 matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX));
                 matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 1, 0, particle.RotateY));
                 matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 0, 1, particle.RotateZ));
-                matrix44.PostConcat(SKMatrix44.CreateTranslation(particle.X, particle.Y, 0));
+                matrix44.PostConcat(SKMatrix44.CreateTranslation(particle.X, particle.Y, particle.Z));
 
                 SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
                 perspectiveMatrix[3, 2] = perspective;
