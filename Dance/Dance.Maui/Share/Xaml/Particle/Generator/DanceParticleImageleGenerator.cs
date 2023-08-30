@@ -11,9 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Resources;
 
-namespace Dance.Wpf
+namespace Dance.Maui
 {
     /// <summary>
     /// 图片粒子生成器
@@ -40,8 +39,8 @@ namespace Dance.Wpf
         /// <summary>
         /// 宽度
         /// </summary>
-        public static readonly DependencyProperty WidthProperty =
-            DependencyProperty.Register("Width", typeof(DanceRangeFloat), typeof(DanceParticleRectangleGenerator), new PropertyMetadata(new DanceRangeFloat(10, 20)));
+        public static readonly BindableProperty WidthProperty =
+            BindableProperty.Create(nameof(Width), typeof(DanceRangeFloat), typeof(DanceParticleImageleGenerator), new DanceRangeFloat(10, 20));
 
         #endregion
 
@@ -59,8 +58,8 @@ namespace Dance.Wpf
         /// <summary>
         /// 高度
         /// </summary>
-        public static readonly DependencyProperty HeightProperty =
-            DependencyProperty.Register("Height", typeof(DanceRangeFloat), typeof(DanceParticleRectangleGenerator), new PropertyMetadata(new DanceRangeFloat(10, 20)));
+        public static readonly BindableProperty HeightProperty =
+            BindableProperty.Create(nameof(Height), typeof(DanceRangeFloat), typeof(DanceParticleImageleGenerator), new DanceRangeFloat(10, 20));
 
         #endregion
 
@@ -78,8 +77,8 @@ namespace Dance.Wpf
         /// <summary>
         /// 图片集合
         /// </summary>
-        public static readonly DependencyProperty ImagesProperty =
-            DependencyProperty.Register("Images", typeof(DanceImageCollection), typeof(DanceParticleImageleGenerator), new PropertyMetadata(null));
+        public static readonly BindableProperty ImagesProperty =
+            BindableProperty.Create(nameof(Images), typeof(DanceImageCollection), typeof(DanceParticleImageleGenerator), null);
 
         #endregion
 
@@ -126,17 +125,11 @@ namespace Dance.Wpf
             }
             else if (str.StartsWith("HTTP"))
             {
-                StreamResourceInfo info = Application.GetRemoteStream(uri);
-                using SKBitmap bmp = SKBitmap.Decode(info.Stream);
-                info.Stream.Dispose();
-                return SKImage.FromBitmap(bmp);
+                return null;
             }
             else
             {
-                StreamResourceInfo info = Application.GetResourceStream(uri);
-                using SKBitmap bmp = SKBitmap.Decode(info.Stream);
-                info.Stream.Dispose();
-                return SKImage.FromBitmap(bmp);
+                return null;
             }
         }
     }

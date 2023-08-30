@@ -22,13 +22,13 @@
 		<Folder Include="Platforms\Android\" />
 		<Folder Include="Platforms\MacCatalyst\" />
 		<Folder Include="Platforms\Windows\" />
-		<Folder Include="Share\Xaml\Particle\" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Aether.Physics2D" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.1" />
+		<PackageReference Include="SkiaSharp.Views.Maui.Controls" Version="2.88.5" />
 	</ItemGroup>
 
 	<ItemGroup>

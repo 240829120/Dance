@@ -1,18 +1,23 @@
-﻿using SkiaSharp;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using SkiaSharp;
 
-namespace Dance.Wpf
+namespace Dance.Maui
 {
     /// <summary>
-    /// 矩形粒子
+    /// 图片粒子
     /// </summary>
-    public class DanceParticleRectangle : DanceParticleBase
+    public class DanceParticleImage : DanceParticleBase
     {
+        /// <summary>
+        /// 源
+        /// </summary>
+        public SKImage? Source { get; set; }
+
         /// <summary>
         /// 宽度
         /// </summary>
@@ -30,7 +35,12 @@ namespace Dance.Wpf
         /// <param name="canvas">绘制上下文</param>
         public override void Draw(SKSize size, SKCanvas canvas)
         {
-            canvas.DrawRect(0, 0, this.Width, this.Height, this.Paint);
+            float left = -this.Width / 2f;
+            float right = this.Width / 2f;
+            float top = -this.Height / 2f;
+            float bottom = this.Height / 2f;
+
+            canvas.DrawImage(this.Source, new SKRect(left, top, right, bottom), this.Paint);
         }
     }
 }

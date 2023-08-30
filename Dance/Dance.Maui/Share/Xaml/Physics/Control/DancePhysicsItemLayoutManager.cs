@@ -16,7 +16,7 @@ namespace Dance.Maui
         /// <summary>
         /// 物理引擎面板布局管理器
         /// </summary>
-        /// <param name="panel">所属</param>
+        /// <param name="owner">所属</param>
         public DancePhysicsItemLayoutManager(DancePhysicsItemsControl owner)
         {
             this.Owner = owner;

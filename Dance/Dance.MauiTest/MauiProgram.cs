@@ -1,6 +1,7 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
 using Dance.Maui;
+using SkiaSharp.Views.Maui.Controls.Hosting;
 
 namespace Dance.MauiTest
 {
@@ -18,6 +19,7 @@ namespace Dance.MauiTest
                 })
                 .UseMauiCommunityToolkit()
                 .UseMauiCommunityToolkitMediaElement()
+                .UseSkiaSharp()
                 .UseDance();
 
 #if DEBUG

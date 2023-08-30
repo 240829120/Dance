@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dance
+namespace Dance.Wpf
 {
     /// <summary>
     /// 图片列表
