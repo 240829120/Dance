@@ -59,7 +59,7 @@ namespace Dance
         public DanceColor(string code)
         {
             if (string.IsNullOrWhiteSpace(code) || code[0] != '#')
-                throw new ArgumentException(nameof(code));
+                throw new ArgumentException(null, nameof(code));
 
             this.A = byte.Parse(code.Substring(1, 2), NumberStyles.HexNumber);
             this.R = byte.Parse(code.Substring(3, 2), NumberStyles.HexNumber);
@@ -111,7 +111,7 @@ namespace Dance
             return false;
         }
 
-        public override string ToString()
+        public override readonly string ToString()
         {
             return $"#{this.A:X2}{this.R:X2}{this.G:X2}{this.B:X2}";
         }

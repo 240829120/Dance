@@ -80,9 +80,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 持续时间
         /// </summary>
-        public DanceRangeFloat Duration
+        public DanceRangeTimeSpan Duration
         {
-            get { return (DanceRangeFloat)GetValue(DurationProperty); }
+            get { return (DanceRangeTimeSpan)GetValue(DurationProperty); }
             set { SetValue(DurationProperty, value); }
         }
 
@@ -90,7 +90,7 @@ namespace Dance.Wpf
         /// 持续时间
         /// </summary>
         public static readonly DependencyProperty DurationProperty =
-            DependencyProperty.Register("Duration", typeof(DanceRangeFloat), typeof(DanceParticleControllerBase), new PropertyMetadata(new DanceRangeFloat(5, 10)));
+            DependencyProperty.Register("Duration", typeof(DanceRangeTimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(new DanceRangeTimeSpan(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(10))));
 
         #endregion
 
@@ -338,7 +338,7 @@ namespace Dance.Wpf
         /// 显示时间点
         /// </summary>
         public static readonly DependencyProperty ShowTimePointProperty =
-            DependencyProperty.Register("ShowTimePoint", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(0.5)));
+            DependencyProperty.Register("ShowTimePoint", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(0.3)));
 
         #endregion
 
@@ -357,7 +357,7 @@ namespace Dance.Wpf
         /// 隐藏时间点
         /// </summary>
         public static readonly DependencyProperty HideTimePointProperty =
-            DependencyProperty.Register("HideTimePoint", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(1)));
+            DependencyProperty.Register("HideTimePoint", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(0.3)));
 
         #endregion
 
@@ -400,7 +400,7 @@ namespace Dance.Wpf
             {
                 IDanceParticle particle = this.Generator.Generate();
                 particle.GeneratTime = DateTime.Now;
-                particle.Duration = TimeSpan.FromSeconds(this.Random.NextFloat(this.Duration.MinValue, this.Duration.MaxValue));
+                particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
 
                 list.Add(particle);
             }
@@ -480,6 +480,15 @@ namespace Dance.Wpf
                 particle.UpdatePaintAlpha(this.ShowTimePoint, this.HideTimePoint);
                 particle.Draw(size, canvas);
             }
+        }
+
+        /// <summary>
+        /// 获取粒子数量
+        /// </summary>
+        /// <returns>粒子数量</returns>
+        public int GetParticleCount()
+        {
+            return this.Particles.Count;
         }
     }
 }

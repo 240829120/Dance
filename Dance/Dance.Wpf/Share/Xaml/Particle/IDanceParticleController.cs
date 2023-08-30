@@ -37,5 +37,11 @@ namespace Dance.Wpf
         /// <param name="size">绘制区域</param>
         /// <param name="canvas">画布</param>
         void Draw(SKSize size, SKCanvas canvas);
+
+        /// <summary>
+        /// 获取粒子数量
+        /// </summary>
+        /// <returns>粒子数量</returns>
+        int GetParticleCount();
     }
 }
