@@ -85,7 +85,7 @@ namespace Dance.Wpf
             if (this.Colors != null && this.Colors.Count > 0)
             {
                 DanceColor color = this.Colors[this.Random.Next(0, this.Colors.Count)];
-                particle.Paint.Color = new((byte)(255 * color.R), (byte)(255 * color.G), (byte)(255 * color.B), (byte)(255 * color.A));
+                particle.Paint.Color = new(color.R, color.G, color.B, color.A);
             }
 
             return particle;

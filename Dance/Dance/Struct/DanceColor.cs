@@ -31,10 +31,10 @@ namespace Dance
         /// <param name="b">蓝色</param>
         public DanceColor(float a, float r, float g, float b)
         {
-            this.A = a;
-            this.R = r;
-            this.G = g;
-            this.B = b;
+            this.A = (byte)(a * 255);
+            this.R = (byte)(r * 255);
+            this.G = (byte)(g * 255);
+            this.B = (byte)(b * 255);
         }
 
         /// <summary>
@@ -46,10 +46,10 @@ namespace Dance
         /// <param name="b">蓝色</param>
         public DanceColor(byte a, byte r, byte g, byte b)
         {
-            this.A = a / 255f;
-            this.R = r / 255f;
-            this.G = g / 255f;
-            this.B = b / 255f;
+            this.A = a;
+            this.R = r;
+            this.G = g;
+            this.B = b;
         }
 
         /// <summary>
@@ -58,34 +58,44 @@ namespace Dance
         /// <param name="code">颜色码 #AARRGGBB</param>
         public DanceColor(string code)
         {
-            if (string.IsNullOrWhiteSpace(code) || code[0] != '#')
+            if (string.IsNullOrWhiteSpace(code) || code[0] != '#' || code.Length != 7 && code.Length != 9)
                 throw new ArgumentException(null, nameof(code));
 
-            this.A = byte.Parse(code.Substring(1, 2), NumberStyles.HexNumber);
-            this.R = byte.Parse(code.Substring(3, 2), NumberStyles.HexNumber);
-            this.G = byte.Parse(code.Substring(5, 2), NumberStyles.HexNumber);
-            this.B = byte.Parse(code.Substring(7, 2), NumberStyles.HexNumber);
+            if (code.Length == 7)
+            {
+                this.A = 255;
+                this.R = byte.Parse(code.Substring(1, 2), NumberStyles.HexNumber);
+                this.G = byte.Parse(code.Substring(3, 2), NumberStyles.HexNumber);
+                this.B = byte.Parse(code.Substring(5, 2), NumberStyles.HexNumber);
+            }
+            else if (code.Length == 9)
+            {
+                this.A = byte.Parse(code.Substring(1, 2), NumberStyles.HexNumber);
+                this.R = byte.Parse(code.Substring(3, 2), NumberStyles.HexNumber);
+                this.G = byte.Parse(code.Substring(5, 2), NumberStyles.HexNumber);
+                this.B = byte.Parse(code.Substring(7, 2), NumberStyles.HexNumber);
+            }
         }
 
         /// <summary>
         /// 透明度
         /// </summary>
-        public float A;
+        public byte A;
 
         /// <summary>
         /// 红色
         /// </summary>
-        public float R;
+        public byte R;
 
         /// <summary>
         /// 绿色
         /// </summary>
-        public float G;
+        public byte G;
 
         /// <summary>
         /// 蓝色
         /// </summary>
-        public float B;
+        public byte B;
 
         /// <summary>
         /// 尝试转化
@@ -95,12 +105,27 @@ namespace Dance
         /// <returns>是否成功转化</returns>
         public static bool TryParse(string value, out DanceColor color)
         {
-            if (!string.IsNullOrEmpty(value) && value[0] == '#')
+            if (!string.IsNullOrEmpty(value) && value[0] == '#' || value.Length == 7 || value.Length == 9)
             {
-                byte a = byte.Parse(value.Substring(1, 2), NumberStyles.HexNumber);
-                byte r = byte.Parse(value.Substring(3, 2), NumberStyles.HexNumber);
-                byte g = byte.Parse(value.Substring(5, 2), NumberStyles.HexNumber);
-                byte b = byte.Parse(value.Substring(7, 2), NumberStyles.HexNumber);
+                byte a = 0;
+                byte r = 0;
+                byte g = 0;
+                byte b = 0;
+
+                if (value.Length == 7)
+                {
+                    a = 255;
+                    r = byte.Parse(value.Substring(1, 2), NumberStyles.HexNumber);
+                    g = byte.Parse(value.Substring(3, 2), NumberStyles.HexNumber);
+                    b = byte.Parse(value.Substring(5, 2), NumberStyles.HexNumber);
+                }
+                else if (value.Length == 9)
+                {
+                    a = byte.Parse(value.Substring(1, 2), NumberStyles.HexNumber);
+                    r = byte.Parse(value.Substring(3, 2), NumberStyles.HexNumber);
+                    g = byte.Parse(value.Substring(5, 2), NumberStyles.HexNumber);
+                    b = byte.Parse(value.Substring(7, 2), NumberStyles.HexNumber);
+                }
 
                 color = new(a, r, g, b);
 

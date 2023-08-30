@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:wpf="clr-namespace:Dance.Wpf;assembly=Dance.Wpf"
         xmlns:local="clr-namespace:Dance.WpfTest" 
-        WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Background="White"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
+        mc:Ignorable="d" Background="Transparent"
         Title="MainWindow" Height="800" Width="1400">
     <Grid>
         <!-- 导航测试 -->
@@ -109,7 +109,7 @@
         </wpf:DancePhysicsItemsControl>-->
 
         <!-- 粒子引擎测试 -->
-        <Border Background="SkyBlue" Width="800">
+        <Border Background="Transparent" Width="800">
             <wpf:DanceParticlePanel IsShowDebugInfo="True">
                 <wpf:DanceParticleLayer>
                     <wpf:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
