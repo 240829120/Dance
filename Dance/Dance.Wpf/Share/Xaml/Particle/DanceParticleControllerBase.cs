@@ -208,6 +208,120 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region ExcitationTranslateSpeedX -- X轴平移扰动
+
+        /// <summary>
+        /// X轴平移扰动
+        /// </summary>
+        public float ExcitationTranslateSpeedX
+        {
+            get { return (float)GetValue(ExcitationTranslateSpeedXProperty); }
+            set { SetValue(ExcitationTranslateSpeedXProperty, value); }
+        }
+
+        /// <summary>
+        /// X轴平移扰动
+        /// </summary>
+        public static readonly DependencyProperty ExcitationTranslateSpeedXProperty =
+            DependencyProperty.Register("ExcitationTranslateSpeedX", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
+
+        #region ExcitationTranslateSpeedY -- Y轴平移扰动
+
+        /// <summary>
+        /// Y轴平移扰动
+        /// </summary>
+        public float ExcitationTranslateSpeedY
+        {
+            get { return (float)GetValue(ExcitationTranslateSpeedYProperty); }
+            set { SetValue(ExcitationTranslateSpeedYProperty, value); }
+        }
+
+        /// <summary>
+        /// Y轴平移扰动
+        /// </summary>
+        public static readonly DependencyProperty ExcitationTranslateSpeedYProperty =
+            DependencyProperty.Register("ExcitationTranslateSpeedY", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
+
+        #region ExcitationTranslateSpeedZ -- Z轴平移扰动
+
+        /// <summary>
+        /// Z轴平移扰动
+        /// </summary>
+        public float ExcitationTranslateSpeedZ
+        {
+            get { return (float)GetValue(ExcitationTranslateSpeedZProperty); }
+            set { SetValue(ExcitationTranslateSpeedZProperty, value); }
+        }
+
+        /// <summary>
+        /// Z轴平移扰动
+        /// </summary>
+        public static readonly DependencyProperty ExcitationTranslateSpeedZProperty =
+            DependencyProperty.Register("ExcitationTranslateSpeedZ", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
+
+        #region ExcitationRotationSpeedX -- X轴旋转扰动
+
+        /// <summary>
+        /// X轴旋转扰动
+        /// </summary>
+        public float ExcitationRotationSpeedX
+        {
+            get { return (float)GetValue(ExcitationRotationSpeedXProperty); }
+            set { SetValue(ExcitationRotationSpeedXProperty, value); }
+        }
+
+        /// <summary>
+        /// X轴旋转扰动
+        /// </summary>
+        public static readonly DependencyProperty ExcitationRotationSpeedXProperty =
+            DependencyProperty.Register("ExcitationRotationSpeedX", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
+
+        #region ExcitationRotationSpeedY -- Y轴旋转扰动
+
+        /// <summary>
+        /// Y轴旋转扰动
+        /// </summary>
+        public float ExcitationRotationSpeedY
+        {
+            get { return (float)GetValue(ExcitationRotationSpeedYProperty); }
+            set { SetValue(ExcitationRotationSpeedYProperty, value); }
+        }
+
+        /// <summary>
+        /// Y轴旋转扰动
+        /// </summary>
+        public static readonly DependencyProperty ExcitationRotationSpeedYProperty =
+            DependencyProperty.Register("ExcitationRotationSpeedY", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
+
+        #region ExcitationRotationSpeedZ -- Z轴旋转扰动
+
+        /// <summary>
+        /// Z轴旋转扰动
+        /// </summary>
+        public float ExcitationRotationSpeedZ
+        {
+            get { return (float)GetValue(ExcitationRotationSpeedZProperty); }
+            set { SetValue(ExcitationRotationSpeedZProperty, value); }
+        }
+
+        /// <summary>
+        /// Z轴旋转扰动
+        /// </summary>
+        public static readonly DependencyProperty ExcitationRotationSpeedZProperty =
+            DependencyProperty.Register("ExcitationRotationSpeedZ", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+
+        #endregion
+
         #region OpacityChangeTime -- 不透明度改变时间点
 
         /// <summary>
@@ -286,12 +400,12 @@ namespace Dance.Wpf
 
             foreach (IDanceParticle particle in this.Particles)
             {
-                particle.X += seconds * particle.TranslateSpeedX;
-                particle.Y += seconds * particle.TranslateSpeedY;
-                particle.Z += seconds * particle.TranslateSpeedZ;
-                particle.RotateX += seconds * particle.RotateSpeedX;
-                particle.RotateY += seconds * particle.RotateSpeedY;
-                particle.RotateZ += seconds * particle.RotateSpeedZ;
+                particle.X += seconds * particle.TranslateSpeedX * this.Random.NextFloat(1 - this.ExcitationTranslateSpeedX, 1 + this.ExcitationTranslateSpeedX);
+                particle.Y += seconds * particle.TranslateSpeedY * this.Random.NextFloat(1 - this.ExcitationTranslateSpeedY, 1 + this.ExcitationTranslateSpeedY);
+                particle.Z += seconds * particle.TranslateSpeedZ * this.Random.NextFloat(1 - this.ExcitationTranslateSpeedZ, 1 + this.ExcitationTranslateSpeedZ);
+                particle.RotateX += seconds * particle.RotateSpeedX * this.Random.NextFloat(1 - this.ExcitationRotationSpeedX, 1 + this.ExcitationRotationSpeedX);
+                particle.RotateY += seconds * particle.RotateSpeedY * this.Random.NextFloat(1 - this.ExcitationRotationSpeedY, 1 + this.ExcitationRotationSpeedY);
+                particle.RotateZ += seconds * particle.RotateSpeedZ * this.Random.NextFloat(1 - this.ExcitationRotationSpeedZ, 1 + this.ExcitationRotationSpeedZ);
 
                 particle.RotateX %= 360f;
                 particle.RotateY %= 360f;
