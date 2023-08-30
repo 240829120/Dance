@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SkiaSharp;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -50,6 +51,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region Colors -- 颜色集合
+
+        /// <summary>
+        /// 颜色集合
+        /// </summary>
+        public DanceColorCollection Colors
+        {
+            get { return (DanceColorCollection)GetValue(ColorsProperty); }
+            set { SetValue(ColorsProperty, value); }
+        }
+
+        /// <summary>
+        /// 颜色集合
+        /// </summary>
+        public static readonly DependencyProperty ColorsProperty =
+            DependencyProperty.Register("Colors", typeof(DanceColorCollection), typeof(DanceParticleRectangleGenerator), new PropertyMetadata(null));
+
+        #endregion
+
         /// <summary>
         /// 创建
         /// </summary>
@@ -61,6 +81,12 @@ namespace Dance.Wpf
                 Width = this.Random.NextFloat(this.Width.MinValue, this.Width.MaxValue),
                 Height = this.Random.NextFloat(this.Height.MinValue, this.Height.MaxValue)
             };
+
+            if (this.Colors != null && this.Colors.Count > 0)
+            {
+                DanceColor color = this.Colors[this.Random.Next(0, this.Colors.Count)];
+                particle.Paint.Color = new((byte)(255 * color.R), (byte)(255 * color.G), (byte)(255 * color.B), (byte)(255 * color.A));
+            }
 
             return particle;
         }

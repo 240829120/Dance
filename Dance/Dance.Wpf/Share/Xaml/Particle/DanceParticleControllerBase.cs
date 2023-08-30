@@ -322,22 +322,42 @@ namespace Dance.Wpf
 
         #endregion
 
-        #region OpacityChangeTime -- 不透明度改变时间点
+        #region ShowTimePoint -- 显示时间点
 
         /// <summary>
-        /// 不透明度改变时间点
+        /// 显示时间点
         /// </summary>
-        public TimeSpan OpacityChangeTime
+
+        public TimeSpan ShowTimePoint
         {
-            get { return (TimeSpan)GetValue(OpacityChangeTimeProperty); }
-            set { SetValue(OpacityChangeTimeProperty, value); }
+            get { return (TimeSpan)GetValue(ShowTimePointProperty); }
+            set { SetValue(ShowTimePointProperty, value); }
         }
 
         /// <summary>
-        /// 不透明度改变时间点
+        /// 显示时间点
         /// </summary>
-        public static readonly DependencyProperty OpacityChangeTimeProperty =
-            DependencyProperty.Register("OpacityChangeTime", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(1)));
+        public static readonly DependencyProperty ShowTimePointProperty =
+            DependencyProperty.Register("ShowTimePoint", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(0.5)));
+
+        #endregion
+
+        #region HideTimePoint -- 隐藏时间点
+
+        /// <summary>
+        /// 隐藏时间点
+        /// </summary>
+        public TimeSpan HideTimePoint
+        {
+            get { return (TimeSpan)GetValue(HideTimePointProperty); }
+            set { SetValue(HideTimePointProperty, value); }
+        }
+
+        /// <summary>
+        /// 隐藏时间点
+        /// </summary>
+        public static readonly DependencyProperty HideTimePointProperty =
+            DependencyProperty.Register("HideTimePoint", typeof(TimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(TimeSpan.FromSeconds(1)));
 
         #endregion
 
@@ -444,9 +464,6 @@ namespace Dance.Wpf
         /// <param name="canvas">画布</param>
         public void Draw(SKSize size, SKCanvas canvas)
         {
-            TimeSpan opacityChangeTime = this.OpacityChangeTime;
-            float perspective = this.Perspective;
-
             foreach (IDanceParticle particle in this.Particles)
             {
                 SKMatrix44 matrix44 = SKMatrix44.CreateIdentity();
@@ -456,11 +473,11 @@ namespace Dance.Wpf
                 matrix44.PostConcat(SKMatrix44.CreateTranslation(particle.X, particle.Y, particle.Z));
 
                 SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
-                perspectiveMatrix[3, 2] = perspective;
+                perspectiveMatrix[3, 2] = this.Perspective;
                 matrix44.PostConcat(perspectiveMatrix);
 
                 canvas.SetMatrix(matrix44.Matrix);
-                particle.UpdatePaintAlpha(opacityChangeTime);
+                particle.UpdatePaintAlpha(this.ShowTimePoint, this.HideTimePoint);
                 particle.Draw(size, canvas);
             }
         }

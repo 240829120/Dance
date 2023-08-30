@@ -95,7 +95,8 @@ namespace Dance.Wpf
         /// <summary>
         /// 更新透明度
         /// </summary>
-        /// <param name="opacityChangeTime">透明度改变时间点</param>
-        void UpdatePaintAlpha(TimeSpan opacityChangeTime);
+        /// <param name="showTimePoint">显示时间点</param>
+        /// <param name="hideTimePoint">隐藏时间点</param>
+        void UpdatePaintAlpha(TimeSpan showTimePoint, TimeSpan hideTimePoint);
     }
 }

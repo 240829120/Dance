@@ -32,6 +32,7 @@ namespace Dance.Wpf
         /// <param name="canvas">绘制上下文</param>
         public override void Draw(SKSize size, SKCanvas canvas)
         {
+            //SKShader.CreateLinearGradient(,,, SKShaderTileMode.Repeat);
 
             canvas.DrawRect(0, 0, this.Width, this.Height, this.Paint);
         }

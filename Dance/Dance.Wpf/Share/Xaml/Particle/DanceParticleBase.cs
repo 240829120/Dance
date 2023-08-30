@@ -99,15 +99,34 @@ namespace Dance.Wpf
         /// <summary>
         /// 更新透明度
         /// </summary>
-        /// <param name="opacityChangeTime">透明度改变时间点</param>
-        public void UpdatePaintAlpha(TimeSpan opacityChangeTime)
+        /// <param name="showTimePoint">显示时间点</param>
+        /// <param name="hideTimePoint">隐藏时间点</param>
+        public void UpdatePaintAlpha(TimeSpan showTimePoint, TimeSpan hideTimePoint)
         {
-            TimeSpan dt = this.Duration - (DateTime.Now - this.GeneratTime);
-            if (dt >= opacityChangeTime)
+            if (showTimePoint.Ticks < 0 || hideTimePoint.Ticks < 0)
                 return;
 
-            byte a = (byte)(255 * (dt.Ticks / (double)opacityChangeTime.Ticks));
-            this.Paint.Color = new SKColor(this.Paint.Color.Red, this.Paint.Color.Green, this.Paint.Color.Blue, a);
+            TimeSpan left = DateTime.Now - this.GeneratTime;
+
+            if (left >= showTimePoint && left <= hideTimePoint)
+            {
+                this.Paint.Color = this.Paint.Color.WithAlpha(255);
+                return;
+            }
+            else if (left < showTimePoint)
+            {
+                byte alpha = (byte)(255 * (double)left.Ticks / showTimePoint.Ticks);
+                alpha = alpha < 0 ? (byte)0 : alpha;
+                this.Paint.Color = this.Paint.Color.WithAlpha(alpha);
+                return;
+            }
+            else if (left > hideTimePoint)
+            {
+                byte alpha = (byte)(255 * ((double)(this.Duration - left).Ticks / this.Duration.Ticks));
+                alpha = alpha < 0 ? (byte)0 : alpha;
+                this.Paint.Color = this.Paint.Color.WithAlpha(alpha);
+                return;
+            }
         }
     }
 }
