@@ -81,5 +81,11 @@ namespace Dance.Wpf
         /// <param name="size">可绘制区域</param>
         /// <param name="canvas">绘制上下文</param>
         void Draw(SKSize size, SKCanvas canvas);
+
+        /// <summary>
+        /// 更新透明度
+        /// </summary>
+        /// <param name="opacityChangeTime">透明度改变时间点</param>
+        void UpdatePaintAlpha(TimeSpan opacityChangeTime);
     }
 }

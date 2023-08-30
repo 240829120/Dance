@@ -36,12 +36,12 @@ namespace Dance.Wpf
         /// <param name="canvas">绘制上下文</param>
         public override void Draw(SKSize size, SKCanvas canvas)
         {
-            float left = this.X - this.Width / 2f;
-            float right = this.X + this.Width / 2f;
-            float top = this.Y - this.Height / 2f;
-            float bottom = this.Y + this.Height / 2f;
+            float left = -this.Width / 2f;
+            float right = this.Width / 2f;
+            float top = -this.Height / 2f;
+            float bottom = this.Height / 2f;
 
-            canvas.DrawImage(this.Source, new SKRect(left, top, right, bottom));
+            canvas.DrawImage(this.Source, new SKRect(left, top, right, bottom), this.Paint);
         }
     }
 }

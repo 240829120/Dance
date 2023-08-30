@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Markup;
 using System.Windows.Media;
 
 namespace Dance.Wpf
@@ -13,11 +14,13 @@ namespace Dance.Wpf
     /// <summary>
     /// 粒子面板
     /// </summary>
+    [ContentProperty(nameof(Layers))]
     public class DanceParticlePanel : SkiaSharp.Views.WPF.SKElement
     {
         public DanceParticlePanel()
         {
             this.Layers = new();
+            this.IsHitTestVisible = false;
 
             this.PaintSurface += DanceParticlePanel_PaintSurface;
 
@@ -26,14 +29,9 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 更新时间
+        /// 上次渲染时间
         /// </summary>
-        private TimeSpan UpdatingTime;
-
-        /// <summary>
-        /// 渲染时间
-        /// </summary>
-        private TimeSpan RenderingTime;
+        private TimeSpan LastRenderingTime;
 
         #region Layers -- 粒子层集合
 
@@ -82,7 +80,15 @@ namespace Dance.Wpf
             if (e is not RenderingEventArgs args)
                 return;
 
-            this.UpdatingTime = args.RenderingTime;
+            TimeSpan dt = args.RenderingTime - this.LastRenderingTime;
+            this.LastRenderingTime = args.RenderingTime;
+
+            foreach (DanceParticleLayer layer in this.Layers)
+            {
+                layer.Destory(dt);
+                layer.Step(dt);
+                layer.Generate(dt);
+            }
 
             this.InvalidateVisual();
         }
@@ -96,18 +102,9 @@ namespace Dance.Wpf
             if (!this.IsVisible)
                 return;
 
-            SKCanvas canvas = e.Surface.Canvas;
-            canvas.Clear();
-
-            TimeSpan dt = this.RenderingTime - this.UpdatingTime;
-            this.RenderingTime = this.UpdatingTime;
-
+            e.Surface.Canvas.Clear();
             foreach (DanceParticleLayer layer in this.Layers)
             {
-                layer.Step(dt);
-                layer.Destory(dt);
-                layer.Generate(dt);
-
                 layer.Draw(e.Info.Size, e.Surface.Canvas);
             }
         }

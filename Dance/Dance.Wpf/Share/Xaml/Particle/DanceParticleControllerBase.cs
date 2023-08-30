@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace Dance.Wpf
 {
     /// <summary>
     /// 粒子控制器基类
     /// </summary>
+    [ContentProperty(nameof(Generator))]
     public abstract class DanceParticleControllerBase : DependencyObject, IDanceParticleController
     {
         /// <summary>
@@ -78,9 +80,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 持续时间
         /// </summary>
-        public DanceRangeTimeSpan Duration
+        public DanceRangeFloat Duration
         {
-            get { return (DanceRangeTimeSpan)GetValue(DurationProperty); }
+            get { return (DanceRangeFloat)GetValue(DurationProperty); }
             set { SetValue(DurationProperty, value); }
         }
 
@@ -88,7 +90,7 @@ namespace Dance.Wpf
         /// 持续时间
         /// </summary>
         public static readonly DependencyProperty DurationProperty =
-            DependencyProperty.Register("Duration", typeof(DanceRangeTimeSpan), typeof(DanceParticleControllerBase), new PropertyMetadata(new DanceRangeTimeSpan(TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(20))));
+            DependencyProperty.Register("Duration", typeof(DanceRangeFloat), typeof(DanceParticleControllerBase), new PropertyMetadata(new DanceRangeFloat(5, 10)));
 
         #endregion
 
@@ -127,6 +129,25 @@ namespace Dance.Wpf
         /// </summary>
         public static readonly DependencyProperty TranslateSpeedYProperty =
             DependencyProperty.Register("TranslateSpeedY", typeof(DanceRangeFloat), typeof(DanceParticleControllerBase), new PropertyMetadata(DanceRangeFloat.Zero));
+
+        #endregion
+
+        #region TranslateSpeedZ -- Z轴平移速度
+
+        /// <summary>
+        /// Z轴平移速度
+        /// </summary>
+        public DanceRangeFloat TranslateSpeedZ
+        {
+            get { return (DanceRangeFloat)GetValue(TranslateSpeedZProperty); }
+            set { SetValue(TranslateSpeedZProperty, value); }
+        }
+
+        /// <summary>
+        /// Z轴平移速度
+        /// </summary>
+        public static readonly DependencyProperty TranslateSpeedZProperty =
+            DependencyProperty.Register("TranslateSpeedZ", typeof(DanceRangeFloat), typeof(DanceParticleControllerBase), new PropertyMetadata(new DanceRangeFloat(10, 20)));
 
         #endregion
 
@@ -206,6 +227,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region Perspective -- 透视变换值
+
+        /// <summary>
+        /// 透视变换值
+        /// </summary>
+        public float Perspective
+        {
+            get { return (float)GetValue(PerspectiveProperty); }
+            set { SetValue(PerspectiveProperty, value); }
+        }
+
+        /// <summary>
+        /// 透视变换值
+        /// </summary>
+        public static readonly DependencyProperty PerspectiveProperty =
+            DependencyProperty.Register("Perspective", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(-0.0001f));
+
+        #endregion
+
         /// <summary>
         /// 生成
         /// </summary>
@@ -226,7 +266,7 @@ namespace Dance.Wpf
             {
                 IDanceParticle particle = this.Generator.Generate();
                 particle.GeneratTime = DateTime.Now;
-                particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
+                particle.Duration = TimeSpan.FromSeconds(this.Random.NextFloat(this.Duration.MinValue, this.Duration.MaxValue));
 
                 list.Add(particle);
             }
@@ -289,27 +329,24 @@ namespace Dance.Wpf
         /// <param name="canvas">画布</param>
         public void Draw(SKSize size, SKCanvas canvas)
         {
+            TimeSpan opacityChangeTime = this.OpacityChangeTime;
+            float perspective = this.Perspective;
+
             foreach (IDanceParticle particle in this.Particles)
             {
-                // Translate center to origin
-                SKMatrix matrix = SKMatrix.CreateTranslation(particle.X, particle.Y);
+                SKMatrix44 matrix44 = SKMatrix44.CreateIdentity();
+                matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX));
+                matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 1, 0, particle.RotateY));
+                matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 0, 1, particle.RotateZ));
+                matrix44.PostConcat(SKMatrix44.CreateTranslation(particle.X, particle.Y, 0));
 
-                // Use 3D matrix for 3D rotations and perspective
-                //SKMatrix44 matrix44 = SKMatrix44.CreateIdentity();
-                //matrix.PostConcat(SKMatrix44.CreateRotationDegrees(1, 0, 0, particle.RotateX).Matrix);
-                //matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 1, 0, particle.RotateY));
-                //matrix44.PostConcat(SKMatrix44.CreateRotationDegrees(0, 0, 1, particle.RotateZ));
+                SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
+                perspectiveMatrix[3, 2] = perspective;
+                matrix44.PostConcat(perspectiveMatrix);
 
-                //SKMatrix44 perspectiveMatrix = SKMatrix44.CreateIdentity();
-                //perspectiveMatrix[3, 2] = -1 / 250f;
-                //matrix44.PostConcat(perspectiveMatrix);
-
-                //matrix = matrix.PostConcat(matrix44.Matrix);
-
-                // Set the matrix and display the bitmap
-                canvas.SetMatrix(matrix);
+                canvas.SetMatrix(matrix44.Matrix);
+                particle.UpdatePaintAlpha(opacityChangeTime);
                 particle.Draw(size, canvas);
-                canvas.ResetMatrix();
             }
         }
     }

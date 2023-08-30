@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace Dance.Wpf
 {
     /// <summary>
     /// 粒子层
     /// </summary>
+    [ContentProperty(nameof(Controllers))]
     public class DanceParticleLayer : DependencyObject
     {
         public DanceParticleLayer()

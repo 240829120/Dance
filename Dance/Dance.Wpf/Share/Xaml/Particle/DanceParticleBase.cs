@@ -85,5 +85,19 @@ namespace Dance.Wpf
         /// <param name="size">可绘制区域</param>
         /// <param name="canvas">绘制上下文</param>
         public abstract void Draw(SKSize size, SKCanvas canvas);
+
+        /// <summary>
+        /// 更新透明度
+        /// </summary>
+        /// <param name="opacityChangeTime">透明度改变时间点</param>
+        public void UpdatePaintAlpha(TimeSpan opacityChangeTime)
+        {
+            TimeSpan dt = this.Duration - (DateTime.Now - this.GeneratTime);
+            if (dt >= opacityChangeTime)
+                return;
+
+            byte a = (byte)(255 * (dt.Ticks / (double)opacityChangeTime.Ticks));
+            this.Paint.Color = new SKColor(this.Paint.Color.Red, this.Paint.Color.Green, this.Paint.Color.Blue, a);
+        }
     }
 }
