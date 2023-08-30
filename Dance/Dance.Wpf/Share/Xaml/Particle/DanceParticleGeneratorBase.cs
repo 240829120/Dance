@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,11 @@ namespace Dance.Wpf
     /// </summary>
     public abstract class DanceParticleGeneratorBase : DependencyObject, IDanceParticleGenerator
     {
+        /// <summary>
+        /// 日志
+        /// </summary>
+        protected readonly static ILog log = LogManager.GetLogger(typeof(DanceParticleGeneratorBase));
+
         /// <summary>
         /// 随机数
         /// </summary>

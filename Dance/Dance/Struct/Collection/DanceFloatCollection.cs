@@ -11,7 +11,7 @@ namespace Dance
     /// <summary>
     /// Float类型列表
     /// </summary>
-    [TypeConverter(typeof(FloatCollectionTypeConverter))]
+    [TypeConverter(typeof(DanceFloatCollectionTypeConverter))]
     public class DanceFloatCollection : List<float>
     {
     }
@@ -19,7 +19,7 @@ namespace Dance
     /// <summary>
     /// 点集合转化器
     /// </summary>
-    public class FloatCollectionTypeConverter : TypeConverter
+    public class DanceFloatCollectionTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {

@@ -1,15 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net7.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net7.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Dance.Wpf\Dance.Wpf.csproj" />
-    <ProjectReference Include="..\Dance\Dance.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove="flower.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Dance.Wpf\Dance.Wpf.csproj" />
+		<ProjectReference Include="..\Dance\Dance.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Resource Include="flower.png" />
+	</ItemGroup>
 
 </Project>

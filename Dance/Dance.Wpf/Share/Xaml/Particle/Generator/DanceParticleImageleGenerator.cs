@@ -5,17 +5,27 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Reflection.Emit;
+using System.Security.Policy;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
+using System.Windows.Resources;
 
 namespace Dance.Wpf
 {
     /// <summary>
     /// 图片粒子生成器
     /// </summary>
+    [ContentProperty(nameof(Images))]
     public class DanceParticleImageleGenerator : DanceParticleGeneratorBase
     {
+        public DanceParticleImageleGenerator()
+        {
+            this.Images = new();
+        }
+
         #region Width -- 宽度
 
         /// <summary>
@@ -54,38 +64,22 @@ namespace Dance.Wpf
 
         #endregion
 
-        #region Source -- 源
+        #region Images -- 图片集合
 
         /// <summary>
-        /// 源
+        /// 图片集合
         /// </summary>
-        private SKImage? SKImage;
-
-        /// <summary>
-        /// 源
-        /// </summary>
-        public Uri Source
+        public DanceImageCollection Images
         {
-            get { return (Uri)GetValue(SourceProperty); }
-            set { SetValue(SourceProperty, value); }
+            get { return (DanceImageCollection)GetValue(ImagesProperty); }
+            set { SetValue(ImagesProperty, value); }
         }
 
         /// <summary>
-        /// 源
+        /// 图片集合
         /// </summary>
-        public static readonly DependencyProperty SourceProperty =
-            DependencyProperty.Register("Source", typeof(Uri), typeof(DanceParticleImageleGenerator), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceParticleImageleGenerator generator)
-                    return;
-
-                if (e.NewValue is not Uri uri)
-                    return;
-
-                using FileStream fs = new(uri.LocalPath, FileMode.Open, FileAccess.Read);
-                using SKBitmap bmp = SKBitmap.Decode(fs);
-                generator.SKImage = SKImage.FromBitmap(bmp);
-            })));
+        public static readonly DependencyProperty ImagesProperty =
+            DependencyProperty.Register("Images", typeof(DanceImageCollection), typeof(DanceParticleImageleGenerator), new PropertyMetadata(null));
 
         #endregion
 
@@ -98,11 +92,52 @@ namespace Dance.Wpf
             DanceParticleImage particle = new()
             {
                 Width = this.Random.NextFloat(this.Width.MinValue, this.Width.MaxValue),
-                Height = this.Random.NextFloat(this.Height.MinValue, this.Height.MaxValue),
-                Source = this.SKImage
+                Height = this.Random.NextFloat(this.Height.MinValue, this.Height.MaxValue)
             };
 
+            if (this.Images != null && this.Images.Count > 0)
+            {
+                DanceImage img = this.Images[this.Random.Next(0, this.Images.Count)];
+                if (img.Tag is not SKImage)
+                {
+                    img.Tag = img.Uri == null ? null : CreateSKImage(img.Uri);
+                }
+
+                particle.Source = img.Tag as SKImage;
+            }
+
             return particle;
+        }
+
+        /// <summary>
+        /// 创建SKImage
+        /// </summary>
+        /// <param name="uri">地址</param>
+        /// <returns>SKImage</returns>
+        private static SKImage CreateSKImage(Uri uri)
+        {
+            string str = uri.ToString().Trim().ToUpper();
+
+            if (str.StartsWith("FILE"))
+            {
+                using FileStream fs = new(uri.LocalPath, FileMode.Open, FileAccess.Read);
+                using SKBitmap bmp = SKBitmap.Decode(fs);
+                return SKImage.FromBitmap(bmp);
+            }
+            else if (str.StartsWith("HTTP"))
+            {
+                StreamResourceInfo info = Application.GetRemoteStream(uri);
+                using SKBitmap bmp = SKBitmap.Decode(info.Stream);
+                info.Stream.Dispose();
+                return SKImage.FromBitmap(bmp);
+            }
+            else
+            {
+                StreamResourceInfo info = Application.GetResourceStream(uri);
+                using SKBitmap bmp = SKBitmap.Decode(info.Stream);
+                info.Stream.Dispose();
+                return SKImage.FromBitmap(bmp);
+            }
         }
     }
 }
