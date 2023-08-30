@@ -13,7 +13,7 @@ namespace Dance
     /// 二维向量
     /// </summary>
     [DebuggerDisplay("X={X}, Y={Y}")]
-    [TypeConverter(typeof(Vector2FTypeConverter))]
+    [TypeConverter(typeof(DanceVectorTypeConverter))]
     public struct DanceVector
     {
         public static readonly DanceVector Zero = new(0, 0);
@@ -95,7 +95,7 @@ namespace Dance
     /// <summary>
     /// 二维向量类型转化器
     /// </summary>
-    public class Vector2FTypeConverter : TypeConverter
+    public class DanceVectorTypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {

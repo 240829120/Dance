@@ -10,31 +10,33 @@ using System.Threading.Tasks;
 namespace Dance
 {
     /// <summary>
-    /// 二维点
+    /// 三维点
     /// </summary>
-    [DebuggerDisplay("X={X}, Y={Y}")]
-    [TypeConverter(typeof(DancePointTypeConverter))]
-    public struct DancePoint
+    [DebuggerDisplay("X={X}, Y={Y}, Z={Z}")]
+    [TypeConverter(typeof(DancePoint3TypeConverter))]
+    public struct DancePoint3
     {
-        public readonly static DancePoint Zero = new(0, 0);
+        public readonly static DancePoint3 Zero = new(0, 0, 0);
 
         /// <summary>
-        /// 二维点
+        /// 三维点
         /// </summary>
-        public DancePoint()
+        public DancePoint3()
         {
 
         }
 
         /// <summary>
-        /// 二维点
+        /// 三维点
         /// </summary>
         /// <param name="x">X</param>
         /// <param name="y">Y</param>
-        public DancePoint(float x, float y)
+        /// <param name="z">Z</param>
+        public DancePoint3(float x, float y, float z)
         {
             this.X = x;
             this.Y = y;
+            this.Z = z;
         }
 
         /// <summary>
@@ -48,19 +50,27 @@ namespace Dance
         public float Y;
 
         /// <summary>
+        /// Z值
+        /// </summary>
+        public float Z;
+
+        /// <summary>
         /// 尝试转化
         /// </summary>
         /// <param name="value">字符串</param>
         /// <param name="point">转化后的点</param>
         /// <returns>是否成功转化</returns>
-        public static bool TryParse(string value, out DancePoint point)
+        public static bool TryParse(string value, out DancePoint3 point)
         {
             if (!string.IsNullOrEmpty(value))
             {
                 string[] array = value.Split(',');
-                if (array.Length == 2 && float.TryParse(array[0], NumberStyles.Number, CultureInfo.InvariantCulture, out var result) && float.TryParse(array[1], NumberStyles.Number, CultureInfo.InvariantCulture, out var result2))
+                if (array.Length == 3 &&
+                    float.TryParse(array[0], NumberStyles.Number, CultureInfo.InvariantCulture, out var result) &&
+                    float.TryParse(array[1], NumberStyles.Number, CultureInfo.InvariantCulture, out var result2) &&
+                    float.TryParse(array[2], NumberStyles.Number, CultureInfo.InvariantCulture, out var result3))
                 {
-                    point = new DancePoint(result, result2);
+                    point = new DancePoint3(result, result2, result3);
                     return true;
                 }
             }
@@ -68,34 +78,12 @@ namespace Dance
             point = default;
             return false;
         }
-
-        /// <summary>
-        /// 点和向量相加
-        /// </summary>
-        /// <param name="point">点</param>
-        /// <param name="vector">向量</param>
-        /// <returns></returns>
-        public static DancePoint operator +(DancePoint point, DanceVector vector)
-        {
-            return new DancePoint(point.X + vector.X, point.Y + vector.Y);
-        }
-
-        /// <summary>
-        /// 点和向量相加
-        /// </summary
-        /// <param name="vector">向量</param>
-        /// <param name="point">点</param>
-        /// <returns></returns>
-        public static DancePoint operator +(DanceVector vector, DancePoint point)
-        {
-            return new DancePoint(point.X + vector.X, point.Y + vector.Y);
-        }
     }
 
     /// <summary>
     /// 二维点类型转化器
     /// </summary>
-    public class DancePointTypeConverter : TypeConverter
+    public class DancePoint3TypeConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
@@ -109,19 +97,19 @@ namespace Dance
 
         public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            if (DancePoint.TryParse(value?.ToString() ?? string.Empty, out var point))
+            if (DancePoint3.TryParse(value?.ToString() ?? string.Empty, out var point))
             {
                 return point;
             }
 
-            throw new InvalidOperationException($"Cannot convert \"{value}\" into {typeof(DancePoint)}");
+            throw new InvalidOperationException($"Cannot convert \"{value}\" into {typeof(DancePoint3)}");
         }
 
         public override object ConvertTo(ITypeDescriptorContext? context, CultureInfo? culture, object? value, Type? destinationType)
         {
-            if (value is DancePoint point)
+            if (value is DancePoint3 point)
             {
-                return point.X.ToString(CultureInfo.InvariantCulture) + ", " + point.Y.ToString(CultureInfo.InvariantCulture);
+                return point.X.ToString(CultureInfo.InvariantCulture) + ", " + point.Y.ToString(CultureInfo.InvariantCulture) + ", " + point.Z.ToString(CultureInfo.InvariantCulture);
             }
 
             throw new NotSupportedException();

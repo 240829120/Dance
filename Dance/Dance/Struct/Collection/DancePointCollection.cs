@@ -12,7 +12,7 @@ namespace Dance
     /// <summary>
     /// 点集合
     /// </summary>
-    [TypeConverter(typeof(Point2FCollectionTypeConverter))]
+    [TypeConverter(typeof(DancePointCollectionTypeConverter))]
     public class DancePointCollection : List<DancePoint>
     {
 
@@ -21,12 +21,12 @@ namespace Dance
     /// <summary>
     /// 点集合转化器
     /// </summary>
-    public class Point2FCollectionTypeConverter : TypeConverter
+    public class DancePointCollectionTypeConverter : TypeConverter
     {
         /// <summary>
         /// 点转化器
         /// </summary>
-        private readonly Point2FTypeConverter Point2FTypeConverter = new();
+        private readonly DancePointTypeConverter Converter = new();
 
         public override bool CanConvertFrom(ITypeDescriptorContext? context, Type sourceType)
         {
@@ -50,7 +50,7 @@ namespace Dance
 
             foreach (string str_point in str_points)
             {
-                if (this.Point2FTypeConverter.ConvertFromString(str_point) is not DancePoint point)
+                if (this.Converter.ConvertFromString(str_point) is not DancePoint point)
                 {
                     throw new InvalidOperationException($"Cannot convert \"{value}\" into {typeof(DancePointCollection)}");
                 }
