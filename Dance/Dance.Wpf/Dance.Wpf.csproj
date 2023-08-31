@@ -9,12 +9,16 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <Compile Remove="Share\Core\Base\**" />
 	  <Compile Remove="Share\Core\Xaml\**" />
 	  <Compile Remove="Share\Xaml\Widgets\Preview\**" />
+	  <EmbeddedResource Remove="Share\Core\Base\**" />
 	  <EmbeddedResource Remove="Share\Core\Xaml\**" />
 	  <EmbeddedResource Remove="Share\Xaml\Widgets\Preview\**" />
+	  <None Remove="Share\Core\Base\**" />
 	  <None Remove="Share\Core\Xaml\**" />
 	  <None Remove="Share\Xaml\Widgets\Preview\**" />
+	  <Page Remove="Share\Core\Base\**" />
 	  <Page Remove="Share\Core\Xaml\**" />
 	  <Page Remove="Share\Xaml\Widgets\Preview\**" />
 	</ItemGroup>

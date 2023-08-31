@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:dance="clr-namespace:Dance;assembly=Dance"
              xmlns:maui="clr-namespace:Dance.Maui;assembly=Dance.Maui"
              x:Class="Dance.MauiTest.MainPage">
 
@@ -130,7 +131,8 @@
                                                      X="0,400" Y="0,0" Z="-20,20" Perspective="-0.0005" IsEnabled="True"
                                                      Duration="00:00:04,00:00:05" GenerateSpeed="10">
                     <maui:DanceParticleImageleGenerator Width="5,50" Height="5,50">
-                        <maui:DanceImage Uri="C:\Users\win\Desktop\flower2.png"></maui:DanceImage>
+                        <maui:DanceParticleImageDefine Uri="Dance.MauiTest.Resources.Images.flower.png"></maui:DanceParticleImageDefine>
+                        <maui:DanceParticleImageDefine Uri="Dance.MauiTest.Resources.Images.flower2.png"></maui:DanceParticleImageDefine>
                     </maui:DanceParticleImageleGenerator>
                     <!--<maui:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                               Width="10,30" Height="10,20"></maui:DanceParticleRectangleGenerator>-->

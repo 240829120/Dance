@@ -68,9 +68,9 @@ namespace Dance.Maui
         /// <summary>
         /// 图片集合
         /// </summary>
-        public DanceImageCollection Images
+        public List<DanceParticleImageDefine> Images
         {
-            get { return (DanceImageCollection)GetValue(ImagesProperty); }
+            get { return (List<DanceParticleImageDefine>)GetValue(ImagesProperty); }
             set { SetValue(ImagesProperty, value); }
         }
 
@@ -78,7 +78,7 @@ namespace Dance.Maui
         /// 图片集合
         /// </summary>
         public static readonly BindableProperty ImagesProperty =
-            BindableProperty.Create(nameof(Images), typeof(DanceImageCollection), typeof(DanceParticleImageleGenerator), null);
+            BindableProperty.Create(nameof(Images), typeof(List<DanceParticleImageDefine>), typeof(DanceParticleImageleGenerator), null);
 
         #endregion
 
@@ -96,13 +96,13 @@ namespace Dance.Maui
 
             if (this.Images != null && this.Images.Count > 0)
             {
-                DanceImage img = this.Images[this.Random.Next(0, this.Images.Count)];
-                if (img.Tag is not SKImage)
+                DanceParticleImageDefine img = this.Images[this.Random.Next(0, this.Images.Count)];
+                if (img.Uri != null && img.SKImage == null)
                 {
-                    img.Tag = img.Uri == null ? null : CreateSKImage(img.Uri);
+                    img.SKImage = CreateSKImage(img);
                 }
 
-                particle.Source = img.Tag as SKImage;
+                particle.Source = img.SKImage;
             }
 
             return particle;
@@ -113,24 +113,57 @@ namespace Dance.Maui
         /// </summary>
         /// <param name="uri">地址</param>
         /// <returns>SKImage</returns>
-        private static SKImage? CreateSKImage(Uri uri)
+        private static SKImage? CreateSKImage(DanceParticleImageDefine define)
         {
-            string str = uri.ToString().Trim().ToUpper();
+            try
+            {
+                string str = define.Uri.ToString().Trim().ToUpper();
 
-            if (str.StartsWith("FILE"))
-            {
-                using FileStream fs = new(uri.LocalPath, FileMode.Open, FileAccess.Read);
-                using SKBitmap bmp = SKBitmap.Decode(fs);
-                return SKImage.FromBitmap(bmp);
+                if (str.StartsWith("FILE"))
+                {
+                    using FileStream fs = new(define.Uri.LocalPath, FileMode.Open, FileAccess.Read);
+                    using SKBitmap bmp = SKBitmap.Decode(fs);
+                    return SKImage.FromBitmap(bmp);
+                }
+                else if (str.StartsWith("HTTP"))
+                {
+                    HttpClient client = new();
+                    using Stream stream = client.GetAsync(define.Uri).Result.Content.ReadAsStream();
+                    using SKBitmap bmp = SKBitmap.Decode(stream);
+                    return SKImage.FromBitmap(bmp);
+                }
+                else
+                {
+                    if (Application.Current == null)
+                        return null;
+
+                    Assembly? assembly;
+                    if (string.IsNullOrWhiteSpace(define.AssemblyName))
+                    {
+                        assembly = Assembly.GetEntryAssembly();
+                    }
+                    else
+                    {
+                        assembly = Assembly.Load(define.AssemblyName);
+                    }
+
+                    if (assembly == null)
+                        return null;
+
+                    using Stream? stream = assembly.GetManifestResourceStream(define.Uri.ToString());
+                    if (stream == null)
+                        return null;
+
+                    using SKBitmap bmp = SKBitmap.Decode(stream);
+                    return SKImage.FromBitmap(bmp);
+                }
             }
-            else if (str.StartsWith("HTTP"))
+            catch (Exception ex)
             {
-                return null;
+                log.Error(ex);
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
     }
 }

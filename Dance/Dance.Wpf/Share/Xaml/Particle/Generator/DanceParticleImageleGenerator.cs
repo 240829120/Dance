@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Reflection.Emit;
 using System.Security.Policy;
@@ -69,9 +70,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 图片集合
         /// </summary>
-        public DanceImageCollection Images
+        public List<DanceParticleImageDefine> Images
         {
-            get { return (DanceImageCollection)GetValue(ImagesProperty); }
+            get { return (List<DanceParticleImageDefine>)GetValue(ImagesProperty); }
             set { SetValue(ImagesProperty, value); }
         }
 
@@ -79,7 +80,7 @@ namespace Dance.Wpf
         /// 图片集合
         /// </summary>
         public static readonly DependencyProperty ImagesProperty =
-            DependencyProperty.Register("Images", typeof(DanceImageCollection), typeof(DanceParticleImageleGenerator), new PropertyMetadata(null));
+            DependencyProperty.Register("Images", typeof(List<DanceParticleImageDefine>), typeof(DanceParticleImageleGenerator), new PropertyMetadata(null));
 
         #endregion
 
@@ -97,13 +98,13 @@ namespace Dance.Wpf
 
             if (this.Images != null && this.Images.Count > 0)
             {
-                DanceImage img = this.Images[this.Random.Next(0, this.Images.Count)];
-                if (img.Tag is not SKImage)
+                DanceParticleImageDefine img = this.Images[this.Random.Next(0, this.Images.Count)];
+                if (img.Uri != null && img.SKImage == null)
                 {
-                    img.Tag = img.Uri == null ? null : CreateSKImage(img.Uri);
+                    img.SKImage = CreateSKImage(img.Uri);
                 }
 
-                particle.Source = img.Tag as SKImage;
+                particle.Source = img.SKImage;
             }
 
             return particle;
@@ -116,27 +117,36 @@ namespace Dance.Wpf
         /// <returns>SKImage</returns>
         private static SKImage? CreateSKImage(Uri uri)
         {
-            string str = uri.ToString().Trim().ToUpper();
+            try
+            {
+                string str = uri.ToString().Trim().ToUpper();
 
-            if (str.StartsWith("FILE"))
-            {
-                using FileStream fs = new(uri.LocalPath, FileMode.Open, FileAccess.Read);
-                using SKBitmap bmp = SKBitmap.Decode(fs);
-                return SKImage.FromBitmap(bmp);
+                if (str.StartsWith("FILE"))
+                {
+                    using FileStream fs = new(uri.LocalPath, FileMode.Open, FileAccess.Read);
+                    using SKBitmap bmp = SKBitmap.Decode(fs);
+                    return SKImage.FromBitmap(bmp);
+                }
+                else if (str.StartsWith("HTTP"))
+                {
+                    HttpClient client = new();
+                    using Stream stream = client.GetAsync(uri).Result.Content.ReadAsStream();
+                    using SKBitmap bmp = SKBitmap.Decode(stream);
+                    return SKImage.FromBitmap(bmp);
+                }
+                else
+                {
+                    StreamResourceInfo info = Application.GetResourceStream(uri);
+                    using SKBitmap bmp = SKBitmap.Decode(info.Stream);
+                    info.Stream.Dispose();
+                    return SKImage.FromBitmap(bmp);
+                }
             }
-            else if (str.StartsWith("HTTP"))
+            catch (Exception ex)
             {
-                StreamResourceInfo info = Application.GetRemoteStream(uri);
-                using SKBitmap bmp = SKBitmap.Decode(info.Stream);
-                info.Stream.Dispose();
-                return SKImage.FromBitmap(bmp);
-            }
-            else
-            {
-                StreamResourceInfo info = Application.GetResourceStream(uri);
-                using SKBitmap bmp = SKBitmap.Decode(info.Stream);
-                info.Stream.Dispose();
-                return SKImage.FromBitmap(bmp);
+                log.Error(ex);
+
+                return null;
             }
         }
     }

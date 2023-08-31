@@ -49,6 +49,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiImage Remove="Resources\Images\flower.png" />
+	  <MauiImage Remove="Resources\Images\flower2.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Remove="flower.png" />
+	  <None Remove="flower2.png" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="5.3.0" />
 		<PackageReference Include="CommunityToolkit.Maui.MediaElement" Version="2.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
@@ -57,6 +67,11 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\Dance.Maui\Dance.Maui.csproj" />
 	  <ProjectReference Include="..\Dance\Dance.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <EmbeddedResource Include="Resources\Images\flower.png" />
+	  <EmbeddedResource Include="Resources\Images\flower2.png" />
 	</ItemGroup>
 
 </Project>
