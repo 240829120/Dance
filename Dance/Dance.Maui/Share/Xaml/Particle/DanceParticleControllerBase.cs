@@ -31,6 +31,25 @@ namespace Dance.Maui
         /// </summary>
         protected Random Random = new();
 
+        #region IsEnabled -- 是否启用
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// 粒子构建器
+        /// </summary>
+        public static readonly BindableProperty IsEnabledProperty =
+            BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(DanceParticleControllerBase), true);
+
+        #endregion
+
         #region Generator -- 粒子构建器
 
         /// <summary>
@@ -61,9 +80,9 @@ namespace Dance.Maui
         /// <summary>
         /// 生成速度
         /// </summary>
-        public float GenerateSpeed
+        public int GenerateSpeed
         {
-            get { return (float)GetValue(GenerateSpeedProperty); }
+            get { return (int)GetValue(GenerateSpeedProperty); }
             set { SetValue(GenerateSpeedProperty, value); }
         }
 
@@ -71,7 +90,7 @@ namespace Dance.Maui
         /// 生成速度
         /// </summary>
         public static readonly BindableProperty GenerateSpeedProperty =
-            BindableProperty.Create(nameof(GenerateSpeed), typeof(float), typeof(DanceParticleControllerBase), 0.05f);
+            BindableProperty.Create(nameof(GenerateSpeed), typeof(int), typeof(DanceParticleControllerBase), 10);
 
         #endregion
 
@@ -389,6 +408,12 @@ namespace Dance.Maui
         {
             List<IDanceParticle> list = new();
 
+            if (!this.IsEnabled)
+            {
+                this.TotalUpdateTime = TimeSpan.Zero;
+                return list;
+            }
+
             TimeSpan one = TimeSpan.FromSeconds(1) / this.GenerateSpeed;
             this.TotalUpdateTime += dt;
 
@@ -406,7 +431,7 @@ namespace Dance.Maui
                     this.Particles.Add(particle);
                 }
 
-                this.TotalUpdateTime = TimeSpan.Zero;
+                this.TotalUpdateTime -= one * count;
             }
 
             return list;

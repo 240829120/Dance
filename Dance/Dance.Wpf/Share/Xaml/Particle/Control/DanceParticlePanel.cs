@@ -14,12 +14,12 @@ namespace Dance.Wpf
     /// <summary>
     /// 粒子面板
     /// </summary>
-    [ContentProperty(nameof(Layers))]
+    [ContentProperty(nameof(Controllers))]
     public class DanceParticlePanel : SkiaSharp.Views.WPF.SKElement
     {
         public DanceParticlePanel()
         {
-            this.Layers = new();
+            this.Controllers = new();
             this.IsHitTestVisible = false;
 
             this.PaintSurface += DanceParticlePanel_PaintSurface;
@@ -43,22 +43,22 @@ namespace Dance.Wpf
         /// </summary>
         private static readonly SKPaint DEBUG_PAINT = new() { IsAntialias = true, Color = SKColors.Red, Style = SKPaintStyle.Fill };
 
-        #region Layers -- 粒子层集合
+        #region Controllers -- 粒子控制器
 
         /// <summary>
-        /// 粒子层集合
+        /// 粒子控制器
         /// </summary>
-        public List<DanceParticleLayer> Layers
+        public List<DanceParticleControllerBase> Controllers
         {
-            get { return (List<DanceParticleLayer>)GetValue(LayersProperty); }
-            set { SetValue(LayersProperty, value); }
+            get { return (List<DanceParticleControllerBase>)GetValue(ControllersProperty); }
+            set { SetValue(ControllersProperty, value); }
         }
 
         /// <summary>
-        /// 粒子层集合
+        /// 粒子控制器
         /// </summary>
-        public static readonly DependencyProperty LayersProperty =
-            DependencyProperty.Register("Layers", typeof(List<DanceParticleLayer>), typeof(DanceParticlePanel), new PropertyMetadata(null));
+        public static readonly DependencyProperty ControllersProperty =
+            DependencyProperty.Register("Controllers", typeof(List<DanceParticleControllerBase>), typeof(DanceParticlePanel), new PropertyMetadata(null));
 
         #endregion
 
@@ -113,14 +113,11 @@ namespace Dance.Wpf
             this.LastRenderingTime = args.RenderingTime;
             this.FPS = (float)(1f / dt.TotalSeconds);
 
-            foreach (DanceParticleLayer layer in this.Layers)
+            foreach (IDanceParticleController controller in this.Controllers)
             {
-                if (!layer.IsEnabled)
-                    continue;
-
-                layer.Destory(dt);
-                layer.Step(dt);
-                layer.Generate(dt);
+                controller.Destory(dt);
+                controller.Step(dt);
+                controller.Generate(dt);
             }
 
             this.InvalidateVisual();
@@ -136,9 +133,9 @@ namespace Dance.Wpf
                 return;
 
             e.Surface.Canvas.Clear();
-            foreach (DanceParticleLayer layer in this.Layers)
+            foreach (IDanceParticleController controller in this.Controllers)
             {
-                layer.Draw(e.Info.Size, e.Surface.Canvas);
+                controller.Draw(e.Info.Size, e.Surface.Canvas);
             }
 
             if (this.IsShowDebugInfo)
@@ -156,13 +153,9 @@ namespace Dance.Wpf
             canvas.ResetMatrix();
 
             int count = 0;
-
-            foreach (DanceParticleLayer layer in this.Layers)
+            foreach (IDanceParticleController controller in this.Controllers)
             {
-                foreach (IDanceParticleController controller in layer.Controllers)
-                {
-                    count += controller.GetParticleCount();
-                }
+                count += controller.GetParticleCount();
             }
 
             canvas.DrawText($"Particle Count: {count}", 10, 20, DEBUG_PAINT);

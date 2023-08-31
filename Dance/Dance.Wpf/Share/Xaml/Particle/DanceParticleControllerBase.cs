@@ -30,6 +30,25 @@ namespace Dance.Wpf
         /// </summary>
         protected Random Random = new();
 
+        #region IsEnabled -- 是否启用
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public static readonly DependencyProperty IsEnabledProperty =
+            DependencyProperty.Register("IsEnabled", typeof(bool), typeof(DanceParticleControllerBase), new PropertyMetadata(true));
+
+        #endregion
+
         #region Generator -- 粒子构建器
 
         /// <summary>
@@ -64,7 +83,7 @@ namespace Dance.Wpf
         /// 生成速度
         /// </summary>
         public static readonly DependencyProperty GenerateSpeedProperty =
-            DependencyProperty.Register("GenerateSpeed", typeof(int), typeof(DanceParticleControllerBase), new PropertyMetadata(1));
+            DependencyProperty.Register("GenerateSpeed", typeof(int), typeof(DanceParticleControllerBase), new PropertyMetadata(10));
 
         #endregion
 
@@ -382,6 +401,12 @@ namespace Dance.Wpf
         {
             List<IDanceParticle> list = new();
 
+            if (!this.IsEnabled)
+            {
+                this.TotalUpdateTime = TimeSpan.Zero;
+                return list;
+            }
+
             TimeSpan one = TimeSpan.FromSeconds(1) / this.GenerateSpeed;
             this.TotalUpdateTime += dt;
 
@@ -399,7 +424,7 @@ namespace Dance.Wpf
                     this.Particles.Add(particle);
                 }
 
-                this.TotalUpdateTime = TimeSpan.Zero;
+                this.TotalUpdateTime -= one * count;
             }
 
             return list;

@@ -111,30 +111,28 @@
         <!-- 粒子引擎测试 -->
         <Border Background="Transparent" Width="800">
             <wpf:DanceParticlePanel IsShowDebugInfo="True">
-                <wpf:DanceParticleLayer>
-                    <wpf:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
+                <wpf:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
                                                     RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                                     X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
                                                     Duration="00:00:04,00:00:05" GenerateSpeed="10">
-                        <wpf:DanceParticleImageleGenerator Width="5,50" Height="5,50">
-                            <wpf:DanceImage Uri="/Dance.WpfTest;component/flower.png"></wpf:DanceImage>
-                            <wpf:DanceImage Uri="C:\Users\win\Desktop\flower2.png"></wpf:DanceImage>
-                        </wpf:DanceParticleImageleGenerator>
-                        <!--<wpf:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
+                    <wpf:DanceParticleImageleGenerator Width="5,50" Height="5,50">
+                        <wpf:DanceImage Uri="/Dance.WpfTest;component/flower.png"></wpf:DanceImage>
+                        <wpf:DanceImage Uri="C:\Users\win\Desktop\flower2.png"></wpf:DanceImage>
+                    </wpf:DanceParticleImageleGenerator>
+                    <!--<wpf:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                                  Width="10,30" Height="10,20"></wpf:DanceParticleRectangleGenerator>-->
-                        <!--<wpf:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
+                    <!--<wpf:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                               Radius="10,30"></wpf:DanceParticleCircleGenerator>-->
-                    </wpf:DanceParticleControllerBox>
-                    <!--<wpf:DanceParticleControllerBall TranslateSpeedX="-100,100" TranslateSpeedY="-100,100" TranslateSpeedZ="-100,100"
+                </wpf:DanceParticleControllerBox>
+                <!--<wpf:DanceParticleControllerBall TranslateSpeedX="-100,100" TranslateSpeedY="-100,100" TranslateSpeedZ="-100,100"
                                                      RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                                      Position="400,200,0" Radius="10" 
                                                      Perspective="-0.001" Duration="5,8" GenerateSpeed="0.5">
                         -->
-                    <!--<wpf:DanceParticleImageleGenerator Source="C:\Users\win\Desktop\flower.png" Width="5,50" Height="5,50"></wpf:DanceParticleImageleGenerator>-->
-                    <!--<wpf:DanceParticleRectangleGenerator></wpf:DanceParticleRectangleGenerator>-->
-                    <!--
+                <!--<wpf:DanceParticleImageleGenerator Source="C:\Users\win\Desktop\flower.png" Width="5,50" Height="5,50"></wpf:DanceParticleImageleGenerator>-->
+                <!--<wpf:DanceParticleRectangleGenerator></wpf:DanceParticleRectangleGenerator>-->
+                <!--
                     </wpf:DanceParticleControllerBall>-->
-                </wpf:DanceParticleLayer>
             </wpf:DanceParticlePanel>
         </Border>
     </Grid>

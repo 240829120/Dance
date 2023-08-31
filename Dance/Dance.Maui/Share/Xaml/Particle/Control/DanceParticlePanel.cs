@@ -14,12 +14,12 @@ namespace Dance.Maui
     /// <summary>
     /// 粒子面板
     /// </summary>
-    [ContentProperty(nameof(Layers))]
+    [ContentProperty(nameof(Controllers))]
     public class DanceParticlePanel : SKCanvasView
     {
         public DanceParticlePanel()
         {
-            this.Layers = new();
+            this.Controllers = new();
 
             this.PaintSurface += DanceParticlePanel_PaintSurface;
 
@@ -52,22 +52,22 @@ namespace Dance.Maui
         /// </summary>
         private Stopwatch? RunningAnimationStopwatch;
 
-        #region Layers -- 粒子层集合
+        #region Controllers -- 粒子控制器
 
         /// <summary>
-        /// 粒子层集合
+        /// 粒子控制器
         /// </summary>
-        public List<DanceParticleLayer> Layers
+        public List<DanceParticleControllerBase> Controllers
         {
-            get { return (List<DanceParticleLayer>)GetValue(LayersProperty); }
-            set { SetValue(LayersProperty, value); }
+            get { return (List<DanceParticleControllerBase>)GetValue(ControllersProperty); }
+            set { SetValue(ControllersProperty, value); }
         }
 
         /// <summary>
-        /// 粒子层集合
+        /// 粒子控制器
         /// </summary>
-        public static readonly BindableProperty LayersProperty =
-            BindableProperty.Create(nameof(Layers), typeof(List<DanceParticleLayer>), typeof(DanceParticleLayer), null);
+        public static readonly BindableProperty ControllersProperty =
+            BindableProperty.Create(nameof(Controllers), typeof(List<DanceParticleControllerBase>), typeof(DanceParticlePanel), null);
 
         #endregion
 
@@ -86,7 +86,7 @@ namespace Dance.Maui
         /// 粒子层集合
         /// </summary>
         public static readonly BindableProperty IsShowDebugInfoProperty =
-            BindableProperty.Create(nameof(IsShowDebugInfo), typeof(bool), typeof(DanceParticleLayer), null);
+            BindableProperty.Create(nameof(IsShowDebugInfo), typeof(bool), typeof(DanceParticlePanel), null);
 
         #endregion
 
@@ -103,14 +103,11 @@ namespace Dance.Maui
                     this.LastRenderingTime = this.RunningAnimationStopwatch.Elapsed;
                     this.FPS = (float)(1f / dt.TotalSeconds);
 
-                    foreach (DanceParticleLayer layer in this.Layers)
+                    foreach (IDanceParticleController controller in this.Controllers)
                     {
-                        if (!layer.IsEnabled)
-                            continue;
-
-                        layer.Destory(dt);
-                        layer.Step(dt);
-                        layer.Generate(dt);
+                        controller.Destory(dt);
+                        controller.Step(dt);
+                        controller.Generate(dt);
                     }
 
                     this.InvalidateSurface();
@@ -143,9 +140,9 @@ namespace Dance.Maui
                 return;
 
             e.Surface.Canvas.Clear();
-            foreach (DanceParticleLayer layer in this.Layers)
+            foreach (IDanceParticleController controller in this.Controllers)
             {
-                layer.Draw(e.Info.Size, e.Surface.Canvas);
+                controller.Draw(e.Info.Size, e.Surface.Canvas);
             }
 
             if (this.IsShowDebugInfo)
@@ -163,13 +160,9 @@ namespace Dance.Maui
             canvas.ResetMatrix();
 
             int count = 0;
-
-            foreach (DanceParticleLayer layer in this.Layers)
+            foreach (IDanceParticleController controller in this.Controllers)
             {
-                foreach (IDanceParticleController controller in layer.Controllers)
-                {
-                    count += controller.GetParticleCount();
-                }
+                count += controller.GetParticleCount();
             }
 
             canvas.DrawText($"Particle Count: {count}", 10, 20, DEBUG_PAINT);
