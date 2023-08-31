@@ -1,43 +1,42 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:dance="clr-namespace:Dance;assembly=Dance"
-             xmlns:maui="clr-namespace:Dance.Maui;assembly=Dance.Maui"
+             xmlns:dance="http://schemas.dance.com/maui"
              x:Class="Dance.MauiTest.MainPage">
 
     <Grid RowDefinitions="*" BackgroundColor="Transparent">
-        <!--<maui:DanceNavigationView x:Name="lv" SwitchMode="RotationCenter_Opacity" SwitchEasing="{x:Static Easing.SpringOut}" IsShowNavigationBar="True" maui:DanceNavigationSwitchRotationOption.Angle="360" SwitchDuration="00:00:02" >
-            <maui:DanceNavigationView.ItemTemplate>
+        <!--<dance:DanceNavigationView x:Name="lv" SwitchMode="RotationCenter_Opacity" SwitchEasing="{x:Static Easing.SpringOut}" IsShowNavigationBar="True" dance:DanceNavigationSwitchRotationOption.Angle="360" SwitchDuration="00:00:02" >
+            <dance:DanceNavigationView.ItemTemplate>
                 <DataTemplate>
-                    <maui:DanceNavigationItem>
+                    <dance:DanceNavigationItem>
                         <Image Source="{Binding}" Aspect="AspectFit"></Image>
-                    </maui:DanceNavigationItem>
+                    </dance:DanceNavigationItem>
                 </DataTemplate>
-            </maui:DanceNavigationView.ItemTemplate>
-        </maui:DanceNavigationView>-->
+            </dance:DanceNavigationView.ItemTemplate>
+        </dance:DanceNavigationView>-->
 
-        <!--<maui:DriftEffect Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill"></maui:DriftEffect>-->
+        <!--<dance:DriftEffect Grid.Row="1" VerticalOptions="Fill" HorizontalOptions="Fill"></dance:DriftEffect>-->
 
 
-        <!--<maui:DanceVideoPreview Source="https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d548f2a7814d458f85451be0bd0d11b5.mp4?type=video/mp4"  PlaybackMode="All"></maui:DanceVideoPreview>-->
+        <!--<dance:DanceVideoPreview Source="https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d548f2a7814d458f85451be0bd0d11b5.mp4?type=video/mp4"  PlaybackMode="All"></dance:DanceVideoPreview>-->
 
-        <!--<maui:DanceButton Command="{Binding Path=ClickCommand}">
+        <!--<dance:DanceButton Command="{Binding Path=ClickCommand}">
             <Ellipse WidthRequest="300" HeightRequest="300" Fill="Red"></Ellipse>
-        </maui:DanceButton>-->
+        </dance:DanceButton>-->
 
-        <!--<maui:DanceCheckBox WidthRequest="30" HeightRequest="30">
-            <maui:DanceCheckBox.CheckedContent>
+        <!--<dance:DanceCheckBox WidthRequest="30" HeightRequest="30">
+            <dance:DanceCheckBox.CheckedContent>
                 <Ellipse WidthRequest="30" HeightRequest="30" Fill="Red"></Ellipse>
-            </maui:DanceCheckBox.CheckedContent>
-            <maui:DanceCheckBox.UnCheckedContent>
+            </dance:DanceCheckBox.CheckedContent>
+            <dance:DanceCheckBox.UnCheckedContent>
                 <Ellipse WidthRequest="30" HeightRequest="30" Fill="Yellow"></Ellipse>
-            </maui:DanceCheckBox.UnCheckedContent>
-        </maui:DanceCheckBox>-->
+            </dance:DanceCheckBox.UnCheckedContent>
+        </dance:DanceCheckBox>-->
 
-        <!--<maui:DancePhysicsItemsControl x:Name="layout" Grid.RowSpan="2" StepSpeed="2">
-            <maui:DancePhysicsItemJointGraphics></maui:DancePhysicsItemJointGraphics>
+        <!--<dance:DancePhysicsItemsControl x:Name="layout" Grid.RowSpan="2" StepSpeed="2">
+            <dance:DancePhysicsItemJointGraphics></dance:DancePhysicsItemJointGraphics>
 
-            <maui:DancePhysicsItem>
+            <dance:DancePhysicsItem>
                 <Rectangle x:Name="r1" WidthRequest="200" HeightRequest="40" >
                     <Rectangle.Fill>
                         <LinearGradientBrush>
@@ -47,15 +46,15 @@
                     </Rectangle.Fill>
                 </Rectangle>
 
-                <maui:DancePhysicsItem.Body>
-                    <maui:DanceBody x:Name="bodyA" LinearVelocity="100,0" Position="100,0" AngularVelocity="1">
-                        <maui:DanceRectangleFixture Width="200" Height="40"></maui:DanceRectangleFixture>
-                    </maui:DanceBody>
-                </maui:DancePhysicsItem.Body>
-            </maui:DancePhysicsItem>
+                <dance:DancePhysicsItem.Body>
+                    <dance:DanceBody x:Name="bodyA" LinearVelocity="100,0" Position="100,0" AngularVelocity="1">
+                        <dance:DanceRectangleFixture Width="200" Height="40"></dance:DanceRectangleFixture>
+                    </dance:DanceBody>
+                </dance:DancePhysicsItem.Body>
+            </dance:DancePhysicsItem>
 
 
-            <maui:DancePhysicsItem>
+            <dance:DancePhysicsItem>
                 <Ellipse WidthRequest="40" HeightRequest="40">
                     <Ellipse.Fill>
                         <LinearGradientBrush>
@@ -65,80 +64,80 @@
                     </Ellipse.Fill>
                 </Ellipse>
 
-                <maui:DancePhysicsItem.Body>
-                    <maui:DanceBody x:Name="bodyB" LinearVelocity="-100,0" Position="500,0" AngularVelocity="0">
-                        <maui:DanceCircleFixture Radius="20" Friction="0.8"></maui:DanceCircleFixture>
-                    </maui:DanceBody>
-                </maui:DancePhysicsItem.Body>
-            </maui:DancePhysicsItem>
+                <dance:DancePhysicsItem.Body>
+                    <dance:DanceBody x:Name="bodyB" LinearVelocity="-100,0" Position="500,0" AngularVelocity="0">
+                        <dance:DanceCircleFixture Radius="20" Friction="0.8"></dance:DanceCircleFixture>
+                    </dance:DanceBody>
+                </dance:DancePhysicsItem.Body>
+            </dance:DancePhysicsItem>
 
-            <maui:DancePhysicsItem>
+            <dance:DancePhysicsItem>
                 <Grid WidthRequest="40" HeightRequest="100">
                     <Rectangle WidthRequest="40" HeightRequest="40" VerticalOptions="Start" Fill="Pink"></Rectangle>
                     <Rectangle WidthRequest="40" HeightRequest="40" VerticalOptions="End" Fill="Orange"></Rectangle>
                 </Grid>
 
-                <maui:DancePhysicsItem.Body>
-                    <maui:DanceBody x:Name="body" LinearVelocity="0,0" Position="300,0" AngularVelocity="1">
-                        <maui:DanceRectangleFixture Width="40" Height="40" Position="0,-30"></maui:DanceRectangleFixture>
-                        <maui:DanceRectangleFixture Width="40" Height="40" Position="0,30"></maui:DanceRectangleFixture>
-                    </maui:DanceBody>
-                </maui:DancePhysicsItem.Body>
-            </maui:DancePhysicsItem>
+                <dance:DancePhysicsItem.Body>
+                    <dance:DanceBody x:Name="body" LinearVelocity="0,0" Position="300,0" AngularVelocity="1">
+                        <dance:DanceRectangleFixture Width="40" Height="40" Position="0,-30"></dance:DanceRectangleFixture>
+                        <dance:DanceRectangleFixture Width="40" Height="40" Position="0,30"></dance:DanceRectangleFixture>
+                    </dance:DanceBody>
+                </dance:DancePhysicsItem.Body>
+            </dance:DancePhysicsItem>
 
-            <maui:DancePhysicsItem>
+            <dance:DancePhysicsItem>
                 <Path WidthRequest="80" HeightRequest="80" Data="M 40,0 L 80,80 0,80Z" Fill="Orange"></Path>
-                <maui:DancePhysicsItem.Body>
-                    <maui:DanceBody Position="600,0">
-                        <maui:DancePolygonFixture Points="0,-40 40,40 -40,40"></maui:DancePolygonFixture>
-                    </maui:DanceBody>
-                </maui:DancePhysicsItem.Body>
-            </maui:DancePhysicsItem>
+                <dance:DancePhysicsItem.Body>
+                    <dance:DanceBody Position="600,0">
+                        <dance:DancePolygonFixture Points="0,-40 40,40 -40,40"></dance:DancePolygonFixture>
+                    </dance:DanceBody>
+                </dance:DancePhysicsItem.Body>
+            </dance:DancePhysicsItem>
 
 
-            <maui:DancePhysicsItem>
+            <dance:DancePhysicsItem>
                 <Rectangle WidthRequest="800" HeightRequest="40" Fill="gray">
                 </Rectangle>
-                <maui:DancePhysicsItem.Body>
-                    <maui:DanceBody Position="400,420" BodyType="Static">
-                        <maui:DanceRectangleFixture Width="800" Height="40"></maui:DanceRectangleFixture>
-                    </maui:DanceBody>
-                </maui:DancePhysicsItem.Body>
-                <maui:DancePhysicsItem.Joints>
-                    <maui:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference bodyB}" AnchorA="-96,-20"
+                <dance:DancePhysicsItem.Body>
+                    <dance:DanceBody Position="400,420" BodyType="Static">
+                        <dance:DanceRectangleFixture Width="800" Height="40"></dance:DanceRectangleFixture>
+                    </dance:DanceBody>
+                </dance:DancePhysicsItem.Body>
+                <dance:DancePhysicsItem.Joints>
+                    <dance:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference bodyB}" AnchorA="-96,-20"
                             StrokeDashPattern="2,2"
-                            StrokeColor="Red" StrokeSize="2"></maui:DanceDistanceJoint>
-                    <maui:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference body}" AnchorB="0,-50"
+                            StrokeColor="Red" StrokeSize="2"></dance:DanceDistanceJoint>
+                    <dance:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference body}" AnchorB="0,-50"
                             StrokeDashPattern="2,2"
-                            StrokeColor="Pink" StrokeSize="2"></maui:DanceDistanceJoint>
-                </maui:DancePhysicsItem.Joints>
-            </maui:DancePhysicsItem>
+                            StrokeColor="Pink" StrokeSize="2"></dance:DanceDistanceJoint>
+                </dance:DancePhysicsItem.Joints>
+            </dance:DancePhysicsItem>
 
-            <maui:DancePhysicsItem>
+            <dance:DancePhysicsItem>
                 <Rectangle WidthRequest="400" HeightRequest="200" Fill="skyblue" Opacity="0.4" Margin="800,400,0,0" HorizontalOptions="Start" VerticalOptions="Start"></Rectangle>
-                <maui:DancePhysicsItem.Controllers>
-                    <maui:DanceBuoyancyController WorldLowerBound="800,400" WorldUpperBound="1200,600" Density="0.6"></maui:DanceBuoyancyController>
-                </maui:DancePhysicsItem.Controllers>
-            </maui:DancePhysicsItem>
+                <dance:DancePhysicsItem.Controllers>
+                    <dance:DanceBuoyancyController WorldLowerBound="800,400" WorldUpperBound="1200,600" Density="0.6"></dance:DanceBuoyancyController>
+                </dance:DancePhysicsItem.Controllers>
+            </dance:DancePhysicsItem>
 
-        </maui:DancePhysicsItemsControl>-->
+        </dance:DancePhysicsItemsControl>-->
         <!-- 粒子引擎测试 -->
 
         <Border Background="Transparent" WidthRequest="400">
-            <maui:DanceParticlePanel IsShowDebugInfo="True">
-                <maui:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
+            <dance:DanceParticlePanel IsShowDebugInfo="True">
+                <dance:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
                                                      RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                                      X="0,400" Y="0,0" Z="-20,20" Perspective="-0.0005" IsEnabled="True"
                                                      Duration="00:00:04,00:00:05" GenerateSpeed="10">
-                    <maui:DanceParticleImageleGenerator Width="5,50" Height="5,50">
-                        <maui:DanceParticleImageDefine Uri="Dance.MauiTest.Resources.Images.flower.png"></maui:DanceParticleImageDefine>
-                        <maui:DanceParticleImageDefine Uri="Dance.MauiTest.Resources.Images.flower2.png"></maui:DanceParticleImageDefine>
-                    </maui:DanceParticleImageleGenerator>
-                    <!--<maui:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
-                                                              Width="10,30" Height="10,20"></maui:DanceParticleRectangleGenerator>-->
+                    <dance:DanceParticleImageleGenerator Width="5,50" Height="5,50">
+                        <dance:DanceParticleImageDefine Uri="Dance.MauiTest.Resources.Images.flower.png"></dance:DanceParticleImageDefine>
+                        <dance:DanceParticleImageDefine Uri="Dance.MauiTest.Resources.Images.flower2.png"></dance:DanceParticleImageDefine>
+                    </dance:DanceParticleImageleGenerator>
+                    <!--<dance:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
+                                                              Width="10,30" Height="10,20"></dance:DanceParticleRectangleGenerator>-->
                     <!--<wpf:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                       Radius="10,30"></wpf:DanceParticleCircleGenerator>-->
-                </maui:DanceParticleControllerBox>
+                </dance:DanceParticleControllerBox>
                 <!--<wpf:DanceParticleControllerBall TranslateSpeedX="-100,100" TranslateSpeedY="-100,100" TranslateSpeedZ="-100,100"
                                              RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                              Position="400,200,0" Radius="10" 
@@ -148,7 +147,7 @@
                 <!--<wpf:DanceParticleRectangleGenerator></wpf:DanceParticleRectangleGenerator>-->
                 <!--
             </wpf:DanceParticleControllerBall>-->
-            </maui:DanceParticlePanel>
+            </dance:DanceParticlePanel>
         </Border>
     </Grid>
 
