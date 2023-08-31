@@ -16,14 +16,14 @@ namespace Dance.Wpf
     public abstract class DanceParticleControllerBase : DependencyObject, IDanceParticleController
     {
         /// <summary>
-        /// 生成数量
+        /// 总更新时间
         /// </summary>
-        private float GenerateCount;
+        private TimeSpan TotalUpdateTime;
 
         /// <summary>
         /// 粒子集合
         /// </summary>
-        protected List<IDanceParticle> Particles = new(100);
+        protected List<IDanceParticle> Particles = new(200);
 
         /// <summary>
         /// 随机数
@@ -45,14 +45,7 @@ namespace Dance.Wpf
         /// 粒子构建器
         /// </summary>
         public static readonly DependencyProperty GeneratorProperty =
-            DependencyProperty.Register("Generator", typeof(IDanceParticleGenerator), typeof(DanceParticleControllerBase), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceParticleControllerBase controller)
-                    return;
-
-                controller.GenerateCount = 0;
-
-            })));
+            DependencyProperty.Register("Generator", typeof(IDanceParticleGenerator), typeof(DanceParticleControllerBase), new PropertyMetadata(null));
 
         #endregion
 
@@ -61,9 +54,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 生成速度
         /// </summary>
-        public float GenerateSpeed
+        public int GenerateSpeed
         {
-            get { return (float)GetValue(GenerateSpeedProperty); }
+            get { return (int)GetValue(GenerateSpeedProperty); }
             set { SetValue(GenerateSpeedProperty, value); }
         }
 
@@ -71,7 +64,7 @@ namespace Dance.Wpf
         /// 生成速度
         /// </summary>
         public static readonly DependencyProperty GenerateSpeedProperty =
-            DependencyProperty.Register("GenerateSpeed", typeof(float), typeof(DanceParticleControllerBase), new PropertyMetadata(0.05f));
+            DependencyProperty.Register("GenerateSpeed", typeof(int), typeof(DanceParticleControllerBase), new PropertyMetadata(1));
 
         #endregion
 
@@ -389,23 +382,25 @@ namespace Dance.Wpf
         {
             List<IDanceParticle> list = new();
 
-            this.GenerateCount += this.GenerateSpeed;
-            if (this.GenerateCount < 1f || this.Generator == null)
-                return list;
+            TimeSpan one = TimeSpan.FromSeconds(1) / this.GenerateSpeed;
+            this.TotalUpdateTime += dt;
 
-            int count = (int)this.GenerateCount;
-            this.GenerateCount -= count;
-
-            for (int i = 0; i < count; i++)
+            int count = (int)((double)this.TotalUpdateTime.Ticks / one.Ticks);
+            if (count > 0)
             {
-                IDanceParticle particle = this.Generator.Generate();
-                particle.GeneratTime = DateTime.Now;
-                particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
+                DateTime now = DateTime.Now;
+                for (int i = 0; i < count; i++)
+                {
+                    IDanceParticle particle = this.Generator.Generate();
+                    particle.GeneratTime = now;
+                    particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
 
-                list.Add(particle);
+                    list.Add(particle);
+                    this.Particles.Add(particle);
+                }
+
+                this.TotalUpdateTime = TimeSpan.Zero;
             }
-
-            this.Particles.AddRange(list);
 
             return list;
         }

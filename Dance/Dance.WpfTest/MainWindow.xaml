@@ -115,7 +115,7 @@
                     <wpf:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
                                                     RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                                     X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
-                                                    Duration="00:00:04,00:00:05" GenerateSpeed="1">
+                                                    Duration="00:00:04,00:00:05" GenerateSpeed="10">
                         <wpf:DanceParticleImageleGenerator Width="5,50" Height="5,50">
                             <wpf:DanceImage Uri="/Dance.WpfTest;component/flower.png"></wpf:DanceImage>
                             <wpf:DanceImage Uri="C:\Users\win\Desktop\flower2.png"></wpf:DanceImage>

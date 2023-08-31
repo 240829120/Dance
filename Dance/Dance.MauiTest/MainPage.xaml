@@ -123,13 +123,13 @@
         </maui:DancePhysicsItemsControl>-->
         <!-- 粒子引擎测试 -->
 
-        <Border Background="Transparent" WidthRequest="800">
+        <Border Background="Transparent" WidthRequest="400">
             <maui:DanceParticlePanel IsShowDebugInfo="True">
                 <maui:DanceParticleLayer>
                     <maui:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
-                                            RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
-                                            X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
-                                            Duration="00:00:04,00:00:05" GenerateSpeed="1">
+                                                     RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
+                                                     X="0,400" Y="0,0" Z="-20,20" Perspective="-0.0005"
+                                                     Duration="00:00:04,00:00:05" GenerateSpeed="1">
                         <!--<maui:DanceParticleImageleGenerator Width="5,50" Height="5,50">
                             -->
                         <!--<dance:DanceImage Uri="/Dance.WpfTest;component/flower.png"></dance:DanceImage>-->

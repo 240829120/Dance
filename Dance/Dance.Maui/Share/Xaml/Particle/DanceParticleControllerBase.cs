@@ -17,9 +17,9 @@ namespace Dance.Maui
     public abstract class DanceParticleControllerBase : BindableObject, IDanceParticleController
     {
         /// <summary>
-        /// 生成数量
+        /// 总更新时间
         /// </summary>
-        private float GenerateCount;
+        private TimeSpan TotalUpdateTime;
 
         /// <summary>
         /// 粒子集合
@@ -51,7 +51,7 @@ namespace Dance.Maui
                 if (s is not DanceParticleControllerBase controller)
                     return;
 
-                controller.GenerateCount = 0;
+                controller.TotalUpdateTime = TimeSpan.Zero;
             });
 
         #endregion
@@ -389,23 +389,25 @@ namespace Dance.Maui
         {
             List<IDanceParticle> list = new();
 
-            this.GenerateCount += this.GenerateSpeed;
-            if (this.GenerateCount < 1f || this.Generator == null)
-                return list;
+            TimeSpan one = TimeSpan.FromSeconds(1) / this.GenerateSpeed;
+            this.TotalUpdateTime += dt;
 
-            int count = (int)this.GenerateCount;
-            this.GenerateCount -= count;
-
-            for (int i = 0; i < count; i++)
+            int count = (int)((double)this.TotalUpdateTime.Ticks / one.Ticks);
+            if (count > 0)
             {
-                IDanceParticle particle = this.Generator.Generate();
-                particle.GeneratTime = DateTime.Now;
-                particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
+                DateTime now = DateTime.Now;
+                for (int i = 0; i < count; i++)
+                {
+                    IDanceParticle particle = this.Generator.Generate();
+                    particle.GeneratTime = now;
+                    particle.Duration = this.Random.NextTimeSpan(this.Duration.MinValue, this.Duration.MaxValue);
 
-                list.Add(particle);
+                    list.Add(particle);
+                    this.Particles.Add(particle);
+                }
+
+                this.TotalUpdateTime = TimeSpan.Zero;
             }
-
-            this.Particles.AddRange(list);
 
             return list;
         }

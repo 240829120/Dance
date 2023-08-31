@@ -115,6 +115,9 @@ namespace Dance.Wpf
 
             foreach (DanceParticleLayer layer in this.Layers)
             {
+                if (!layer.IsEnabled)
+                    continue;
+
                 layer.Destory(dt);
                 layer.Step(dt);
                 layer.Generate(dt);

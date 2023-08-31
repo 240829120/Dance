@@ -21,6 +21,25 @@ namespace Dance.Maui
             this.Controllers = new();
         }
 
+        #region IsEnabled -- 是否启用
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool IsEnabled
+        {
+            get { return (bool)GetValue(IsEnabledProperty); }
+            set { SetValue(IsEnabledProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public static readonly BindableProperty IsEnabledProperty =
+            BindableProperty.Create(nameof(IsEnabled), typeof(bool), typeof(DanceParticleLayer), true);
+
+        #endregion
+
         #region Controllers -- 粒子控制器
 
         /// <summary>
