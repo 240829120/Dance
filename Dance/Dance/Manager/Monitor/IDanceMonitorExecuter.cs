@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 namespace Dance
 {
     /// <summary>
-    /// 操作记录管理器
+    /// 监视执行器
     /// </summary>
-    public interface IDanceRecordManager : IDisposable
+    public interface IDanceMonitorExecuter : IDisposable
     {
         /// <summary>
-        /// 记录操作日志
+        /// 初始化
         /// </summary>
-        /// <param name="content">内容</param>
-        void Log(string content);
+        void Initialize();
 
         /// <summary>
-        /// 将操作日志输出到文件
+        /// 更新
         /// </summary>
-        void Flush();
+        /// <param name="info">监视信息</param>
+        void Update(IDanceMonitorInfo? info);
     }
 }

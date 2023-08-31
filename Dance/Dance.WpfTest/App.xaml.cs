@@ -20,6 +20,9 @@ namespace Dance.WpfTest
 
             DanceDomain.Current = new();
             DanceDomain.Current.Build();
+
+            IDanceMonitorManager manager = DanceDomain.Current.LifeScope.Resolve<IDanceMonitorManager>();
+            manager.MonitorInfo = new DanceMonitorInfo();
         }
     }
 }
