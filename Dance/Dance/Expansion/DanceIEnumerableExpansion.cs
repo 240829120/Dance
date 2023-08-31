@@ -10,7 +10,7 @@ namespace Dance
     /// <summary>
     /// IEnumerable 扩展
     /// </summary>
-    public static class IEnumerableExpansion
+    public static class DanceIEnumerableExpansion
     {
         /// <summary>
         /// 获取对象在集合中的位序

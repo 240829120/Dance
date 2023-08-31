@@ -9,7 +9,7 @@ namespace Dance
     /// <summary>
     /// 随机数扩展
     /// </summary>
-    public static class RandomExpansion
+    public static class DanceRandomExpansion
     {
         /// <summary>
         /// 获取随机值
