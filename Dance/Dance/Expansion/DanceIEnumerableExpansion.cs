@@ -79,5 +79,33 @@ namespace Dance
 
             return null;
         }
+
+        /// <summary>
+        /// 获取最大值或默认值
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="items">数据集合</param>
+        /// <returns>最大值或默认值</returns>
+        public static T? MaxOrDefault<T>(this IEnumerable<T> items)
+        {
+            if (!items.Any())
+                return default;
+
+            return items.Max();
+        }
+
+        /// <summary>
+        /// 获取最小值或默认值
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="items">数据集合</param>
+        /// <returns>最小值或默认值</returns>
+        public static T? MinOrDefault<T>(this IEnumerable<T> items)
+        {
+            if (!items.Any())
+                return default;
+
+            return items.Min();
+        }
     }
 }
