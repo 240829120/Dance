@@ -55,8 +55,6 @@ namespace Dance.WpfTest
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
-            IDanceMonitorManager manager = DanceDomain.Current.LifeScope.Resolve<IDanceMonitorManager>();
-
             DanceDomain.Current.Dispose();
             Application.Current.Shutdown();
         }

@@ -129,14 +129,11 @@
                                                      RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                                      X="0,400" Y="0,0" Z="-20,20" Perspective="-0.0005" IsEnabled="True"
                                                      Duration="00:00:04,00:00:05" GenerateSpeed="10">
-                    <!--<maui:DanceParticleImageleGenerator Width="5,50" Height="5,50">
-                            -->
-                    <!--<dance:DanceImage Uri="/Dance.WpfTest;component/flower.png"></dance:DanceImage>-->
-                    <!--
-                            <maui:DanceImage Uri="C:\Users\win\Desktop\flower2.png"></maui:DanceImage>
-                        </maui:DanceParticleImageleGenerator>-->
-                    <maui:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
-                                                              Width="10,30" Height="10,20"></maui:DanceParticleRectangleGenerator>
+                    <maui:DanceParticleImageleGenerator Width="5,50" Height="5,50">
+                        <maui:DanceImage Uri="C:\Users\win\Desktop\flower2.png"></maui:DanceImage>
+                    </maui:DanceParticleImageleGenerator>
+                    <!--<maui:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
+                                                              Width="10,30" Height="10,20"></maui:DanceParticleRectangleGenerator>-->
                     <!--<wpf:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                       Radius="10,30"></wpf:DanceParticleCircleGenerator>-->
                 </maui:DanceParticleControllerBox>
