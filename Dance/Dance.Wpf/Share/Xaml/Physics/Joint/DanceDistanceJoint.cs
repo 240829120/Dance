@@ -36,7 +36,7 @@ namespace Dance.Wpf
         /// 弹性系数
         /// </summary>
         public static readonly DependencyProperty FrequencyProperty =
-            DependencyProperty.Register("Frequency", typeof(float), typeof(DanceDistanceJoint), new PropertyMetadata(0.3f));
+            DependencyProperty.Register("Frequency", typeof(float), typeof(DanceDistanceJoint), new PropertyMetadata(0.95f));
 
         #endregion
 

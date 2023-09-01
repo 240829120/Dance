@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dance="http://schemas.dance.com/wpf"
         xmlns:local="clr-namespace:Dance.WpfTest" 
-        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True"
+        WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Background="Transparent"
         Title="MainWindow" Height="800" Width="1400">
     <Grid>
@@ -109,12 +109,12 @@
         </dance:DancePhysicsItemsControl>-->
 
         <!-- 粒子引擎测试 -->
-        <Border Background="Transparent" Width="800">
+        <Border Background="White">
             <dance:DanceParticlePanel IsShowDebugInfo="True">
                 <dance:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
-                                                    RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
-                                                    X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
-                                                    Duration="00:00:04,00:00:05" GenerateSpeed="10">
+                                                  RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
+                                                  X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
+                                                  Duration="00:00:04,00:00:05" GenerateSpeed="10">
                     <dance:DanceParticleImageleGenerator Width="5,50" Height="5,50">
                         <dance:DanceParticleImageDefine Uri="/Dance.WpfTest;component/flower.png"></dance:DanceParticleImageDefine>
                         <dance:DanceParticleImageDefine Uri="/Dance.WpfTest;component/flower2.png"></dance:DanceParticleImageDefine>

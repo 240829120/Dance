@@ -20,7 +20,6 @@ namespace Dance.Wpf
         public DanceParticlePanel()
         {
             this.Controllers = new();
-            this.IsHitTestVisible = false;
 
             this.PaintSurface += DanceParticlePanel_PaintSurface;
 

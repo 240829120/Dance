@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
@@ -34,6 +35,11 @@ public class DanceNavigationView : ItemsControl
         ProviderDic.Add(DanceNavigationSwitchMode.RotationCenter_Opacity, new DanceNavigationSwitchProvider_RotationCenter_Opacity());
 
         DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceNavigationView), new FrameworkPropertyMetadata(typeof(DanceNavigationView)));
+    }
+
+    public DanceNavigationView()
+    {
+        this.Loaded += DanceNavigationView_Loaded;
     }
 
     // ========================================================================================================
@@ -186,5 +192,19 @@ public class DanceNavigationView : ItemsControl
     internal void DownSwiped()
     {
         ProviderDic[this.SwitchMode].DownSwiped(this);
+    }
+
+    // ========================================================================================================
+    // Private Function
+
+    /// <summary>
+    /// 加载完成
+    /// </summary>
+    private void DanceNavigationView_Loaded(object sender, RoutedEventArgs e)
+    {
+        this.Loaded -= DanceNavigationView_Loaded;
+
+        // 第一次加载时切换至当前选择视图
+        ProviderDic[this.SwitchMode].Switch(this, null, this.SelectedItem);
     }
 }
