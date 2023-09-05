@@ -163,8 +163,7 @@ namespace Dance.Wpf
                 return;
 
             this.UpdatingTime = args.RenderingTime;
-
-            this.InvalidateVisual();
+            this.InvalidateArrange();
         }
     }
 }

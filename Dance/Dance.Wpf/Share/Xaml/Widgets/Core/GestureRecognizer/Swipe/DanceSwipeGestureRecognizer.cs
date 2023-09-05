@@ -89,14 +89,14 @@ namespace Dance.Wpf
         {
             this.UnRegister();
 
-            element.PreviewMouseLeftButtonDown -= Element_PreviewMouseLeftButtonDown;
-            element.PreviewMouseLeftButtonDown += Element_PreviewMouseLeftButtonDown;
+            element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
+            element.MouseLeftButtonDown += Element_MouseLeftButtonDown;
 
-            element.PreviewMouseLeftButtonUp -= Element_PreviewMouseLeftButtonUp;
-            element.PreviewMouseLeftButtonUp += Element_PreviewMouseLeftButtonUp;
+            element.MouseLeftButtonUp -= Element_MouseLeftButtonUp;
+            element.MouseLeftButtonUp += Element_MouseLeftButtonUp;
 
-            element.PreviewMouseMove -= Element_PreviewMouseMove;
-            element.PreviewMouseMove += Element_PreviewMouseMove;
+            element.MouseMove -= Element_MouseMove;
+            element.MouseMove += Element_MouseMove;
 
             this.Target = new WeakReference<FrameworkElement>(element);
         }
@@ -109,9 +109,9 @@ namespace Dance.Wpf
             if (this.Target == null || !this.Target.TryGetTarget(out var element))
                 return;
 
-            element.PreviewMouseLeftButtonDown -= Element_PreviewMouseLeftButtonDown;
-            element.PreviewMouseLeftButtonUp -= Element_PreviewMouseLeftButtonUp;
-            element.PreviewMouseMove -= Element_PreviewMouseMove;
+            element.MouseLeftButtonDown -= Element_MouseLeftButtonDown;
+            element.MouseLeftButtonUp -= Element_MouseLeftButtonUp;
+            element.MouseMove -= Element_MouseMove;
 
             this.Target = null;
         }
@@ -122,7 +122,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 鼠标按下
         /// </summary>
-        private void Element_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Element_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
@@ -134,7 +134,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 鼠标抬起
         /// </summary>
-        private void Element_PreviewMouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void Element_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;
@@ -146,7 +146,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 鼠标移动
         /// </summary>
-        private void Element_PreviewMouseMove(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Element_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
             if (this.BeginPoint == null || sender is not FrameworkElement element)
                 return;

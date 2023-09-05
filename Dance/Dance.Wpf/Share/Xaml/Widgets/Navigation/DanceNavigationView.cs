@@ -205,6 +205,6 @@ public class DanceNavigationView : ItemsControl
         this.Loaded -= DanceNavigationView_Loaded;
 
         // 第一次加载时切换至当前选择视图
-        ProviderDic[this.SwitchMode].Switch(this, null, this.SelectedItem);
+        ProviderDic[DanceNavigationSwitchMode.Opacity].Switch(this, null, this.SelectedItem);
     }
 }
