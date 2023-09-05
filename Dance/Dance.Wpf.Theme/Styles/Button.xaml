@@ -1,6 +1,19 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <Style x:Key="Button_None" TargetType="Button">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Opacity" Value="1"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ContentPresenter VerticalAlignment="Stretch" HorizontalAlignment="Stretch"></ContentPresenter>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="Button_Master" TargetType="Button">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="#ff1e74f9"></Setter>
@@ -19,7 +32,7 @@
                 <Setter Property="Background" Value="#aa1e74f9"></Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.4"></Setter>
+                <Setter Property="Opacity" Value="0.35"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -42,7 +55,7 @@
                 <Setter Property="Background" Value="#aad9d9d9"></Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.4"></Setter>
+                <Setter Property="Opacity" Value="0.35"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
