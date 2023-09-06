@@ -146,6 +146,25 @@ public class DanceNavigationView : ItemsControl
 
     #endregion
 
+    #region IsSwipeGestureEnabled --  «∑Ò∆Ù”√«·…®
+
+    /// <summary>
+    ///  «∑Ò∆Ù”√«·…®
+    /// </summary>
+    public bool IsSwipeGestureEnabled
+    {
+        get { return (bool)GetValue(IsSwipeGestureEnabledProperty); }
+        set { SetValue(IsSwipeGestureEnabledProperty, value); }
+    }
+
+    /// <summary>
+    ///  «∑Ò∆Ù”√«·…®
+    /// </summary>
+    public static readonly DependencyProperty IsSwipeGestureEnabledProperty =
+        DependencyProperty.Register("IsSwipeGestureEnabled", typeof(bool), typeof(DanceNavigationView), new PropertyMetadata(false));
+
+    #endregion
+
     // ========================================================================================================
     // Protected Override
 
