@@ -5,24 +5,24 @@
     <Style TargetType="local:DanceWindowMinPart">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="#AAFFFFFF"></Setter>
+        <Setter Property="Foreground" Value="#FF494949"></Setter>
         <Setter Property="Width" Value="40"></Setter>
         <Setter Property="Width" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceWindowMinPart">
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                        <Rectangle Height="2" Fill="{TemplateBinding Foreground}" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center"></Rectangle>
+                        <Rectangle Height="1" Fill="{TemplateBinding Foreground}" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center"></Rectangle>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#44FFFFFF"></Setter>
+                <Setter Property="Background" Value="#FFE2E2E2"></Setter>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#22FFFFFF"></Setter>
+                <Setter Property="Background" Value="#AAE2E2E2"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -30,25 +30,25 @@
     <Style TargetType="local:DanceWindowMaxOrNormalPart">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="#AAFFFFFF"></Setter>
+        <Setter Property="Foreground" Value="#FF494949"></Setter>
         <Setter Property="Width" Value="40"></Setter>
         <Setter Property="Width" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceWindowMaxOrNormalPart">
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                        <Grid x:Name="max" Visibility="Collapsed">
-                            <Border Height="12" Width="12" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Border>
+                        <Grid x:Name="max" Visibility="Visible">
+                            <Border Height="10" Width="10" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center"></Border>
                         </Grid>
-                        <Grid x:Name="normal" Visibility="Visible">
+                        <Grid x:Name="normal" Visibility="Collapsed">
                             <Border Height="8" Width="8" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" BorderThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,3,0"></Border>
                             <Border Height="8" Width="8" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" BorderThickness="0,1,1,0" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0,0,3"></Border>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="max" Property="Visibility" Value="Visible"></Setter>
-                            <Setter TargetName="normal" Property="Visibility" Value="Collapsed"></Setter>
+                            <Setter TargetName="normal" Property="Visibility" Value="Visible"></Setter>
+                            <Setter TargetName="max" Property="Visibility" Value="Collapsed"></Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -56,10 +56,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#44FFFFFF"></Setter>
+                <Setter Property="Background" Value="#FFE2E2E2"></Setter>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#22FFFFFF"></Setter>
+                <Setter Property="Background" Value="#AAE2E2E2"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -67,19 +67,19 @@
     <Style TargetType="local:DanceWindowClosePart">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="Foreground" Value="#AAFFFFFF"></Setter>
+        <Setter Property="Foreground" Value="#FF494949"></Setter>
         <Setter Property="Width" Value="40"></Setter>
         <Setter Property="Width" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceWindowClosePart">
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                        <Rectangle Height="2" Fill="{TemplateBinding Foreground}" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle Height="1" Fill="{TemplateBinding Foreground}" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                             <Rectangle.RenderTransform>
                                 <RotateTransform Angle="45"></RotateTransform>
                             </Rectangle.RenderTransform>
                         </Rectangle>
-                        <Rectangle Height="2" Fill="{TemplateBinding Foreground}" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                        <Rectangle Height="1" Fill="{TemplateBinding Foreground}" Width="12" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
                             <Rectangle.RenderTransform>
                                 <RotateTransform Angle="-45"></RotateTransform>
                             </Rectangle.RenderTransform>
@@ -90,10 +90,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#44FFFFFF"></Setter>
+                <Setter Property="Background" Value="#FFE2E2E2"></Setter>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#22FFFFFF"></Setter>
+                <Setter Property="Background" Value="#AAE2E2E2"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
