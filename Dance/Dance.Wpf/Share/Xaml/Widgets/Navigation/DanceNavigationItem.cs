@@ -45,6 +45,9 @@ public class DanceNavigationItem : ContentControl
         if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
+        if (!navigation.IsSwipeEnabled)
+            return;
+
         navigation.LeftSwiped();
     }
 
@@ -54,6 +57,9 @@ public class DanceNavigationItem : ContentControl
     private void RightSwiped()
     {
         if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
+            return;
+
+        if (!navigation.IsSwipeEnabled)
             return;
 
         navigation.RightSwiped();
@@ -67,6 +73,9 @@ public class DanceNavigationItem : ContentControl
         if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
             return;
 
+        if (!navigation.IsSwipeEnabled)
+            return;
+
         navigation.UpSwiped();
     }
 
@@ -76,6 +85,9 @@ public class DanceNavigationItem : ContentControl
     private void DownSwiped()
     {
         if (DanceXamlExpansion.GetVisualTreeParent<DanceNavigationView>(this) is not DanceNavigationView navigation)
+            return;
+
+        if (!navigation.IsSwipeEnabled)
             return;
 
         navigation.DownSwiped();

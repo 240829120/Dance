@@ -25,6 +25,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Aether.Physics2D" Version="2.0.0" />
+	  <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 	  <PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.5" />
 	</ItemGroup>
 
