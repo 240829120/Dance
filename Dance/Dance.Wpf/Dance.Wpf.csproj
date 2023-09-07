@@ -33,8 +33,4 @@
 		<ProjectReference Include="..\Dance\Dance.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Share\Xaml\Widgets\Action\" />
-	</ItemGroup>
-
 </Project>
