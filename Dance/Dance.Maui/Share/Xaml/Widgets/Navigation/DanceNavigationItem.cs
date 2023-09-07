@@ -26,6 +26,9 @@ public class DanceNavigationItem : DanceCollectionItem
         if (this.LogicCollectionView is not DanceNavigationView navigation)
             return;
 
+        if (!navigation.IsSwipeEnabled)
+            return;
+
         navigation.LeftSwiped();
     }
 
@@ -35,6 +38,9 @@ public class DanceNavigationItem : DanceCollectionItem
     private void RightSwiped()
     {
         if (this.LogicCollectionView is not DanceNavigationView navigation)
+            return;
+
+        if (!navigation.IsSwipeEnabled)
             return;
 
         navigation.RightSwiped();
@@ -48,6 +54,9 @@ public class DanceNavigationItem : DanceCollectionItem
         if (this.LogicCollectionView is not DanceNavigationView navigation)
             return;
 
+        if (!navigation.IsSwipeEnabled)
+            return;
+
         navigation.UpSwiped();
     }
 
@@ -57,6 +66,9 @@ public class DanceNavigationItem : DanceCollectionItem
     private void DownSwiped()
     {
         if (this.LogicCollectionView is not DanceNavigationView navigation)
+            return;
+
+        if (!navigation.IsSwipeEnabled)
             return;
 
         navigation.DownSwiped();

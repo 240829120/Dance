@@ -1,5 +1,11 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf.Theme;component/Styles/Button.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf.Theme;component/Styles/GroupBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf.Theme;component/Styles/ScrollViewer.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf.Theme;component/Styles/TextBox.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -114,6 +114,25 @@ public class DanceNavigationView : DanceCollectionView
 
     #endregion
 
+    #region IsSwipeEnabled -- 轻扫是否启用
+
+    /// <summary>
+    /// 轻扫是否启用
+    /// </summary>
+    public bool IsSwipeEnabled
+    {
+        get { return (bool)GetValue(IsSwipeEnabledProperty); }
+        set { SetValue(IsSwipeEnabledProperty, value); }
+    }
+
+    /// <summary>
+    /// 是否显示导航条
+    /// </summary>
+    public static readonly BindableProperty IsSwipeEnabledProperty =
+        BindableProperty.Create(nameof(IsSwipeEnabled), typeof(bool), typeof(DanceNavigationView), false);
+
+    #endregion
+
     // ========================================================================================================
     // Override
 
