@@ -9,19 +9,20 @@
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
         <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Padding" Value="5,0,5,0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceSeparator">
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                            <ColumnDefinition Width="24"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Rectangle Stroke="Red" StrokeDashArray="4 2" Height="1" VerticalAlignment="Center" StrokeThickness="0,1,0,0"></Rectangle>
-                        <ContentPresenter Grid.Column="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                        <local:DanceDashedLine Stroke="#ffebedf0" StrokeDashArray="5 5" Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" StrokeThickness="1"></local:DanceDashedLine>
+                        <ContentPresenter Grid.Column="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"></ContentPresenter>
-                        <Rectangle Stroke="Red" StrokeDashArray="4 2" Height="1" VerticalAlignment="Center" StrokeThickness="0,1,0,0" Grid.Column="2"></Rectangle>
+                        <local:DanceDashedLine Stroke="#ffebedf0" StrokeDashArray="5 5" Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" StrokeThickness="1" Grid.Column="2"></local:DanceDashedLine>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

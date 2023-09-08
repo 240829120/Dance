@@ -6,4 +6,8 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Dance.Wpf\Dance.Wpf.csproj" />
+  </ItemGroup>
+
 </Project>

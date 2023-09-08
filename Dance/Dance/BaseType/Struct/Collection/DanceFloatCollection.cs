@@ -39,7 +39,7 @@ namespace Dance
             if (string.IsNullOrWhiteSpace(str))
                 return list;
 
-            string[] str_values = str.Split(',', StringSplitOptions.RemoveEmptyEntries);
+            string[] str_values = str.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string str_value in str_values)
             {
