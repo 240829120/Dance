@@ -75,7 +75,7 @@ namespace Dance
                                 Directory.CreateDirectory(dir);
                             }
 
-                            string path = Path.Combine(dir, $"{DateTime.Now.ToString("yyyy_MM_dd__HH_mm_ss__fffffff")}.csv");
+                            string path = Path.Combine(dir, $"{DateTime.Now:yyyy_MM_dd__HH_mm_ss__fff}.csv");
 
                             this.CsvWriter = new CsvWriter(new StreamWriter(path), System.Globalization.CultureInfo.CurrentCulture);
                             this.CsvWriter.WriteHeader<DanceRecordInfo>();
@@ -87,6 +87,7 @@ namespace Dance
                         this.CsvWriter.NextRecord();
                         ++this.CurrentFileCount;
                     }
+                    this.CsvWriter?.Flush();
                 }
             }
             catch (Exception ex)

@@ -24,7 +24,12 @@ namespace Dance.Wpf
         /// </summary>
         public void Build()
         {
-
+            IDanceLoopManager manager = DanceDomain.Current.LifeScope.Resolve<IDanceLoopManager>();
+            manager.Register("IDanceRecordManager.Flush", 30, () =>
+            {
+                IDanceRecordManager manager = DanceDomain.Current.LifeScope.Resolve<IDanceRecordManager>();
+                manager?.Flush();
+            });
         }
 
         /// <summary>

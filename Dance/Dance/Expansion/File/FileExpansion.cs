@@ -37,6 +37,9 @@ namespace Dance
 
             using StreamWriter sw = new(path, false, encoding);
             sw.Write(json);
+            sw.Flush();
+            sw.Close();
+            sw.Dispose();
         }
 
         /// <summary>
@@ -95,6 +98,9 @@ namespace Dance
 
             using StreamWriter sw = new(path, false, encoding);
             sw.Write(document);
+            sw.Flush();
+            sw.Close();
+            sw.Dispose();
         }
 
         /// <summary>

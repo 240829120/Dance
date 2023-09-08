@@ -17,7 +17,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 日志
         /// </summary>
-        private readonly static ILog log = LogManager.GetLogger(typeof(DanceCommandTrigger));
+        private readonly static ILog log = DanceLogManager.GetLogger(typeof(DanceCommandTrigger));
 
         #region LoadedCommand -- 加载命令
 

@@ -25,9 +25,8 @@
                         <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="1"
                                           VerticalAlignment="Center" Margin="5,0,5,0"/>
                         <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="2" Stroke="{TemplateBinding BorderBrush}"></dance:DanceDashedLine>
-                        <dance:DanceDashedLine Orientation="Vertical" Width="1" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Left" Margin="0,12,0,0" Stroke="{TemplateBinding BorderBrush}"></dance:DanceDashedLine>
-                        <dance:DanceDashedLine Orientation="Vertical" Width="1" Grid.RowSpan="2" VerticalAlignment="Stretch" HorizontalAlignment="Right" Grid.Column="2" Margin="0,12,0,0" Stroke="{TemplateBinding BorderBrush}"></dance:DanceDashedLine>
-                        <dance:DanceDashedLine Height="1" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Stroke="{TemplateBinding BorderBrush}"></dance:DanceDashedLine>
+                        <dance:DanceDashedRectangle Grid.RowSpan="2" Grid.ColumnSpan="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                    Stroke="{TemplateBinding BorderBrush}" EdgeMark="1,0,1,1" Margin="0,12,0,0"></dance:DanceDashedRectangle>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

@@ -15,7 +15,7 @@ namespace Dance
         /// <summary>
         /// 日志
         /// </summary>
-        protected readonly static ILog log = LogManager.GetLogger(typeof(DanceObject));
+        protected readonly static ILog log = DanceLogManager.GetLogger(typeof(DanceObject));
 
         /// <summary>
         /// 是否已经释放

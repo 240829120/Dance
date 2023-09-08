@@ -5,8 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dance.Wpf"
         mc:Ignorable="d"
-        Title="DanceLogWindow" Height="450" Width="800">
+        Title="debug log" Height="800" Width="600">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+        </Grid.RowDefinitions>
+        <TextBox x:Name="tb" VerticalAlignment="Stretch" Height="NaN" Margin="10" IsReadOnly="True" AcceptsReturn="True" 
+                 ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"></TextBox>
+        <Button x:Name="btClear" Grid.Row="1" Width="80" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"
+                Content="Clear" Click="btClear_Click"></Button>
     </Grid>
 </Window>
