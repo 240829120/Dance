@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dance.Mqtt\Dance.Mqtt.csproj" />
     <ProjectReference Include="..\Dance\Dance.csproj" />
   </ItemGroup>
 

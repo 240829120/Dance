@@ -19,7 +19,7 @@ namespace Dance
         /// <summary>
         /// 日志
         /// </summary>
-        private readonly static ILog log = DanceLogManager.GetLogger(typeof(DanceHttpExpansion));
+        private readonly static ILog log = LogManager.GetLogger(typeof(DanceHttpExpansion));
 
         /// <summary>
         /// 默认超时时间
