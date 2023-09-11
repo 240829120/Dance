@@ -16,7 +16,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 日志
         /// </summary>
-        protected readonly static ILog log = DanceLogManager.GetLogger(typeof(DanceParticleGeneratorBase));
+        protected readonly static ILog log = LogManager.GetLogger(typeof(DanceParticleGeneratorBase));
 
         /// <summary>
         /// 随机数
