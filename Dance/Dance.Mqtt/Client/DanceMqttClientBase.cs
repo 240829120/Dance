@@ -8,6 +8,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.FileIO;
 
 namespace Dance.Mqtt
 {
@@ -113,19 +114,16 @@ namespace Dance.Mqtt
             if (!this.MqttClient.IsConnected)
                 throw new Exception("mqtt client is not connected.");
 
-            var option = this.MqttFactory.CreateSubscribeOptionsBuilder()
-                                         .WithTopicFilter(
-                                             f =>
-                                             {
-                                                 foreach (string topic in topics)
-                                                 {
-                                                     if (string.IsNullOrWhiteSpace(topic))
-                                                         continue;
+            var builder = this.MqttFactory.CreateSubscribeOptionsBuilder();
+            foreach (string topic in topics)
+            {
+                if (string.IsNullOrWhiteSpace(topic))
+                    continue;
 
-                                                     f.WithTopic(topic);
-                                                 }
-                                             })
-                                         .Build();
+                builder = builder.WithTopicFilter(topic);
+            }
+
+            var option = builder.Build();
 
             await this.MqttClient.SubscribeAsync(option, CancellationToken.None);
         }
@@ -142,44 +140,19 @@ namespace Dance.Mqtt
             if (!this.MqttClient.IsConnected)
                 throw new Exception("mqtt client is not connected.");
 
+            var builder = this.MqttFactory.CreateUnsubscribeOptionsBuilder();
+
             foreach (string topic in topics)
             {
-                var option = this.MqttFactory.CreateUnsubscribeOptionsBuilder()
-                                             .WithTopicFilter(topic)
-                                             .Build();
+                if (string.IsNullOrWhiteSpace(topic))
+                    continue;
 
-                await this.MqttClient.UnsubscribeAsync(option, CancellationToken.None);
-            }
-        }
-
-        /// <summary>
-        /// 发布
-        /// </summary>
-        /// <param name="topic">主题</param>
-        /// <param name="responseTopic">返回主题</param>
-        /// <param name="userProperties">用户数据</param>
-        /// <param name="buffer">二进制数据</param>
-        public async Task PublishAsync(string topic, string responseTopic, Dictionary<string, string>? userProperties, byte[] buffer)
-        {
-            if (this.MqttClient == null)
-                return;
-
-            MqttApplicationMessage msg = new()
-            {
-                ResponseTopic = responseTopic,
-                Topic = topic,
-                PayloadSegment = buffer,
-                UserProperties = new()
-            };
-            if (userProperties != null)
-            {
-                foreach (var kv in userProperties)
-                {
-                    msg.UserProperties.Add(new(kv.Key, kv.Value));
-                }
+                builder = builder.WithTopicFilter(topic);
             }
 
-            await this.MqttClient.PublishAsync(msg);
+            var option = builder.Build();
+
+            await this.MqttClient.UnsubscribeAsync(option, CancellationToken.None);
         }
 
         /// <summary>

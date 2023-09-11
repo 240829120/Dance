@@ -1,8 +1,10 @@
-﻿using MQTTnet.Client;
+﻿using MQTTnet;
+using MQTTnet.Client;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
@@ -33,9 +35,9 @@ namespace Dance.Mqtt
         private readonly ConcurrentDictionary<string, DanceMqttTopicInfo> TopicInfoDic = new();
 
         /// <summary>
-        /// 主题执行器集合
+        /// 主题行为集合
         /// </summary>
-        private readonly ConcurrentDictionary<string, DanceMqttTopicExecuter> TopicExecuterDic = new();
+        private readonly ConcurrentDictionary<string, DanceMqttTopicActionBase> TopicActionDic = new();
 
         // ===============================================================================================
         // Event
@@ -54,73 +56,64 @@ namespace Dance.Mqtt
         // Public Function
 
         /// <summary>
-        /// 发布
+        /// 添加主题行为
+        /// </summary>
+        /// <param name="action">主题行为</param>
+        public virtual void AddTopicAction(DanceMqttTopicActionBase action)
+        {
+            this.TopicActionDic[$"[{action.Topic}]{action.Route}"] = action;
+        }
+
+        /// <summary>
+        /// 移除主题行为
         /// </summary>
         /// <param name="topic">主题</param>
-        /// <param name="data">数据</param>
-        public virtual async Task PublishAsync(string topic, object data)
+        public virtual void RemoveTopicAction(string topic)
         {
-            string json = JsonConvert.SerializeObject(data);
-            byte[] buffer = Encoding.UTF8.GetBytes(json);
-
-            await this.PublishAsync(topic, string.Empty, null, buffer);
-
-            this.Sended?.Invoke(this, new(topic, string.Empty, null, json));
+            this.TopicActionDic.TryRemove(topic, out _);
         }
+
+        // ------------------------------------------------------------------------------------------
 
         /// <summary>
         /// 发布
         /// </summary>
         /// <param name="topic">主题</param>
-        /// <param name="clientId">客户端ID</param>
-        /// <param name="data">数据</param>
-        public virtual async Task PublishAsync(string topic, string clientId, object data)
+        /// <param name="route">路由</param>
+        /// <param name="targetClientId">目标客户端ID</param>
+        /// <param name="messageType">消息类型</param>
+        /// <param name="buffer">二进制数据</param>
+        public async Task PublishAsync(string topic, string route, string targetClientId, string messageType, byte[] buffer)
         {
-            string json = JsonConvert.SerializeObject(data);
-            byte[] buffer = Encoding.UTF8.GetBytes(json);
-            Dictionary<string, string> userProperties = new()
-            {
-                [DanceMqttPropertyKeys.DANCE_CLIENT_ID] = clientId
-            };
-
-            await this.PublishAsync(topic, string.Empty, userProperties, buffer);
-
-            this.Sended?.Invoke(this, new(topic, string.Empty, userProperties, json));
+            await this.PublishAsync(topic, route, targetClientId, messageType, string.Empty, buffer);
         }
 
         /// <summary>
-        /// 发布
+        /// 请求
         /// </summary>
-        /// <typeparam name="T">数据类型</typeparam>
         /// <param name="topic">主题</param>
-        /// <param name="responseTopic">返回主题</param>
-        /// <param name="clientId">客户端ID</param>
-        /// <param name="data">数据</param>
-        /// <returns>返回</returns>
-        public async Task<T?> PublishAsync<T>(string topic, string responseTopic, string clientId, object data) where T : new()
-        {
-            return await this.PublishAsync<T>(topic, responseTopic, clientId, data, this.Option.Timeout);
-        }
-
-        /// <summary>
-        /// 发布
-        /// </summary>
-        /// <typeparam name="T">数据类型</typeparam>
-        /// <param name="topic">主题</param>
-        /// <param name="responseTopic">返回主题</param>
-        /// <param name="clientId">客户端ID</param>
-        /// <param name="data">数据</param>
+        /// <param name="route">路由</param>
+        /// <param name="targetClientId">目标客户端ID</param>
+        /// <param name="buffer">数据</param>
         /// <param name="timeout">超时时间</param>
         /// <returns>返回</returns>
-        public virtual async Task<T?> PublishAsync<T>(string topic, string responseTopic, string clientId, object data, TimeSpan timeout) where T : new()
+        public virtual async Task<byte[]?> RequestAsync(string topic, string route, string targetClientId, byte[] buffer, TimeSpan timeout)
         {
-            string json = JsonConvert.SerializeObject(data);
-            DanceMqttTopicInfo info = new(json);
+            if (this.MqttClient == null)
+                return null;
+
+            if (string.IsNullOrWhiteSpace(topic))
+                throw new ArgumentNullException(nameof(topic));
+
+            if (string.IsNullOrWhiteSpace(targetClientId))
+                throw new ArgumentNullException(nameof(targetClientId));
+
+            DanceMqttTopicInfo info = new(buffer);
 
             if (!this.TopicInfoDic.TryAdd(info.RequestID, info))
-                throw new Exception($"add request error. id: {info.RequestID}, topic: {topic}, responseTopic: {responseTopic}, data: {json}");
+                throw new Exception($"add request error. id: {info.RequestID}, topic: {topic}");
 
-            await this.PublishAsync(topic, clientId, data);
+            await this.PublishAsync(topic, route, targetClientId, DanceMqttMessageType.REQUEST, info.RequestID, buffer);
 
             while (!info.IsResponse && (DateTime.Now - info.RequestTime) < timeout)
             {
@@ -129,10 +122,7 @@ namespace Dance.Mqtt
 
             this.TopicInfoDic.TryRemove(info.RequestID, out _);
 
-            if (string.IsNullOrWhiteSpace(info.ResponseData))
-                return default;
-
-            return JsonConvert.DeserializeObject<T>(info.ResponseData);
+            return info.ResponseData;
         }
 
         // ===============================================================================================
@@ -141,45 +131,110 @@ namespace Dance.Mqtt
         /// <summary>
         /// 当接收消息时触发
         /// </summary>
-        protected override Task OnReceivedAsync(MqttApplicationMessageReceivedEventArgs e)
+        protected override async Task OnReceivedAsync(MqttApplicationMessageReceivedEventArgs e)
         {
             try
             {
                 Dictionary<string, string> userProperties = e.ApplicationMessage.UserProperties?.ToDictionary(p => p.Name, p => p.Value) ?? new();
-
+                userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_MESSAGE_TYPE, out string? messageType);
                 userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_REQUEST_ID, out string? requestId);
+                userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_ROUTE, out string? route);
+                userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_SEND_CLIENT_ID, out string? sendClientId);
+                userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_TARGET_CLIENT_ID, out string? targetClientId);
 
                 string topic = e.ApplicationMessage.Topic;
-                string responseTopic = e.ApplicationMessage.ResponseTopic;
-                byte[] buffer = e.ApplicationMessage.PayloadSegment.ToArray();
-                string json = Encoding.UTF8.GetString(buffer);
+                string key = $"[{topic}]{route}";
+                byte[]? buffer = e.ApplicationMessage.PayloadSegment.ToArray();
 
-                // 普通数据
-                if (string.IsNullOrWhiteSpace(requestId))
+                // 触发接收到消息
+                this.Received?.Invoke(this, new(topic, userProperties, buffer));
+
+                // 没有消息类型不处理
+                if (string.IsNullOrWhiteSpace(topic) || string.IsNullOrWhiteSpace(messageType))
+                    return;
+
+                // 如果指定目标不是自己则不处理
+                if (!string.IsNullOrWhiteSpace(targetClientId) && !string.Equals(this.Option.ClientID, targetClientId))
+                    return;
+
+                // 消息数据
+                if (string.Equals(DanceMqttMessageType.MESSAGE, messageType))
                 {
-                    this.TopicExecuterDic.TryGetValue(topic, out DanceMqttTopicExecuter? executer);
-                    executer?.Execute(json);
+                    this.TopicActionDic.TryGetValue(key, out DanceMqttTopicActionBase? action);
+                    _ = action?.Execute(e.ApplicationMessage.PayloadSegment.ToArray());
 
-                    return Task.CompletedTask;
+                    return;
                 }
 
-                // 拥有请求ID的数据
-                this.TopicInfoDic.TryGetValue(requestId, out DanceMqttTopicInfo? info);
-                if (info == null)
-                    return Task.CompletedTask;
+                // 处理请求数据
+                if (string.Equals(DanceMqttMessageType.REQUEST, messageType) && !string.IsNullOrWhiteSpace(requestId))
+                {
+                    this.TopicActionDic.TryGetValue(key, out DanceMqttTopicActionBase? action);
+                    byte[]? responseBuffer = action?.Execute(buffer) ?? Array.Empty<byte>();
 
-                info.ResponseData = json;
-                info.ResponseTime = DateTime.Now;
-                info.IsResponse = true;
+                    await this.PublishAsync(topic, route ?? string.Empty, sendClientId ?? string.Empty, DanceMqttMessageType.RESPONSE, requestId, responseBuffer);
 
-                return Task.CompletedTask;
+                    return;
+                }
+
+                // 处理返回数据
+                if (string.Equals(DanceMqttMessageType.RESPONSE, messageType) && !string.IsNullOrWhiteSpace(requestId))
+                {
+                    this.TopicInfoDic.TryGetValue(requestId, out DanceMqttTopicInfo? info);
+                    if (info == null)
+                        return;
+
+                    info.ResponseData = e.ApplicationMessage.PayloadSegment.ToArray();
+                    info.ResponseTime = DateTime.Now;
+                    info.IsResponse = true;
+
+                    return;
+                }
             }
             catch (Exception ex)
             {
                 log.Error(ex);
-
-                return Task.CompletedTask;
             }
+        }
+
+        /// <summary>
+        /// 发布
+        /// </summary>
+        /// <param name="topic">主题</param>
+        /// <param name="route">路由</param>
+        /// <param name="targetClientId">目标客户端ID</param>
+        /// <param name="messageType">消息类型</param>
+        /// <param name="requestId">请求ID</param>
+        /// <param name="buffer">二进制数据</param>
+        private async Task PublishAsync(string topic, string route, string targetClientId, string messageType, string requestId, byte[] buffer)
+        {
+            if (this.MqttClient == null)
+                return;
+
+            Dictionary<string, string> userProperties = new()
+            {
+                [DanceMqttPropertyKeys.DANCE_MESSAGE_TYPE] = messageType,
+                [DanceMqttPropertyKeys.DANCE_ROUTE] = route,
+                [DanceMqttPropertyKeys.DANCE_SEND_CLIENT_ID] = this.Option.ClientID,
+                [DanceMqttPropertyKeys.DANCE_TARGET_CLIENT_ID] = targetClientId,
+                [DanceMqttPropertyKeys.DANCE_REQUEST_ID] = requestId,
+            };
+
+            MqttApplicationMessage msg = new()
+            {
+                Topic = topic,
+                PayloadSegment = buffer,
+                UserProperties = new()
+            };
+
+            foreach (var kv in userProperties)
+            {
+                msg.UserProperties.Add(new(kv.Key, kv.Value));
+            }
+
+            await this.MqttClient.PublishAsync(msg);
+
+            this.Sended?.Invoke(this, new(topic, userProperties, buffer));
         }
     }
 }

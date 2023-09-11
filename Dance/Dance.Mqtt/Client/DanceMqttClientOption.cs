@@ -16,7 +16,19 @@ namespace Dance.Mqtt
         /// <summary>
         /// 客户端ID
         /// </summary>
-        public string? ClientID { get; set; }
+        /// <param name="clientId">客户端ID</param>
+        public DanceMqttClientOption(string clientId)
+        {
+            if (string.IsNullOrWhiteSpace(clientId))
+                throw new ArgumentNullException(nameof(clientId));
+
+            this.ClientID = clientId;
+        }
+
+        /// <summary>
+        /// 客户端ID
+        /// </summary>
+        public string ClientID { get; private set; }
 
         /// <summary>
         /// 用户名

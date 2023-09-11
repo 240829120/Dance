@@ -15,21 +15,14 @@ namespace Dance.Mqtt
         /// Mqtt消息发送事件参数
         /// </summary>
         /// <param name="topic">主题</param>
-        /// <param name="responseTopic">返回主题</param>
         /// <param name="userProperties">用户数据</param>
-        /// <param name="json">Json数据</param>
-        public DanceMqttTransferEventArgs(string topic, string responseTopic, Dictionary<string, string>? userProperties, string json)
+        /// <param name="data">数据</param>
+        public DanceMqttTransferEventArgs(string topic, Dictionary<string, string>? userProperties, byte[]? data)
         {
             this.Topic = topic;
-            this.ResponseTopic = responseTopic;
             this.UserProperties = userProperties;
-            this.Json = json;
+            this.Data = data;
         }
-
-        /// <summary>
-        /// 返回主题
-        /// </summary>
-        public string ResponseTopic { get; private set; }
 
         /// <summary>
         /// 主题
@@ -42,8 +35,8 @@ namespace Dance.Mqtt
         public Dictionary<string, string>? UserProperties { get; private set; }
 
         /// <summary>
-        /// Json数据
+        /// 数据
         /// </summary>
-        public string Json { get; private set; }
+        public byte[]? Data { get; private set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Dance.Mqtt
         /// Mqtt主题信息
         /// </summary>
         /// <param name="requestData">请求数据</param>
-        public DanceMqttTopicInfo(string requestData)
+        public DanceMqttTopicInfo(byte[]? requestData)
         {
             this.RequestData = requestData;
         }
@@ -28,7 +28,7 @@ namespace Dance.Mqtt
         /// <summary>
         /// 请求数据
         /// </summary>
-        public string RequestData { get; private set; }
+        public byte[]? RequestData { get; private set; }
 
         /// <summary>
         /// 请求时间
@@ -43,7 +43,7 @@ namespace Dance.Mqtt
         /// <summary>
         /// 返回数据
         /// </summary>
-        public string? ResponseData { get; set; }
+        public byte[]? ResponseData { get; set; }
 
         /// <summary>
         /// 是否返回
