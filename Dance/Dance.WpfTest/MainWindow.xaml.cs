@@ -51,6 +51,12 @@ namespace Dance.WpfTest
             //this.lv.SetValue(BindableLayout.ItemsSourceProperty, this.list);
             //this.lv.ItemsSource = list;
             //this.lv.SelectedItem = list.FirstOrDefault();
+
+            DanceWebApiServer server = new();
+            server.Urls.Add("http://localhost:5001/");
+            server.Assemblies.Add(this.GetType().Assembly);
+
+            server.Start();
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

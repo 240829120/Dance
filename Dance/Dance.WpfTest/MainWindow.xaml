@@ -109,7 +109,7 @@
         </dance:DancePhysicsItemsControl>-->
 
         <!-- 粒子引擎测试 -->
-        <Border Background="White">
+        <!--<Border Background="White">
             <dance:DanceParticlePanel IsShowDebugInfo="True">
                 <dance:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
                                                   RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
@@ -119,21 +119,25 @@
                         <dance:DanceParticleImageDefine Uri="/Dance.WpfTest;component/flower.png"></dance:DanceParticleImageDefine>
                         <dance:DanceParticleImageDefine Uri="/Dance.WpfTest;component/flower2.png"></dance:DanceParticleImageDefine>
                     </dance:DanceParticleImageleGenerator>
-                    <!--<dance:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
+                    -->
+        <!--<dance:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                                  Width="10,30" Height="10,20"></dance:DanceParticleRectangleGenerator>-->
-                    <!--<dance:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
+        <!--<dance:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
                                                               Radius="10,30"></dance:DanceParticleCircleGenerator>-->
+        <!--
                 </dance:DanceParticleControllerBox>
-                <!--<dance:DanceParticleControllerBall TranslateSpeedX="-100,100" TranslateSpeedY="-100,100" TranslateSpeedZ="-100,100"
+                -->
+        <!--<dance:DanceParticleControllerBall TranslateSpeedX="-100,100" TranslateSpeedY="-100,100" TranslateSpeedZ="-100,100"
                                                      RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
                                                      Position="400,200,0" Radius="10" 
                                                      Perspective="-0.001" Duration="5,8" GenerateSpeed="0.5">
                         -->
-                <!--<dance:DanceParticleImageleGenerator Source="C:\Users\win\Desktop\flower.png" Width="5,50" Height="5,50"></dance:DanceParticleImageleGenerator>-->
-                <!--<dance:DanceParticleRectangleGenerator></dance:DanceParticleRectangleGenerator>-->
-                <!--
+        <!--<dance:DanceParticleImageleGenerator Source="C:\Users\win\Desktop\flower.png" Width="5,50" Height="5,50"></dance:DanceParticleImageleGenerator>-->
+        <!--<dance:DanceParticleRectangleGenerator></dance:DanceParticleRectangleGenerator>-->
+        <!--
                     </dance:DanceParticleControllerBall>-->
+        <!--
             </dance:DanceParticlePanel>
-        </Border>
+        </Border>-->
     </Grid>
 </Window>

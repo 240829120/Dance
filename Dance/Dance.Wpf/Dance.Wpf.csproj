@@ -9,24 +9,26 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <Compile Remove="Share\Core\Base\**" />
-	  <Compile Remove="Share\Core\Xaml\**" />
-	  <Compile Remove="Share\Xaml\Widgets\Preview\**" />
-	  <EmbeddedResource Remove="Share\Core\Base\**" />
-	  <EmbeddedResource Remove="Share\Core\Xaml\**" />
-	  <EmbeddedResource Remove="Share\Xaml\Widgets\Preview\**" />
-	  <None Remove="Share\Core\Base\**" />
-	  <None Remove="Share\Core\Xaml\**" />
-	  <None Remove="Share\Xaml\Widgets\Preview\**" />
-	  <Page Remove="Share\Core\Base\**" />
-	  <Page Remove="Share\Core\Xaml\**" />
-	  <Page Remove="Share\Xaml\Widgets\Preview\**" />
+		<Compile Remove="Share\Core\Base\**" />
+		<Compile Remove="Share\Core\Xaml\**" />
+		<Compile Remove="Share\Xaml\Widgets\Preview\**" />
+		<EmbeddedResource Remove="Share\Core\Base\**" />
+		<EmbeddedResource Remove="Share\Core\Xaml\**" />
+		<EmbeddedResource Remove="Share\Xaml\Widgets\Preview\**" />
+		<None Remove="Share\Core\Base\**" />
+		<None Remove="Share\Core\Xaml\**" />
+		<None Remove="Share\Xaml\Widgets\Preview\**" />
+		<Page Remove="Share\Core\Base\**" />
+		<Page Remove="Share\Core\Xaml\**" />
+		<Page Remove="Share\Xaml\Widgets\Preview\**" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Aether.Physics2D" Version="2.0.0" />
-	  <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
-	  <PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.5" />
+		<PackageReference Include="Aether.Physics2D" Version="2.0.0" />
+		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+		<PackageReference Include="SkiaSharp.Views.WPF" Version="2.88.5" />
+		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>

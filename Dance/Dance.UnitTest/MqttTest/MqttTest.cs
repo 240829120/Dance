@@ -67,11 +67,11 @@ namespace Dance.UnitTest
             this.Client3?.Dispose();
         }
 
-        private DanceMqttClient Client1;
+        private readonly DanceMqttClient Client1;
 
-        private DanceMqttClient Client2;
+        private readonly DanceMqttClient Client2;
 
-        private DanceMqttClient Client3;
+        private readonly DanceMqttClient Client3;
 
         [TestMethod]
         public void RequestTest1()

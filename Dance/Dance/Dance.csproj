@@ -14,7 +14,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="BaseType\Class\" />
+		<Folder Include="BaseType\Class\" />
 	</ItemGroup>
 
 </Project>
