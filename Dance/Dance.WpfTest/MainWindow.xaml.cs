@@ -1,4 +1,5 @@
-﻿using Dance.Wpf;
+﻿using Dance.Common;
+using Dance.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

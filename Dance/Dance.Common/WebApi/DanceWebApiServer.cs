@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dance.Wpf
+namespace Dance.Common
 {
     /// <summary>
     /// WebApi服务
