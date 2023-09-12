@@ -5,6 +5,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Physics/Control/DancePhysicsItemsControl.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/Design/Design.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/Navigation/DanceNavigationView.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/TabControl/DanceTab.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/TreeView/DanceTreeView.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/WindowPart/DanceWindowPart.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

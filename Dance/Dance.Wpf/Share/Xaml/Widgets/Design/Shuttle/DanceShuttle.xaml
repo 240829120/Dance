@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dance.Wpf">
+
+    <Style TargetType="local:DanceShuttle">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceShuttle">
+                    <Canvas>
+                        <ContentPresenter Width="{Binding UnitLength,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DanceShuttle}}"
+                                          Height="{Binding ActualHeight,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DanceShuttle}}"
+                                          Canvas.Left="{Binding Value,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DanceShuttle}}"></ContentPresenter>
+                    </Canvas>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Orientation" Value="Vertical">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="local:DanceShuttle">
+                            <Canvas>
+                                <ContentPresenter Height="{Binding UnitLength,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DanceShuttle}}"
+                                                  Width="{Binding ActualWidth,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DanceShuttle}}"
+                                                  Canvas.Top="{Binding Value,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=local:DanceShuttle}}"></ContentPresenter>
+                            </Canvas>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+</ResourceDictionary>
