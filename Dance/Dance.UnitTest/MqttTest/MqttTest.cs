@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dance;
-using Dance.Mqtt;
+using Dance.Common;
 
 namespace Dance.UnitTest
 {

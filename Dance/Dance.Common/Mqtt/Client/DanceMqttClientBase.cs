@@ -15,7 +15,7 @@ namespace Dance.Common
     /// <summary>
     /// Mqtt客户端基类
     /// </summary>
-    public abstract class DanceMqttClientBase : DanceObject, IDanceMqttClient
+    public abstract class DanceMqttClientBase : DanceObject
     {
         /// <summary>
         /// Mqtt客户端基类

@@ -9,16 +9,16 @@ using System.Windows.Data;
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 类型实例化转化器
+    /// 简单数学算法转化器
     /// </summary>
-    public class DanceTypeInstanceConverter : IValueConverter
+    public class DanceSimpleMathConverter : IValueConverter
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is not Type type || string.IsNullOrWhiteSpace(type.FullName))
-                return null;
-            
-            return type.Assembly.CreateInstance(type.FullName);
+            _ = double.TryParse(value?.ToString(), out double v1);
+            _ = double.TryParse(parameter?.ToString(), out double v2);
+
+            return v1 + v2;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

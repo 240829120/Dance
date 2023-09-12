@@ -87,7 +87,7 @@ namespace Dance.Common
         /// </summary>
         public void Stop()
         {
-            this.WebApp?.DisposeAsync().AsTask().Wait();
+            this.WebApp?.DisposeAsync().AsTask().Wait(TimeSpan.FromSeconds(10));
             this.RunThread?.Dispose();
 
             this.WebApp = null;

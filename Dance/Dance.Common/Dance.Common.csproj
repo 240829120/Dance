@@ -9,6 +9,7 @@
 	<ItemGroup>
 		<PackageReference Include="MQTTnet" Version="4.3.1.873" />
 		<PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.10" />
+		<PackageReference Include="SharpSvn" Version="1.14001.156" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 

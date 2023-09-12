@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dance.Common\Dance.Common.csproj" />
     <ProjectReference Include="..\Dance\Dance.csproj" />
   </ItemGroup>
 

@@ -90,10 +90,12 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#FFE2E2E2"></Setter>
+                <Setter Property="Background" Value="Red"></Setter>
+                <Setter Property="Foreground" Value="White"></Setter>
             </Trigger>
             <Trigger Property="IsPressed" Value="True">
-                <Setter Property="Background" Value="#AAE2E2E2"></Setter>
+                <Setter Property="Background" Value="Red"></Setter>
+                <Setter Property="Foreground" Value="White"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
