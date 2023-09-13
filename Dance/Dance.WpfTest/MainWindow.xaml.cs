@@ -18,6 +18,13 @@ using System.Windows.Shapes;
 
 namespace Dance.WpfTest
 {
+    public class Student
+    {
+        public string? Name { get; set; }
+
+        public int Age { get; set; }
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -30,6 +37,13 @@ namespace Dance.WpfTest
             this.Closed += MainWindow_Closed;
             this.Loaded += MainWindow_Loaded;
         }
+
+        private readonly List<Student> List = new()
+        {
+            new Student { Name="zhangsan", Age =16 },
+            new Student { Name="lisi", Age =17 },
+            new Student { Name="wangwu", Age =18 },
+        };
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {

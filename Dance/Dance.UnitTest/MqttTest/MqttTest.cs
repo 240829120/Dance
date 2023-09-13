@@ -20,7 +20,7 @@ namespace Dance.UnitTest
         {
             DanceMqttClientOption option1 = new("test1")
             {
-                Url = "127.0.0.1",
+                Url = "10.0.96.254",
                 UserName = "admin",
                 Password = "public",
                 Port = 1883
@@ -28,7 +28,7 @@ namespace Dance.UnitTest
 
             DanceMqttClientOption option2 = new("test2")
             {
-                Url = "127.0.0.1",
+                Url = "10.0.96.254",
                 UserName = "admin",
                 Password = "public",
                 Port = 1883
@@ -36,7 +36,7 @@ namespace Dance.UnitTest
 
             DanceMqttClientOption option3 = new("test3")
             {
-                Url = "127.0.0.1",
+                Url = "10.0.96.254",
                 UserName = "admin",
                 Password = "public",
                 Port = 1883

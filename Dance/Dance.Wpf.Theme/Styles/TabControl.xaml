@@ -50,14 +50,14 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <dance:DanceShuttle UnitLength="120" Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=TabControl,Mode=FindAncestor}}">
+                        <Rectangle Height="1" VerticalAlignment="Bottom" Fill="#ffe8e8e8"></Rectangle>
+                        <StackPanel Background="Transparent" IsItemsHost="true" Orientation="Horizontal" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" />
+                        <dance:DanceShuttle UnitLength="120" Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=TabControl,Mode=FindAncestor}}" Duration="00:00:00.5" IsHitTestVisible="False">
                             <dance:DanceShuttle.SwitchEasing>
                                 <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
                             </dance:DanceShuttle.SwitchEasing>
                             <Rectangle Height="2" Width="120" VerticalAlignment="Bottom" Fill="#ff1890ff"></Rectangle>
                         </dance:DanceShuttle>
-                        <Rectangle Height="1" VerticalAlignment="Bottom" Fill="#ffe8e8e8"></Rectangle>
-                        <StackPanel Background="Transparent" IsItemsHost="true" Orientation="Horizontal" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" />
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
                                 KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
                             <ContentPresenter x:Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>

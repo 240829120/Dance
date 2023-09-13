@@ -23,9 +23,10 @@ namespace Dance.Common
 
             this.SvnClient = new();
             this.SvnClient.Authentication.UserNamePasswordHandlers += Authentication_UserNamePasswordHandlers;
+            this.SvnClient.Authentication.SslServerTrustHandlers += Authentication_SslServerTrustHandlers;
 
-            DanceLogWritter writter = new(Encoding.UTF8, m => this.Logging?.Invoke(this, m));
-            SvnClientReporter reporter = new(this.SvnClient, writter);
+            this.Writter = new(Encoding.UTF8, m => this.Logging?.Invoke(this, m));
+            this.Reporter = new(this.SvnClient, this.Writter);
         }
 
         // =======================================================================================================
@@ -45,7 +46,17 @@ namespace Dance.Common
         /// <summary>
         /// SVN客户端
         /// </summary>
-        public SvnClient? SvnClient { get; private set; }
+        public SvnClient SvnClient { get; private set; }
+
+        /// <summary>
+        /// 日志
+        /// </summary>
+        public SvnClientReporter Reporter { get; private set; }
+
+        /// <summary>
+        /// 日志写入器
+        /// </summary>
+        public DanceLogWritter Writter { get; private set; }
 
         /// <summary>
         /// 设置
@@ -58,11 +69,10 @@ namespace Dance.Common
         /// <summary>
         /// 更新
         /// </summary>
-        /// <param name="path">路径</param>
         /// <returns>是否操作成功</returns>
-        public bool Update(string path)
+        public bool Update()
         {
-            return this.SvnClient?.Update(path) ?? false;
+            return this.SvnClient.Update(this.Option.Path);
         }
 
         /// <summary>
@@ -72,26 +82,41 @@ namespace Dance.Common
         /// <returns>是否操作成功</returns>
         public bool Add(string path)
         {
-            return this.SvnClient?.Add(path) ?? false;
+            return this.SvnClient.Add(path);
         }
 
         /// <summary>
         /// 提交
         /// </summary>
-        /// <param name="path">路径</param>
         /// <returns>是否操作成功</returns>
-        public bool Commit(string path)
+        public bool Commit()
         {
-            return this.SvnClient?.Commit(path) ?? false;
+            return this.SvnClient.Commit(this.Option.Path);
         }
 
         /// <summary>
         /// 获取状态
         /// </summary>
-        /// <param name="path"></param>
-        public void GetStatus(string path)
+        public bool GetStatus(out Collection<SvnStatusEventArgs>? statuses)
         {
-            this.SvnClient?.GetStatus(path, out var list);
+            statuses = null;
+            return this.SvnClient.GetStatus(this.Option.Path, out statuses);
+        }
+
+        /// <summary>
+        /// 检出
+        /// </summary>
+        public bool CheckOut()
+        {
+            return this.SvnClient.CheckOut(new(this.Option.Url), this.Option.Path);
+        }
+
+        /// <summary>
+        /// 输出日志
+        /// </summary>
+        public void FlushLog()
+        {
+            this.Writter.Flush();
         }
 
         // =======================================================================================================
@@ -103,11 +128,19 @@ namespace Dance.Common
         protected override void Destroy()
         {
             this.SvnClient?.Dispose();
-            this.SvnClient = null;
         }
 
         // =======================================================================================================
         // Private Function
+
+        /// <summary>
+        /// 证书认证
+        /// </summary>
+        private void Authentication_SslServerTrustHandlers(object? sender, SharpSvn.Security.SvnSslServerTrustEventArgs e)
+        {
+            e.AcceptedFailures = e.Failures;
+            e.Save = true;
+        }
 
         /// <summary>
         /// 验证用户名密码
