@@ -31,7 +31,7 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="element">元素</param>
         /// <param name="names">名称</param>
-        public static void CnacelKeyFrameAnimation(this FrameworkElement element, params string[] names)
+        public static void CancelKeyFrameAnimation(this FrameworkElement element, params string[] names)
         {
             DanceAnimationManager.RemoveAnimation(element, names);
         }

@@ -53,11 +53,11 @@ namespace Dance.WpfTest
             //this.lv.ItemsSource = list;
             //this.lv.SelectedItem = list.FirstOrDefault();
 
-            DanceWebApiServer server = new();
-            server.Urls.Add("http://localhost:5001/");
-            server.Assemblies.Add(this.GetType().Assembly);
+            //DanceWebApiServer server = new();
+            //server.Urls.Add("http://localhost:5001/");
+            //server.Assemblies.Add(this.GetType().Assembly);
 
-            server.Start();
+            //server.Start();
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

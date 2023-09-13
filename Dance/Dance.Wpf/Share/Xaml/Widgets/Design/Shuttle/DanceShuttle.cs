@@ -5,6 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
 {
@@ -16,14 +18,6 @@ namespace Dance.Wpf
         static DanceShuttle()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceShuttle), new FrameworkPropertyMetadata(typeof(DanceShuttle)));
-        }
-
-        public DanceShuttle()
-        {
-            this.PreviewMouseDown += (s, e) =>
-            {
-                this.Index += 1;
-            };
         }
 
         #region Orientation -- 方向
@@ -42,6 +36,25 @@ namespace Dance.Wpf
         /// </summary>
         public static readonly DependencyProperty OrientationProperty =
             DependencyProperty.Register("Orientation", typeof(Orientation), typeof(DanceShuttle), new PropertyMetadata(Orientation.Horizontal));
+
+        #endregion
+
+        #region SwitchEasing -- 过渡函数
+
+        /// <summary>
+        /// 切换过渡函数
+        /// </summary>
+        public IEasingFunction SwitchEasing
+        {
+            get { return (IEasingFunction)GetValue(SwitchEasingProperty); }
+            set { SetValue(SwitchEasingProperty, value); }
+        }
+
+        /// <summary>
+        /// 切换过渡函数
+        /// </summary>
+        public static readonly DependencyProperty SwitchEasingProperty =
+            DependencyProperty.Register("SwitchEasing", typeof(IEasingFunction), typeof(DanceShuttle), new PropertyMetadata(null));
 
         #endregion
 
@@ -103,9 +116,9 @@ namespace Dance.Wpf
                 if (s is not DanceShuttle shuttle)
                     return;
 
-                shuttle.CnacelKeyFrameAnimation("MOVE");
-                shuttle.CreateKeyFrameAnimation().Double(ValueProperty, null, new DanceAnimationKeyFrame<double>(shuttle.Value, 0),
-                                                                              new DanceAnimationKeyFrame<double>(shuttle.UnitLength * shuttle.Index, shuttle.Duration))
+                shuttle.CancelKeyFrameAnimation("MOVE");
+                shuttle.CreateKeyFrameAnimation().Double(ValueProperty, shuttle.SwitchEasing, new DanceAnimationKeyFrame<double>(shuttle.Value, 0),
+                                                                                              new DanceAnimationKeyFrame<double>(shuttle.UnitLength * shuttle.Index, shuttle.Duration))
                        .Commit("MOVE");
             })));
 
@@ -131,9 +144,9 @@ namespace Dance.Wpf
                 if (s is not DanceShuttle shuttle)
                     return;
 
-                shuttle.CnacelKeyFrameAnimation("MOVE");
-                shuttle.CreateKeyFrameAnimation().Double(ValueProperty, null, new DanceAnimationKeyFrame<double>(shuttle.Value, 0),
-                                                                              new DanceAnimationKeyFrame<double>(shuttle.UnitLength * shuttle.Index, shuttle.Duration))
+                shuttle.CancelKeyFrameAnimation("MOVE");
+                shuttle.CreateKeyFrameAnimation().Double(ValueProperty, shuttle.SwitchEasing, new DanceAnimationKeyFrame<double>(shuttle.Value, 0),
+                                                                                              new DanceAnimationKeyFrame<double>(shuttle.UnitLength * shuttle.Index, shuttle.Duration))
                        .Commit("MOVE");
             })));
 

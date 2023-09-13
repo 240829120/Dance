@@ -6,138 +6,18 @@
         xmlns:dance="http://schemas.dance.com/wpf"
         xmlns:local="clr-namespace:Dance.WpfTest" 
         WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Background="Transparent"
+        mc:Ignorable="d" Background="White"
         Title="MainWindow" Height="800" Width="1400">
     <Grid>
-        <!-- 导航测试 -->
-        <!--<dance:DanceNavigationView x:Name="lv" IsShowNavigationBar="True" SwitchMode="TranslationX_Opacity">
-            <dance:DanceNavigationView.ItemTemplate>
-                <DataTemplate>
-                    <Image Source="{Binding}" Stretch="UniformToFill"></Image>
-                </DataTemplate>
-            </dance:DanceNavigationView.ItemTemplate>
-        </dance:DanceNavigationView>-->
-
-        <!-- 物理引擎测试 -->
-        <!--<dance:DancePhysicsItemsControl x:Name="layout" Grid.RowSpan="2" StepSpeed="2">
-            <dance:DancePhysicsItemJointGraphics></dance:DancePhysicsItemJointGraphics>
-
-            <dance:DancePhysicsItem>
-                <Rectangle x:Name="r1" Width="200" Height="40" >
-                    <Rectangle.Fill>
-                        <LinearGradientBrush>
-                            <GradientStop Offset="0" Color="Red"></GradientStop>
-                            <GradientStop Offset="1" Color="Yellow"></GradientStop>
-                        </LinearGradientBrush>
-                    </Rectangle.Fill>
-                </Rectangle>
-
-                <dance:DancePhysicsItem.Body>
-                    <dance:DanceBody x:Name="bodyA" LinearVelocity="100,0" Position="100,0" AngularVelocity="1">
-                        <dance:DanceRectangleFixture Width="200" Height="40"></dance:DanceRectangleFixture>
-                    </dance:DanceBody>
-                </dance:DancePhysicsItem.Body>
-            </dance:DancePhysicsItem>
-
-
-            <dance:DancePhysicsItem>
-                <Ellipse Width="40" Height="40">
-                    <Ellipse.Fill>
-                        <LinearGradientBrush>
-                            <GradientStop Offset="0" Color="Blue"></GradientStop>
-                            <GradientStop Offset="1" Color="Green"></GradientStop>
-                        </LinearGradientBrush>
-                    </Ellipse.Fill>
-                </Ellipse>
-
-                <dance:DancePhysicsItem.Body>
-                    <dance:DanceBody x:Name="bodyB" LinearVelocity="-100,0" Position="500,0" AngularVelocity="0">
-                        <dance:DanceCircleFixture Radius="20" Friction="0.8"></dance:DanceCircleFixture>
-                    </dance:DanceBody>
-                </dance:DancePhysicsItem.Body>
-            </dance:DancePhysicsItem>
-
-            <dance:DancePhysicsItem>
-                <Grid Width="40" Height="100">
-                    <Rectangle Width="40" Height="40" VerticalAlignment="Top" Fill="Pink"></Rectangle>
-                    <Rectangle Width="40" Height="40" VerticalAlignment="Bottom" Fill="Orange"></Rectangle>
-                </Grid>
-
-                <dance:DancePhysicsItem.Body>
-                    <dance:DanceBody x:Name="body" LinearVelocity="0,0" Position="300,0" AngularVelocity="1">
-                        <dance:DanceRectangleFixture Width="40" Height="40" Position="0,-30"></dance:DanceRectangleFixture>
-                        <dance:DanceRectangleFixture Width="40" Height="40" Position="0,30"></dance:DanceRectangleFixture>
-                    </dance:DanceBody>
-                </dance:DancePhysicsItem.Body>
-            </dance:DancePhysicsItem>
-
-            <dance:DancePhysicsItem>
-                <Path Width="80" Height="80" Data="M 40,0 L 80,80 0,80Z" Fill="Orange"></Path>
-                <dance:DancePhysicsItem.Body>
-                    <dance:DanceBody Position="600,0">
-                        <dance:DancePolygonFixture Points="0,-40 40,40 -40,40"></dance:DancePolygonFixture>
-                    </dance:DanceBody>
-                </dance:DancePhysicsItem.Body>
-            </dance:DancePhysicsItem>
-
-
-            <dance:DancePhysicsItem>
-                <Rectangle Width="800" Height="40" Fill="gray">
-                </Rectangle>
-                <dance:DancePhysicsItem.Body>
-                    <dance:DanceBody Position="400,420" BodyType="Static">
-                        <dance:DanceRectangleFixture Width="800" Height="40"></dance:DanceRectangleFixture>
-                    </dance:DanceBody>
-                </dance:DancePhysicsItem.Body>
-                <dance:DancePhysicsItem.Joints>
-                    <dance:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference bodyB}" AnchorA="-96,-20"
-                                   StrokeDashPattern="2,2"
-                                   StrokeColor="Red" StrokeSize="2"></dance:DanceDistanceJoint>
-                    <dance:DanceDistanceJoint BodyA="{x:Reference bodyA}" BodyB="{x:Reference body}" AnchorB="0,-50"
-                                   StrokeDashPattern="2,2"
-                                   StrokeColor="Pink" StrokeSize="2"></dance:DanceDistanceJoint>
-                </dance:DancePhysicsItem.Joints>
-            </dance:DancePhysicsItem>
-
-            <dance:DancePhysicsItem>
-                <Rectangle Width="400" Height="200" Fill="skyblue" Opacity="0.4" Margin="800,400,0,0" HorizontalAlignment="Left" VerticalAlignment="Top"></Rectangle>
-                <dance:DancePhysicsItem.Controllers>
-                    <dance:DanceBuoyancyController WorldLowerBound="800,400" WorldUpperBound="1200,600" Density="0.6"></dance:DanceBuoyancyController>
-                </dance:DancePhysicsItem.Controllers>
-            </dance:DancePhysicsItem>
-
-        </dance:DancePhysicsItemsControl>-->
-
-        <!-- 粒子引擎测试 -->
-        <!--<Border Background="White">
-            <dance:DanceParticlePanel IsShowDebugInfo="True">
-                <dance:DanceParticleControllerBox TranslateSpeedX="0,100" TranslateSpeedY="100,200" TranslateSpeedZ="0,200"
-                                                  RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
-                                                  X="0,800" Y="0,0" Z="-20,20" Perspective="-0.001"
-                                                  Duration="00:00:04,00:00:05" GenerateSpeed="10">
-                    <dance:DanceParticleImageleGenerator Width="5,50" Height="5,50">
-                        <dance:DanceParticleImageDefine Uri="/Dance.WpfTest;component/flower.png"></dance:DanceParticleImageDefine>
-                        <dance:DanceParticleImageDefine Uri="/Dance.WpfTest;component/flower2.png"></dance:DanceParticleImageDefine>
-                    </dance:DanceParticleImageleGenerator>
-                    -->
-        <!--<dance:DanceParticleRectangleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
-                                                                 Width="10,30" Height="10,20"></dance:DanceParticleRectangleGenerator>-->
-        <!--<dance:DanceParticleCircleGenerator Colors="#FF1E90FF,#FF6495ED,#FFDB7093,#FFFFB6C1,#FFDAA520,#FFFFD700,#FFFF0000"
-                                                              Radius="10,30"></dance:DanceParticleCircleGenerator>-->
-        <!--
-                </dance:DanceParticleControllerBox>
-                -->
-        <!--<dance:DanceParticleControllerBall TranslateSpeedX="-100,100" TranslateSpeedY="-100,100" TranslateSpeedZ="-100,100"
-                                                     RotationSpeedX="10,45" RotationSpeedY="10,45" RotationSpeedZ="20,90"
-                                                     Position="400,200,0" Radius="10" 
-                                                     Perspective="-0.001" Duration="5,8" GenerateSpeed="0.5">
-                        -->
-        <!--<dance:DanceParticleImageleGenerator Source="C:\Users\win\Desktop\flower.png" Width="5,50" Height="5,50"></dance:DanceParticleImageleGenerator>-->
-        <!--<dance:DanceParticleRectangleGenerator></dance:DanceParticleRectangleGenerator>-->
-        <!--
-                    </dance:DanceParticleControllerBall>-->
-        <!--
-            </dance:DanceParticlePanel>
-        </Border>-->
+        <TabControl>
+            <TabItem Header="1"></TabItem>
+            <TabItem Header="2"></TabItem>
+            <TabItem Header="3"></TabItem>
+            <TabItem Header="4"></TabItem>
+            <TabItem Header="1"></TabItem>
+            <TabItem Header="2"></TabItem>
+            <TabItem Header="3"></TabItem>
+            <TabItem Header="4"></TabItem>
+        </TabControl>
     </Grid>
 </Window>
