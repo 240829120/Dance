@@ -1,0 +1,62 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dance.Wpf">
+
+    <local:DanceSimpleMathConverter x:Key="DanceSimpleMathConverter"></local:DanceSimpleMathConverter>
+
+    <Style TargetType="local:DanceDataGridColumnItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceDataGridColumnItem">
+                    <Border>
+                        <ContentPresenter></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:DanceDataGridColumnItemsControl">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceDataGridColumnItemsControl">
+                    <ScrollViewer x:Name="PART_ScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                        <ItemsPresenter></ItemsPresenter>
+                    </ScrollViewer>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    
+
+    <Style TargetType="local:DanceDataGrid">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceDataGrid">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <local:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" />
+                        <ScrollViewer x:Name="PART_ScrollViewer" Grid.Row="1">
+                            <ItemsPresenter Width="{Binding Path=ActualWidth,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor},Converter={StaticResource DanceSimpleMathConverter},ConverterParameter=-10}"></ItemsPresenter>
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
