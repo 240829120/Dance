@@ -2,7 +2,9 @@
 using Dance.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,41 +42,10 @@ namespace Dance.WpfTest
             this.Loaded += MainWindow_Loaded;
         }
 
-        private readonly List<Student> List = new()
+        private readonly ObservableCollection<Student> List = new()
         {
             new Student { Index =0, Name="zhangsan", Age =16 },
             new Student { Index =1, Name="lisi", Age =17 },
-            new Student { Index =2, Name="wangwu", Age =18 },
-            new Student { Index =3, Name="zhangsan", Age =16 },
-            new Student { Index =4, Name="lisi", Age =17 },
-            new Student { Index =5, Name="wangwu", Age =18 },
-            new Student { Index =6, Name="zhangsan", Age =16 },
-            new Student { Index =7, Name="lisi", Age =17 },
-            new Student { Index =8, Name="wangwu", Age =18 },
-            new Student { Index =9, Name="zhangsan", Age =16 },
-            new Student { Index =10, Name="lisi", Age =17 },
-            new Student { Index =11, Name="wangwu", Age =18 },
-            new Student { Index =12, Name="zhangsan", Age =16 },
-            new Student { Index =13, Name="lisi", Age =17 },
-            new Student { Index =14, Name="wangwu", Age =18 },
-            new Student { Index =15, Name="zhangsan", Age =16 },
-            new Student { Index =16, Name="lisi", Age =17 },
-            new Student { Index =17, Name="wangwu", Age =18 },
-            new Student { Index =18, Name="zhangsan", Age =16 },
-            new Student { Index =19, Name="lisi", Age =17 },
-            new Student { Index =20, Name="wangwu", Age =18 },
-            new Student { Index =21, Name="zhangsan", Age =16 },
-            new Student { Index =22, Name="lisi", Age =17 },
-            new Student { Index =23, Name="wangwu", Age =18 },
-            new Student { Index =24, Name="zhangsan", Age =16 },
-            new Student { Index =25, Name="lisi", Age =17 },
-            new Student { Index =26, Name="wangwu", Age =18 },
-            new Student { Index =27, Name="zhangsan", Age =16 },
-            new Student { Index =28, Name="lisi", Age =17 },
-            new Student { Index =29, Name="wangwu", Age =18 },
-            new Student { Index =30, Name="zhangsan", Age =16 },
-            new Student { Index =31, Name="lisi", Age =17 },
-            new Student { Index =32, Name="wangwu", Age =18 },
         };
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -106,6 +77,24 @@ namespace Dance.WpfTest
             //server.Start();
 
             this.dg.ItemsSource = List;
+            this.lb2.ItemsSource = List;
+
+            Task.Run(() =>
+            {
+                Task.Delay(3000).Wait();
+
+                this.Dispatcher.InvokeAsync(() =>
+                {
+                    this.tb.Text += "hahahahahahaha";
+                    for (int i = 0; i < 100; i++)
+                    {
+                        this.List.Add(new Student { Index = i, Name = $"test_{i}", Age = 28 });
+                    }
+
+                    this.drawing.CaptureScreen(@"e:\1.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                });
+
+            });
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

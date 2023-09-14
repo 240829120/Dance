@@ -1,0 +1,12 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dance.Wpf">
+
+    <local:DanceQRCoderConverter x:Key="DanceQRCoderConverter"></local:DanceQRCoderConverter>
+
+    <Style TargetType="local:DanceQRCoder">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Source" Value="{Binding Code,RelativeSource={RelativeSource Mode=Self},Converter={StaticResource DanceQRCoderConverter}}"></Setter>
+    </Style>
+
+</ResourceDictionary>

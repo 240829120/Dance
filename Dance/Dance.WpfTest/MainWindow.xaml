@@ -43,6 +43,48 @@
             <TextBlock Text="{Binding ElementName=dg,Path=SelectedValue.Name}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
         </StackPanel>
 
+        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,20,0" BorderBrush="Red" BorderThickness="1" Visibility="Visible">
+            <ScrollViewer Width="300" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                <dance:DanceDrawing Width="300" x:Name="drawing" Foreground="Red">
+                    <dance:DanceDrawingGrid Background="White">
+                        <dance:DanceDrawingGrid.RowDefinitions>
+                            <RowDefinition Height="60"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </dance:DanceDrawingGrid.RowDefinitions>
+                        <dance:DanceDrawingGrid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"></ColumnDefinition>
+                            <ColumnDefinition Width="3*"></ColumnDefinition>
+                        </dance:DanceDrawingGrid.ColumnDefinitions>
+                        <dance:DanceDrawingImage Source="C:\Users\win\Pictures\5.jpeg" Height="60"></dance:DanceDrawingImage>
+                        <dance:DanceDrawingStackPanel Grid.Row="1">
+                            <dance:DanceDrawingTextBlock x:Name="tb" Text="this is a try." Margin="20,0,0,0"></dance:DanceDrawingTextBlock>
+                            <dance:DanceDrawingTextBlock Text="this is a try. 1" Margin="20,0,0,0"></dance:DanceDrawingTextBlock>
+                            <dance:DanceDrawingTextBlock Text="this is a try. 2" Margin="20,0,0,0"></dance:DanceDrawingTextBlock>
+                            <dance:DanceDrawingTextBlock Text="this is a try. 3" Margin="20,0,0,0"></dance:DanceDrawingTextBlock>
+                            <dance:DanceDrawingTextBlock Text="this is a try. 4" Margin="20,0,0,0"></dance:DanceDrawingTextBlock>
+                        </dance:DanceDrawingStackPanel>
+                        <dance:DanceDrawingQRCoder Grid.Column="1" Code="http://www.baidu.com"></dance:DanceDrawingQRCoder>
+                        <dance:DanceDrawingItemsControl x:Name="lb2" Grid.Column="1" Grid.Row="1">
+                            <dance:DanceDrawingItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <dance:DanceDrawingGrid>
+                                        <dance:DanceDrawingGrid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                            <ColumnDefinition Width="*"></ColumnDefinition>
+                                        </dance:DanceDrawingGrid.ColumnDefinitions>
+                                        <dance:DanceDrawingTextBlock Text="{Binding Index}"></dance:DanceDrawingTextBlock>
+                                        <dance:DanceDrawingTextBlock Text="{Binding Name}" Grid.Column="1"></dance:DanceDrawingTextBlock>
+                                        <dance:DanceDrawingTextBlock Text="{Binding Age}" Grid.Column="2"></dance:DanceDrawingTextBlock>
+                                    </dance:DanceDrawingGrid>
+                                </DataTemplate>
+                            </dance:DanceDrawingItemsControl.ItemTemplate>
+                        </dance:DanceDrawingItemsControl>
+                    </dance:DanceDrawingGrid>
+                </dance:DanceDrawing>
+            </ScrollViewer>
+        </Border>
+
         <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="400" Margin="20">
             <dance:DanceDataGrid x:Name="dg" Background="White">
                 <dance:DanceDataGrid.Columns>

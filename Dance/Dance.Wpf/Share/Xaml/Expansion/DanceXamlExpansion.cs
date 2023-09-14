@@ -80,5 +80,26 @@ namespace Dance.Wpf
         {
             return GetVisualTreeDescendants(element, typeof(T)).Cast<T>().ToList();
         }
+
+        /// <summary>
+        /// 使用可视化树查找子控件
+        /// </summary>
+        /// <param name="element">查找的开始控件</param>
+        /// <param name="action">遍历行为</param>
+        public static void TraversalVisualTree(this DependencyObject? element, Action<DependencyObject>? action)
+        {
+            if (element == null || action == null)
+                return;
+
+            action.Invoke(element);
+
+            int count = VisualTreeHelper.GetChildrenCount(element);
+            for (int i = 0; i < count; ++i)
+            {
+                DependencyObject child = VisualTreeHelper.GetChild(element, i);
+
+                TraversalVisualTree(child, action);
+            }
+        }
     }
 }
