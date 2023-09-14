@@ -2,15 +2,23 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Dance.Wpf">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Colors.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
     <local:DanceSimpleMathConverter x:Key="DanceSimpleMathConverter"></local:DanceSimpleMathConverter>
 
     <Style TargetType="local:DanceDataGridColumnItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Width" Value="{Binding Width,Mode=TwoWay}"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+        <Setter Property="Padding" Value="3,0,3,0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceDataGridColumnItem">
-                    <Border>
-                        <ContentPresenter></ContentPresenter>
+                    <Border Padding="{TemplateBinding Padding}">
+                        <ContentControl Content="{Binding Header}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"></ContentControl>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -19,6 +27,9 @@
 
     <Style TargetType="local:DanceDataGridColumnItemsControl">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_BORDER}"></Setter>
+        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -29,31 +40,93 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceDataGridColumnItemsControl">
-                    <ScrollViewer x:Name="PART_ScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <ItemsPresenter></ItemsPresenter>
-                    </ScrollViewer>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    
+    <Style TargetType="local:DanceDataGridCellItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Width" Value="{Binding Path=Width}"></Setter>
+        <Setter Property="Padding" Value="3,0,3,0"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceDataGridCellItem">
+                    <Border Padding="{TemplateBinding Padding}">
+                        <ContentControl ContentTemplate="{Binding DataContext.CellTemplate,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:DanceDataGridCellItem}}}" 
+                                        Content="{Binding Model,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:DanceDataGridCellItem}}}"></ContentControl>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:DanceDataGridCellItemsControl">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_BORDER}"></Setter>
+        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+        <Setter Property="Height" Value="{Binding Path=RowHeight,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}"></Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal"></StackPanel>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceDataGridCellItemsControl">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <ItemsPresenter></ItemsPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 
     <Style TargetType="local:DanceDataGrid">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_BORDER}"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Vertical"></StackPanel>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceDataGrid">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"></RowDefinition>
-                            <RowDefinition Height="*"></RowDefinition>
-                        </Grid.RowDefinitions>
-                        <local:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" />
-                        <ScrollViewer x:Name="PART_ScrollViewer" Grid.Row="1">
-                            <ItemsPresenter Width="{Binding Path=ActualWidth,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor},Converter={StaticResource DanceSimpleMathConverter},ConverterParameter=-10}"></ItemsPresenter>
-                        </ScrollViewer>
-                    </Grid>
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <ScrollViewer x:Name="PART_ScrollViewer_Header" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                                <local:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" />
+                            </ScrollViewer>
+                            <ScrollViewer x:Name="PART_ScrollViewer_Items" Grid.Row="1">
+                                <Grid Width="{Binding Path=ActualWidth,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor},Converter={StaticResource DanceSimpleMathConverter},ConverterParameter=-10}">
+                                    <local:DanceShuttle UnitLength="30" Index="{Binding Path=SelectedIndex,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" IsHitTestVisible="False"
+                                                        Orientation="Vertical" Value="-30">
+                                        <Rectangle Fill="{StaticResource DANCE_BRUSH_SELECTED}"></Rectangle>
+                                    </local:DanceShuttle>
+                                    <ItemsPresenter></ItemsPresenter>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

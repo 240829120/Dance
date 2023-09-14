@@ -149,6 +149,7 @@
     </Style>
 
     <Style TargetType="{x:Type ScrollViewer}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Padding" Value="0,0,10,0"></Setter>
         <Setter Property="Template">
             <Setter.Value>

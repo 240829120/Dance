@@ -11,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 表格列项
     /// </summary>
-    public class DanceDataGridColumnItem : ContentControl
+    public class DanceDataGridColumnItem : Control
     {
         static DanceDataGridColumnItem()
         {

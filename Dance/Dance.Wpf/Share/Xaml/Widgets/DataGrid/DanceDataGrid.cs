@@ -7,14 +7,23 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Collections.ObjectModel;
+using System.Windows.Markup;
+using log4net;
 
 namespace Dance.Wpf
 {
     /// <summary>
     /// 表格
     /// </summary>
+    [TemplatePart(Name = nameof(PART_ScrollViewer_Header), Type = typeof(ScrollViewer))]
+    [TemplatePart(Name = nameof(PART_ScrollViewer_Items), Type = typeof(ScrollViewer))]
     public class DanceDataGrid : ItemsControl
     {
+        /// <summary>
+        /// 日志
+        /// </summary>
+        private readonly static ILog log = LogManager.GetLogger(typeof(DanceDataGrid));
+
         static DanceDataGrid()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceDataGrid), new FrameworkPropertyMetadata(typeof(DanceDataGrid)));
@@ -22,17 +31,33 @@ namespace Dance.Wpf
 
         public DanceDataGrid()
         {
-            this.Columns = new ObservableCollection<DanceDataGridColumn>();
+            this.Columns = new List<DanceDataGridColumn>();
         }
+
+        // =================================================================================================================
+        // Field
+
+        /// <summary>
+        /// 列头
+        /// </summary>
+        private ScrollViewer? PART_ScrollViewer_Header;
+
+        /// <summary>
+        /// 数据项
+        /// </summary>
+        private ScrollViewer? PART_ScrollViewer_Items;
+
+        // =================================================================================================================
+        // Property
 
         #region Columns -- 列集合
 
         /// <summary>
         /// 列集合
         /// </summary>
-        public IEnumerable Columns
+        public List<DanceDataGridColumn> Columns
         {
-            get { return (IEnumerable)GetValue(ColumnsProperty); }
+            get { return (List<DanceDataGridColumn>)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
@@ -40,8 +65,130 @@ namespace Dance.Wpf
         /// 列集合
         /// </summary>
         public static readonly DependencyProperty ColumnsProperty =
-            DependencyProperty.Register("Columns", typeof(IEnumerable), typeof(DanceDataGrid), new PropertyMetadata(null));
+            DependencyProperty.Register("Columns", typeof(List<DanceDataGridColumn>), typeof(DanceDataGrid), new PropertyMetadata(null));
 
         #endregion
+
+        #region RowHeight -- 行高
+
+        /// <summary>
+        /// 行高
+        /// </summary>
+        public double RowHeight
+        {
+            get { return (double)GetValue(RowHeightProperty); }
+            set { SetValue(RowHeightProperty, value); }
+        }
+
+        /// <summary>
+        /// 行高
+        /// </summary>
+        public static readonly DependencyProperty RowHeightProperty =
+            DependencyProperty.Register("RowHeight", typeof(double), typeof(DanceDataGrid), new PropertyMetadata(30d));
+
+        #endregion
+
+        #region SelectedValue -- 当前选中项
+
+        /// <summary>
+        /// 是否正在更新选中项
+        /// </summary>
+        private bool IsSelectedValueUpdating;
+
+        /// <summary>
+        /// 当前选中项
+        /// </summary>
+        public object? SelectedValue
+        {
+            get { return (object?)GetValue(SelectedValueProperty); }
+            set { SetValue(SelectedValueProperty, value); }
+        }
+
+        /// <summary>
+        /// 当前选中项
+        /// </summary>
+        public static readonly DependencyProperty SelectedValueProperty =
+            DependencyProperty.Register("SelectedValue", typeof(object), typeof(DanceDataGrid), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceDataGrid dataGrid || dataGrid.IsSelectedValueUpdating)
+                    return;
+
+                dataGrid.IsSelectedValueUpdating = true;
+
+                try
+                {
+                    foreach (object item in dataGrid.ItemContainerGenerator.Items)
+                    {
+                        if (dataGrid.ItemContainerGenerator.ContainerFromItem(item) is not DanceDataGridCellItemsControl row)
+                            continue;
+
+                        if (item == e.NewValue)
+                        {
+                            dataGrid.SelectedIndex = dataGrid.ItemContainerGenerator.IndexFromContainer(row);
+                            row.IsSelected = true;
+                        }
+                        else
+                        {
+                            row.IsSelected = false;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    log.Error(ex);
+                }
+                finally
+                {
+                    dataGrid.IsSelectedValueUpdating = false;
+                }
+
+            })));
+
+        #endregion
+
+        #region SelectedIndex -- 当前选中索引
+
+        /// <summary>
+        /// 当前选中索引
+        /// </summary>
+        public int SelectedIndex
+        {
+            get { return (int)GetValue(SelectedIndexPropertyKey.DependencyProperty); }
+            private set { SetValue(SelectedIndexPropertyKey, value); }
+        }
+
+        /// <summary>
+        /// 当前选中索引
+        /// </summary>
+        public static readonly DependencyPropertyKey SelectedIndexPropertyKey =
+            DependencyProperty.RegisterReadOnly("SelectedIndex", typeof(int), typeof(DanceDataGrid), new PropertyMetadata(-1));
+
+        #endregion
+
+        // =================================================================================================================
+        // Protected Function
+
+        protected override bool IsItemItsOwnContainerOverride(object item)
+        {
+            return item is DanceDataGridCellItemsControl;
+        }
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new DanceDataGridCellItemsControl(this);
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.PART_ScrollViewer_Header = this.Template.FindName(nameof(PART_ScrollViewer_Header), this) as ScrollViewer;
+            this.PART_ScrollViewer_Items = this.Template.FindName(nameof(PART_ScrollViewer_Items), this) as ScrollViewer;
+
+            if (this.PART_ScrollViewer_Header != null && this.PART_ScrollViewer_Items != null)
+            {
+
+            }
+        }
     }
 }

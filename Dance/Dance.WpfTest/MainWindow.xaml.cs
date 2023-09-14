@@ -20,6 +20,8 @@ namespace Dance.WpfTest
 {
     public class Student
     {
+        public int Index { get; set; }
+
         public string? Name { get; set; }
 
         public int Age { get; set; }
@@ -40,9 +42,39 @@ namespace Dance.WpfTest
 
         private readonly List<Student> List = new()
         {
-            new Student { Name="zhangsan", Age =16 },
-            new Student { Name="lisi", Age =17 },
-            new Student { Name="wangwu", Age =18 },
+            new Student { Index =0, Name="zhangsan", Age =16 },
+            new Student { Index =1, Name="lisi", Age =17 },
+            new Student { Index =2, Name="wangwu", Age =18 },
+            new Student { Index =3, Name="zhangsan", Age =16 },
+            new Student { Index =4, Name="lisi", Age =17 },
+            new Student { Index =5, Name="wangwu", Age =18 },
+            new Student { Index =6, Name="zhangsan", Age =16 },
+            new Student { Index =7, Name="lisi", Age =17 },
+            new Student { Index =8, Name="wangwu", Age =18 },
+            new Student { Index =9, Name="zhangsan", Age =16 },
+            new Student { Index =10, Name="lisi", Age =17 },
+            new Student { Index =11, Name="wangwu", Age =18 },
+            new Student { Index =12, Name="zhangsan", Age =16 },
+            new Student { Index =13, Name="lisi", Age =17 },
+            new Student { Index =14, Name="wangwu", Age =18 },
+            new Student { Index =15, Name="zhangsan", Age =16 },
+            new Student { Index =16, Name="lisi", Age =17 },
+            new Student { Index =17, Name="wangwu", Age =18 },
+            new Student { Index =18, Name="zhangsan", Age =16 },
+            new Student { Index =19, Name="lisi", Age =17 },
+            new Student { Index =20, Name="wangwu", Age =18 },
+            new Student { Index =21, Name="zhangsan", Age =16 },
+            new Student { Index =22, Name="lisi", Age =17 },
+            new Student { Index =23, Name="wangwu", Age =18 },
+            new Student { Index =24, Name="zhangsan", Age =16 },
+            new Student { Index =25, Name="lisi", Age =17 },
+            new Student { Index =26, Name="wangwu", Age =18 },
+            new Student { Index =27, Name="zhangsan", Age =16 },
+            new Student { Index =28, Name="lisi", Age =17 },
+            new Student { Index =29, Name="wangwu", Age =18 },
+            new Student { Index =30, Name="zhangsan", Age =16 },
+            new Student { Index =31, Name="lisi", Age =17 },
+            new Student { Index =32, Name="wangwu", Age =18 },
         };
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -72,6 +104,8 @@ namespace Dance.WpfTest
             //server.Assemblies.Add(this.GetType().Assembly);
 
             //server.Start();
+
+            this.dg.ItemsSource = List;
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

@@ -38,5 +38,25 @@
             <ListBoxItem>5</ListBoxItem>
         </ListBox>
 
+        <dance:DanceDataGrid x:Name="dg" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="600" Height="400" Margin="20">
+            <dance:DanceDataGrid.Columns>
+                <dance:DanceDataGridColumn Header="Name">
+                    <dance:DanceDataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border>
+                                <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
+                            </Border>
+                        </DataTemplate>
+                    </dance:DanceDataGridColumn.CellTemplate>
+                </dance:DanceDataGridColumn>
+                <dance:DanceDataGridColumn Header="Age">
+                    <dance:DanceDataGridColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Path=Age}" VerticalAlignment="Center"></TextBlock>
+                        </DataTemplate>
+                    </dance:DanceDataGridColumn.CellTemplate>
+                </dance:DanceDataGridColumn>
+            </dance:DanceDataGrid.Columns>
+        </dance:DanceDataGrid>
     </Grid>
 </Window>
