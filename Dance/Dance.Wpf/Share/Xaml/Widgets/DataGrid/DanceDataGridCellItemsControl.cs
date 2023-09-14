@@ -42,31 +42,6 @@ namespace Dance.Wpf
         /// </summary>
         internal DanceDataGrid DataGrid { get; private set; }
 
-        #region IsSelected -- 是否选中
-
-        /// <summary>
-        /// 是否选中
-        /// </summary>
-        public bool IsSelected
-        {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
-        }
-
-        /// <summary>
-        /// 是否选中
-        /// </summary>
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(DanceDataGridCellItemsControl), new PropertyMetadata(false, new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceDataGridCellItemsControl cellItems)
-                    return;
-
-                cellItems.DataGrid.SelectedValue = cellItems.DataContext;
-            })));
-
-        #endregion
-
         // ===========================================================================================================
         // Override Function
 
@@ -84,7 +59,7 @@ namespace Dance.Wpf
         {
             base.OnMouseLeftButtonDown(e);
 
-            this.IsSelected = true;
+            this.DataGrid.SelectedValue = this.DataContext;
         }
     }
 }

@@ -116,10 +116,13 @@
                             <ScrollViewer x:Name="PART_ScrollViewer_Header" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
                                 <local:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" />
                             </ScrollViewer>
-                            <ScrollViewer x:Name="PART_ScrollViewer_Items" Grid.Row="1">
-                                <Grid Width="{Binding Path=ActualWidth,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor},Converter={StaticResource DanceSimpleMathConverter},ConverterParameter=-10}">
-                                    <local:DanceShuttle UnitLength="30" Index="{Binding Path=SelectedIndex,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" IsHitTestVisible="False"
-                                                        Orientation="Vertical" Value="-30">
+                            <ScrollViewer x:Name="PART_ScrollViewer_Items" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
+                                <Grid>
+                                    <local:DanceShuttle UnitLength="30" Index="{Binding Path=SelectedIndex,Mode=OneWay,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}"
+                                                        Value="-30" Orientation="Vertical" Duration="00:00:00.5" IsHitTestVisible="False">
+                                        <local:DanceShuttle.SwitchEasing>
+                                            <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
+                                        </local:DanceShuttle.SwitchEasing>
                                         <Rectangle Fill="{StaticResource DANCE_BRUSH_SELECTED}"></Rectangle>
                                     </local:DanceShuttle>
                                     <ItemsPresenter></ItemsPresenter>

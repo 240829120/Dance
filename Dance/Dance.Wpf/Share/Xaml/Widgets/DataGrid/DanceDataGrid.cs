@@ -31,7 +31,7 @@ namespace Dance.Wpf
 
         public DanceDataGrid()
         {
-            this.Columns = new List<DanceDataGridColumn>();
+            this.Columns = new();
         }
 
         // =================================================================================================================
@@ -55,9 +55,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 列集合
         /// </summary>
-        public List<DanceDataGridColumn> Columns
+        public ObservableCollection<DanceDataGridColumn> Columns
         {
-            get { return (List<DanceDataGridColumn>)GetValue(ColumnsProperty); }
+            get { return (ObservableCollection<DanceDataGridColumn>)GetValue(ColumnsProperty); }
             set { SetValue(ColumnsProperty, value); }
         }
 
@@ -65,7 +65,7 @@ namespace Dance.Wpf
         /// 列集合
         /// </summary>
         public static readonly DependencyProperty ColumnsProperty =
-            DependencyProperty.Register("Columns", typeof(List<DanceDataGridColumn>), typeof(DanceDataGrid), new PropertyMetadata(null));
+            DependencyProperty.Register("Columns", typeof(ObservableCollection<DanceDataGridColumn>), typeof(DanceDataGrid), new PropertyMetadata(null));
 
         #endregion
 
@@ -91,11 +91,6 @@ namespace Dance.Wpf
         #region SelectedValue -- 当前选中项
 
         /// <summary>
-        /// 是否正在更新选中项
-        /// </summary>
-        private bool IsSelectedValueUpdating;
-
-        /// <summary>
         /// 当前选中项
         /// </summary>
         public object? SelectedValue
@@ -110,37 +105,11 @@ namespace Dance.Wpf
         public static readonly DependencyProperty SelectedValueProperty =
             DependencyProperty.Register("SelectedValue", typeof(object), typeof(DanceDataGrid), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
             {
-                if (s is not DanceDataGrid dataGrid || dataGrid.IsSelectedValueUpdating)
+                if (s is not DanceDataGrid dataGrid)
                     return;
 
-                dataGrid.IsSelectedValueUpdating = true;
-
-                try
-                {
-                    foreach (object item in dataGrid.ItemContainerGenerator.Items)
-                    {
-                        if (dataGrid.ItemContainerGenerator.ContainerFromItem(item) is not DanceDataGridCellItemsControl row)
-                            continue;
-
-                        if (item == e.NewValue)
-                        {
-                            dataGrid.SelectedIndex = dataGrid.ItemContainerGenerator.IndexFromContainer(row);
-                            row.IsSelected = true;
-                        }
-                        else
-                        {
-                            row.IsSelected = false;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    log.Error(ex);
-                }
-                finally
-                {
-                    dataGrid.IsSelectedValueUpdating = false;
-                }
+                var container = dataGrid.ItemContainerGenerator.ContainerFromItem(e.NewValue);
+                dataGrid.SelectedIndex = dataGrid.ItemContainerGenerator.IndexFromContainer(container);
 
             })));
 
@@ -187,8 +156,17 @@ namespace Dance.Wpf
 
             if (this.PART_ScrollViewer_Header != null && this.PART_ScrollViewer_Items != null)
             {
-
+                this.PART_ScrollViewer_Items.ScrollChanged -= PART_ScrollViewer_Items_ScrollChanged;
+                this.PART_ScrollViewer_Items.ScrollChanged += PART_ScrollViewer_Items_ScrollChanged;
             }
+        }
+
+        private void PART_ScrollViewer_Items_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (this.PART_ScrollViewer_Header == null || this.PART_ScrollViewer_Items == null)
+                return;
+
+            this.PART_ScrollViewer_Header?.ScrollToHorizontalOffset(this.PART_ScrollViewer_Items.HorizontalOffset);
         }
     }
 }
