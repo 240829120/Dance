@@ -33,4 +33,8 @@
 		<ProjectReference Include="..\Dance\Dance.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Share\Xaml\Expansion\Enum\" />
+	</ItemGroup>
+
 </Project>
