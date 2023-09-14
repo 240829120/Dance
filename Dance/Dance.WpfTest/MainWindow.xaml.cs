@@ -83,7 +83,7 @@ namespace Dance.WpfTest
             {
                 Task.Delay(3000).Wait();
 
-                this.Dispatcher.InvokeAsync(() =>
+                this.Dispatcher.InvokeAsync(async () =>
                 {
                     this.tb.Text += "hahahahahahaha";
                     for (int i = 0; i < 100; i++)
@@ -91,7 +91,9 @@ namespace Dance.WpfTest
                         this.List.Add(new Student { Index = i, Name = $"test_{i}", Age = 28 });
                     }
 
-                    this.drawing.CaptureScreen(@"e:\1.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+                    await this.drawing.CaptureScreenAsync(@"e:\1.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+
+                    Debug.WriteLine("save over.");
                 });
 
             });

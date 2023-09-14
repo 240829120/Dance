@@ -1,4 +1,5 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -15,6 +16,10 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceDrawing : ContentControl, IDanceDrawing
     {
+        /// <summary>
+        /// 日志
+        /// </summary>
+        private readonly static ILog log = LogManager.GetLogger(typeof(DanceDrawing));
 
         /// <summary>
         /// 绘制
@@ -41,17 +46,38 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="path">路径</param>
         /// <param name="format">图片格式</param>
-        public void CaptureScreen(string path, System.Drawing.Imaging.ImageFormat format)
+        public Task CaptureScreenAsync(string path, System.Drawing.Imaging.ImageFormat format)
         {
-            this.Dispatcher.BeginInvoke(() =>
+            return Task.Run(() =>
             {
-                Bitmap bmp = new((int)this.ActualWidth, (int)this.ActualHeight);
-                Graphics g = Graphics.FromImage(bmp);
-                this.OnDrawing(g);
+                bool hock = false;
 
-                bmp.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
+                this.Dispatcher.BeginInvoke(() =>
+                {
+                    try
+                    {
+                        Bitmap bmp = new((int)this.ActualWidth, (int)this.ActualHeight);
+                        Graphics g = Graphics.FromImage(bmp);
+                        this.OnDrawing(g);
 
-            }, System.Windows.Threading.DispatcherPriority.SystemIdle);
+                        bmp.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
+                    }
+                    catch (Exception ex)
+                    {
+                        log.Error(ex);
+                    }
+                    finally
+                    {
+                        hock = true;
+                    }
+
+                }, System.Windows.Threading.DispatcherPriority.SystemIdle);
+
+                while (!hock)
+                {
+                    Task.Delay(100).Wait();
+                }
+            });
         }
     }
 }
