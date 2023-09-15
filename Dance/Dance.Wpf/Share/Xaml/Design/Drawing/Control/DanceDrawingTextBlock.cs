@@ -25,7 +25,8 @@ namespace Dance.Wpf
                 return;
 
             graphics.FillRectangle(DanceDrawingHelper.GetBrush(this.Background), (float)point.X, (float)point.Y, (float)this.ActualWidth, (float)this.ActualHeight);
-            graphics.DrawString(this.Text, DanceDrawingHelper.GetFont(this), DanceDrawingHelper.GetBrush(this.Foreground), new PointF((float)point.X, (float)point.Y));
+            RectangleF layout = new((float)point.X, (float)point.Y, (float)this.ActualWidth, (float)this.ActualHeight);
+            graphics.DrawString(this.Text, DanceDrawingHelper.GetFont(this), DanceDrawingHelper.GetBrush(this.Foreground), layout);
         }
     }
 }

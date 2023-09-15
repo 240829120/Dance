@@ -85,7 +85,7 @@ namespace Dance.WpfTest
 
                 this.Dispatcher.InvokeAsync(async () =>
                 {
-                    this.tb.Text += "hahahahahahaha";
+                    this.tb.Text += "hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
                     for (int i = 0; i < 100; i++)
                     {
                         this.List.Add(new Student { Index = i, Name = $"test_{i}", Age = 28 });
