@@ -32,25 +32,25 @@ namespace Dance
         /// <summary>
         /// 读取数据结构
         /// </summary>
-        /// <param name="swap">交换类型</param>
+        /// <param name="isSwap">是否交换字节顺序</param>
         /// <returns>数据结构</returns>
-        public T? ReadStruct(DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None)
+        public T? ReadStruct(bool isSwap)
         {
             byte[]? buffer = base.Read();
             if (buffer == null)
                 return null;
 
-            return this.Helper.ConvertToStruct<T>(buffer, swap);
+            return this.Helper.ConvertToStruct<T>(buffer, isSwap);
         }
 
         /// <summary>
         /// 写入数据结构
         /// </summary>
         /// <param name="obj">数据结构</param>
-        /// <param name="swap">交换类型</param>
-        public void WriteStruct(T obj, DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None)
+        /// <param name="isSwap">是否交换字节顺序</param>
+        public void WriteStruct(T obj, bool isSwap)
         {
-            base.Write(this.Helper.ConvertToByte(obj, swap));
+            base.Write(this.Helper.ConvertToByte(obj, isSwap));
         }
     }
 }

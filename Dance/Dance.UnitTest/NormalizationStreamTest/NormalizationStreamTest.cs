@@ -62,16 +62,16 @@ namespace Dance.UnitTest
 
             byte[] buffer = new byte[] { 1, 1, 254, 255, 255, 255, 1, 0, 0, 0 };
             stream.Write(buffer);
-            StudentStruct? student1 = stream.ReadStruct();
+            StudentStruct? student1 = stream.ReadStruct(false);
 
             DanceStructNormalStreamHelper helper = new(typeof(StudentStruct));
             helper.Swap(buffer);
             stream.Write(buffer);
-            StudentStruct? student2 = stream.ReadStruct(DanceStructNormalStreamSwapType.EveryTwoByteReverse);
+            StudentStruct? student2 = stream.ReadStruct(true);
 
             helper.Swap(buffer);
             stream.Write(buffer);
-            StudentStruct? student3 = stream.ReadStruct();
+            StudentStruct? student3 = stream.ReadStruct(false);
 
             Assert.IsNotNull(student1);
             Assert.IsNotNull(student2);
@@ -87,10 +87,14 @@ namespace Dance.UnitTest
             UInt32 s1 = 1;
             var b = BitConverter.GetBytes(s1);
 
-            DanceStructNormalStreamHelper helper = new(typeof(StudentSingle));
-            StudentSingle single = new();
-            single.Value = 1;
-            byte[] bytes = helper.ConvertToByte(single, DanceStructNormalStreamSwapType.EveryTwoByteReverse);
+            byte[] bytes = new byte[4];
+            short[] buffer = new short[2];
+            buffer[0] = (short)U32HighWord(s1);
+            buffer[1] = (short)U32LowWord(s1);
+
+            Buffer.BlockCopy(buffer, 0, bytes, 0, 4);
+
+
         }
 
         [TestMethod]
@@ -125,6 +129,38 @@ namespace Dance.UnitTest
 
             Task.Delay(52000).Wait();
 
+        }
+
+        //将short类型数据的高低位进行交换
+        private ushort Swap(ushort x)
+        {
+            ushort highbit;
+            ushort lowbit;
+            ushort swap;
+            highbit = (ushort)(x >> 8);
+            lowbit = (ushort)((x & 0x00ff) << 8);
+            swap = (ushort)(highbit | lowbit);
+            return swap;
+        }
+
+        ///取Uint32的高１６位，并将Uint16的高８位和低８位交换
+        private ushort U32HighWord(uint x)
+        {
+            ushort highbit;
+
+            highbit = (ushort)(x >> 16);
+            highbit = Swap(highbit);
+
+            return (highbit);
+        }
+
+        ///取Uint32的低１６位，并将Uint16的高８位和低８位交换
+        private ushort U32LowWord(uint x)
+        {
+            ushort lowbit;
+            lowbit = (ushort)(x & 0x0000ffff);
+            lowbit = Swap(lowbit);
+            return (lowbit);
         }
     }
 }
