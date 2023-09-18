@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -11,12 +12,12 @@ namespace Dance
     /// <summary>
     /// 数据结构标准化流辅助类
     /// </summary>
-    public class DanceStructNormalStreamHelper<T> where T : struct
+    public class DanceStructNormalStreamHelper
     {
         /// <summary>
         /// 需要交换顺序的数据类型
         /// </summary>
-        private readonly static List<Type> NEED_SWIP_TYPE_LIST = new()
+        public readonly static List<Type> NEED_SWIP_TYPE_LIST = new()
         {
             typeof(Int16),
             typeof(Int32),
@@ -29,11 +30,13 @@ namespace Dance
             typeof(decimal)
         };
 
-        public DanceStructNormalStreamHelper()
+        /// <summary>
+        /// 标准化流辅助类
+        /// </summary>
+        /// <param name="type">数据结构类型</param>
+        public DanceStructNormalStreamHelper(Type type)
         {
             List<Tuple<int, int>> infos = new();
-
-            Type type = typeof(T);
             int index = 0;
 
             foreach (var item in type.GetFields(BindingFlags.Public | BindingFlags.Instance))
@@ -48,8 +51,20 @@ namespace Dance
                 index += size;
             }
 
+            this.FixedLength = Marshal.SizeOf(type);
+            this.Type = type;
             this.SwapInfos = infos;
         }
+
+        /// <summary>
+        /// 数据结构类型
+        /// </summary>
+        public Type Type { get; private set; }
+
+        /// <summary>
+        /// 长度
+        /// </summary>
+        public int FixedLength { get; private set; }
 
         /// <summary>
         /// 交换信息 [ 开始索引, 结束索引 ]
@@ -60,18 +75,74 @@ namespace Dance
         /// 交换
         /// </summary>
         /// <param name="buffer">数据</param>
-        public void Swap(byte[] buffer)
+        public void Swap(byte[] buffer, DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None)
         {
-            if (this.SwapInfos == null || this.SwapInfos.Count == 0)
+            if (swap == DanceStructNormalStreamSwapType.None || this.SwapInfos == null || this.SwapInfos.Count == 0)
                 return;
 
-            foreach (var info in this.SwapInfos)
+            if (swap == DanceStructNormalStreamSwapType.EveryTwoByteReverse)
             {
-                for (int i = 0; i < (info.Item2 - info.Item1 + 1) / 2; ++i)
+                foreach (var info in this.SwapInfos)
                 {
-                    (buffer[info.Item2 - i], buffer[info.Item1 + i]) = (buffer[info.Item1 + i], buffer[info.Item2 - i]);
+                    for (int i = 0; i < (info.Item2 - info.Item1 + 1); i += 2)
+                    {
+                        (buffer[info.Item1 + i], buffer[info.Item1 + i + 1]) = (buffer[info.Item1 + i + 1], buffer[info.Item1 + i]);
+                    }
                 }
+
+                return;
             }
+            else if (swap == DanceStructNormalStreamSwapType.Reverse)
+            {
+                foreach (var info in this.SwapInfos)
+                {
+                    for (int i = 0; i < (info.Item2 - info.Item1 + 1) / 2; ++i)
+                    {
+                        (buffer[info.Item2 - i], buffer[info.Item1 + i]) = (buffer[info.Item1 + i], buffer[info.Item2 - i]);
+                    }
+                }
+
+                return;
+            }
+        }
+
+        /// <summary>
+        /// 转化为数据结构
+        /// </summary>
+        /// <typeparam name="T">数据结构</typeparam>
+        /// <param name="buffer">二进制数据</param>
+        /// <param name="swap">交换类型</param>
+        /// <returns>数据结构</returns>
+        public T ConvertToStruct<T>(byte[] buffer, DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None) where T : struct
+        {
+            this.Swap(buffer, swap);
+
+            IntPtr ptr = Marshal.AllocHGlobal(this.FixedLength);
+            Marshal.Copy(buffer, 0, ptr, this.FixedLength);
+            T obj = Marshal.PtrToStructure<T>(ptr);
+            Marshal.FreeHGlobal(ptr);
+
+            return obj;
+        }
+
+        /// <summary>
+        /// 转化为二进制数据
+        /// </summary>
+        /// <typeparam name="T">数据结构</typeparam>
+        /// <param name="obj">对象</param>
+        /// <param name="swap">交换类型</param>
+        /// <returns>二进制数据</returns>
+        public byte[] ConvertToByte<T>(T obj, DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None) where T : struct
+        {
+            byte[] buffer = new byte[this.FixedLength];
+            IntPtr ptr = Marshal.AllocHGlobal(this.FixedLength);
+            Marshal.StructureToPtr(obj, ptr, false);
+            Marshal.Copy(ptr, buffer, 0, this.FixedLength);
+            Marshal.FreeHGlobal(ptr);
+
+            this.Swap(buffer, swap);
+
+            return buffer;
         }
     }
 }

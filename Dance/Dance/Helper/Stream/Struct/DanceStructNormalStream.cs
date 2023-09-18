@@ -21,49 +21,36 @@ namespace Dance
         public DanceStructNormalStream(byte[]? header = null, int cacheLength = 1024) : base(0, header, cacheLength)
         {
             this.FixedLength = Marshal.SizeOf<T>();
+            this.Helper = new DanceStructNormalStreamHelper(typeof(T));
         }
 
         /// <summary>
         /// 数据结构标准化流辅助类
         /// </summary>
-        protected DanceStructNormalStreamHelper<T> Helper = new();
+        protected readonly DanceStructNormalStreamHelper Helper;
 
         /// <summary>
         /// 读取数据结构
         /// </summary>
-        /// <param name="isSwap">是否对数据结构字节顺序进行交换</param>
+        /// <param name="swap">交换类型</param>
         /// <returns>数据结构</returns>
-        public T? ReadStruct(bool isSwap)
+        public T? ReadStruct(DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None)
         {
             byte[]? buffer = base.Read();
             if (buffer == null)
                 return null;
 
-            if (isSwap)
-            {
-                this.Helper.Swap(buffer);
-            }
-
-            IntPtr ptr = Marshal.AllocHGlobal(this.FixedLength);
-            Marshal.Copy(buffer, 0, ptr, this.FixedLength);
-            T obj = Marshal.PtrToStructure<T>(ptr);
-            Marshal.FreeHGlobal(ptr);
-
-            return obj;
+            return this.Helper.ConvertToStruct<T>(buffer, swap);
         }
 
         /// <summary>
         /// 写入数据结构
         /// </summary>
         /// <param name="obj">数据结构</param>
-        public void WriteStruct(T obj)
+        /// <param name="swap">交换类型</param>
+        public void WriteStruct(T obj, DanceStructNormalStreamSwapType swap = DanceStructNormalStreamSwapType.None)
         {
-            byte[] buffer = new byte[this.FixedLength];
-            IntPtr ptr = Marshal.AllocHGlobal(this.FixedLength);
-            Marshal.StructureToPtr(obj, ptr, false);
-            Marshal.Copy(ptr, buffer, 0, this.FixedLength);
-            Marshal.FreeHGlobal(ptr);
-            base.Write(buffer);
+            base.Write(this.Helper.ConvertToByte(obj, swap));
         }
     }
 }
