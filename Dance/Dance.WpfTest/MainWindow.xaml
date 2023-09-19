@@ -88,7 +88,7 @@
         <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="400" Height="400" Margin="20">
             <dance:DanceDataGrid x:Name="dg" Background="White">
                 <dance:DanceDataGrid.Columns>
-                    <dance:DanceDataGridColumn Header="Index" Width="*">
+                    <dance:DanceDataGridColumn Header="Index" Width="400">
                         <dance:DanceDataGridColumn.CellTemplate>
                             <DataTemplate>
                                 <Border>

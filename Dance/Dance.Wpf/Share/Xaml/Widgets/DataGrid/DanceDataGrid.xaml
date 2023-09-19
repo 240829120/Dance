@@ -10,7 +10,6 @@
 
     <Style TargetType="local:DanceDataGridColumnItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Width" Value="{Binding Width,Mode=TwoWay}"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
         <Setter Property="Padding" Value="3,0,3,0"></Setter>
@@ -34,7 +33,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <local:DanceDataGridPanel></local:DanceDataGridPanel>
+                    <local:DanceDataGridPanel IsColumnHeader="True"></local:DanceDataGridPanel>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -51,7 +50,6 @@
 
     <Style TargetType="local:DanceDataGridCellItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Width" Value="{Binding Path=Width}"></Setter>
         <Setter Property="Padding" Value="3,0,3,0"></Setter>
         <Setter Property="Template">
             <Setter.Value>

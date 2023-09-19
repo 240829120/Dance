@@ -13,22 +13,22 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceDataGridPanel : Panel
     {
-        #region ColumnMinWidth -- 列最小宽度
+        #region IsColumnHeader -- 是否是列头
 
         /// <summary>
-        /// 列最小宽度
+        /// 是否是列头
         /// </summary>
-        public double ColumnMinWidth
+        public bool IsColumnHeader
         {
-            get { return (double)GetValue(ColumnMinWidthProperty); }
-            set { SetValue(ColumnMinWidthProperty, value); }
+            get { return (bool)GetValue(IsColumnHeaderProperty); }
+            set { SetValue(IsColumnHeaderProperty, value); }
         }
 
         /// <summary>
-        /// 列最小宽度
+        /// 是否是列头
         /// </summary>
-        public static readonly DependencyProperty ColumnMinWidthProperty =
-            DependencyProperty.Register("ColumnMinWidth", typeof(double), typeof(DanceDataGridPanel), new PropertyMetadata(60d));
+        public static readonly DependencyProperty IsColumnHeaderProperty =
+            DependencyProperty.Register("IsColumnHeader", typeof(bool), typeof(DanceDataGridPanel), new PropertyMetadata(false));
 
         #endregion
 
@@ -39,54 +39,68 @@ namespace Dance.Wpf
         /// <returns>测量结果</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
-            availableSize.Width = double.IsNormal(availableSize.Width) ? availableSize.Width : 0;
-            availableSize.Height = double.IsNormal(availableSize.Height) ? availableSize.Height : 0;
-
             Size size = new();
 
-            // 统计
-            List<DanceDataGridPanelLayoutInfo> infos = new();
-
-            foreach (UIElement item in this.Children)
+            // 非列头
+            if (!this.IsColumnHeader)
             {
-                if (item is not FrameworkElement element || element.DataContext is not DanceDataGridColumn column)
+                foreach (FrameworkElement element in this.Children)
+                {
+                    if (element == null || element.DataContext is not DanceDataGridColumn column)
+                        continue;
+
+                    size.Width += column.ActualWidth;
+                }
+
+                return size;
+            }
+
+            // 列头
+            DanceDataGridColumnItemsControl? headers = DanceXamlExpansion.GetVisualTreeParent<DanceDataGridColumnItemsControl>(this);
+            if (headers == null || headers.ActualHeight == 0)
+                return size;
+
+            // 统计
+            List<DanceDataGridColumn> starColumns = new();
+            double stars = 0;
+
+            foreach (FrameworkElement element in this.Children)
+            {
+                if (element == null || element.DataContext is not DanceDataGridColumn column)
                     continue;
 
-                infos.Add(new DanceDataGridPanelLayoutInfo(element, column));
-            }
+                element.Measure(availableSize);
 
-            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Pixel))
-            {
-                info.Width = info.Column.Width.Value;
-                size.Width += info.Width;
-            }
-
-            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Auto))
-            {
-                info.Width = info.Element.DesiredSize.Width;
-                size.Width += info.Width;
-            }
-
-            double starSum = infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Star).Sum(p => p.Column.Width.Value);
-
-            if (starSum > 0)
-            {
-                double starOneWidth = (availableSize.Width - size.Width) / starSum;
-
-                foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Star))
+                switch (column.Width.GridUnitType)
                 {
-                    info.Width = Math.Max(this.ColumnMinWidth, starOneWidth * info.Column.Width.Value);
-                    size.Width += info.Width;
+                    case GridUnitType.Auto:
+                        column.ActualWidth = element.DesiredSize.Width;
+                        size.Width += element.DesiredSize.Width;
+                        break;
+                    case GridUnitType.Pixel:
+                        column.ActualWidth = column.Width.Value;
+                        size.Width += column.Width.Value;
+                        break;
+                    case GridUnitType.Star:
+                        starColumns.Add(column);
+                        stars += column.Width.Value;
+                        break;
+                    default:
+                        break;
                 }
             }
 
-            size.Height = availableSize.Height;
-
-            // 测量
-            foreach (DanceDataGridPanelLayoutInfo info in infos)
+            if (starColumns.Count > 0)
             {
-                info.Element.Measure(new Size(info.Width, size.Height));
+                double starOneWidth = headers.ActualWidth / stars;
+                foreach (DanceDataGridColumn column in starColumns)
+                {
+                    column.ActualWidth = Math.Max(column.MinWindth, starOneWidth * column.Width.Value);
+                    size.Width += column.ActualWidth;
+                }
             }
+
+            size.Height = headers.ActualHeight;
 
             return size;
         }
@@ -98,87 +112,22 @@ namespace Dance.Wpf
         /// <returns>布局结果</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            Size size = new();
-
-            // 统计
-            List<DanceDataGridPanelLayoutInfo> infos = new();
-
-            foreach (UIElement item in this.Children)
+            Size size = new()
             {
-                if (item is not FrameworkElement element || element.DataContext is not DanceDataGridColumn column)
-                    continue;
-
-                infos.Add(new DanceDataGridPanelLayoutInfo(element, column));
-            }
-
-            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Pixel))
-            {
-                info.Width = info.Column.Width.Value;
-                size.Width += info.Width;
-            }
-
-            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Auto))
-            {
-                info.Width = info.Element.DesiredSize.Width;
-                size.Width += info.Width;
-            }
-
-            double starSum = infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Star).Sum(p => p.Column.Width.Value);
-
-            if (starSum > 0)
-            {
-                double starOneWidth = (finalSize.Width - size.Width) / starSum;
-
-                foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Star))
-                {
-                    info.Width = Math.Max(this.ColumnMinWidth, starOneWidth * info.Column.Width.Value);
-                    size.Width += info.Width;
-                }
-            }
-
-            size.Height = finalSize.Height;
+                Height = finalSize.Height
+            };
 
             // 布局
-            double x = 0;
-            foreach (DanceDataGridPanelLayoutInfo info in infos)
+            foreach (FrameworkElement element in this.Children)
             {
-                info.Element.Arrange(new Rect(x, 0, info.Width, size.Height));
-                x += info.Width;
+                if (element == null || element.DataContext is not DanceDataGridColumn column)
+                    continue;
+
+                element.Arrange(new Rect(size.Width, 0, column.ActualWidth, size.Height));
+                size.Width += column.ActualWidth;
             }
 
             return size;
-        }
-
-        /// <summary>
-        /// 布局信息
-        /// </summary>
-        private class DanceDataGridPanelLayoutInfo
-        {
-            /// <summary>
-            /// 布局信息
-            /// </summary>
-            /// <param name="element">元素</param>
-            /// <param name="column">列</param>
-            public DanceDataGridPanelLayoutInfo(FrameworkElement element, DanceDataGridColumn column)
-            {
-                this.Element = element;
-                this.Column = column;
-            }
-
-            /// <summary>
-            /// 元素
-            /// </summary>
-            public FrameworkElement Element { get; private set; }
-
-            /// <summary>
-            /// 列信息
-            /// </summary>
-            public DanceDataGridColumn Column { get; private set; }
-
-            /// <summary>
-            /// 宽度
-            /// </summary>
-            public double Width { get; set; }
         }
     }
 }

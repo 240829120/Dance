@@ -32,6 +32,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region MinWidth -- 最小宽度
+
+        /// <summary>
+        /// 最小宽度
+        /// </summary>
+        public double MinWindth
+        {
+            get { return (double)GetValue(MinWindthProperty); }
+            set { SetValue(MinWindthProperty, value); }
+        }
+
+        /// <summary>
+        /// 最小宽度
+        /// </summary>
+        public static readonly DependencyProperty MinWindthProperty =
+            DependencyProperty.Register("MinWindth", typeof(double), typeof(DanceDataGridCellItem), new PropertyMetadata(60d));
+
+        #endregion
+
         #region Header -- 标题
 
         /// <summary>
@@ -67,6 +86,25 @@ namespace Dance.Wpf
         /// </summary>
         public static readonly DependencyProperty CellTemplateProperty =
             DependencyProperty.Register("CellTemplate", typeof(DataTemplate), typeof(DanceDataGridColumn), new PropertyMetadata(null));
+
+        #endregion
+
+        #region ActualWidth -- 真实宽度
+
+        /// <summary>
+        /// 真实宽度
+        /// </summary>
+        public double ActualWidth
+        {
+            get { return (double)GetValue(ActualWidthProperty); }
+            set { SetValue(ActualWidthProperty, value); }
+        }
+
+        /// <summary>
+        /// 真实宽度
+        /// </summary>
+        public static readonly DependencyProperty ActualWidthProperty =
+            DependencyProperty.Register("ActualWidth", typeof(double), typeof(DanceDataGridColumn), new PropertyMetadata(0d));
 
         #endregion
     }
