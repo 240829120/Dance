@@ -113,6 +113,44 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region GotoPageNum -- 跳转页码
+
+        /// <summary>
+        /// 跳转页码
+        /// </summary>
+        public string GotoPageNum
+        {
+            get { return (string)GetValue(GotoPageNumProperty); }
+            set { SetValue(GotoPageNumProperty, value); }
+        }
+
+        /// <summary>
+        /// 跳转页码
+        /// </summary>
+        public static readonly DependencyProperty GotoPageNumProperty =
+            DependencyProperty.Register("GotoPageNum", typeof(string), typeof(DancePagination), new PropertyMetadata(null));
+
+        #endregion
+
+        #region AllowGoto -- 允许跳转
+
+        /// <summary>
+        /// 允许跳转
+        /// </summary>
+        public bool AllowGoto
+        {
+            get { return (bool)GetValue(AllowGotoProperty); }
+            set { SetValue(AllowGotoProperty, value); }
+        }
+
+        /// <summary>
+        /// 允许跳转
+        /// </summary>
+        public static readonly DependencyProperty AllowGotoProperty =
+            DependencyProperty.Register("AllowGoto", typeof(bool), typeof(DancePagination), new PropertyMetadata(false));
+
+        #endregion
+
         /// <summary>
         /// 切换页
         /// </summary>
@@ -139,6 +177,15 @@ namespace Dance.Wpf
                 default:
                     break;
             }
+        }
+
+        /// <summary>
+        /// 跳转
+        /// </summary>
+        public void Goto()
+        {
+            _ = int.TryParse(this.GotoPageNum, out int num);
+            this.PageNum = Math.Clamp(num, 1, this.PageTotal);
         }
 
         /// <summary>

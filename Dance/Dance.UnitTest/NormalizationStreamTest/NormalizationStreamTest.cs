@@ -116,8 +116,6 @@ namespace Dance.UnitTest
                 }
             });
 
-            client2.Connect("127.0.0.1", 7777);
-
             DanceStructNormalStreamHelper helper = new(typeof(StudentSingle));
             StudentSingle single = new();
             single.Value = 1;
@@ -125,7 +123,7 @@ namespace Dance.UnitTest
 
             Task.Delay(2000).Wait();
 
-            //client2.Send(bytes);
+            client2.Send(bytes, new IPEndPoint(IPAddress.Parse("127.0.0.1"), 7777));
 
             Task.Delay(52000).Wait();
 
