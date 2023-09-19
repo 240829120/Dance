@@ -28,7 +28,7 @@ namespace Dance.Wpf
         /// 列最小宽度
         /// </summary>
         public static readonly DependencyProperty ColumnMinWidthProperty =
-            DependencyProperty.Register("ColumnMinWidth", typeof(double), typeof(DanceDataGridPanel), new PropertyMetadata(20d));
+            DependencyProperty.Register("ColumnMinWidth", typeof(double), typeof(DanceDataGridPanel), new PropertyMetadata(60d));
 
         #endregion
 
@@ -39,17 +39,54 @@ namespace Dance.Wpf
         /// <returns>测量结果</returns>
         protected override Size MeasureOverride(Size availableSize)
         {
+            availableSize.Width = double.IsNormal(availableSize.Width) ? availableSize.Width : 0;
+            availableSize.Height = double.IsNormal(availableSize.Height) ? availableSize.Height : 0;
+
             Size size = new();
+
+            // 统计
+            List<DanceDataGridPanelLayoutInfo> infos = new();
 
             foreach (UIElement item in this.Children)
             {
-                item.Measure(availableSize);
+                if (item is not FrameworkElement element || element.DataContext is not DanceDataGridColumn column)
+                    continue;
 
-                size.Width += item.DesiredSize.Width;
+                infos.Add(new DanceDataGridPanelLayoutInfo(element, column));
             }
 
-            size.Width = Math.Max(size.Width, availableSize.Width);
+            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Pixel))
+            {
+                info.Width = info.Column.Width.Value;
+                size.Width += info.Width;
+            }
+
+            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Auto))
+            {
+                info.Width = info.Element.DesiredSize.Width;
+                size.Width += info.Width;
+            }
+
+            double starSum = infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Star).Sum(p => p.Column.Width.Value);
+
+            if (starSum > 0)
+            {
+                double starOneWidth = (availableSize.Width - size.Width) / starSum;
+
+                foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Star))
+                {
+                    info.Width = Math.Max(this.ColumnMinWidth, starOneWidth * info.Column.Width.Value);
+                    size.Width += info.Width;
+                }
+            }
+
             size.Height = availableSize.Height;
+
+            // 测量
+            foreach (DanceDataGridPanelLayoutInfo info in infos)
+            {
+                info.Element.Measure(new Size(info.Width, size.Height));
+            }
 
             return size;
         }
@@ -103,7 +140,7 @@ namespace Dance.Wpf
 
             // 布局
             double x = 0;
-            foreach (DanceDataGridPanelLayoutInfo info in infos.Where(p => p.Column.Width.GridUnitType == GridUnitType.Auto))
+            foreach (DanceDataGridPanelLayoutInfo info in infos)
             {
                 info.Element.Arrange(new Rect(x, 0, info.Width, size.Height));
                 x += info.Width;

@@ -18,9 +18,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 宽度
         /// </summary>
-        public double Width
+        public GridLength Width
         {
-            get { return (double)GetValue(WidthProperty); }
+            get { return (GridLength)GetValue(WidthProperty); }
             set { SetValue(WidthProperty, value); }
         }
 
@@ -28,7 +28,7 @@ namespace Dance.Wpf
         /// 宽度
         /// </summary>
         public static readonly DependencyProperty WidthProperty =
-            DependencyProperty.Register("Width", typeof(double), typeof(DanceDataGridColumn), new PropertyMetadata(120d));
+            DependencyProperty.Register("Width", typeof(GridLength), typeof(DanceDataGridColumn), new PropertyMetadata(new GridLength(1, GridUnitType.Star)));
 
         #endregion
 

@@ -85,10 +85,10 @@
             </ScrollViewer>
         </Border>
 
-        <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="200" Height="400" Margin="20">
+        <Border HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="400" Height="400" Margin="20">
             <dance:DanceDataGrid x:Name="dg" Background="White">
                 <dance:DanceDataGrid.Columns>
-                    <dance:DanceDataGridColumn Header="Index">
+                    <dance:DanceDataGridColumn Header="Index" Width="*">
                         <dance:DanceDataGridColumn.CellTemplate>
                             <DataTemplate>
                                 <Border>
@@ -97,7 +97,7 @@
                             </DataTemplate>
                         </dance:DanceDataGridColumn.CellTemplate>
                     </dance:DanceDataGridColumn>
-                    <dance:DanceDataGridColumn Header="Name">
+                    <dance:DanceDataGridColumn Header="Name" Width="2*">
                         <dance:DanceDataGridColumn.CellTemplate>
                             <DataTemplate>
                                 <Border>

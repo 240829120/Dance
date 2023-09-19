@@ -30,10 +30,11 @@
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_BORDER}"></Setter>
         <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+        <Setter Property="Height" Value="40"></Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"></StackPanel>
+                    <local:DanceDataGridPanel></local:DanceDataGridPanel>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -73,7 +74,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"></StackPanel>
+                    <local:DanceDataGridPanel></local:DanceDataGridPanel>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
@@ -110,7 +111,7 @@
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                         <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="40"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <ScrollViewer x:Name="PART_ScrollViewer_Header" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">

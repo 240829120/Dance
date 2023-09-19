@@ -77,14 +77,14 @@ namespace Dance.WpfTest
             //server.Start();
 
             this.dg.ItemsSource = List;
-            this.lb2.ItemsSource = List;
+            //this.lb2.ItemsSource = List;
 
             Task.Run(() =>
             {
-                this.Dispatcher.InvokeAsync(async () =>
+                this.Dispatcher.InvokeAsync(() =>
                 {
                     this.tb.Text += "hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
-                    for (int i = 0; i < 100; i++)
+                    for (int i = 0; i < 10; i++)
                     {
                         this.List.Add(new Student { Index = i, Name = $"test_{i}", Age = 28 });
                     }
