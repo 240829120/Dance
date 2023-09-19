@@ -4,6 +4,6 @@
     <SolidColorBrush x:Key="DANCE_BRUSH_MOUSE_OVER" Color="#441890ff"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_SELECTED" Color="#ff1890ff"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_ARROW" Color="#ff595959"></SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_BORDER" Color="#ffebedf0"></SolidColorBrush>
+    <SolidColorBrush x:Key="DANCE_BRUSH_BORDER" Color="#33767676"></SolidColorBrush>
 
 </ResourceDictionary>

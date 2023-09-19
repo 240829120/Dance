@@ -4,7 +4,7 @@
                     xmlns:local="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Colors.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
@@ -38,7 +38,7 @@
                 <DataTemplate>
                     <local:DancePaginationItem>
                         <Border Width="6" Height="6" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Path Data="M6,0 L0,3 L6,6" Stroke="Black" StrokeThickness="1"></Path>
+                            <Path Data="M6,0 L0,3 L6,6" Stroke="{StaticResource DANCE_BRUSH_ARROW}" StrokeThickness="1"></Path>
                         </Border>
                     </local:DancePaginationItem>
                 </DataTemplate>
@@ -54,9 +54,9 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Width="2" Height="2" Fill="Black"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="1"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="2"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="1"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="2"></Ellipse>
                         </Grid>
                     </local:DancePaginationItem>
                 </DataTemplate>
@@ -83,9 +83,9 @@
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Width="2" Height="2" Fill="Black"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="1"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="2"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="1"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="2"></Ellipse>
                         </Grid>
                     </local:DancePaginationItem>
                 </DataTemplate>
@@ -96,7 +96,7 @@
                 <DataTemplate>
                     <local:DancePaginationItem>
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="6" Height="6" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Path Data="M0,0 L6,3 L0,6" Stroke="Black" StrokeThickness="1"></Path>
+                            <Path Data="M0,0 L6,3 L0,6" Stroke="{StaticResource DANCE_BRUSH_ARROW}" StrokeThickness="1"></Path>
                         </Border>
                     </local:DancePaginationItem>
                 </DataTemplate>
@@ -118,7 +118,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
+                            <Setter TargetName="bd" Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.35"></Setter>

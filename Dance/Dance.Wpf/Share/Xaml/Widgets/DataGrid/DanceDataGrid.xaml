@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Colors.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <local:DanceSimpleMathConverter x:Key="DanceSimpleMathConverter"></local:DanceSimpleMathConverter>
