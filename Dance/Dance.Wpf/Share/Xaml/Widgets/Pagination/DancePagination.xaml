@@ -11,8 +11,8 @@
             <local:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
                     <local:DancePaginationItem>
-                        <Border Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Path Data="M10,0 L0,5 L10,10"></Path>
+                        <Border Width="6" Height="6" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Path Data="M6,0 L0,3 L6,6" Stroke="Black" StrokeThickness="1"></Path>
                         </Border>
                     </local:DancePaginationItem>
                 </DataTemplate>
@@ -22,7 +22,7 @@
             <local:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
                     <local:DancePaginationItem>
-                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -51,7 +51,7 @@
             <local:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
                     <local:DancePaginationItem>
-                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
@@ -69,8 +69,8 @@
             <local:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
                     <local:DancePaginationItem>
-                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Path Data="M0,0 L10,5 L0,10"></Path>
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="6" Height="6" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Path Data="M0,0 L6,3 L0,6" Stroke="Black" StrokeThickness="1"></Path>
                         </Border>
                     </local:DancePaginationItem>
                 </DataTemplate>
@@ -83,6 +83,7 @@
         <Setter Property="Width" Value="30"></Setter>
         <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Margin" Value="5,0,5,0"></Setter>
+        <Setter Property="IsEnabled" Value="{Binding IsEnabled}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DancePaginationItem">
@@ -92,6 +93,9 @@
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Opacity" Value="0.35"></Setter>
                         </Trigger>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                             <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_SELECTED}"></Setter>

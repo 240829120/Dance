@@ -34,7 +34,7 @@ namespace Dance.Wpf
         /// 页数
         /// </summary>
         public static readonly DependencyProperty PageNumProperty =
-            DependencyProperty.Register("PageNum", typeof(int), typeof(DancePagination), new PropertyMetadata(0, new PropertyChangedCallback((s, e) =>
+            DependencyProperty.Register("PageNum", typeof(int), typeof(DancePagination), new PropertyMetadata(1, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not DancePagination pagination)
                     return;
@@ -122,16 +122,16 @@ namespace Dance.Wpf
             switch (info.Type)
             {
                 case DancePaginationInfoType.Page:
-                    this.PageNum = info.PageNum ?? 0;
+                    this.PageNum = info.PageNum ?? 1;
                     break;
                 case DancePaginationInfoType.PreviousPage:
-                    this.PageNum = this.PageNum - 1 >= 0 ? 0 : this.PageNum - 1;
+                    this.PageNum = this.PageNum - 1 <= 1 ? 1 : this.PageNum - 1;
+                    break;
+                case DancePaginationInfoType.PreviousMorePage:
+                    this.PageNum = this.PageNum - this.PageMoreNum <= 1 ? 1 : this.PageNum - this.PageMoreNum;
                     break;
                 case DancePaginationInfoType.NextPage:
                     this.PageNum = this.PageNum + 1 >= this.PageTotal ? this.PageTotal : this.PageNum + 1;
-                    break;
-                case DancePaginationInfoType.PreviousMorePage:
-                    this.PageNum = this.PageNum - this.PageMoreNum >= 0 ? 0 : this.PageNum - this.PageMoreNum;
                     break;
                 case DancePaginationInfoType.NextMorePage:
                     this.PageNum = this.PageNum + this.PageMoreNum >= this.PageTotal ? this.PageTotal : this.PageNum + this.PageMoreNum;
@@ -146,29 +146,57 @@ namespace Dance.Wpf
         /// </summary>
         private void ResetItemsSource()
         {
+            int start = this.PageNum;
+            int end = this.PageNum;
+
+            while (end - start + 1 < this.PageMoreNum)
+            {
+                if (start > 1)
+                    --start;
+
+                if (end < this.PageTotal)
+                    ++end;
+
+                if (start == 1 && end == PageTotal)
+                    break;
+            }
+
             List<DancePaginationInfo> items = new()
             {
                 // 上一页
                 new() { Type = DancePaginationInfoType.PreviousPage, IsEnabled = this.PageNum > 1 }
             };
-            // 上跟多页
-            if (this.PageNum - this.PageMoreNum > 0)
+
+            // 第一页
+            if (start >= this.PageMoreNum / 2)
+            {
+                items.Add(new DancePaginationInfo { Type = DancePaginationInfoType.Page, PageNum = 1 });
+            }
+
+            // 上更多页
+            if (start >= 3)
             {
                 items.Add(new() { Type = DancePaginationInfoType.PreviousMorePage });
             }
 
             // 页选项
-            int start = Math.Max(1, this.PageNum - this.PageMoreNum / 2);
-            for (int i = start; i < start + this.PageMoreNum; i++)
+            for (int i = start; i <= end; i++)
             {
                 items.Add(new() { Type = DancePaginationInfoType.Page, PageNum = i, IsSelected = i == this.PageNum });
             }
 
             // 下更多页
-            if (this.PageTotal - this.PageNum > this.PageMoreNum)
+            if (end <= this.PageTotal - 2)
             {
                 items.Add(new() { Type = DancePaginationInfoType.NextMorePage });
             }
+
+            // 最后一页
+            if (end <= this.PageTotal - this.PageMoreNum / 2 + 1)
+            {
+                items.Add(new DancePaginationInfo { Type = DancePaginationInfoType.Page, PageNum = this.PageTotal });
+            }
+
             // 下一页
             items.Add(new() { Type = DancePaginationInfoType.NextPage, IsEnabled = this.PageNum < this.PageTotal });
 
