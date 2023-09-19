@@ -116,5 +116,7 @@
                 </dance:DanceDataGrid.Columns>
             </dance:DanceDataGrid>
         </Border>
+
+        <dance:DancePagination Width="600" VerticalAlignment="Bottom" Height="60" PageTotal="5"></dance:DancePagination>
     </Grid>
 </Window>

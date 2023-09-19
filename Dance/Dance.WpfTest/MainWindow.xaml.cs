@@ -79,24 +79,24 @@ namespace Dance.WpfTest
             this.dg.ItemsSource = List;
             this.lb2.ItemsSource = List;
 
-            Task.Run(() =>
-            {
-                Task.Delay(3000).Wait();
+            //Task.Run(() =>
+            //{
+            //    Task.Delay(3000).Wait();
 
-                this.Dispatcher.InvokeAsync(async () =>
-                {
-                    this.tb.Text += "hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
-                    for (int i = 0; i < 100; i++)
-                    {
-                        this.List.Add(new Student { Index = i, Name = $"test_{i}", Age = 28 });
-                    }
+            //    this.Dispatcher.InvokeAsync(async () =>
+            //    {
+            //        this.tb.Text += "hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
+            //        for (int i = 0; i < 100; i++)
+            //        {
+            //            this.List.Add(new Student { Index = i, Name = $"test_{i}", Age = 28 });
+            //        }
 
-                    await this.drawing.CaptureScreenAsync(@"e:\1.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
+            //        await this.drawing.CaptureScreenAsync(@"e:\1.bmp", System.Drawing.Imaging.ImageFormat.Bmp);
 
-                    Debug.WriteLine("save over.");
-                });
+            //        Debug.WriteLine("save over.");
+            //    });
 
-            });
+            //});
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

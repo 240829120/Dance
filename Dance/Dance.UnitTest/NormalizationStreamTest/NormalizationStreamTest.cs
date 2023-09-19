@@ -84,13 +84,13 @@ namespace Dance.UnitTest
         [TestMethod]
         public void LengthTest()
         {
-            UInt32 s1 = 1;
-            var b = BitConverter.GetBytes(s1);
+            byte[] temp = new byte[4] { 1, 2, 3, 4 };
+            var b = BitConverter.ToUInt32(temp);
 
             byte[] bytes = new byte[4];
             short[] buffer = new short[2];
-            buffer[0] = (short)U32HighWord(s1);
-            buffer[1] = (short)U32LowWord(s1);
+            buffer[0] = (short)U32HighWord(b);
+            buffer[1] = (short)U32LowWord(b);
 
             Buffer.BlockCopy(buffer, 0, bytes, 0, 4);
 
@@ -121,7 +121,7 @@ namespace Dance.UnitTest
             DanceStructNormalStreamHelper helper = new(typeof(StudentSingle));
             StudentSingle single = new();
             single.Value = 1;
-            byte[] bytes = helper.ConvertToByte(single, DanceStructNormalStreamSwapType.EveryTwoByteReverse);
+            byte[] bytes = helper.ConvertToByte(single, true);
 
             Task.Delay(2000).Wait();
 

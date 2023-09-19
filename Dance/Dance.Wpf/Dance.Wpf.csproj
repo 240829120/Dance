@@ -35,7 +35,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Share\Xaml\Expansion\Enum\" />
+	  <Folder Include="Share\Xaml\Core\Expansion\Enum\" />
+	  <Folder Include="Share\Xaml\Widgets\TreeDataGrid\" />
 	</ItemGroup>
 
 </Project>

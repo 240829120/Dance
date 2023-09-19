@@ -1,0 +1,127 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dance.Wpf">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Colors.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
+    <local:DanceDataTemplateSelector x:Key="DataTemplateSelector" PropertyName="Type">
+        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.PreviousPage}">
+            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+                <DataTemplate>
+                    <local:DancePaginationItem>
+                        <Border Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Path Data="M10,0 L0,5 L10,10"></Path>
+                        </Border>
+                    </local:DancePaginationItem>
+                </DataTemplate>
+            </local:DanceDataTemplateSelecterMapping.DataTemplate>
+        </local:DanceDataTemplateSelecterMapping>
+        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.PreviousMorePage}">
+            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+                <DataTemplate>
+                    <local:DancePaginationItem>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="2" Height="2" Fill="Black"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="1"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="2"></Ellipse>
+                        </Grid>
+                    </local:DancePaginationItem>
+                </DataTemplate>
+            </local:DanceDataTemplateSelecterMapping.DataTemplate>
+        </local:DanceDataTemplateSelecterMapping>
+        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.Page}">
+            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+                <DataTemplate>
+                    <local:DancePaginationItem>
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <TextBlock Text="{Binding Path=PageNum}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                        </Border>
+                    </local:DancePaginationItem>
+                </DataTemplate>
+            </local:DanceDataTemplateSelecterMapping.DataTemplate>
+        </local:DanceDataTemplateSelecterMapping>
+        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.NextMorePage}">
+            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+                <DataTemplate>
+                    <local:DancePaginationItem>
+                        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Width="2" Height="2" Fill="Black"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="1"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="Black" Grid.Column="2"></Ellipse>
+                        </Grid>
+                    </local:DancePaginationItem>
+                </DataTemplate>
+            </local:DanceDataTemplateSelecterMapping.DataTemplate>
+        </local:DanceDataTemplateSelecterMapping>
+        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.NextPage}">
+            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+                <DataTemplate>
+                    <local:DancePaginationItem>
+                        <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Path Data="M0,0 L10,5 L0,10"></Path>
+                        </Border>
+                    </local:DancePaginationItem>
+                </DataTemplate>
+            </local:DanceDataTemplateSelecterMapping.DataTemplate>
+        </local:DanceDataTemplateSelecterMapping>
+    </local:DanceDataTemplateSelector>
+
+    <Style TargetType="local:DancePaginationItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Width" Value="30"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Margin" Value="5,0,5,0"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DancePaginationItem">
+                    <Border x:Name="bd" Background="Transparent" BorderBrush="{StaticResource DANCE_BRUSH_BORDER}" BorderThickness="1">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
+                        </Trigger>
+                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_SELECTED}"></Setter>
+                        </DataTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="local:DancePagination">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="MinWidth" Value="300"></Setter>
+        <Setter Property="MinHeight" Value="30"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DancePagination">
+                    <Grid>
+                        <ItemsControl ItemsSource="{Binding Path=ItemsSource,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor}}"
+                                      ItemTemplateSelector="{StaticResource DataTemplateSelector}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal"></StackPanel>
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                        </ItemsControl>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
