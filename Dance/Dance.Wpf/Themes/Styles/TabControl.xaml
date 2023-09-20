@@ -2,6 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:dance="clr-namespace:Dance.Wpf">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
     <Style TargetType="{x:Type TabItem}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
@@ -27,7 +31,7 @@
                             <Setter Property="Foreground" Value="#ff1890ff"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.35"></Setter>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -65,7 +69,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="0.35"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

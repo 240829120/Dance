@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/ScrollViewer.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <Style x:Key="TextBox_None" TargetType="TextBox">
@@ -47,7 +47,7 @@
                 <Setter Property="BorderBrush" Value="#ff2a74ff"></Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.4"></Setter>
+                <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

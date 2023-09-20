@@ -27,7 +27,7 @@
                 <Setter Property="Background" Value="#aad9d9d9"></Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="0.35"></Setter>
+                <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -121,7 +121,7 @@
                             <Setter TargetName="bd" Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="0.35"></Setter>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
                         </Trigger>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                             <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_SELECTED}"></Setter>

@@ -79,7 +79,7 @@
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource DANCE_BRUSH_SELECTED}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="0.35"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -110,7 +110,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="0.35"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

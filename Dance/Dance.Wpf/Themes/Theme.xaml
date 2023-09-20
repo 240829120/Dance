@@ -1,9 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
     <SolidColorBrush x:Key="DANCE_BRUSH_MOUSE_OVER" Color="#441890ff"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_SELECTED" Color="#ff1890ff"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_ARROW" Color="#ff595959"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_BORDER" Color="#33767676"></SolidColorBrush>
+
+    <sys:Double x:Key="DANCE_DISABLED_OPACITY">0.35</sys:Double>
 
 </ResourceDictionary>
