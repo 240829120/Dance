@@ -5,15 +5,13 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <dance:DanceSimpleMathConverter x:Key="DanceSimpleMathConverter" ConverterType="Add"></dance:DanceSimpleMathConverter>
-
     <Style TargetType="ListBoxItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Padding" Value="5,0,5,0"></Setter>
         <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
@@ -38,9 +36,8 @@
     <Style TargetType="ListBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"/>
-        <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Padding" Value="0,0,10,0"/>
+        <Setter Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_BORDER}"/>
+        <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
@@ -53,7 +50,7 @@
                         <ScrollViewer x:Name="_tv_scrollviewer_" Background="{TemplateBinding Background}" CanContentScroll="false" Focusable="false" 
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" 
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <Grid Width="{Binding Path=ActualWidth,RelativeSource={RelativeSource AncestorType=ListBox},Converter={StaticResource DanceSimpleMathConverter},ConverterParameter=-10}">
+                            <Grid>
                                 <dance:DanceShuttle UnitLength="30" Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
                                                     Value="-30" Orientation="Vertical" Duration="00:00:00.5" IsHitTestVisible="False">
                                     <dance:DanceShuttle.SwitchEasing>

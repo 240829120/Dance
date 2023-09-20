@@ -6,8 +6,6 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <local:DanceSimpleMathConverter x:Key="DanceSimpleMathConverter"></local:DanceSimpleMathConverter>
-
     <Style TargetType="local:DanceDataGridColumnItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
@@ -113,7 +111,7 @@
                                 <RowDefinition Height="*"></RowDefinition>
                             </Grid.RowDefinitions>
                             <ScrollViewer x:Name="PART_ScrollViewer_Header" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
-                                <local:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}" />
+                                <local:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}"/>
                             </ScrollViewer>
                             <ScrollViewer x:Name="PART_ScrollViewer_Items" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
                                 <Grid>

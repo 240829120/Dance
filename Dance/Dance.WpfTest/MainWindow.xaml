@@ -20,7 +20,7 @@
             <TabItem Header="4"></TabItem>
         </TabControl>
 
-        <ListBox Width="240" HorizontalAlignment="Left" Margin="0,200,0,0">
+        <ListBox Width="240" HorizontalAlignment="Left" Margin="10,200,10,10">
             <ListBoxItem>1</ListBoxItem>
             <ListBoxItem>2</ListBoxItem>
             <ListBoxItem>3</ListBoxItem>
