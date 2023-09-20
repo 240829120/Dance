@@ -26,4 +26,21 @@
     <CornerRadius x:Key="DANCE_CORNERRADIUS_EDIT_CONTROL">5</CornerRadius>
     <CornerRadius x:Key="DANCE_CORNERRADIUS_EDIT_CONTROL_INNER">3</CornerRadius>
 
+
+    <Storyboard x:Key="DANCE_STORYBOARD_FOREGROUND_SELECTED_ENTER" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)">
+        <ColorAnimation To="White" Duration="00:00:00.5"></ColorAnimation>
+    </Storyboard>
+
+    <Storyboard x:Key="DANCE_STORYBOARD_FOREGROUND_SELECTED_EXIT" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)">
+        <ColorAnimation To="Black" Duration="00:00:00.5"></ColorAnimation>
+    </Storyboard>
+
+    <Storyboard x:Key="DANCE_STORYBOARD_BACKGROUND_MOUSE_OVER_ENTER" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
+
+    </Storyboard>
+
+    <Storyboard x:Key="DANCE_STORYBOARD_BACKGROUND_MOUSE_OVER_EXIT" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
+
+    </Storyboard>
+
 </ResourceDictionary>

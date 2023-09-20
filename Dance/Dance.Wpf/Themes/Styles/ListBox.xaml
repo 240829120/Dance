@@ -26,7 +26,12 @@
                             <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="{StaticResource DANCE_BRUSH_SELECTED_FOREGROUND}"></Setter>
+                            <Trigger.EnterActions>
+                                <BeginStoryboard Storyboard="{StaticResource DANCE_STORYBOARD_FOREGROUND_SELECTED_ENTER}"></BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard Storyboard="{StaticResource DANCE_STORYBOARD_FOREGROUND_SELECTED_EXIT}"></BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
                             <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>

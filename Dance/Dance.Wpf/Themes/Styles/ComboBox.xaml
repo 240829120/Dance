@@ -86,7 +86,7 @@
                 Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
             <Grid>
                 <Popup x:Name="PART_Popup" AllowsTransparency="true" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                       Margin="0,3,0,0" Placement="Bottom" PlacementTarget="{Binding ElementName=root}" PopupAnimation="Fade">
+                       Margin="0,3,0,0" Placement="Bottom" PlacementTarget="{Binding ElementName=root}" PopupAnimation="Slide">
                     <Border Background="White" BorderBrush="{StaticResource DANCE_BRUSH_BORDER}" BorderThickness="1" MaxHeight="{StaticResource DANCE_DOUBLE_DROP_DOWN_MAX_HEIGHT}" 
                             SnapsToDevicePixels="True" UseLayoutRounding="True" MinWidth="{Binding ActualWidth, ElementName=root}">
                         <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden">
@@ -115,7 +115,7 @@
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
                 <Popup x:Name="PART_Popup" AllowsTransparency="true" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
-                       Margin="0,3,0,0" Placement="Bottom" PlacementTarget="{Binding ElementName=root}" PopupAnimation="Fade">
+                       Margin="0,3,0,0" Placement="Bottom" PlacementTarget="{Binding ElementName=root}" PopupAnimation="Slide">
                     <Border Background="White" BorderBrush="{StaticResource DANCE_BRUSH_BORDER}" BorderThickness="1" MaxHeight="{StaticResource DANCE_DOUBLE_DROP_DOWN_MAX_HEIGHT}" 
                             SnapsToDevicePixels="True" UseLayoutRounding="True" MinWidth="{Binding ActualWidth, ElementName=root}">
                         <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden">
