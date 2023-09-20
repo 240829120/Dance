@@ -14,7 +14,6 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Dance.Common\Dance.Common.csproj" />
-		<ProjectReference Include="..\Dance.Wpf.Theme\Dance.Wpf.Theme.csproj" />
 		<ProjectReference Include="..\Dance.Wpf\Dance.Wpf.csproj" />
 		<ProjectReference Include="..\Dance\Dance.csproj" />
 	</ItemGroup>

@@ -6,7 +6,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/Dance.Wpf.Theme;component/Themes/Generic.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Dance.Wpf;component/Themes/Generic.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

@@ -92,7 +92,7 @@ namespace Dance.Wpf
 
             if (starColumns.Count > 0)
             {
-                double starOneWidth = headers.ActualWidth / stars;
+                double starOneWidth = (headers.ActualWidth - size.Width) / stars;
                 foreach (DanceDataGridColumn column in starColumns)
                 {
                     column.ActualWidth = Math.Max(column.MinWindth, starOneWidth * column.Width.Value);

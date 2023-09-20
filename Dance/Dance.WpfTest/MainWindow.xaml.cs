@@ -81,6 +81,8 @@ namespace Dance.WpfTest
 
             Task.Run(() =>
             {
+                Task.Delay(3000).Wait();
+
                 this.Dispatcher.InvokeAsync(() =>
                 {
                     this.tb.Text += "hahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahahaha";
