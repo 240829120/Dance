@@ -74,12 +74,12 @@ namespace Dance.Wpf
                 switch (column.Width.GridUnitType)
                 {
                     case GridUnitType.Auto:
-                        column.ActualWidth = element.DesiredSize.Width;
-                        size.Width += element.DesiredSize.Width;
+                        column.ActualWidth = (int)element.DesiredSize.Width;
+                        size.Width += (int)element.DesiredSize.Width;
                         break;
                     case GridUnitType.Pixel:
-                        column.ActualWidth = column.Width.Value;
-                        size.Width += column.Width.Value;
+                        column.ActualWidth = (int)column.Width.Value;
+                        size.Width += (int)column.Width.Value;
                         break;
                     case GridUnitType.Star:
                         starColumns.Add(column);
@@ -95,7 +95,7 @@ namespace Dance.Wpf
                 double starOneWidth = (headers.ActualWidth - size.Width) / stars;
                 foreach (DanceDataGridColumn column in starColumns)
                 {
-                    column.ActualWidth = Math.Max(column.MinWindth, starOneWidth * column.Width.Value);
+                    column.ActualWidth = (int)Math.Max(column.MinWindth, starOneWidth * column.Width.Value);
                     size.Width += column.ActualWidth;
                 }
             }
