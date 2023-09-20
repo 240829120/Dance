@@ -52,7 +52,8 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
-                        <local:DanceMouseOver MinHeight="30" Grid.ColumnSpan="2" Background="{TemplateBinding Background}" MouseOverBackground="{StaticResource DANCE_BRUSH_MOUSE_OVER}">
+                        <local:DanceMouseOver Height="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}" 
+                                              Grid.ColumnSpan="2" Background="{TemplateBinding Background}" MouseOverBackground="{StaticResource DANCE_BRUSH_MOUSE_OVER}">
                             <Grid x:Name="Bd" SnapsToDevicePixels="true">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition MinWidth="19" Width="Auto"/>
@@ -79,7 +80,7 @@
                             <Setter Property="Background" TargetName="Bd" Value="{StaticResource DANCE_BRUSH_SELECTED}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -110,7 +111,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

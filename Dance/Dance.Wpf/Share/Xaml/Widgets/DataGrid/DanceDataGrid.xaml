@@ -115,8 +115,11 @@
                             </ScrollViewer>
                             <ScrollViewer x:Name="PART_ScrollViewer_Items" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
                                 <Grid>
-                                    <local:DanceShuttle UnitLength="30" Index="{Binding Path=SelectedIndex,Mode=OneWay,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}"
-                                                        Value="-30" Orientation="Vertical" Duration="00:00:00.5" IsHitTestVisible="False">
+                                    <local:DanceShuttle UnitLength="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}" 
+                                                        Index="{Binding Path=SelectedIndex,Mode=OneWay,RelativeSource={RelativeSource AncestorType=local:DanceDataGrid,Mode=FindAncestor}}"
+                                                        Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT_NEGATIVE}" 
+                                                        Duration="{StaticResource DANCE_TIMESPAN_SHUTTLE_DURATION}"
+                                                        Orientation="Vertical" IsHitTestVisible="False">
                                         <local:DanceShuttle.SwitchEasing>
                                             <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
                                         </local:DanceShuttle.SwitchEasing>

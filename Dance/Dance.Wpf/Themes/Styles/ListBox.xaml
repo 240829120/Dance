@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
@@ -26,7 +26,7 @@
                             <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"/>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -52,12 +52,16 @@
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" 
                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <Grid>
-                                <dance:DanceShuttle UnitLength="30" Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
-                                                    Value="-30" Orientation="Vertical" Duration="00:00:00.5" IsHitTestVisible="False">
+                                <dance:DanceShuttle UnitLength="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}" 
+                                                    Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
+                                                    Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT_NEGATIVE}" 
+                                                    Orientation="Vertical" 
+                                                    Duration="{StaticResource DANCE_TIMESPAN_SHUTTLE_DURATION}" 
+                                                    IsHitTestVisible="False">
                                     <dance:DanceShuttle.SwitchEasing>
                                         <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
                                     </dance:DanceShuttle.SwitchEasing>
-                                    <Rectangle HorizontalAlignment="Stretch" Height="30" Fill="{StaticResource DANCE_BRUSH_SELECTED}"></Rectangle>
+                                    <Rectangle HorizontalAlignment="Stretch" Height="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}" Fill="{StaticResource DANCE_BRUSH_SELECTED}"></Rectangle>
                                 </dance:DanceShuttle>
                                 <ItemsPresenter />
                             </Grid>
@@ -65,7 +69,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

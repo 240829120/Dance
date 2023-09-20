@@ -6,6 +6,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Button.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/GroupBox.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/ListBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/ComboBox.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/TabControl.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/TextBox.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

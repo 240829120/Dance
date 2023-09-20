@@ -2,13 +2,17 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Dance.Wpf">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
     <Style TargetType="local:DanceSeparator">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="Padding" Value="5,0,5,0"></Setter>
         <Setter Property="Template">
             <Setter.Value>

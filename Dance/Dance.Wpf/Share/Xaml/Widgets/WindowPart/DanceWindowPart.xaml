@@ -7,7 +7,7 @@
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Foreground" Value="#FF494949"></Setter>
         <Setter Property="Width" Value="40"></Setter>
-        <Setter Property="Width" Value="30"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceWindowMinPart">
@@ -32,7 +32,7 @@
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Foreground" Value="#FF494949"></Setter>
         <Setter Property="Width" Value="40"></Setter>
-        <Setter Property="Width" Value="30"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceWindowMaxOrNormalPart">
@@ -69,7 +69,7 @@
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="Foreground" Value="#FF494949"></Setter>
         <Setter Property="Width" Value="40"></Setter>
-        <Setter Property="Width" Value="30"></Setter>
+        <Setter Property="Height" Value="30"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DanceWindowClosePart">

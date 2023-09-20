@@ -9,6 +9,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Opacity" Value="1"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Width" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -20,8 +22,10 @@
 
     <Style x:Key="Button_Master" TargetType="Button">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Background" Value="#ff1e74f9"></Setter>
+        <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_SELECTED}"></Setter>
         <Setter Property="Foreground" Value="White"></Setter>
+        <Setter Property="Width" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -33,10 +37,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#aa1e74f9"></Setter>
+                <Setter Property="Opacity" Value="0.9"></Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -45,6 +49,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="White"></Setter>
         <Setter Property="Foreground" Value="Black"></Setter>
+        <Setter Property="Width" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -56,10 +62,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#aad9d9d9"></Setter>
+                <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

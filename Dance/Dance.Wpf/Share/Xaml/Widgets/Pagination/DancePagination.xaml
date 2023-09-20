@@ -5,32 +5,10 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Button.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
-
-    <Style x:Key="Button_Secondary" TargetType="Button">
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Background" Value="White"></Setter>
-        <Setter Property="Foreground" Value="Black"></Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="#ffd9d9d9" BorderThickness="1" CornerRadius="5">
-                        <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"></ContentPresenter>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#aad9d9d9"></Setter>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
-            </Trigger>
-        </Style.Triggers>
-    </Style>
 
     <local:DanceDataTemplateSelector x:Key="DataTemplateSelector" PropertyName="Type">
         <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.PreviousPage}">
@@ -106,8 +84,8 @@
 
     <Style TargetType="local:DancePaginationItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Width" Value="30"></Setter>
-        <Setter Property="Height" Value="30"></Setter>
+        <Setter Property="Width" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_PART_WIDTH}"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="Margin" Value="5,0,5,0"></Setter>
         <Setter Property="IsEnabled" Value="{Binding IsEnabled}"></Setter>
         <Setter Property="Template">
@@ -121,7 +99,7 @@
                             <Setter TargetName="bd" Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
                         </Trigger>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
                             <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_SELECTED}"></Setter>
@@ -135,7 +113,7 @@
     <Style TargetType="local:DancePagination">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="MinWidth" Value="300"></Setter>
-        <Setter Property="MinHeight" Value="30"></Setter>
+        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="local:DancePagination">
@@ -154,14 +132,18 @@
                         </ItemsControl>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,0,0,0" 
                                     Visibility="{Binding Path=AllowGoto,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor},Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <TextBox Height="30" Width="60" Text="{Binding Path=GotoPageNum,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                            <TextBox Height="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}" 
+                                     Width="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}" 
+                                     Text="{Binding Path=GotoPageNum,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <i:Interaction.Triggers>
                                     <i:KeyTrigger Key="Enter" FiredOn="KeyDown">
                                         <i:CallMethodAction MethodName="Goto" TargetObject="{Binding .,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor}}"></i:CallMethodAction>
                                     </i:KeyTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
-                            <Button Width="60" Height="30" Margin="10,0,0,0" Style="{StaticResource Button_Secondary}" Content="跳转">
+                            <Button Width="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}" 
+                                    Height="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"
+                                    Margin="10,0,0,0" Style="{StaticResource Button_Secondary}" Content="跳转">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
                                         <i:CallMethodAction MethodName="Goto" TargetObject="{Binding .,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor}}"></i:CallMethodAction>
