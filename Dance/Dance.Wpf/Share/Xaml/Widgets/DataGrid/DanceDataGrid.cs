@@ -108,8 +108,20 @@ namespace Dance.Wpf
                 if (s is not DanceDataGrid dataGrid)
                     return;
 
-                var container = dataGrid.ItemContainerGenerator.ContainerFromItem(e.NewValue);
-                dataGrid.SelectedIndex = dataGrid.ItemContainerGenerator.IndexFromContainer(container);
+                if (e.OldValue != null && dataGrid.ItemContainerGenerator.ContainerFromItem(e.OldValue) is DanceDataGridCellItemsControl oldContainer)
+                {
+                    oldContainer.IsSelected = false;
+                }
+
+                if (e.NewValue != null && dataGrid.ItemContainerGenerator.ContainerFromItem(e.NewValue) is DanceDataGridCellItemsControl newContainer)
+                {
+                    newContainer.IsSelected = true;
+                    dataGrid.SelectedIndex = dataGrid.ItemContainerGenerator.IndexFromContainer(newContainer);
+                }
+                else
+                {
+                    dataGrid.SelectedIndex = -1;
+                }
 
             })));
 

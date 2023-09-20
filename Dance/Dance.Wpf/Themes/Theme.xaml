@@ -2,8 +2,10 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <SolidColorBrush x:Key="DANCE_BRUSH_FOREGROUND">#FF000000</SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_MOUSE_OVER" Color="#441890ff"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_SELECTED" Color="#ff1890ff"></SolidColorBrush>
+    <SolidColorBrush x:Key="DANCE_BRUSH_SELECTED_FOREGROUND" Color="White"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_ARROW" Color="#ff595959"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_BORDER" Color="#33767676"></SolidColorBrush>
     <SolidColorBrush x:Key="DANCE_BRUSH_FOCUS" Color="#ff1890ff"></SolidColorBrush>
@@ -12,11 +14,16 @@
     <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_HEIGHT">30</sys:Double>
     <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_WIDTH">60</sys:Double>
     <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_PART_WIDTH">30</sys:Double>
+    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_INNER_WIDTH">16</sys:Double>
+    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_INNER_HEIGHT">16</sys:Double>
     <sys:Double x:Key="DANCE_DOUBLE_DISABLED_OPACITY">0.35</sys:Double>
     <sys:Double x:Key="DANCE_DOUBLE_DROP_DOWN_MAX_HEIGHT">300</sys:Double>
 
     <sys:TimeSpan x:Key="DANCE_TIMESPAN_SHUTTLE_DURATION">00:00:00.5</sys:TimeSpan>
 
     <GridLength x:Key="DANCE_GRIDLENGTH_EDIT_CONTROL_PART_WIDTH">30</GridLength>
+
+    <CornerRadius x:Key="DANCE_CORNERRADIUS_EDIT_CONTROL">5</CornerRadius>
+    <CornerRadius x:Key="DANCE_CORNERRADIUS_EDIT_CONTROL_INNER">3</CornerRadius>
 
 </ResourceDictionary>

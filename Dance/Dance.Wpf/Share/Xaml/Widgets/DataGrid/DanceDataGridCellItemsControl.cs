@@ -33,14 +33,37 @@ namespace Dance.Wpf
         // ===========================================================================================================
         // Field
 
+        /// <summary>
+        /// 所属表格
+        /// </summary>
+        internal DanceDataGrid DataGrid;
 
         // ===========================================================================================================
         // Property
 
+        #region IsSelected -- 是否被选中
+
         /// <summary>
-        /// 所属表格
+        /// 是否被选中
         /// </summary>
-        internal DanceDataGrid DataGrid { get; private set; }
+        public bool IsSelected
+        {
+            get { return (bool)GetValue(IsSelectedProperty); }
+            internal set { SetValue(IsSelectedPropertyKey, value); }
+        }
+
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
+        public static readonly DependencyPropertyKey IsSelectedPropertyKey =
+            DependencyProperty.RegisterReadOnly("IsSelected", typeof(bool), typeof(DanceDataGridCellItemsControl), new PropertyMetadata(false));
+
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
+        public static readonly DependencyProperty IsSelectedProperty = IsSelectedPropertyKey.DependencyProperty;
+
+        #endregion
 
         // ===========================================================================================================
         // Override Function

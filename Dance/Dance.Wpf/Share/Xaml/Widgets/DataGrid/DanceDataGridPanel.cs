@@ -112,10 +112,7 @@ namespace Dance.Wpf
         /// <returns>布局结果</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            Size size = new()
-            {
-                Height = finalSize.Height
-            };
+            Size size = new(0, finalSize.Height);
 
             // 布局
             foreach (FrameworkElement element in this.Children)

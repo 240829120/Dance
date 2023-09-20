@@ -87,6 +87,9 @@
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
             </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Foreground" Value="{StaticResource DANCE_BRUSH_SELECTED_FOREGROUND}"></Setter>
+            </Trigger>
         </Style.Triggers>
     </Style>
 
