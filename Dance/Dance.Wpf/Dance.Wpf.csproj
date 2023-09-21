@@ -38,4 +38,11 @@
 	  <Folder Include="Share\Xaml\Core\Expansion\Enum\" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Update="ResourceKey.settings">
+	    <Generator>PublicSettingsSingleFileGenerator</Generator>
+	    <LastGenOutput>ResourceKey.Designer.cs</LastGenOutput>
+	  </None>
+	</ItemGroup>
+
 </Project>

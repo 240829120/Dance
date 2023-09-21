@@ -84,7 +84,7 @@
             <TextBlock Text="{Binding ElementName=dg,Path=SelectedValue.Index}" VerticalAlignment="Center"></TextBlock>
             <TextBlock Text="{Binding ElementName=dg,Path=SelectedValue.Name}" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
         </StackPanel>
-
+        
         <Button Width="120" Style="{StaticResource Button_Master}" Content="Master"></Button>
 
         <CheckBox Width="120" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,80,0,0" IsChecked="{x:Null}">123123</CheckBox>

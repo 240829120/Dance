@@ -23,7 +23,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"/>
+                            <Setter Property="Background" Value="{StaticResource ResourceKey=DANCE_BRUSH_MOUSE_OVER}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
                             <Trigger.EnterActions>
