@@ -3,12 +3,10 @@
                     xmlns:dance="clr-namespace:Dance.Wpf"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
-
     <!-- 字体 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.FONT_SIZE}">12</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}">13</sys:Double>
     <FontFamily x:Key="{x:Static Member=dance:DanceResourceKey.FONT_FAMILY}">Microsoft Yahei UI</FontFamily>
-
 
     <!-- 动画 -->
     <Duration x:Key="{x:Static Member=dance:DanceResourceKey.ANIMATION_DURATION}">00:00:00.5</Duration>
@@ -22,6 +20,7 @@
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}">#FFFFFFFF</SolidColorBrush>
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MOUSE_OVER}">#FF000000</SolidColorBrush>
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_PRESSED}">#FF000000</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}">#FFC3C3C3</SolidColorBrush>
 
     <!-- 背景 -->
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}">#FFFFFFFF</SolidColorBrush>
@@ -60,7 +59,6 @@
     <!-- 弹出框 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}">300</sys:Double>
     <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.POPUP_MARGIN}">0,5,0,0</Thickness>
-
 
     <!-- 路径 -->
     <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_RIGHT_MARK}">F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z</PathGeometry>

@@ -77,6 +77,11 @@ namespace Dance.Wpf
         /// </summary>
         public const string FOREGROUND_BRUSH_PRESSED = "FOREGROUND_BRUSH_PRESSED";
 
+        /// <summary>
+        /// 前景 -- 标记
+        /// </summary>
+        public const string FOREGROUND_BRUSH_MARK = "FOREGROUND_BRUSH_MARK";
+
         // -----------------------------------------------------------------------------------------------------
         // 背景
         // -----------------------------------------------------------------------------------------------------

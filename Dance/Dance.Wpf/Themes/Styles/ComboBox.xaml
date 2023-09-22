@@ -23,7 +23,7 @@
                                 Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}}">
                             <Path x:Name="path"
                                   Data="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.PATH_ARROW_MARK}}"
-                                  Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
+                                  Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}"
                                   SnapsToDevicePixels="True"
                                   HorizontalAlignment="Center"
                                   VerticalAlignment="Center"
@@ -177,8 +177,6 @@
         <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
         <Setter Property="Template" Value="{StaticResource ComboBox_Select}"></Setter>
-        <Setter Property="FontSize" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE}}"></Setter>
-        <Setter Property="FontFamily" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_FAMILY}}"></Setter>
         <Style.Triggers>
             <Trigger Property="IsEditable" Value="True">
                 <Setter Property="Template" Value="{StaticResource ComboBox_Edit}"></Setter>
