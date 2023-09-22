@@ -175,9 +175,19 @@ namespace Dance.Wpf
         public const string EDIT_ICON_SIZE = "EDIT_ICON_SIZE";
 
         /// <summary>
+        /// 编辑 -- 图标 -- 大小 -- 小号
+        /// </summary>
+        public const string EDIT_ICON_SIZE_SMALL = "EDIT_ICON_SIZE_SMALL";
+
+        /// <summary>
         /// 编辑 -- 部件 -- 宽度
         /// </summary>
         public const string EDIT_PART_WIDTH = "EDIT_PART_WIDTH";
+
+        /// <summary>
+        /// 编辑 -- 部件 -- 宽度 -- 小号
+        /// </summary>
+        public const string EDIT_PART_WIDTH_SMALL = "EDIT_PART_WIDTH_SMALL";
 
         /// <summary>
         /// 编辑 -- 部件 -- 宽度 -- 中号
@@ -193,6 +203,11 @@ namespace Dance.Wpf
         /// 编辑 -- 部件 -- 高度
         /// </summary>
         public const string EDIT_PART_HEIGHT = "EDIT_PART_HEIGHT";
+
+        /// <summary>
+        /// 编辑 -- 部件 -- 高度 -- 小号
+        /// </summary>
+        public const string EDIT_PART_HEIGHT_SMALL = "EDIT_PART_HEIGHT_SMALL";
 
         /// <summary>
         /// 编辑 -- 部件 -- 高度 -- 中号

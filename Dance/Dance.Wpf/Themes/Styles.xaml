@@ -10,6 +10,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/TabControl.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/TextBox.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/CheckBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/RadioButton.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

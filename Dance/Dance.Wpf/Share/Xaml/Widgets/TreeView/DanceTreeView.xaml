@@ -112,7 +112,7 @@
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

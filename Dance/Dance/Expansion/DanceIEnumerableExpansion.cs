@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -106,6 +107,17 @@ namespace Dance
                 return default;
 
             return items.Min();
+        }
+
+        /// <summary>
+        /// 转化为 ObservableCollection
+        /// </summary>
+        /// <typeparam name="T">数据类型</typeparam>
+        /// <param name="items">数据集合</param>
+        /// <returns>ObservableCollection</returns>
+        public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> items)
+        {
+            return new(items);
         }
     }
 }

@@ -6,7 +6,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="CheckBox">
+    <Style TargetType="RadioButton">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
@@ -16,30 +16,27 @@
         <Setter Property="Padding" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_LARGE}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="CheckBox">
+                <ControlTemplate TargetType="RadioButton">
                     <Grid Background="Transparent">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}"
-                                Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}}" 
-                                Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT}}"
-                                CornerRadius="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_CORNERRADIUS}}"
-                                HorizontalAlignment="Left" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Grid UseLayoutRounding="True" SnapsToDevicePixels="True" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                  Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE}}"
-                                  Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE}}">
-                                <Path x:Name="mark" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Data="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.PATH_RIGHT_MARK}}" 
-                                      Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}"
-                                      Opacity="0" Stretch="None"/>
-                                <Path x:Name="rect" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      Data="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.PATH_NONE_MARK}}" 
-                                      Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}"
-                                      Opacity="0" Stretch="None"/>
-                            </Grid>
-                        </Border>
+
+                        <Grid Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}}" 
+                              Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT}}"
+                              HorizontalAlignment="Left" UseLayoutRounding="True" SnapsToDevicePixels="True">
+
+                            <Ellipse x:Name="out" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="1" 
+                                     Fill="{TemplateBinding Background}"
+                                     Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_SMALL}}"
+                                     Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_SMALL}}"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"></Ellipse>
+                            <Ellipse x:Name="in" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}"
+                                     Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE_SMALL}}"
+                                     Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE_SMALL}}"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"></Ellipse>
+                        </Grid>
                         <ContentPresenter Grid.Column="1" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"></ContentPresenter>
                     </Grid>
@@ -49,14 +46,12 @@
                             <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MOUSE_OVER}}"></Setter>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter TargetName="mark" Property="Opacity" Value="0"></Setter>
-                            <Setter TargetName="rect" Property="Opacity" Value="1"></Setter>
+                            <Setter TargetName="in" Property="Opacity" Value="0.86"></Setter>
                             <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
                             <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
                         </Trigger>
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter TargetName="mark" Property="Opacity" Value="1"></Setter>
-                            <Setter TargetName="rect" Property="Opacity" Value="0"></Setter>
+                            <Setter TargetName="in" Property="Opacity" Value="1"></Setter>
                             <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
                             <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
                         </Trigger>

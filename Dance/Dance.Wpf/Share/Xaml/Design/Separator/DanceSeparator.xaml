@@ -1,32 +1,33 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Dance.Wpf">
+                    xmlns:dance="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <BorderGapMaskConverter x:Key="BorderGapMaskConverter"/>
-    <Style TargetType="local:DanceSeparator">
+    <Style TargetType="dance:DanceSeparator">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
-        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
-        <Setter Property="Padding" Value="5,0,5,0"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"></Setter>
+        <Setter Property="Padding" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN}}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:DanceSeparator">
+                <ControlTemplate TargetType="dance:DanceSeparator">
                     <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="24"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <local:DanceDashedLine Stroke="#ffebedf0" StrokeDashArray="5 5" Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" StrokeThickness="1"></local:DanceDashedLine>
+                        <dance:DanceDashedLine Stroke="{TemplateBinding BorderBrush}" StrokeDashArray="5 5" Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" StrokeThickness="1"></dance:DanceDashedLine>
                         <ContentPresenter Grid.Column="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"
                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"></ContentPresenter>
-                        <local:DanceDashedLine Stroke="#ffebedf0" StrokeDashArray="5 5" Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" StrokeThickness="1" Grid.Column="2"></local:DanceDashedLine>
+                        <dance:DanceDashedLine Stroke="{TemplateBinding BorderBrush}" StrokeDashArray="5 5" Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" StrokeThickness="1" Grid.Column="2"></dance:DanceDashedLine>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
