@@ -15,6 +15,14 @@ namespace Dance
         /// <summary>
         /// 单例
         /// </summary>
+        public DanceSingletonAttribute()
+        {
+            this.Key = DanceIocLifeScope.DEFAULT_KEY;
+        }
+
+        /// <summary>
+        /// 单例
+        /// </summary>
         /// <param name="serviceType">服务类型</param>
         public DanceSingletonAttribute(Type serviceType)
         {
@@ -41,6 +49,6 @@ namespace Dance
         /// <summary>
         /// 服务类型
         /// </summary>
-        public Type ServiceType { get; private set; }
+        public Type? ServiceType { get; private set; }
     }
 }

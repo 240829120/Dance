@@ -48,13 +48,13 @@ namespace Dance
                     var singletons = type.GetCustomAttributes<DanceSingletonAttribute>(false);
                     foreach (var singleton in singletons)
                     {
-                        builder.AddSingleton(singleton.Key, singleton.ServiceType, type);
+                        builder.AddSingleton(singleton.Key, singleton.ServiceType ?? type, type);
                     }
 
                     var lifescopes = type.GetCustomAttributes<DanceLifeScopeAttribute>(false);
                     foreach (var lifescope in lifescopes)
                     {
-                        builder.AddLifeScope(lifescope.Key, lifescope.ServiceType, type);
+                        builder.AddLifeScope(lifescope.Key, lifescope.ServiceType ?? type, type);
                     }
                 }
             }

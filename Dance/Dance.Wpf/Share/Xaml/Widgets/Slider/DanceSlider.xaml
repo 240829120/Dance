@@ -1,0 +1,64 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dance="clr-namespace:Dance.Wpf">
+
+    <Style TargetType="dance:DanceSliderLink">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceSliderLink">
+                    <Border Background="{TemplateBinding Background}"></Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="dance:DanceSliderThumb">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceSliderThumb">
+                    <Border Background="{TemplateBinding Background}"></Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Opacity" Value="0.86"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="dance:DanceSlider">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceSlider">
+                    <Grid>
+                        <Rectangle Height="4" 
+                                   Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" 
+                                   HorizontalAlignment="Stretch" VerticalAlignment="Center"></Rectangle>
+                        <dance:DanceSliderPanel Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_SMALL}}" 
+                                                VerticalAlignment="Center"
+                                                Minimum="{TemplateBinding Minimum}"
+                                                Maximum="{TemplateBinding Maximum}">
+                            <dance:DanceSliderThumb x:Name="min"
+                                                    Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_SMALL}}" 
+                                                    Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_SMALL}}" 
+                                                    dance:DanceSliderPanel.Value="{Binding Path=MinValue,RelativeSource={RelativeSource AncestorType=dance:DanceSlider,Mode=FindAncestor},Mode=TwoWay}"></dance:DanceSliderThumb>
+                            <dance:DanceSliderThumb x:Name="max"
+                                                    Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_SMALL}}" 
+                                                    Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_SMALL}}" 
+                                                    dance:DanceSliderPanel.Value="{Binding Path=MaxValue,RelativeSource={RelativeSource AncestorType=dance:DanceSlider,Mode=FindAncestor},Mode=TwoWay}"></dance:DanceSliderThumb>
+                            <dance:DanceSliderLink MinValueThumb="{Binding ElementName=min}" Height="4"
+                                                   MaxValueThumb="{Binding ElementName=max}" Panel.ZIndex="-1"></dance:DanceSliderLink>
+                        </dance:DanceSliderPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
