@@ -21,6 +21,11 @@ namespace Dance.Wpf
         public const string FONT_SIZE = "FONT_SIZE";
 
         /// <summary>
+        /// 字体 -- 头部大小
+        /// </summary>
+        public const string FONT_SIZE_HEADER = "FONT_SIZE_HEADER";
+
+        /// <summary>
         /// 字体
         /// </summary>
         public const string FONT_FAMILY = "FONT_FAMILY";
@@ -145,6 +150,16 @@ namespace Dance.Wpf
         public const string EDIT_HEIGHT = "EDIT_HEIGHT";
 
         /// <summary>
+        /// 编辑 -- 高度 -- 大号
+        /// </summary>
+        public const string EDIT_HEIGHT_LARGE = "EDIT_HEIGHT_LARGE";
+
+        /// <summary>
+        /// 编辑 -- 高度负数
+        /// </summary>
+        public const string EDIT_HEIGHT_NEGATIVE = "EDIT_HEIGHT_NEGATIVE";
+
+        /// <summary>
         /// 编辑 -- 图标 -- 大小
         /// </summary>
         public const string EDIT_ICON_SIZE = "EDIT_ICON_SIZE";
@@ -168,7 +183,6 @@ namespace Dance.Wpf
         /// 编辑 -- 部件 -- 内容外边距 -- 大号
         /// </summary>
         public const string EDIT_CONTENT_MARGIN_LARGE = "EDIT_PART_CONTENT_MARGIN_LARGE";
-
 
         // -----------------------------------------------------------------------------------------------------
         // 滚动

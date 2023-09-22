@@ -10,8 +10,8 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Width" Value="120"></Setter>
-        <Setter Property="Height" Value="50"></Setter>
+        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_LARGE}}"></Setter>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
@@ -19,19 +19,20 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabItem}">
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
-                        <ContentPresenter ContentSource="Header" Focusable="False" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
+                        <ContentPresenter ContentSource="Header" Focusable="False" 
+                                          HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}" 
                                           Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
                                           VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Foreground" Value="#ff40a9ff"/>
+                            <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"/>
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter Property="Foreground" Value="#ff1890ff"></Setter>
+                            <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -43,9 +44,9 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -54,13 +55,19 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Rectangle Height="1" VerticalAlignment="Bottom" Fill="#ffe8e8e8"></Rectangle>
+                        <Rectangle Height="1" VerticalAlignment="Bottom" 
+                                   Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Rectangle>
                         <StackPanel Background="Transparent" IsItemsHost="true" Orientation="Horizontal" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" />
-                        <dance:DanceShuttle UnitLength="120" Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=TabControl,Mode=FindAncestor}}" Duration="00:00:00.5" IsHitTestVisible="False">
+                        <dance:DanceShuttle UnitLength="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}" 
+                                            Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=TabControl,Mode=FindAncestor}}" 
+                                            Duration="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.ANIMATION_DURATION_TIMESPAN}}" 
+                                            IsHitTestVisible="False">
                             <dance:DanceShuttle.SwitchEasing>
                                 <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
                             </dance:DanceShuttle.SwitchEasing>
-                            <Rectangle Height="2" Width="120" VerticalAlignment="Bottom" Fill="#ff1890ff"></Rectangle>
+                            <Rectangle Height="2" 
+                                       Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}" 
+                                       VerticalAlignment="Bottom" Fill="#ff1890ff"></Rectangle>
                         </dance:DanceShuttle>
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
                                 KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
@@ -69,7 +76,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -6,7 +6,9 @@
 
     <!-- 字体 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.FONT_SIZE}">12</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}">13</sys:Double>
     <FontFamily x:Key="{x:Static Member=dance:DanceResourceKey.FONT_FAMILY}">Microsoft Yahei UI</FontFamily>
+
 
     <!-- 动画 -->
     <Duration x:Key="{x:Static Member=dance:DanceResourceKey.ANIMATION_DURATION}">00:00:00.5</Duration>
@@ -38,6 +40,8 @@
     <!-- 编辑 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}">120</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}">30</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_LARGE}">50</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_NEGATIVE}">-30</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE}">12</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}">20</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT}">20</sys:Double>
