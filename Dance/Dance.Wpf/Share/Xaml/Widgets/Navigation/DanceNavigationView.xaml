@@ -73,7 +73,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:DanceNavigationView}">
-                    <Grid Background="{TemplateBinding Background}">
+                    <Grid Background="{TemplateBinding Background}" UseLayoutRounding="True" SnapsToDevicePixels="True" ClipToBounds="True">
                         <ItemsPresenter></ItemsPresenter>
 
                         <ListBox ItemsSource="{Binding Path=ItemsSource,Source={RelativeSource AncestorType={x:Type local:DanceNavigationView},Mode=FindAncestor}}"
