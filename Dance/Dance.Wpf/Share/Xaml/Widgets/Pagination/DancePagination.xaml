@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
-                    xmlns:local="clr-namespace:Dance.Wpf">
+                    xmlns:dance="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
@@ -10,99 +10,100 @@
 
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"></BooleanToVisibilityConverter>
 
-    <local:DanceDataTemplateSelector x:Key="DataTemplateSelector" PropertyName="Type">
-        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.PreviousPage}">
-            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+    <dance:DanceDataTemplateSelector x:Key="DataTemplateSelector" PropertyName="Type">
+        <dance:DanceDataTemplateSelecterMapping Value="{x:Static Member=dance:DancePaginationInfoType.PreviousPage}">
+            <dance:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
-                    <local:DancePaginationItem>
+                    <dance:DancePaginationItem>
                         <Border Width="6" Height="6" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Path Data="M6,0 L0,3 L6,6" Stroke="{StaticResource DANCE_BRUSH_ARROW}" StrokeThickness="1"></Path>
+                            <Path Data="M6,0 L0,3 L6,6" Stroke="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" StrokeThickness="1"></Path>
                         </Border>
-                    </local:DancePaginationItem>
+                    </dance:DancePaginationItem>
                 </DataTemplate>
-            </local:DanceDataTemplateSelecterMapping.DataTemplate>
-        </local:DanceDataTemplateSelecterMapping>
-        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.PreviousMorePage}">
-            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+            </dance:DanceDataTemplateSelecterMapping.DataTemplate>
+        </dance:DanceDataTemplateSelecterMapping>
+        <dance:DanceDataTemplateSelecterMapping Value="{x:Static Member=dance:DancePaginationInfoType.PreviousMorePage}">
+            <dance:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
-                    <local:DancePaginationItem>
+                    <dance:DancePaginationItem>
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="1"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="2"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" Grid.Column="1"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" Grid.Column="2"></Ellipse>
                         </Grid>
-                    </local:DancePaginationItem>
+                    </dance:DancePaginationItem>
                 </DataTemplate>
-            </local:DanceDataTemplateSelecterMapping.DataTemplate>
-        </local:DanceDataTemplateSelecterMapping>
-        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.Page}">
-            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+            </dance:DanceDataTemplateSelecterMapping.DataTemplate>
+        </dance:DanceDataTemplateSelecterMapping>
+        <dance:DanceDataTemplateSelecterMapping Value="{x:Static Member=dance:DancePaginationInfoType.Page}">
+            <dance:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
-                    <local:DancePaginationItem>
+                    <dance:DancePaginationItem>
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <TextBlock Text="{Binding Path=PageNum}" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
                         </Border>
-                    </local:DancePaginationItem>
+                    </dance:DancePaginationItem>
                 </DataTemplate>
-            </local:DanceDataTemplateSelecterMapping.DataTemplate>
-        </local:DanceDataTemplateSelecterMapping>
-        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.NextMorePage}">
-            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+            </dance:DanceDataTemplateSelecterMapping.DataTemplate>
+        </dance:DanceDataTemplateSelecterMapping>
+        <dance:DanceDataTemplateSelecterMapping Value="{x:Static Member=dance:DancePaginationInfoType.NextMorePage}">
+            <dance:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
-                    <local:DancePaginationItem>
+                    <dance:DancePaginationItem>
                         <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Width="12" Height="10" UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="1"></Ellipse>
-                            <Ellipse Width="2" Height="2" Fill="{StaticResource DANCE_BRUSH_ARROW}" Grid.Column="2"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" Grid.Column="1"></Ellipse>
+                            <Ellipse Width="2" Height="2" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" Grid.Column="2"></Ellipse>
                         </Grid>
-                    </local:DancePaginationItem>
+                    </dance:DancePaginationItem>
                 </DataTemplate>
-            </local:DanceDataTemplateSelecterMapping.DataTemplate>
-        </local:DanceDataTemplateSelecterMapping>
-        <local:DanceDataTemplateSelecterMapping Value="{x:Static Member=local:DancePaginationInfoType.NextPage}">
-            <local:DanceDataTemplateSelecterMapping.DataTemplate>
+            </dance:DanceDataTemplateSelecterMapping.DataTemplate>
+        </dance:DanceDataTemplateSelecterMapping>
+        <dance:DanceDataTemplateSelecterMapping Value="{x:Static Member=dance:DancePaginationInfoType.NextPage}">
+            <dance:DanceDataTemplateSelecterMapping.DataTemplate>
                 <DataTemplate>
-                    <local:DancePaginationItem>
+                    <dance:DancePaginationItem>
                         <Border HorizontalAlignment="Center" VerticalAlignment="Center" Width="6" Height="6" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Path Data="M0,0 L6,3 L0,6" Stroke="{StaticResource DANCE_BRUSH_ARROW}" StrokeThickness="1"></Path>
+                            <Path Data="M0,0 L6,3 L0,6" Stroke="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" StrokeThickness="1"></Path>
                         </Border>
-                    </local:DancePaginationItem>
+                    </dance:DancePaginationItem>
                 </DataTemplate>
-            </local:DanceDataTemplateSelecterMapping.DataTemplate>
-        </local:DanceDataTemplateSelecterMapping>
-    </local:DanceDataTemplateSelector>
+            </dance:DanceDataTemplateSelecterMapping.DataTemplate>
+        </dance:DanceDataTemplateSelecterMapping>
+    </dance:DanceDataTemplateSelector>
 
-    <Style TargetType="local:DancePaginationItem">
+    <Style TargetType="dance:DancePaginationItem">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Width" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_PART_WIDTH}"></Setter>
-        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
-        <Setter Property="Margin" Value="5,0,5,0"></Setter>
+        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_MIDDLE}}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_MIDDLE}}"></Setter>
+        <Setter Property="Margin" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN}}"></Setter>
         <Setter Property="IsEnabled" Value="{Binding IsEnabled}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:DancePaginationItem">
-                    <Border x:Name="bd" Background="Transparent" BorderBrush="{StaticResource DANCE_BRUSH_BORDER}" BorderThickness="1">
+                <ControlTemplate TargetType="dance:DancePaginationItem">
+                    <Border x:Name="bd" Background="Transparent" BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" BorderThickness="1">
                         <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"></ContentPresenter>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="bd" Property="Background" Value="{StaticResource DANCE_BRUSH_MOUSE_OVER}"></Setter>
+                            <Setter TargetName="bd" Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}"></Setter>
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MOUSE_OVER}}"></Setter>
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
                         </Trigger>
                         <DataTrigger Binding="{Binding IsSelected}" Value="True">
-                            <Setter TargetName="bd" Property="BorderBrush" Value="{StaticResource DANCE_BRUSH_SELECTED}"></Setter>
+                            <Setter TargetName="bd" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -110,19 +111,19 @@
         </Setter>
     </Style>
 
-    <Style TargetType="local:DancePagination">
+    <Style TargetType="dance:DancePagination">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="MinWidth" Value="300"></Setter>
-        <Setter Property="Height" Value="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="local:DancePagination">
+                <ControlTemplate TargetType="dance:DancePagination">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <ItemsControl ItemsSource="{Binding Path=ItemsSource,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor}}"
+                        <ItemsControl ItemsSource="{Binding Path=ItemsSource,RelativeSource={RelativeSource AncestorType=dance:DancePagination,Mode=FindAncestor}}"
                                       ItemTemplateSelector="{StaticResource DataTemplateSelector}">
                             <ItemsControl.ItemsPanel>
                                 <ItemsPanelTemplate>
@@ -131,22 +132,22 @@
                             </ItemsControl.ItemsPanel>
                         </ItemsControl>
                         <StackPanel Orientation="Horizontal" Grid.Column="1" Margin="20,0,0,0" 
-                                    Visibility="{Binding Path=AllowGoto,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor},Converter={StaticResource BooleanToVisibilityConverter}}">
-                            <TextBox Height="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}" 
-                                     Width="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}" 
-                                     Text="{Binding Path=GotoPageNum,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                                    Visibility="{Binding Path=AllowGoto,RelativeSource={RelativeSource AncestorType=dance:DancePagination,Mode=FindAncestor},Converter={StaticResource BooleanToVisibilityConverter}}">
+                            <TextBox Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}" 
+                                     Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_LARGE}}" 
+                                     Text="{Binding Path=GotoPageNum,RelativeSource={RelativeSource AncestorType=dance:DancePagination,Mode=FindAncestor},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
                                 <i:Interaction.Triggers>
                                     <i:KeyTrigger Key="Enter" FiredOn="KeyDown">
-                                        <i:CallMethodAction MethodName="Goto" TargetObject="{Binding .,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor}}"></i:CallMethodAction>
+                                        <i:CallMethodAction MethodName="Goto" TargetObject="{Binding .,RelativeSource={RelativeSource AncestorType=dance:DancePagination,Mode=FindAncestor}}"></i:CallMethodAction>
                                     </i:KeyTrigger>
                                 </i:Interaction.Triggers>
                             </TextBox>
-                            <Button Width="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_WIDTH}" 
-                                    Height="{StaticResource DANCE_DOUBLE_EDIT_CONTROL_HEIGHT}"
+                            <Button Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_LARGE}}" 
+                                    Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
                                     Margin="10,0,0,0" Style="{StaticResource Button_Secondary}" Content="跳转">
                                 <i:Interaction.Triggers>
                                     <i:EventTrigger EventName="Click">
-                                        <i:CallMethodAction MethodName="Goto" TargetObject="{Binding .,RelativeSource={RelativeSource AncestorType=local:DancePagination,Mode=FindAncestor}}"></i:CallMethodAction>
+                                        <i:CallMethodAction MethodName="Goto" TargetObject="{Binding .,RelativeSource={RelativeSource AncestorType=dance:DancePagination,Mode=FindAncestor}}"></i:CallMethodAction>
                                     </i:EventTrigger>
                                 </i:Interaction.Triggers>
                             </Button>

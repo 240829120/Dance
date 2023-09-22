@@ -92,7 +92,10 @@ namespace Dance.Wpf
         /// 穿梭值
         /// </summary>
         public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register("Value", typeof(double), typeof(DanceShuttle), new PropertyMetadata(0d));
+            DependencyProperty.Register("Value", typeof(double), typeof(DanceShuttle), new PropertyMetadata(0d, new PropertyChangedCallback((s, e) =>
+            {
+
+            })));
 
         #endregion
 

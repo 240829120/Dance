@@ -38,6 +38,18 @@
             <ListBoxItem>5</ListBoxItem>
         </ListBox>
 
+        <dance:DanceTreeView Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="300,200,0,0">
+            <dance:DanceTreeViewItem Header="1">
+                <dance:DanceTreeViewItem Header="1_1"></dance:DanceTreeViewItem>
+                <dance:DanceTreeViewItem Header="1_2"></dance:DanceTreeViewItem>
+            </dance:DanceTreeViewItem>
+            <dance:DanceTreeViewItem Header="2"></dance:DanceTreeViewItem>
+            <dance:DanceTreeViewItem Header="3"></dance:DanceTreeViewItem>
+            <dance:DanceTreeViewItem Header="4"></dance:DanceTreeViewItem>
+            <dance:DanceTreeViewItem Header="5"></dance:DanceTreeViewItem>
+            <dance:DanceTreeViewItem Header="6"></dance:DanceTreeViewItem>
+        </dance:DanceTreeView>
+
         <ComboBox Width="240" HorizontalAlignment="Left" Margin="300,200,10,10">
             <ComboBoxItem>1</ComboBoxItem>
             <ComboBoxItem>2</ComboBoxItem>

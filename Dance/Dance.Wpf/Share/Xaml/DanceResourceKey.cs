@@ -150,6 +150,11 @@ namespace Dance.Wpf
         public const string EDIT_HEIGHT = "EDIT_HEIGHT";
 
         /// <summary>
+        /// 编辑 -- 高度 -- 中号
+        /// </summary>
+        public const string EDIT_HEIGHT_MIDDLE = "EDIT_HEIGHT_MIDDLE";
+
+        /// <summary>
         /// 编辑 -- 高度 -- 大号
         /// </summary>
         public const string EDIT_HEIGHT_LARGE = "EDIT_HEIGHT_LARGE";
@@ -170,9 +175,24 @@ namespace Dance.Wpf
         public const string EDIT_PART_WIDTH = "EDIT_PART_WIDTH";
 
         /// <summary>
+        /// 编辑 -- 部件 -- 宽度 -- 中号
+        /// </summary>
+        public const string EDIT_PART_WIDTH_MIDDLE = "EDIT_PART_WIDTH_MIDDLE";
+
+        /// <summary>
+        /// 编辑 -- 部件 -- 宽度 -- 大号
+        /// </summary>
+        public const string EDIT_PART_WIDTH_LARGE = "EDIT_PART_WIDTH_LARGE";
+
+        /// <summary>
         /// 编辑 -- 部件 -- 高度
         /// </summary>
         public const string EDIT_PART_HEIGHT = "EDIT_PART_HEIGHT";
+
+        /// <summary>
+        /// 编辑 -- 部件 -- 高度 -- 中号
+        /// </summary>
+        public const string EDIT_PART_HEIGHT_MIDDLE = "EDIT_PART_HEIGHT_MIDDLE";
 
         /// <summary>
         /// 编辑 -- 部件 -- 内容外边距
@@ -192,6 +212,16 @@ namespace Dance.Wpf
         /// 滚动 -- 滑轮 -- 大小
         /// </summary>
         public const string SCROLL_BAR_SIZE = "SCROLL_BAR_SIZE";
+
+        /// <summary>
+        /// 滚动 -- 背景
+        /// </summary>
+        public const string SCROLL_BAR_BACKGROUND = "SCROLL_BAR_BACKGROUND";
+
+        /// <summary>
+        /// 滚动 -- 前景
+        /// </summary>
+        public const string SCROLL_BAR_FOREGROUND = "SCROLL_BAR_FOREGROUND";
 
         // -----------------------------------------------------------------------------------------------------
         // 弹出框

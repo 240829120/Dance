@@ -1,5 +1,6 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dance="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
@@ -42,13 +43,12 @@
     <Style x:Key="ScrollBarThumb_General" TargetType="{x:Type Thumb}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
-        <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"></Setter>
+        <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"></Setter>
         <Setter Property="IsTabStop" Value="false"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Thumb}">
-                    <Rectangle x:Name="rectangle" Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" SnapsToDevicePixels="True" Width="{TemplateBinding Width}"
-                               RadiusX="5" RadiusY="5"/>
+                    <Rectangle x:Name="rectangle" Fill="{TemplateBinding Background}" Height="{TemplateBinding Height}" SnapsToDevicePixels="True" Width="{TemplateBinding Width}"/>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
                             <Setter Property="Opacity" Value="1"/>
@@ -63,12 +63,12 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
-        <Setter Property="Background" Value="#fffafafa"/>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="#ffdedede"/>
+        <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_FOREGROUND}}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Width" Value="10"/>
-        <Setter Property="MinWidth" Value="10"/>
+        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"/>
+        <Setter Property="MinWidth" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
@@ -97,7 +97,7 @@
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
+                            <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -107,8 +107,8 @@
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto"/>
                 <Setter Property="MinWidth" Value="0"/>
-                <Setter Property="Height" Value="10"/>
-                <Setter Property="MinHeight" Value="10"/>
+                <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"/>
+                <Setter Property="MinHeight" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"></Setter>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Template">
                     <Setter.Value>
@@ -141,7 +141,7 @@
                                     <Setter Property="Opacity" Value="1"></Setter>
                                 </Trigger>
                                 <Trigger Property="IsEnabled" Value="false">
-                                    <Setter Property="Opacity" Value="{StaticResource DANCE_DOUBLE_DISABLED_OPACITY}"/>
+                                    <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -182,7 +182,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsEnabled" Value="false">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
             </Trigger>
         </Style.Triggers>
     </Style>

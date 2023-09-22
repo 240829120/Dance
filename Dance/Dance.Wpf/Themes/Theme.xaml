@@ -40,16 +40,22 @@
     <!-- 编辑 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}">120</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}">30</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_MIDDLE}">40</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_LARGE}">50</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_NEGATIVE}">-30</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE}">12</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}">20</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_MIDDLE}">30</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_LARGE}">60</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT}">20</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_MIDDLE}">30</sys:Double>
     <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN}">5,0,5,0</Thickness>
     <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_LARGE}">10,0,10,0</Thickness>
 
     <!-- 滚动 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}">10</sys:Double>
+    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}">#FFFAFAFA</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.SCROLL_BAR_FOREGROUND}">#FFDEDEDE</SolidColorBrush>
 
     <!-- 弹出框 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}">300</sys:Double>
@@ -61,47 +67,4 @@
     <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_NONE_MARK}">M0,0 L6,0 L6,1 L0,1 Z</PathGeometry>
     <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_ARROW_MARK}">M0,0 L3,0 4.5,1.5 6,0 9,0 4.5,4.5 Z</PathGeometry>
 
-
-    <!-- 等待删除 -->
-
-    <SolidColorBrush x:Key="DANCE_BRUSH_FOREGROUND">#FF000000</SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_MOUSE_OVER" Color="#441890ff"></SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_SELECTED" Color="#ff1890ff"></SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_SELECTED_FOREGROUND" Color="White"></SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_ARROW" Color="#ff595959"></SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_BORDER" Color="#33767676"></SolidColorBrush>
-    <SolidColorBrush x:Key="DANCE_BRUSH_FOCUS" Color="#ff1890ff"></SolidColorBrush>
-
-    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_HEIGHT_NEGATIVE">-30</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_HEIGHT">30</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_WIDTH">60</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_PART_WIDTH">30</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_INNER_WIDTH">16</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_EDIT_CONTROL_INNER_HEIGHT">16</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_DISABLED_OPACITY">0.35</sys:Double>
-    <sys:Double x:Key="DANCE_DOUBLE_DROP_DOWN_MAX_HEIGHT">300</sys:Double>
-
-    <sys:TimeSpan x:Key="DANCE_TIMESPAN_SHUTTLE_DURATION">00:00:00.5</sys:TimeSpan>
-
-    <GridLength x:Key="DANCE_GRIDLENGTH_EDIT_CONTROL_PART_WIDTH">30</GridLength>
-
-    <CornerRadius x:Key="DANCE_CORNERRADIUS_EDIT_CONTROL">5</CornerRadius>
-    <CornerRadius x:Key="DANCE_CORNERRADIUS_EDIT_CONTROL_INNER">3</CornerRadius>
-
-
-    <Storyboard x:Key="DANCE_STORYBOARD_FOREGROUND_SELECTED_ENTER" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)">
-        <ColorAnimation To="White" Duration="00:00:00.5"></ColorAnimation>
-    </Storyboard>
-
-    <Storyboard x:Key="DANCE_STORYBOARD_FOREGROUND_SELECTED_EXIT" Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)">
-        <ColorAnimation To="Black" Duration="00:00:00.5"></ColorAnimation>
-    </Storyboard>
-
-    <Storyboard x:Key="DANCE_STORYBOARD_BACKGROUND_MOUSE_OVER_ENTER" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-
-    </Storyboard>
-
-    <Storyboard x:Key="DANCE_STORYBOARD_BACKGROUND_MOUSE_OVER_EXIT" Storyboard.TargetProperty="(Background).(SolidColorBrush.Color)">
-
-    </Storyboard>
 </ResourceDictionary>
