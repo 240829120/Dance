@@ -32,6 +32,20 @@ namespace Dance.Wpf
                 return;
 
             this.IsChecked = window.WindowState == WindowState.Maximized;
+
+            window.StateChanged -= Window_StateChanged;
+            window.StateChanged += Window_StateChanged;
+        }
+
+        /// <summary>
+        /// 窗口状态变化
+        /// </summary>
+        private void Window_StateChanged(object? sender, EventArgs e)
+        {
+            if (Window.GetWindow(this) is not Window window)
+                return;
+
+            this.IsChecked = window.WindowState == WindowState.Maximized;
         }
 
         /// <summary>
