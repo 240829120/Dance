@@ -67,7 +67,8 @@
                             </dance:DanceShuttle.SwitchEasing>
                             <Rectangle Height="2" 
                                        Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}" 
-                                       VerticalAlignment="Bottom" Fill="#ff1890ff"></Rectangle>
+                                       Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"
+                                       VerticalAlignment="Bottom"></Rectangle>
                         </dance:DanceShuttle>
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" 
                                 KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local">
