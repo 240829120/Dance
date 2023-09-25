@@ -11,7 +11,7 @@
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
         <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
-        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"></Setter>
+        <Setter Property="Height" Value="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
@@ -52,7 +52,7 @@
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" 
                                       SnapsToDevicePixels="True" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
                             <Grid>
-                                <dance:DanceShuttle UnitLength="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}" 
+                                <dance:DanceShuttle UnitLength="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
                                                     Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
                                                     Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_NEGATIVE}}" 
                                                     Orientation="Vertical" 
@@ -62,7 +62,7 @@
                                         <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
                                     </dance:DanceShuttle.SwitchEasing>
                                     <Rectangle HorizontalAlignment="Stretch" 
-                                               Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
+                                               Height="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}"
                                                Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Rectangle>
                                 </dance:DanceShuttle>
                                 <ItemsPresenter />

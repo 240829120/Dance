@@ -30,7 +30,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 上次渲染时间
         /// </summary>
-        private TimeSpan LastRenderingTime;
+        private TimeSpan? LastRenderingTime;
 
         /// <summary>
         /// 瞬时FPS
@@ -102,13 +102,19 @@ namespace Dance.Wpf
         /// </summary>
         private void CompositionTarget_Rendering(object? sender, EventArgs e)
         {
-            if (!this.IsVisible)
+            if (!this.IsVisible || e is not RenderingEventArgs args)
+            {
+                this.LastRenderingTime = null;
                 return;
+            }
 
-            if (e is not RenderingEventArgs args)
+            if (this.LastRenderingTime == null)
+            {
+                this.LastRenderingTime = args.RenderingTime;
                 return;
+            }
 
-            TimeSpan dt = args.RenderingTime - this.LastRenderingTime;
+            TimeSpan dt = args.RenderingTime - this.LastRenderingTime.Value;
             this.LastRenderingTime = args.RenderingTime;
             this.FPS = (float)(1f / dt.TotalSeconds);
 
@@ -121,7 +127,6 @@ namespace Dance.Wpf
 
             this.InvalidateVisual();
         }
-
 
         /// <summary>
         /// 绘制

@@ -121,7 +121,7 @@
                                 <dance:DanceDataGridColumnItemsControl ItemsSource="{Binding Path=Columns,RelativeSource={RelativeSource AncestorType=dance:DanceDataGrid,Mode=FindAncestor}}"/>
                             </ScrollViewer>
                             <ScrollViewer x:Name="PART_ScrollViewer_Items" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Row="1">
-                                <Grid>
+                                <Grid ClipToBounds="True">
                                     <dance:DanceShuttle UnitLength="{TemplateBinding RowHeight}" 
                                                         Value="{TemplateBinding RowHeight,Converter={StaticResource DanceSimpleMathConverter},ConverterParameter=-1}" 
                                                         Index="{Binding Path=SelectedIndex,Mode=OneWay,RelativeSource={RelativeSource AncestorType=dance:DanceDataGrid,Mode=FindAncestor}}"

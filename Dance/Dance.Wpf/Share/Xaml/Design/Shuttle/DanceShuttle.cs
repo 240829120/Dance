@@ -142,7 +142,7 @@ namespace Dance.Wpf
         /// 索引
         /// </summary>
         public static readonly DependencyProperty IndexProperty =
-            DependencyProperty.Register("Index", typeof(int), typeof(DanceShuttle), new PropertyMetadata(0, new PropertyChangedCallback((s, e) =>
+            DependencyProperty.Register("Index", typeof(int), typeof(DanceShuttle), new PropertyMetadata(-1, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not DanceShuttle shuttle)
                     return;
