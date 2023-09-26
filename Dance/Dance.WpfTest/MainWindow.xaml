@@ -9,6 +9,6 @@
         mc:Ignorable="d" Background="White"
         Title="MainWindow" Height="800" Width="1400">
     <Grid>
-        <dance:DanceSlider MinValue="20" MaxValue="80" Margin="50"></dance:DanceSlider>
+        
     </Grid>
 </Window>

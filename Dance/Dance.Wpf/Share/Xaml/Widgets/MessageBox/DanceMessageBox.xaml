@@ -1,0 +1,86 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dance="clr-namespace:Dance.Wpf">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Button.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
+    <Style TargetType="dance:DanceMessageBox">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="MinWidth" Value="300"></Setter>
+        <Setter Property="MaxWidth" Value="600"></Setter>
+        <Setter Property="MinHeight" Value="160"></Setter>
+        <Setter Property="MaxHeight" Value="320"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceMessageBox">
+                    <Border BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
+                            BorderThickness="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"></RowDefinition>
+                                <RowDefinition Height="*"></RowDefinition>
+                                <RowDefinition Height="50"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <Border Background="White" Grid.RowSpan="3" Grid.ColumnSpan="2">
+                                <Border.Effect>
+                                    <DropShadowEffect Color="Black" Direction="-20" ShadowDepth="5" BlurRadius="10" Opacity="0.3"></DropShadowEffect>
+                                </Border.Effect>
+                            </Border>
+
+                            <Grid x:Name="header" TextBlock.FontWeight="Bold" Grid.ColumnSpan="2"
+                              Margin="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_LARGE}}">
+
+                                <ContentControl Content="{TemplateBinding Header}" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                                            TextBlock.FontSize="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}}"></ContentControl>
+                                <Rectangle Height="1" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Margin="0,0,0,10"
+                                           Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Rectangle>
+                            </Grid>
+                            <Border x:Name="icon" Grid.Row="1" Visibility="Collapsed">
+                                <Image Source="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Center"></Image>
+                            </Border>
+                            <ContentPresenter Grid.Column="1" Grid.Row="1" ToolTip="{TemplateBinding Content}"
+                                          Margin="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_LARGE}}">
+                                <ContentPresenter.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextWrapping" Value="Wrap"></Setter>
+                                        <Setter Property="TextTrimming" Value="CharacterEllipsis"></Setter>
+                                        <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"></Setter>
+                                    </Style>
+                                </ContentPresenter.Resources>
+                            </ContentPresenter>
+
+                            <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Right">
+                                <Button x:Name="btYes" Style="{StaticResource Button_Secondary}" Content="确定" Width="60" Height="24" Margin="0,0,10,0"
+                                        Command="{Binding YesCommand,RelativeSource={RelativeSource AncestorType=dance:DanceMessageBox,Mode=FindAncestor}}"></Button>
+                                <Button x:Name="btNo" Style="{StaticResource Button_Secondary}" Visibility="Collapsed" Content="否" Width="60" Height="24" Margin="0,0,10,0"
+                                        Command="{Binding NoCommand,RelativeSource={RelativeSource AncestorType=dance:DanceMessageBox,Mode=FindAncestor}}"></Button>
+                                <Button x:Name="btCancel" Style="{StaticResource Button_Secondary}" Visibility="Collapsed" Content="取消" Width="60" Height="24" Margin="0,0,10,0"
+                                        Command="{Binding CancelCommand,RelativeSource={RelativeSource AncestorType=dance:DanceMessageBox,Mode=FindAncestor}}"></Button>
+                            </StackPanel>
+
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasIcon" Value="True">
+                            <Setter TargetName="icon" Property="Visibility" Value="Visible"></Setter>
+                        </Trigger>
+                        <Trigger Property="HasNoButton" Value="True">
+                            <Setter TargetName="btNo" Property="Visibility" Value="Visible"></Setter>
+                        </Trigger>
+                        <Trigger Property="HasCancelButton" Value="True">
+                            <Setter TargetName="btCancel" Property="Visibility" Value="Visible"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
