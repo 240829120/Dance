@@ -42,7 +42,7 @@ namespace Dance.Wpf
         /// 宽度
         /// </summary>
         public static readonly DependencyProperty WidthProperty =
-            DependencyProperty.Register("Width", typeof(DanceRangeFloat), typeof(DanceParticleRectangleGenerator), new PropertyMetadata(new DanceRangeFloat(10, 20)));
+            DependencyProperty.Register("Width", typeof(DanceRangeFloat), typeof(DanceParticleImageleGenerator), new PropertyMetadata(new DanceRangeFloat(10, 20)));
 
         #endregion
 
@@ -61,7 +61,7 @@ namespace Dance.Wpf
         /// 高度
         /// </summary>
         public static readonly DependencyProperty HeightProperty =
-            DependencyProperty.Register("Height", typeof(DanceRangeFloat), typeof(DanceParticleRectangleGenerator), new PropertyMetadata(new DanceRangeFloat(10, 20)));
+            DependencyProperty.Register("Height", typeof(DanceRangeFloat), typeof(DanceParticleImageleGenerator), new PropertyMetadata(new DanceRangeFloat(10, 20)));
 
         #endregion
 

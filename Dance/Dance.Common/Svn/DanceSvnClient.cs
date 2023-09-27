@@ -99,7 +99,6 @@ namespace Dance.Common
         /// </summary>
         public bool GetStatus(out Collection<SvnStatusEventArgs>? statuses)
         {
-            statuses = null;
             return this.SvnClient.GetStatus(this.Option.Path, out statuses);
         }
 
