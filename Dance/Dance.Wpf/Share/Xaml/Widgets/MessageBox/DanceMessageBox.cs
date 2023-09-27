@@ -116,7 +116,7 @@ namespace Dance.Wpf
         public bool HasNoButton
         {
             get { return (bool)GetValue(HasNoButtonProperty); }
-            private set { SetValue(HasNoButtonPropertyKey, value); }
+            internal set { SetValue(HasNoButtonPropertyKey, value); }
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Dance.Wpf
         public bool HasCancelButton
         {
             get { return (bool)GetValue(HasCancelButtonProperty); }
-            private set { SetValue(HasCancelButtonPropertyKey, value); }
+            internal set { SetValue(HasCancelButtonPropertyKey, value); }
         }
 
         /// <summary>
@@ -231,76 +231,5 @@ namespace Dance.Wpf
         }
 
         #endregion
-
-        /// <summary>
-        /// 显示
-        /// </summary>
-        /// <param name="header">头部</param>
-        /// <param name="icon">图标</param>
-        /// <param name="content">内容</param>
-        /// <param name="action">行为</param>
-        /// <param name="owner">所属窗口</param>
-        /// <returns>行为</returns>
-        public static DanceMessageBoxAction Show(object? header, ImageSource? icon, object? content, DanceMessageBoxAction action, Window? owner)
-        {
-            DanceMessageBoxAction result = DanceMessageBoxAction.YES;
-
-            Application.Current?.Dispatcher.Invoke(() =>
-            {
-                DanceMessageBoxWindow window = new();
-                window.box.Header = header;
-                window.box.Icon = icon;
-                window.box.HasIcon = icon != null;
-                window.box.HasNoButton = action.HasFlag(DanceMessageBoxAction.NO);
-                window.box.HasCancelButton = action.HasFlag(DanceMessageBoxAction.CANCEL);
-                window.box.Content = content;
-                window.box.Action = action;
-
-                window.Owner = owner ?? Application.Current?.MainWindow;
-                window.ShowDialog();
-
-                result = window.box.ResultAction;
-
-            });
-
-            return result;
-        }
-
-        /// <summary>
-        /// 显示
-        /// </summary>
-        /// <param name="header">头部</param>
-        /// <param name="icon">图标</param>
-        /// <param name="content">内容</param>
-        /// <param name="action">行为</param>
-        /// <returns>行为</returns>
-        public static DanceMessageBoxAction Show(object? header, ImageSource? icon, object? content, DanceMessageBoxAction action)
-        {
-            return Show(header, icon, content, action, null);
-        }
-
-        /// <summary>
-        /// 显示
-        /// </summary>
-        /// <param name="header">头部</param>
-        /// <param name="content">内容</param>
-        /// <param name="action">行为</param>
-        /// <returns>行为</returns>
-        public static DanceMessageBoxAction Show(object? header, object? content, DanceMessageBoxAction action)
-        {
-            return Show(header, null, content, action, null);
-        }
-
-        /// <summary>
-        /// 显示
-        /// </summary>
-        /// <param name="header">头部</param>
-        /// <param name="content">内容</param>
-        /// <param name="action">行为</param>
-        /// <returns>行为</returns>
-        public static DanceMessageBoxAction Show(object? header, object? content)
-        {
-            return Show(header, null, content, DanceMessageBoxAction.YES, null);
-        }
     }
 }

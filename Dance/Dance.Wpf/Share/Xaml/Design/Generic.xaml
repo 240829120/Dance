@@ -5,6 +5,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Design/MouseOver/DanceMouseOver.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Design/Separator/DanceSeparator.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Design/Shuttle/DanceShuttle.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Design/Svg/DanceSvgImage.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

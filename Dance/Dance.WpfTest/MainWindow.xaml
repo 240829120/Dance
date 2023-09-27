@@ -9,6 +9,6 @@
         mc:Ignorable="d" Background="White"
         Title="MainWindow" Height="800" Width="1400">
     <Grid>
-        
+        <dance:DanceSvgImage Source="C:\Users\win\Downloads\SVGImage-master\SVGImage-master\Samples\Example\Images\example8.1.test01.svg" Width="300"></dance:DanceSvgImage>
     </Grid>
 </Window>

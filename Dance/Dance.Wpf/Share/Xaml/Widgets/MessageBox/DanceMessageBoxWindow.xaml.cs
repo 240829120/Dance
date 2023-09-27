@@ -23,5 +23,10 @@ namespace Dance.Wpf
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// 消息框
+        /// </summary>
+        public DanceMessageBox MessageBox { get { return this.box; } }
     }
 }
