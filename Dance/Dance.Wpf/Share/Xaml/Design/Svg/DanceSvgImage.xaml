@@ -1,0 +1,19 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+                    xmlns:dance="clr-namespace:Dance.Wpf">
+
+    <svgc:SvgImageConverter x:Key="SvgImageConverter"></svgc:SvgImageConverter>
+
+    <Style TargetType="dance:DanceSvgImage">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceSvgImage">
+                    <Image Source="{TemplateBinding Source,Converter={StaticResource SvgImageConverter}}"></Image>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>

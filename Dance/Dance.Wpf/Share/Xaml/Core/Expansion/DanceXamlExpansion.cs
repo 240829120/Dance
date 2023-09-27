@@ -8,6 +8,7 @@ using System.Windows;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
+using SharpVectors.Converters;
 
 namespace Dance.Wpf
 {
@@ -110,6 +111,20 @@ namespace Dance.Wpf
         public static double GetPixelsPerDip()
         {
             return VisualTreeHelper.GetDpi(new Border()).PixelsPerDip;
+        }
+
+        /// <summary>
+        /// 获取SVG图片源
+        /// </summary>
+        /// <param name="uri">图片地址</param>
+        /// <returns>SVG图片源</returns>
+        public static ImageSource? GetSvgImageSource(Uri uri)
+        {
+            SvgImageConverterExtension extension = new(uri);
+            if (extension.Convert(uri, null, null, System.Globalization.CultureInfo.CurrentUICulture) is DrawingImage img)
+                return img;
+
+            return null;
         }
     }
 }
