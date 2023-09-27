@@ -7,6 +7,7 @@ using System.Windows.Media;
 using System.Windows;
 using System.IO;
 using System.Windows.Media.Imaging;
+using System.Windows.Controls;
 
 namespace Dance.Wpf
 {
@@ -100,6 +101,15 @@ namespace Dance.Wpf
 
                 TraversalVisualTree(child, action);
             }
+        }
+
+        /// <summary>
+        /// 获取DPI
+        /// </summary>
+        /// <returns>DPI</returns>
+        public static double GetPixelsPerDip()
+        {
+            return VisualTreeHelper.GetDpi(new Border()).PixelsPerDip;
         }
     }
 }

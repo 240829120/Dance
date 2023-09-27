@@ -15,7 +15,7 @@ namespace Dance
         /// <summary>
         /// 锁对象
         /// </summary>
-        protected object lock_object = new object();
+        protected readonly object lock_object = new();
 
         /// <summary>
         /// 队列

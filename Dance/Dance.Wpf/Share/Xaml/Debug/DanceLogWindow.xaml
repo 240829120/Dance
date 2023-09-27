@@ -14,6 +14,6 @@
         <TextBox x:Name="tb" VerticalAlignment="Stretch" Height="NaN" Margin="10" IsReadOnly="True" AcceptsReturn="True" 
                  ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto"></TextBox>
         <Button x:Name="btClear" Grid.Row="1" Width="80" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,0,10,0"
-                Content="Clear" Click="btClear_Click"></Button>
+                Content="Clear" Click="BtClear_Click"></Button>
     </Grid>
 </Window>

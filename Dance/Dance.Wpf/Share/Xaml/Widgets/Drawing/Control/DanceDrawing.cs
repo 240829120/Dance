@@ -60,7 +60,7 @@ namespace Dance.Wpf
                         Graphics g = Graphics.FromImage(bmp);
                         this.OnDrawing(g);
 
-                        bmp.Save(path, System.Drawing.Imaging.ImageFormat.Bmp);
+                        bmp.Save(path, format);
                     }
                     catch (Exception ex)
                     {

@@ -31,7 +31,7 @@ namespace Dance.Wpf
                 return;
 
             using MemoryStream ms = new();
-            BmpBitmapEncoder encoder = new BmpBitmapEncoder();
+            BmpBitmapEncoder encoder = new();
             encoder.Frames.Add(BitmapFrame.Create((BitmapSource)this.Source));
             encoder.Save(ms);
 

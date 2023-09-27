@@ -19,11 +19,6 @@ namespace Dance.Wpf
     [TemplatePart(Name = nameof(PART_ScrollViewer_Items), Type = typeof(ScrollViewer))]
     public class DanceDataGrid : ItemsControl
     {
-        /// <summary>
-        /// 日志
-        /// </summary>
-        private readonly static ILog log = LogManager.GetLogger(typeof(DanceDataGrid));
-
         static DanceDataGrid()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceDataGrid), new FrameworkPropertyMetadata(typeof(DanceDataGrid)));

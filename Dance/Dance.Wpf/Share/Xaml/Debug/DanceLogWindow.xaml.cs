@@ -72,7 +72,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 清理
         /// </summary>
-        private void btClear_Click(object sender, RoutedEventArgs e)
+        private void BtClear_Click(object sender, RoutedEventArgs e)
         {
             this.tb.Clear();
         }
