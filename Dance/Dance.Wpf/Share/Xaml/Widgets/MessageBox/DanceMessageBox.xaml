@@ -47,7 +47,7 @@
                                 <Image Source="{TemplateBinding Icon}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="32" Height="32" Margin="20,0,0,0"></Image>
                             </Border>
                             <ContentPresenter Grid.Column="1" Grid.Row="1" ToolTip="{TemplateBinding Content}"
-                                              Margin="20,6,10,20">
+                                              Margin="20,6,20,20">
                                 <ContentPresenter.Resources>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextWrapping" Value="Wrap"></Setter>

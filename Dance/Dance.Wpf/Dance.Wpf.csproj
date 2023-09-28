@@ -25,9 +25,10 @@
 
 	<ItemGroup>
 	  <None Remove="Themes\Resources\Icon\datetime.svg" />
-	  <None Remove="Themes\Resources\Icon\failure.png" />
-	  <None Remove="Themes\Resources\Icon\success.png" />
-	  <None Remove="Themes\Resources\Icon\warning.png" />
+	  <None Remove="Themes\Resources\Icon\failure.svg" />
+	  <None Remove="Themes\Resources\Icon\info.svg" />
+	  <None Remove="Themes\Resources\Icon\success.svg" />
+	  <None Remove="Themes\Resources\Icon\warning.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -48,9 +49,10 @@
 
 	<ItemGroup>
 	  <Resource Include="Themes\Resources\Icon\datetime.svg" />
-	  <Resource Include="Themes\Resources\Icon\failure.png" />
-	  <Resource Include="Themes\Resources\Icon\success.png" />
-	  <Resource Include="Themes\Resources\Icon\warning.png" />
+	  <Resource Include="Themes\Resources\Icon\failure.svg" />
+	  <Resource Include="Themes\Resources\Icon\info.svg" />
+	  <Resource Include="Themes\Resources\Icon\success.svg" />
+	  <Resource Include="Themes\Resources\Icon\warning.svg" />
 	</ItemGroup>
 
 	<ItemGroup>
