@@ -12,6 +12,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/CheckBox.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/RadioButton.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Slider.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Menu.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

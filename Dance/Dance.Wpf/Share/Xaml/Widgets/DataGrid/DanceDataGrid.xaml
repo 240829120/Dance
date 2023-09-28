@@ -27,7 +27,7 @@
     <Style TargetType="dance:DanceDataGridColumnItemsControl">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
-        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MASK}}"></Setter>
         <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
         <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_MIDDLE}}"></Setter>
         <Setter Property="ItemsPanel">

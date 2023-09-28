@@ -25,9 +25,10 @@
 
                         <Grid Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}}" 
                               Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT}}"
-                              HorizontalAlignment="Left" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                              HorizontalAlignment="Center" VerticalAlignment="Center" 
+                              UseLayoutRounding="True" SnapsToDevicePixels="True">
 
-                            <Ellipse x:Name="out" Stroke="{TemplateBinding BorderBrush}" StrokeThickness="1" 
+                            <Ellipse x:Name="out" Stroke="{TemplateBinding BorderBrush}"
                                      Fill="{TemplateBinding Background}"
                                      Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_SMALL}}"
                                      Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_SMALL}}"

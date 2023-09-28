@@ -35,7 +35,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 瞬时FPS
         /// </summary>
-        private float FPS;
+        private int FPS;
 
         /// <summary>
         /// 调试画刷
@@ -115,8 +115,11 @@ namespace Dance.Wpf
             }
 
             TimeSpan dt = args.RenderingTime - this.LastRenderingTime.Value;
+            if (dt <= TimeSpan.Zero)
+                return;
+
             this.LastRenderingTime = args.RenderingTime;
-            this.FPS = (float)(1f / dt.TotalSeconds);
+            this.FPS = (int)Math.Round(1f / dt.TotalSeconds);
 
             foreach (IDanceParticleController controller in this.Controllers)
             {
@@ -163,7 +166,7 @@ namespace Dance.Wpf
             }
 
             canvas.DrawText($"Particle Count: {count}", 10, 20, DEBUG_PAINT);
-            canvas.DrawText($"FPS : {(int)Math.Round(this.FPS)}", 10, 40, DEBUG_PAINT);
+            canvas.DrawText($"FPS : {this.FPS}", 10, 40, DEBUG_PAINT);
         }
     }
 }

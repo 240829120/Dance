@@ -30,6 +30,7 @@
 
     <!-- 边框 -->
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}">#33767676</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MASK}">#FFE4E4E4</SolidColorBrush>
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}">#FF1890FF</SolidColorBrush>
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MOUSE_OVER}">#441890FF</SolidColorBrush>
     <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_PRESSED}">#221890FF</SolidColorBrush>
@@ -43,7 +44,7 @@
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_LARGE}">50</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_NEGATIVE}">-30</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE}">12</sys:Double>
-    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE_SMALL}">8</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_ICON_SIZE_SMALL}">6</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}">20</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_SMALL}">16</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH_MIDDLE}">30</sys:Double>
@@ -65,7 +66,7 @@
 
     <!-- 路径 -->
     <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_RIGHT_MARK}">F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z</PathGeometry>
-    <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_NONE_MARK}">M0,0 L6,0 L6,1 L0,1 Z</PathGeometry>
+    <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_NONE_MARK}">M0,0 L6,0 L6,2 L0,2 Z</PathGeometry>
     <PathGeometry x:Key="{x:Static Member=dance:DanceResourceKey.PATH_ARROW_MARK}">M0,0 L3,0 4.5,1.5 6,0 9,0 4.5,4.5 Z</PathGeometry>
 
 </ResourceDictionary>

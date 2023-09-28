@@ -116,6 +116,11 @@ namespace Dance.Wpf
         public const string BORDER_BRUSH = "BORDER_BRUSH";
 
         /// <summary>
+        /// 边框 -- 遮罩
+        /// </summary>
+        public const string BORDER_BRUSH_MASK = "BORDER_BRUSH_MASK";
+
+        /// <summary>
         /// 边框 -- 鼠标滑过
         /// </summary>
         public const string BORDER_BRUSH_MOUSE_OVER = "BORDER_BRUSH_MOUSE_OVER";

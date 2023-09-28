@@ -37,7 +37,7 @@
     <Style TargetType="ListBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MASK}}"/>
         <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
@@ -54,7 +54,6 @@
                             <Grid>
                                 <dance:DanceShuttle UnitLength="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
                                                     Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
-                                                    Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_NEGATIVE}}" 
                                                     Orientation="Vertical" 
                                                     Duration="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.ANIMATION_DURATION_TIMESPAN}}" 
                                                     IsHitTestVisible="False">
