@@ -11,19 +11,17 @@ namespace Dance.Wpf
     /// <summary>
     /// 类型实例化转化器
     /// </summary>
-    public class DanceTypeInstanceConverter : IValueConverter
+    public class DanceTypeInstanceConverter : DanceConverterBase
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// 转化
+        /// </summary>
+        public override object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is not Type type || string.IsNullOrWhiteSpace(type.FullName))
                 return null;
-            
-            return type.Assembly.CreateInstance(type.FullName);
-        }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
+            return type.Assembly.CreateInstance(type.FullName);
         }
     }
 }

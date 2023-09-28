@@ -18,9 +18,12 @@ namespace Dance.Wpf
     /// <summary>
     /// 二维码转化器
     /// </summary>
-    public class DanceQRCoderConverter : IValueConverter
+    public class DanceQRCoderConverter : DanceConverterBase
     {
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// 转化
+        /// </summary>
+        public override object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is not string code)
                 return null;
@@ -36,11 +39,6 @@ namespace Dance.Wpf
             DeleteObject(hBitmap);
 
             return imageSource;
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
