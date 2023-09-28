@@ -63,12 +63,12 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="false"/>
-        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}"/>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
-        <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_FOREGROUND}}"/>
+        <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_FOREGROUND}}"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"/>
-        <Setter Property="MinWidth" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"></Setter>
+        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_SIZE}}"/>
+        <Setter Property="MinWidth" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_SIZE}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollBar}">
@@ -107,8 +107,8 @@
             <Trigger Property="Orientation" Value="Horizontal">
                 <Setter Property="Width" Value="Auto"/>
                 <Setter Property="MinWidth" Value="0"/>
-                <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"/>
-                <Setter Property="MinHeight" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}}"></Setter>
+                <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_SIZE}}"/>
+                <Setter Property="MinHeight" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_SIZE}}"></Setter>
                 <Setter Property="BorderThickness" Value="0"/>
                 <Setter Property="Template">
                     <Setter.Value>

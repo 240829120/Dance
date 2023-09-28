@@ -22,10 +22,12 @@ namespace Dance.Wpf
             if (string.IsNullOrWhiteSpace(path))
                 return;
 
-            NotifyIcon = new();
-            NotifyIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon(path);
-            NotifyIcon.Text = System.Windows.Application.Current.MainWindow?.Title;
-            NotifyIcon.Visible = true;
+            NotifyIcon = new()
+            {
+                Icon = Icon.ExtractAssociatedIcon(path),
+                Text = System.Windows.Application.Current.MainWindow?.Title,
+                Visible = true
+            };
         }
 
         // ================================================================================================================================
@@ -108,7 +110,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 通知
         /// </summary>
-        public static System.Windows.Forms.NotifyIcon NotifyIcon { get; private set; }
+        public static NotifyIcon? NotifyIcon { get; private set; }
 
         /// <summary>
         /// 显示通知
@@ -119,7 +121,7 @@ namespace Dance.Wpf
         /// <param name="content">内容</param>
         public static void ShowNotify(TimeSpan timeout, ToolTipIcon icon, string header, string content)
         {
-            NotifyIcon.ShowBalloonTip((int)timeout.TotalMilliseconds, header, content, icon);
+            NotifyIcon?.ShowBalloonTip((int)timeout.TotalMilliseconds, header, content, icon);
         }
 
         /// <summary>

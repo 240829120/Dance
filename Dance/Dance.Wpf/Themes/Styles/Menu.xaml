@@ -106,7 +106,7 @@
                 <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}" Placement="Bottom" VerticalOffset="3"
                        PopupAnimation="Fade" PlacementTarget="{Binding ElementName=templateRoot}" MaxHeight="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}}">
                     <Border x:Name="SubMenuBorder" 
-                            Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}" 
+                            Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}" 
                             BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" BorderThickness="1" Padding="1">
                         <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                             <Grid RenderOptions.ClearTypeHint="Enabled">
@@ -199,7 +199,7 @@
                 <Popup x:Name="PART_Popup" AllowsTransparency="true" Focusable="false" HorizontalOffset="5" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                        Placement="Right" PopupAnimation="Fade" VerticalOffset="-2" MaxHeight="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}}">
                     <Border x:Name="SubMenuBorder" 
-                            Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}"
+                            Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"
                             BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" BorderThickness="1" Padding="1">
                         <ScrollViewer x:Name="SubMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey ResourceId=MenuScrollViewer, TypeInTargetAssembly={x:Type FrameworkElement}}}">
                             <Grid RenderOptions.ClearTypeHint="Enabled">
@@ -248,7 +248,7 @@
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
             </Trigger>
             <Trigger Property="Role" Value="TopLevelItem">
-                <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}"/>
+                <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
                 <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"/>
                 <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
                 <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
@@ -261,7 +261,7 @@
 
     <Style TargetType="{x:Type Menu}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}"/>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
         <Setter Property="FontFamily" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_FAMILY}}"/>
         <Setter Property="FontSize" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE}}"/>
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
@@ -278,7 +278,7 @@
     </Style>
 
     <Style TargetType="{x:Type ContextMenu}">
-        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}}"/>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
         <Setter Property="FontFamily" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_FAMILY}}"/>
         <Setter Property="FontSize" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE}}"/>
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>

@@ -56,9 +56,9 @@
     <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_LARGE}">10,0,10,0</Thickness>
 
     <!-- 滚动 -->
-    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.SCROLL_BAR_SIZE}">10</sys:Double>
-    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.SCROLL_BAR_BACKGROUND}">#FFFAFAFA</SolidColorBrush>
-    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.SCROLL_BAR_FOREGROUND}">#FFDEDEDE</SolidColorBrush>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.CHUNK_BAR_SIZE}">10</sys:Double>
+    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}">#FFFAFAFA</SolidColorBrush>
+    <SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.CHUNK_BAR_FOREGROUND}">#FFDEDEDE</SolidColorBrush>
 
     <!-- 弹出框 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}">300</sys:Double>

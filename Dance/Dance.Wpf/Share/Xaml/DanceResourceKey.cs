@@ -236,17 +236,17 @@ namespace Dance.Wpf
         /// <summary>
         /// 滚动 -- 滑轮 -- 大小
         /// </summary>
-        public const string SCROLL_BAR_SIZE = "SCROLL_BAR_SIZE";
+        public const string CHUNK_BAR_SIZE = "CHUNK_BAR_SIZE";
 
         /// <summary>
         /// 滚动 -- 背景
         /// </summary>
-        public const string SCROLL_BAR_BACKGROUND = "SCROLL_BAR_BACKGROUND";
+        public const string CHUNK_BAR_BACKGROUND = "CHUNK_BAR_BACKGROUND";
 
         /// <summary>
         /// 滚动 -- 前景
         /// </summary>
-        public const string SCROLL_BAR_FOREGROUND = "SCROLL_BAR_FOREGROUND";
+        public const string CHUNK_BAR_FOREGROUND = "CHUNK_BAR_FOREGROUND";
 
         // -----------------------------------------------------------------------------------------------------
         // 弹出框

@@ -42,22 +42,22 @@ namespace Dance.Wpf
 
             if (this.EdgeMark.Top > 0)
             {
-                drawingContext.DrawLine(this.StrokePen, new Point(0, 0), new Point(this.RenderSize.Width, 0));
+                drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new(0, 0), new(this.RenderSize.Width, 0));
             }
 
             if (this.EdgeMark.Bottom > 0)
             {
-                drawingContext.DrawLine(this.StrokePen, new Point(0, this.RenderSize.Height), new Point(this.RenderSize.Width, this.RenderSize.Height));
+                drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new(0, this.RenderSize.Height), new(this.RenderSize.Width, this.RenderSize.Height));
             }
 
             if (this.EdgeMark.Left > 0)
             {
-                drawingContext.DrawLine(this.StrokePen, new Point(0, 0), new Point(0, this.RenderSize.Height));
+                drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new(0, 0), new(0, this.RenderSize.Height));
             }
 
             if (this.EdgeMark.Right > 0)
             {
-                drawingContext.DrawLine(this.StrokePen, new Point(this.RenderSize.Width, 0), new Point(this.RenderSize.Width, this.RenderSize.Height));
+                drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new(this.RenderSize.Width, 0), new(this.RenderSize.Width, this.RenderSize.Height));
             }
         }
     }

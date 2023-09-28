@@ -40,12 +40,21 @@ namespace Dance.Wpf
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
+
             switch (this.Orientation)
             {
-                case Orientation.Horizontal: drawingContext.DrawLine(this.StrokePen, new Point(0, this.RenderSize.Height / 2d), new Point(this.RenderSize.Width, this.RenderSize.Height / 2d)); break;
-                case Orientation.Vertical: drawingContext.DrawLine(this.StrokePen, new Point(this.RenderSize.Width / 2d, 0), new Point(this.RenderSize.Width / 2d, this.RenderSize.Height)); break;
+                case Orientation.Horizontal:
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new(0, this.RenderSize.Height / 2d), new(this.RenderSize.Width, this.RenderSize.Height / 2d));
+
+                    break;
+
+                case Orientation.Vertical:
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new(this.RenderSize.Width / 2d, 0), new(this.RenderSize.Width / 2d, this.RenderSize.Height));
+                    break;
+
                 default: break;
             }
+
         }
     }
 }
