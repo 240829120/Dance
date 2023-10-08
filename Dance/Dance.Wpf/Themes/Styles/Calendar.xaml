@@ -109,70 +109,67 @@
     </ControlTemplate>
 
     <Style x:Key="CalendarItem" TargetType="{x:Type CalendarItem}">
-        <Setter Property="Margin" Value="0,3,0,3"/>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarItem}">
-                    <Grid x:Name="PART_Root">
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="1"
-                                Padding="2">
-                            <Grid>
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Button x:Name="PART_PreviousButton" Grid.Column="0" Focusable="False" HorizontalAlignment="Left" Grid.Row="0" 
+                                        Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}" 
+                                        Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
+                                        Template="{StaticResource PreviousButtonTemplate}" />
+                            <Button x:Name="PART_HeaderButton" Grid.Column="1" Focusable="False" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" 
+                                        Template="{StaticResource HeaderButtonTemplate}" VerticalAlignment="Center"
+                                        FontSize="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}}"/>
+                            <Button x:Name="PART_NextButton" Grid.Column="2" Focusable="False" HorizontalAlignment="Right" Grid.Row="0" 
+                                        Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}" 
+                                        Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
+                                        Template="{StaticResource NextButtonTemplate}"/>
+                            <Grid x:Name="PART_MonthView" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="1" Visibility="Visible">
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                     <ColumnDefinition Width="Auto"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <Button x:Name="PART_PreviousButton" Grid.Column="0" Focusable="False" HorizontalAlignment="Left" Grid.Row="0" 
-                                        Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}" 
-                                        Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
-                                        Template="{StaticResource PreviousButtonTemplate}" />
-                                <Button x:Name="PART_HeaderButton" Grid.Column="1" Focusable="False" FontWeight="Bold" HorizontalAlignment="Center" Grid.Row="0" 
-                                        Template="{StaticResource HeaderButtonTemplate}" VerticalAlignment="Center"
-                                        FontSize="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}}"/>
-                                <Button x:Name="PART_NextButton" Grid.Column="2" Focusable="False" HorizontalAlignment="Right" Grid.Row="0" 
-                                        Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}" 
-                                        Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
-                                        Template="{StaticResource NextButtonTemplate}"/>
-                                <Grid x:Name="PART_MonthView" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="1" Visibility="Visible">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                </Grid>
-                                <Grid x:Name="PART_YearView" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="1" Visibility="Hidden">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                        <ColumnDefinition Width="Auto"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                        <RowDefinition Height="Auto"/>
-                                    </Grid.RowDefinitions>
-                                </Grid>
                             </Grid>
-                        </Border>
-                    </Grid>
+                            <Grid x:Name="PART_YearView" Grid.ColumnSpan="3" HorizontalAlignment="Center" Grid.Row="1" Visibility="Hidden">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </Grid>
+                    </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding DisplayMode, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Calendar}}}" Value="Year">
                             <Setter Property="Visibility" TargetName="PART_MonthView" Value="Hidden"/>
@@ -189,6 +186,8 @@
     </Style>
 
     <Style TargetType="{x:Type Calendar}">
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
@@ -199,10 +198,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Calendar}">
-                    <StackPanel x:Name="PART_Root" HorizontalAlignment="Center">
-                        <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                      Style="{StaticResource CalendarItem}"/>
-                    </StackPanel>
+                    <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                  Style="{StaticResource CalendarItem}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -214,6 +211,9 @@
     </Style>
 
     <Style x:Key="Calendar" TargetType="{x:Type Calendar}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Margin" Value="0"></Setter>
+        <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
@@ -225,10 +225,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Calendar}">
-                    <StackPanel x:Name="PART_Root" HorizontalAlignment="Center">
-                        <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
-                                      Style="{StaticResource CalendarItem}"/>
-                    </StackPanel>
+                    <CalendarItem x:Name="PART_CalendarItem" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"
+                                  Style="{StaticResource CalendarItem}"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
