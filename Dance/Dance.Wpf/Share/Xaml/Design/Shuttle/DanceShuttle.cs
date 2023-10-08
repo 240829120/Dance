@@ -116,9 +116,11 @@ namespace Dance.Wpf
                 if (s is not DanceShuttle shuttle)
                     return;
 
+                double to = shuttle.Index < 0 ? (-2 * shuttle.UnitLength) : shuttle.UnitLength * shuttle.Index;
+
                 shuttle.CancelKeyFrameAnimation("MOVE");
                 shuttle.CreateKeyFrameAnimation().Double(ValueProperty, shuttle.SwitchEasing, new DanceAnimationKeyFrame<double>(shuttle.Value, 0),
-                                                                                              new DanceAnimationKeyFrame<double>(shuttle.UnitLength * shuttle.Index, shuttle.Duration))
+                                                                                              new DanceAnimationKeyFrame<double>(to, shuttle.Duration))
                        .Commit("MOVE");
             })));
 
@@ -144,9 +146,11 @@ namespace Dance.Wpf
                 if (s is not DanceShuttle shuttle)
                     return;
 
+                double to = shuttle.Index < 0 ? (-2 * shuttle.UnitLength) : shuttle.UnitLength * shuttle.Index;
+
                 shuttle.CancelKeyFrameAnimation("MOVE");
                 shuttle.CreateKeyFrameAnimation().Double(ValueProperty, shuttle.SwitchEasing, new DanceAnimationKeyFrame<double>(shuttle.Value, 0),
-                                                                                              new DanceAnimationKeyFrame<double>(shuttle.UnitLength * shuttle.Index, shuttle.Duration))
+                                                                                              new DanceAnimationKeyFrame<double>(to, shuttle.Duration))
                        .Commit("MOVE");
             })));
 
