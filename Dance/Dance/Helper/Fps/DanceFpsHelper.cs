@@ -16,12 +16,9 @@ namespace Dance
         /// <summary>
         /// FPS辅助类
         /// </summary>
-        /// <param name="restrictFps">约束FPS</param>
         /// <param name="length">统计长度</param>
-        public DanceFpsHelper(int restrictFps, int length)
+        public DanceFpsHelper(int length)
         {
-            this.RestrictFps = restrictFps;
-            this.OneFrameTicks = TimeSpan.FromSeconds(1d / restrictFps).Ticks;
             this.Length = length;
             this.Datas = new long[length];
             this.Stopwatch.Start();
@@ -38,14 +35,9 @@ namespace Dance
         public int FPS { get; private set; }
 
         /// <summary>
-        /// 约束FPS
+        /// 时间间隔
         /// </summary>
-        public int RestrictFps { get; private set; }
-
-        /// <summary>
-        /// 一帧对应Ticks
-        /// </summary>
-        public long OneFrameTicks { get; private set; }
+        public TimeSpan Interval { get; private set; }
 
         // -----------------------------------------------------------------
 
@@ -65,11 +57,6 @@ namespace Dance
         private long Sum;
 
         /// <summary>
-        /// 渲染目标时间
-        /// </summary>
-        private long RenderTargetTime;
-
-        /// <summary>
         /// 最后一次更新时间
         /// </summary>
         private long LastUpdateTime;
@@ -82,16 +69,10 @@ namespace Dance
         /// <summary>
         /// 计算
         /// </summary>
-        /// <returns>是否可以渲染</returns>
-        public bool Calculate()
+        /// <returns>时间差</returns>
+        public void Calculate()
         {
             long time = this.Stopwatch.ElapsedTicks;
-
-            if (time < this.RenderTargetTime)
-                return false;
-
-            if (time > this.RenderTargetTime + 2 * this.OneFrameTicks)
-                this.RenderTargetTime = time;
 
             long dt = time - this.LastUpdateTime;
 
@@ -103,10 +84,9 @@ namespace Dance
 
             this.FPS = (int)Math.Round(10000000d / (this.Sum / this.Length));
 
-            this.RenderTargetTime += this.OneFrameTicks;
             this.LastUpdateTime = time;
 
-            return true;
+            this.Interval = TimeSpan.FromTicks(dt);
         }
 
         /// <summary>

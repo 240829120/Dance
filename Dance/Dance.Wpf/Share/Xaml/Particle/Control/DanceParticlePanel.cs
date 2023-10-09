@@ -31,7 +31,7 @@ namespace Dance.Wpf
         /// <summary>
         /// FPS辅助类
         /// </summary>
-        private readonly DanceFpsHelper FpsHelper = new(60, 60);
+        private readonly DanceFpsHelper FpsHelper = new(60);
 
         /// <summary>
         /// 调试画刷
@@ -98,15 +98,16 @@ namespace Dance.Wpf
         /// </summary>
         private void CompositionTarget_Rendering(object? sender, EventArgs e)
         {
-            if (!this.IsVisible || !this.FpsHelper.Calculate())
+            this.FpsHelper.Calculate();
+
+            if (!this.IsVisible)
                 return;
 
-            TimeSpan dt = TimeSpan.FromTicks(this.FpsHelper.OneFrameTicks);
             foreach (IDanceParticleController controller in this.Controllers)
             {
-                controller.Destory(dt);
-                controller.Step(dt);
-                controller.Generate(dt);
+                controller.Destory(this.FpsHelper.Interval);
+                controller.Step(this.FpsHelper.Interval);
+                controller.Generate(this.FpsHelper.Interval);
             }
 
             this.InvalidateVisual();

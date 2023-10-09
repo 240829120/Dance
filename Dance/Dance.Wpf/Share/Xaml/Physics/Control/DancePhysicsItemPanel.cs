@@ -29,7 +29,7 @@ namespace Dance.Wpf
         /// <summary>
         /// FPS辅助类
         /// </summary>
-        private readonly DanceFpsHelper FpsHelper = new(60, 60);
+        private readonly DanceFpsHelper FpsHelper = new(60);
 
         /// <summary>
         /// 子项元素改变
@@ -66,10 +66,10 @@ namespace Dance.Wpf
             if (this.Owner == null || !this.Owner.IsRunning)
                 return finalSize;
 
-            if (!this.IsVisible || !this.FpsHelper.Calculate())
+            if (!this.IsVisible)
                 return finalSize;
 
-            this.Owner.World.Step(TimeSpan.FromTicks(this.FpsHelper.OneFrameTicks) * this.Owner.StepSpeed);
+            this.Owner.World.Step(this.FpsHelper.Interval * this.Owner.StepSpeed);
 
             foreach (var item in this.Children)
             {
@@ -154,6 +154,8 @@ namespace Dance.Wpf
         /// </summary>
         private void CompositionTarget_Rendering(object? sender, EventArgs e)
         {
+            this.FpsHelper.Calculate();
+
             if (!this.IsVisible)
                 return;
 
