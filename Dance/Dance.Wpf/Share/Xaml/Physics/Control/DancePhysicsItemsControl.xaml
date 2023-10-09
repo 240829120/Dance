@@ -19,7 +19,7 @@
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
-                    <local:DancePhysicsItemPanel></local:DancePhysicsItemPanel>
+                    <local:DancePhysicsItemPanel SnapsToDevicePixels="True"></local:DancePhysicsItemPanel>
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
