@@ -227,10 +227,8 @@ namespace Dance.Wpf
                     AngularDamping = this.AngularDamping,
                     Position = new Vector2(this.Position.X, this.Position.Y),
                     Rotation = this.Rotation,
-                    IgnoreGravity = this.IgnoreGravity
+                    IgnoreGravity = this.IgnoreGravity,
                 };
-
-                this.Body.ResetMassData();
 
                 foreach (DanceFixture fixtureElement in this.Fixtures)
                 {

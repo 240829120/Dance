@@ -27,14 +27,9 @@ namespace Dance.Wpf
         private DancePhysicsItemsControl? Owner;
 
         /// <summary>
-        /// 更新时间
+        /// FPS辅助类
         /// </summary>
-        private TimeSpan UpdatingTime;
-
-        /// <summary>
-        /// 渲染时间
-        /// </summary>
-        private TimeSpan RenderingTime;
+        private readonly DanceFpsHelper FpsHelper = new(60, 60);
 
         /// <summary>
         /// 子项元素改变
@@ -71,8 +66,10 @@ namespace Dance.Wpf
             if (this.Owner == null || !this.Owner.IsRunning)
                 return finalSize;
 
-            this.Owner.World.Step((this.UpdatingTime - this.RenderingTime) * this.Owner.StepSpeed);
-            this.RenderingTime = this.UpdatingTime;
+            if (!this.IsVisible || !this.FpsHelper.Calculate())
+                return finalSize;
+
+            this.Owner.World.Step(TimeSpan.FromTicks(this.FpsHelper.OneFrameTicks) * this.Owner.StepSpeed);
 
             foreach (var item in this.Children)
             {
@@ -160,10 +157,6 @@ namespace Dance.Wpf
             if (!this.IsVisible)
                 return;
 
-            if (e is not RenderingEventArgs args)
-                return;
-
-            this.UpdatingTime = args.RenderingTime;
             this.InvalidateArrange();
         }
     }

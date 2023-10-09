@@ -1,4 +1,5 @@
-﻿using SkiaSharp;
+﻿using SharpVectors.Scripting;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,14 +29,9 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 上次渲染时间
+        /// FPS辅助类
         /// </summary>
-        private TimeSpan? LastRenderingTime;
-
-        /// <summary>
-        /// 瞬时FPS
-        /// </summary>
-        private int FPS;
+        private readonly DanceFpsHelper FpsHelper = new(60, 60);
 
         /// <summary>
         /// 调试画刷
@@ -102,25 +98,10 @@ namespace Dance.Wpf
         /// </summary>
         private void CompositionTarget_Rendering(object? sender, EventArgs e)
         {
-            if (!this.IsVisible || e is not RenderingEventArgs args)
-            {
-                this.LastRenderingTime = null;
-                return;
-            }
-
-            if (this.LastRenderingTime == null)
-            {
-                this.LastRenderingTime = args.RenderingTime;
-                return;
-            }
-
-            TimeSpan dt = args.RenderingTime - this.LastRenderingTime.Value;
-            if (dt <= TimeSpan.Zero)
+            if (!this.IsVisible || !this.FpsHelper.Calculate())
                 return;
 
-            this.LastRenderingTime = args.RenderingTime;
-            this.FPS = (int)Math.Round(1f / dt.TotalSeconds);
-
+            TimeSpan dt = TimeSpan.FromTicks(this.FpsHelper.OneFrameTicks);
             foreach (IDanceParticleController controller in this.Controllers)
             {
                 controller.Destory(dt);
@@ -166,7 +147,7 @@ namespace Dance.Wpf
             }
 
             canvas.DrawText($"Particle Count: {count}", 10, 20, DEBUG_PAINT);
-            canvas.DrawText($"FPS : {this.FPS}", 10, 40, DEBUG_PAINT);
+            canvas.DrawText($"FPS : {this.FpsHelper.FPS}", 10, 40, DEBUG_PAINT);
         }
     }
 }

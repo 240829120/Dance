@@ -109,8 +109,6 @@
     </ControlTemplate>
 
     <Style x:Key="CalendarItem" TargetType="{x:Type CalendarItem}">
-        <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type CalendarItem}">
@@ -119,6 +117,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
                                 <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"/>
@@ -186,8 +185,6 @@
     </Style>
 
     <Style TargetType="{x:Type Calendar}">
-        <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
@@ -212,8 +209,6 @@
 
     <Style x:Key="Calendar" TargetType="{x:Type Calendar}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Margin" Value="0"></Setter>
-        <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
