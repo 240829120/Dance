@@ -11,6 +11,6 @@
     <Grid Background="Transparent">
         <DatePicker VerticalAlignment="Center" Width="240"></DatePicker>
 
-        <Calendar VerticalAlignment="Top" Margin="50"></Calendar>
+        <Calendar VerticalAlignment="Top" HorizontalAlignment="Center"></Calendar>
     </Grid>
 </Window>

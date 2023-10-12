@@ -1,5 +1,7 @@
 ﻿using Dance.Common;
 using Dance.Wpf;
+using Microsoft.ClearScript.V8;
+using Microsoft.ClearScript;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -82,7 +84,6 @@ namespace Dance.WpfTest
             //DanceMessageExpansion.ShowMessageBox("header", "Content");
 
             //DanceMessageExpansion.ShowNotify(TimeSpan.FromSeconds(5), ToolTipIcon.Info, "header", "content");
-
         }
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
