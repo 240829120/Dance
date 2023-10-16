@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.ClearScript.JavaScript;
 
 namespace Dance.UnitTest
 {
@@ -18,25 +19,24 @@ namespace Dance.UnitTest
         [TestMethod]
         public void RunTest()
         {
-            using (var engine = new V8ScriptEngine("test1", V8ScriptEngineFlags.EnableDebugging))
+            using (var engine = new V8ScriptEngine("test1", V8ScriptEngineFlags.EnableDynamicModuleImports | V8ScriptEngineFlags.EnableDebugging))
             {
-                engine.AddRestrictedHostObject("host", new ExtendedHostFunctions());
-                engine.AddHostType("Student", typeof(Student));
-                engine.AddHostType("Random", typeof(Random));
+                engine.DocumentSettings.SearchPath = string.Join(";",
+                    Path.Combine(@"E:\Projects\Test\Dance\Dance\Dance.UnitTest\V8")
+                );
+                engine.DocumentSettings.AccessFlags = DocumentAccessFlags.EnableFileLoading;
+                //engine.AddRestrictedHostObject("host", new ExtendedHostFunctions());
+                //engine.AddHostType("Student", typeof(Student));
+                //engine.AddHostType("Random", typeof(Random));
                 engine.SuppressExtensionMethodEnumeration = true;
                 engine.AllowReflection = true;
-
                 string command = @"
-function f1(a,b) {
-    return a + b;
-}
+import { student } from 'v8.js'
 
-var student = host.newObj(Student);
-student.Name = '张三';
+student.Name;
 ";
-                var obj = engine.Evaluate(command);
-                string result = engine.ExecuteCommand("f1(5,6);");
-
+                var obj = engine.Evaluate(new DocumentInfo { Category = ModuleCategory.Standard }, command);
+                var a = engine.Script;
             }
         }
     }
