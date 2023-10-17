@@ -16,8 +16,14 @@ namespace Dance.Wpf
     /// </summary>
     public static class DanceMessageExpansion
     {
-        static DanceMessageExpansion()
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        public static void Initialize()
         {
+            if (System.Windows.Application.Current == null)
+                return;
+
             string? path = System.Diagnostics.Process.GetCurrentProcess().MainModule?.FileName;
             if (string.IsNullOrWhiteSpace(path))
                 return;
@@ -34,7 +40,7 @@ namespace Dance.Wpf
         // MessageBox -- 消息框
 
         /// <summary>
-        /// 显示提示框
+        /// 显示提示框，需要切换至UI线程
         /// </summary>
         /// <param name="header">头部</param>
         /// <param name="icon">图标</param>
@@ -44,40 +50,50 @@ namespace Dance.Wpf
         /// <returns>行为</returns>
         public static DanceMessageBoxAction ShowMessageBox(object? header, ImageSource? icon, object? content, DanceMessageBoxAction action, Window? owner)
         {
-            DanceMessageBoxAction result = DanceMessageBoxAction.YES;
+            DanceMessageBoxWindow window = new();
+            window.MessageBox.Header = header;
+            window.MessageBox.Icon = icon;
+            window.MessageBox.HasIcon = icon != null;
+            window.MessageBox.HasNoButton = action.HasFlag(DanceMessageBoxAction.NO);
+            window.MessageBox.HasCancelButton = action.HasFlag(DanceMessageBoxAction.CANCEL);
+            window.MessageBox.Content = content;
+            window.MessageBox.Action = action;
 
-            System.Windows.Application.Current?.Dispatcher.Invoke(() =>
-            {
-                DanceMessageBoxWindow window = new();
-                window.MessageBox.Header = header;
-                window.MessageBox.Icon = icon;
-                window.MessageBox.HasIcon = icon != null;
-                window.MessageBox.HasNoButton = action.HasFlag(DanceMessageBoxAction.NO);
-                window.MessageBox.HasCancelButton = action.HasFlag(DanceMessageBoxAction.CANCEL);
-                window.MessageBox.Content = content;
-                window.MessageBox.Action = action;
+            window.Owner = owner ?? System.Windows.Application.Current?.MainWindow;
+            window.ShowDialog();
 
-                window.Owner = owner ?? System.Windows.Application.Current?.MainWindow;
-                window.ShowDialog();
-
-                result = window.box.ResultAction;
-
-            });
-
-            return result;
+            return window.box.ResultAction;
         }
 
         /// <summary>
-        /// 显示
+        /// 显示提示框
         /// </summary>
         /// <param name="header">头部</param>
         /// <param name="icon">图标</param>
         /// <param name="content">内容</param>
         /// <param name="action">行为</param>
+        /// <param name="owner">所属窗口</param>
         /// <returns>行为</returns>
-        public static DanceMessageBoxAction ShowMessageBox(object? header, ImageSource? icon, object? content, DanceMessageBoxAction action)
+        public static DanceMessageBoxAction ShowMessageBox(object? header, DanceMessageBoxIcon icon, object? content, DanceMessageBoxAction action)
         {
-            return ShowMessageBox(header, icon, content, action, null);
+            DanceMessageBoxAction result = DanceMessageBoxAction.YES;
+
+            System.Windows.Application.Current?.Dispatcher.Invoke(() =>
+            {
+                ImageSource? source = null;
+                switch (icon)
+                {
+                    case DanceMessageBoxIcon.None: break;
+                    case DanceMessageBoxIcon.Failure: source = DanceResourceIcons.Failure; break;
+                    case DanceMessageBoxIcon.Success: source = DanceResourceIcons.Success; break;
+                    case DanceMessageBoxIcon.Warning: source = DanceResourceIcons.Warning; break;
+                    case DanceMessageBoxIcon.Info: source = DanceResourceIcons.Info; break;
+                }
+
+                result = ShowMessageBox(header, source, content, action, null);
+            });
+
+            return result;
         }
 
         /// <summary>
@@ -89,7 +105,7 @@ namespace Dance.Wpf
         /// <returns>行为</returns>
         public static DanceMessageBoxAction ShowMessageBox(object? header, object? content, DanceMessageBoxAction action)
         {
-            return ShowMessageBox(header, null, content, action, null);
+            return ShowMessageBox(header, DanceMessageBoxIcon.None, content, action);
         }
 
         /// <summary>
@@ -97,11 +113,10 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="header">头部</param>
         /// <param name="content">内容</param>
-        /// <param name="action">行为</param>
         /// <returns>行为</returns>
         public static DanceMessageBoxAction ShowMessageBox(object? header, object? content)
         {
-            return ShowMessageBox(header, null, content, DanceMessageBoxAction.YES, null);
+            return ShowMessageBox(header, DanceMessageBoxIcon.None, content, DanceMessageBoxAction.YES);
         }
 
         // ================================================================================================================================

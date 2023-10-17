@@ -34,6 +34,8 @@ namespace Dance.Wpf
             this.Builders.Add(new DanceDomainBuilder_Blocking());
             // 监视
             this.Builders.Add(new DanceDomainBuilder_Monitor());
+            // UI
+            this.Builders.Add(new DanceDomainBuilder_UI());
         }
 
         /// <summary>

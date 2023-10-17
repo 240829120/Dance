@@ -50,7 +50,7 @@ namespace Dance.Wpf
             if (value == null || this.Items.Count == 0)
                 return this.DefaultValue;
 
-            return this.Items.FirstOrDefault(p => object.Equals(value, p));
+            return this.Items.FirstOrDefault(p => object.Equals(value, p.From))?.To ?? this.DefaultValue;
         }
     }
 }
