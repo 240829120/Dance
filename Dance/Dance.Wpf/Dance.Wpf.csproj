@@ -45,6 +45,7 @@
 
 	<ItemGroup>
 	  <Folder Include="Share\Xaml\Core\Expansion\Enum\" />
+	  <Folder Include="Share\Xaml\Widgets\OverlapPopup\" />
 	</ItemGroup>
 
 	<ItemGroup>
