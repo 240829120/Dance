@@ -33,7 +33,7 @@ namespace Dance.Wpf
         public static ImageSource? Warning { get; } = DanceXamlExpansion.GetSvgImageSource(new Uri("pack://application:,,,/Dance.Wpf;component/Themes/Resources/Icon/warning.svg", UriKind.RelativeOrAbsolute));
 
         /// <summary>
-        /// 失败
+        /// 信息
         /// </summary>
         [NotNull]
         public static ImageSource? Info { get; } = DanceXamlExpansion.GetSvgImageSource(new Uri("pack://application:,,,/Dance.Wpf;component/Themes/Resources/Icon/info.svg", UriKind.RelativeOrAbsolute));
