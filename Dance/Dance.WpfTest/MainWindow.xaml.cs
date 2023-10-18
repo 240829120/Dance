@@ -22,16 +22,38 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using CommunityToolkit.Mvvm.Input;
 
 namespace Dance.WpfTest
 {
-    public class Student
+    public class MainWindowModel : DanceViewModel
     {
-        public int Index { get; set; }
+        public MainWindowModel()
+        {
+            this.DragBeginCommand = new RelayCommand<DanceDragBeginEventArgs>(this.DragBegin);
+            this.DropCommand = new RelayCommand<DanceDragEventArgs>(this.Drop);
+        }
 
-        public string? Name { get; set; }
+        public RelayCommand<DanceDragBeginEventArgs> DragBeginCommand { get; set; }
 
-        public int Age { get; set; }
+        private void DragBegin(DanceDragBeginEventArgs? e)
+        {
+            if (e == null)
+                return;
+
+            e.Data = "this is a try.";
+        }
+
+        public RelayCommand<DanceDragEventArgs> DropCommand { get; set; }
+
+        private void Drop(DanceDragEventArgs? e)
+        {
+            if (e == null)
+                return;
+
+            string? data = e.Data.GetData(typeof(string))?.ToString();
+            DanceMessageExpansion.ShowNotify(ToolTipIcon.Info, "测试", data ?? string.Empty);
+        }
     }
 
     /// <summary>
@@ -43,62 +65,15 @@ namespace Dance.WpfTest
         {
             InitializeComponent();
 
+            this.DataContext = new MainWindowModel();
+
             this.Closed += MainWindow_Closed;
-            this.Loaded += MainWindow_Loaded;
         }
 
-        private readonly ObservableCollection<Student> List = new()
-        {
-            new Student { Index =0, Name="zhangsan", Age =16 },
-            new Student { Index =1, Name="lisi", Age =17 },
-        };
-
-
-        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            //this.border.CreateKeyFrameAnimation()
-            //           .Thickness(Border.MarginProperty, null, new DanceAnimationKeyFrame<Thickness>(new Thickness(0, 0, 0, 0), 0),
-            //                                              new DanceAnimationKeyFrame<Thickness>(new Thickness(100, 0, 0, 0), 2))
-            //           .Double(Border.OpacityProperty, null, new DanceAnimationKeyFrame<double>(1, 0),
-            //                                            new DanceAnimationKeyFrame<double>(0, 4))
-            //           .Color("(Border.Background).(SolidColorBrush.Color)", null, new DanceAnimationKeyFrame<Color>(Colors.Red, 0),
-            //                                                                      new DanceAnimationKeyFrame<Color>(Colors.Yellow, 2))
-            //           .Commit("TEST");
-
-            //List<string> list = new()
-            //{
-            //    "https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/d3f5d1ca626d44dbba2527c04a97708e.jpg",
-            //    "https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/a9560038774d4b8aa82ddef95cfdfd94.jpg",
-            //    "https://soreal-erp.oss-cn-beijing.aliyuncs.com/soreal-cms/1c31356f394e4fe998f5fbf248bea7bd.jpeg"
-            //};
-
-            //this.lv.SetValue(BindableLayout.ItemsSourceProperty, this.list);
-            //this.lv.ItemsSource = list;
-            //this.lv.SelectedItem = list.FirstOrDefault();
-
-            //DanceWebApiServer server = new();
-            //server.Urls.Add("http://localhost:5001/");
-            //server.Assemblies.Add(this.GetType().Assembly);
-
-            //server.Start();
-            //DanceMessageExpansion.ShowMessageBox("header", "Content");
-
-            //DanceMessageExpansion.ShowNotify(TimeSpan.FromSeconds(5), ToolTipIcon.Info, "header", "content");
-        }
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
-            DanceDomain.Current.Dispose();
+            DanceDomain.Current?.Dispose();
             System.Windows.Application.Current.Shutdown();
-        }
-
-        private void DanceSwipeGestureRecognizer_Swiped(object sender, DanceSwipeGestureRecognizerEventArgs e)
-        {
-            Debug.WriteLine(e.Direction);
-        }
-
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

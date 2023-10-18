@@ -125,7 +125,7 @@ namespace Dance.Wpf
             this.OverlapWindow.SetBinding(DanceOverlapWindow.ContentProperty, new Binding()
             {
                 Source = this,
-                Path = new PropertyPath("Content"),
+                Path = new PropertyPath(DanceOverlap.ContentProperty),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });
@@ -134,7 +134,7 @@ namespace Dance.Wpf
             this.OverlapWindow.SetBinding(DanceOverlapWindow.DataContextProperty, new Binding()
             {
                 Source = this,
-                Path = new PropertyPath(DanceOverlap.ContentProperty),
+                Path = new PropertyPath(DanceOverlap.DataContextProperty),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });

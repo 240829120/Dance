@@ -9,9 +9,11 @@
         mc:Ignorable="d" Background="White"
         Title="MainWindow" Height="800" Width="1400">
     <Grid Background="Transparent">
-        <Border Background="Yellow"></Border>
-        <dance:DanceOverlap Opacity="0.2">
-            <Border Width="200" Height="200" Background="Red"></Border>
-        </dance:DanceOverlap>
+        <Border Background="Yellow" Width="100" Height="100" Margin="0,0,200,0"
+                dance:DanceDragTrigger.DragBeginCommand="{Binding DragBeginCommand}"></Border>
+        <Border Background="Blue" Width="100" Height="100" Margin="200,0,0,0"
+                AllowDrop="True"
+                dance:DanceDragTrigger.DropCommand="{Binding DropCommand}"></Border>
+
     </Grid>
 </Window>
