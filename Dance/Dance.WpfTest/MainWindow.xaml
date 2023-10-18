@@ -9,8 +9,9 @@
         mc:Ignorable="d" Background="White"
         Title="MainWindow" Height="800" Width="1400">
     <Grid Background="Transparent">
-        <DatePicker VerticalAlignment="Center" Width="240"></DatePicker>
-
-        <Calendar VerticalAlignment="Top" HorizontalAlignment="Center"></Calendar>
+        <Border Background="Yellow"></Border>
+        <dance:DanceOverlap Opacity="0.2">
+            <Border Width="200" Height="200" Background="Red"></Border>
+        </dance:DanceOverlap>
     </Grid>
 </Window>

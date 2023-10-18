@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,6 +19,9 @@ namespace Dance.Wpf
     {
         public DanceOverlap()
         {
+            if (DesignerProperties.GetIsInDesignMode(this))
+                return;
+
             this.Loaded += DanceOverlap_Loaded;
             this.Unloaded += DanceOverlap_Unloaded;
             this.LayoutUpdated += DanceOverlap_LayoutUpdated;
@@ -130,25 +134,7 @@ namespace Dance.Wpf
             this.OverlapWindow.SetBinding(DanceOverlapWindow.DataContextProperty, new Binding()
             {
                 Source = this,
-                Path = new PropertyPath("DataContext"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            });
-
-            // 宽度
-            this.OverlapWindow.SetBinding(DanceOverlapWindow.WidthProperty, new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("ActualWidth"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            });
-
-            // 高度
-            this.OverlapWindow.SetBinding(DanceOverlapWindow.HeightProperty, new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("ActualHeight"),
+                Path = new PropertyPath(DanceOverlap.ContentProperty),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });
@@ -157,19 +143,23 @@ namespace Dance.Wpf
             this.OverlapWindow.SetBinding(DanceOverlapWindow.OpacityProperty, new Binding()
             {
                 Source = this,
-                Path = new PropertyPath("Opacity"),
+                Path = new PropertyPath(DanceOverlap.OpacityProperty),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             });
 
             // 可见性
+            DanceMappingConverter converter = new();
+            converter.Items.Add(new() { From = true, To = Visibility.Visible });
+            converter.Items.Add(new() { From = false, To = Visibility.Collapsed });
+            converter.Items.Add(new() { From = null, To = Visibility.Collapsed });
             this.OverlapWindow.SetBinding(DanceOverlapWindow.VisibilityProperty, new Binding()
             {
                 Source = this,
                 Path = new PropertyPath("IsVisible"),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                Converter = new BooleanToVisibilityConverter()
+                Converter = converter
             });
 
             this.OverlapWindow.Show();
@@ -202,6 +192,8 @@ namespace Dance.Wpf
             Point point = this.PointToScreen(new());
             this.OverlapWindow.Left = point.X;
             this.OverlapWindow.Top = point.Y;
+            this.OverlapWindow.Width = this.ActualWidth;
+            this.OverlapWindow.Height = this.ActualHeight;
         }
     }
 }

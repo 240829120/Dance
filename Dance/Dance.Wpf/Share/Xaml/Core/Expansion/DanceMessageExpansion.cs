@@ -60,6 +60,8 @@ namespace Dance.Wpf
             window.MessageBox.Action = action;
 
             window.Owner = owner ?? System.Windows.Application.Current?.MainWindow;
+            window.Topmost = true;
+            window.Loaded += (s, e) => { window.Topmost = false; };
             window.ShowDialog();
 
             return window.box.ResultAction;

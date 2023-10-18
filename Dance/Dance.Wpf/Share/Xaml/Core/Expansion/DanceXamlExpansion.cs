@@ -9,6 +9,7 @@ using System.IO;
 using System.Windows.Media.Imaging;
 using System.Windows.Controls;
 using SharpVectors.Converters;
+using System.ComponentModel;
 
 namespace Dance.Wpf
 {
@@ -126,5 +127,6 @@ namespace Dance.Wpf
 
             return null;
         }
+
     }
 }
