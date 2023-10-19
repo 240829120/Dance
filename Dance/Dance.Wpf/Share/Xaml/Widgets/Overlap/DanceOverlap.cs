@@ -19,7 +19,7 @@ namespace Dance.Wpf
     {
         public DanceOverlap()
         {
-            if (DesignerProperties.GetIsInDesignMode(this))
+            if (DanceXamlExpansion.IsInDesignMode)
                 return;
 
             this.Loaded += DanceOverlap_Loaded;
@@ -190,8 +190,8 @@ namespace Dance.Wpf
                 return;
 
             Point point = this.PointToScreen(new());
-            this.OverlapWindow.Left = point.X;
-            this.OverlapWindow.Top = point.Y;
+            this.OverlapWindow.Left = point.X / DanceXamlExpansion.DpiScale.DpiScaleX;
+            this.OverlapWindow.Top = point.Y / DanceXamlExpansion.DpiScale.DpiScaleY;
             this.OverlapWindow.Width = this.ActualWidth;
             this.OverlapWindow.Height = this.ActualHeight;
         }

@@ -44,7 +44,7 @@ namespace Dance.Wpf
                 return;
 
             Point pos = PointFromScreen(new Point(screenPos.X, screenPos.Y));
-            Rect rect = new(pos.X, pos.Y, element.ActualWidth, element.ActualHeight);
+            Rect rect = new(pos.X / DanceXamlExpansion.DpiScale.DpiScaleX, pos.Y / DanceXamlExpansion.DpiScale.DpiScaleY, element.ActualWidth, element.ActualHeight);
             drawingContext.PushOpacity(1);
             drawingContext.DrawRectangle(this.VisualBrush, this.VisualPen, rect);
             drawingContext.Pop();

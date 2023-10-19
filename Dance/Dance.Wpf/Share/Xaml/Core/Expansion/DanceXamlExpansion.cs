@@ -19,6 +19,57 @@ namespace Dance.Wpf
     public static class DanceXamlExpansion
     {
         /// <summary>
+        /// 虚对象
+        /// </summary>
+        class VISUAL : FrameworkElement
+        {
+            public VISUAL()
+            {
+                this.DpiScale = VisualTreeHelper.GetDpi(this);
+            }
+
+            /// <summary>
+            /// Dpi信息
+            /// </summary>
+            public DpiScale DpiScale { get; private set; }
+
+            protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
+            {
+                base.OnDpiChanged(oldDpi, newDpi);
+
+                this.DpiScale = newDpi;
+            }
+        }
+
+        /// <summary>
+        /// 虚拟对象
+        /// </summary>
+        private static readonly VISUAL Visual = new();
+
+        /// <summary>
+        /// 是否处于设计模式中
+        /// </summary>
+        /// <returns>是否处于设计模式中</returns>
+        public static bool IsInDesignMode
+        {
+            get
+            {
+                return DesignerProperties.GetIsInDesignMode(Visual);
+            }
+        }
+
+        /// <summary>
+        /// DPI
+        /// </summary>
+        public static DpiScale DpiScale
+        {
+            get
+            {
+                return Visual.DpiScale;
+            }
+        }
+
+        /// <summary>
         /// 使用可视化树查找父级控件
         /// </summary>
         /// <typeparam name="T">要查找的控件类型</typeparam>
@@ -106,15 +157,6 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 获取DPI
-        /// </summary>
-        /// <returns>DPI</returns>
-        public static double GetPixelsPerDip()
-        {
-            return VisualTreeHelper.GetDpi(new Border()).PixelsPerDip;
-        }
-
-        /// <summary>
         /// 获取SVG图片源
         /// </summary>
         /// <param name="uri">图片地址</param>
@@ -127,6 +169,5 @@ namespace Dance.Wpf
 
             return null;
         }
-
     }
 }
