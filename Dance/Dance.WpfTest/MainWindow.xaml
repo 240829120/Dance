@@ -5,15 +5,56 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dance="http://schemas.dance.com/wpf"
         xmlns:local="clr-namespace:Dance.WpfTest" 
+        xmlns:dock="https://github.com/Dirkster99/AvalonDock"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Background="White"
         Title="MainWindow" Height="800" Width="1400">
     <Grid Background="Transparent">
-        <Border Background="Yellow" Width="100" Height="100" Margin="0,0,200,0"
-                dance:DanceDragTrigger.DragBeginCommand="{Binding DragBeginCommand}"></Border>
-        <Border Background="Blue" Width="100" Height="100" Margin="200,0,0,0"
-                AllowDrop="True"
-                dance:DanceDragTrigger.DropCommand="{Binding DropCommand}"></Border>
-
+        <dock:DockingManager Margin="5">
+            <LayoutRoot>
+                <LayoutPanel Orientation="Horizontal">
+                    <LayoutPanel Orientation="Vertical">
+                        <LayoutDocumentPane>
+                            <LayoutDocument Title="doc1111111111111111">
+                                <TextBlock Text="doc1"></TextBlock>
+                            </LayoutDocument>
+                            <LayoutDocument Title="doc22222222">
+                                <TextBlock Text="doc2"></TextBlock>
+                            </LayoutDocument>
+                            <LayoutDocument Title="doc3">
+                                <TextBlock Text="doc3"></TextBlock>
+                            </LayoutDocument>
+                            <LayoutDocument Title="doc4444444">
+                                <TextBlock Text="doc4"></TextBlock>
+                            </LayoutDocument>
+                        </LayoutDocumentPane>
+                        <LayoutAnchorablePaneGroup DockHeight="128" Orientation="Horizontal">
+                            <LayoutAnchorablePane Name="ErrorsPane">
+                                <LayoutAnchorable Title="ErrorsPane">
+                                    <TextBlock Text="ErrorsPane"></TextBlock>
+                                </LayoutAnchorable>
+                            </LayoutAnchorablePane>
+                            <LayoutAnchorablePane Name="OutputPane">
+                                <LayoutAnchorable Title="OutputPane">
+                                    <TextBlock Text="OutputPane"></TextBlock>
+                                </LayoutAnchorable>
+                            </LayoutAnchorablePane>
+                        </LayoutAnchorablePaneGroup>
+                    </LayoutPanel>
+                    <LayoutAnchorablePaneGroup DockWidth="256" Orientation="Vertical">
+                        <LayoutAnchorablePane Name="ExplorerPane" DockHeight="2*">
+                            <LayoutAnchorable Title="ExplorerPane">
+                                <TextBlock Text="ExplorerPane"></TextBlock>
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+                        <LayoutAnchorablePane Name="PropertiesPane">
+                            <LayoutAnchorable Title="PropertiesPane">
+                                <TextBlock Text="PropertiesPane"></TextBlock>
+                            </LayoutAnchorable>
+                        </LayoutAnchorablePane>
+                    </LayoutAnchorablePaneGroup>
+                </LayoutPanel>
+            </LayoutRoot>
+        </dock:DockingManager>
     </Grid>
 </Window>

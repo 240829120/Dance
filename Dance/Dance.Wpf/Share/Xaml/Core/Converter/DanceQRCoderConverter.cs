@@ -18,7 +18,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 二维码转化器
     /// </summary>
-    public class DanceQRCoderConverter : DanceConverterBase
+    public partial class DanceQRCoderConverter : DanceConverterBase
     {
         /// <summary>
         /// 转化
@@ -46,8 +46,9 @@ namespace Dance.Wpf
         /// </summary>
         /// <param name="hObject"></param>
         /// <returns>是否删除成功</returns>
-        [DllImport("gdi32.dll")]
-        private static extern bool DeleteObject(IntPtr hObject);
+        [LibraryImport("gdi32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static partial bool DeleteObject(IntPtr hObject);
     }
 }
 

@@ -8,6 +8,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Design/Generic.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/Generic.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Physics/Control/DancePhysicsItemsControl.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/AvalonDock.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
     <Style TargetType="TextBlock">
