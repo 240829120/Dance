@@ -9,7 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Dance.Wpf;component/Themes/Generic.xaml"></ResourceDictionary>
-                <ResourceDictionary Source="pack://application:,,,/Dance.Wpf;component/Themes/AvalonDock/AvalonDock.xaml"></ResourceDictionary>
+                <ResourceDictionary Source="pack://application:,,,/Dance.Wpf;component/Themes/AvalonDock.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
 
             <!--<SolidColorBrush x:Key="{x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}">red</SolidColorBrush>-->
