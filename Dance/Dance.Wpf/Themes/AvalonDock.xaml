@@ -1025,7 +1025,7 @@
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
                 <shell:WindowChrome
-					CaptionHeight="20"
+					CaptionHeight="30"
 					CornerRadius="0"
 					GlassFrameThickness="0"
 					ResizeBorderThickness="10"
@@ -1043,7 +1043,7 @@
 							BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" MinHeight="16" />
+                                    <RowDefinition Height="Auto" MinHeight="30" />
                                     <!--  https://github.com/xceedsoftware/wpftoolkit/issues/1203  -->
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
@@ -1057,7 +1057,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Border Visibility="{Binding Path=Model.IsSinglePane, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                         <avalonDockControls:DropDownControlArea x:Name="Header" DropDownContextMenu="{Binding Model.Root.Manager.DocumentContextMenu, RelativeSource={RelativeSource TemplatedParent}}" DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}">
-                                            <ContentPresenter VerticalAlignment="Center" Margin="3"
+                                            <ContentPresenter VerticalAlignment="Center" Margin="10,3,0,3"
 												Content="{Binding Model.SinglePane.SelectedContent, RelativeSource={RelativeSource TemplatedParent}}"
 												ContentTemplate="{Binding Model.Root.Manager.DocumentTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
 												ContentTemplateSelector="{Binding Model.Root.Manager.DocumentTitleTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -1070,7 +1070,7 @@
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
                                         Width="20"
-										Height="16" 
+										Height="20" 
 										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Window_Maximize}"
 										Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:InverseBoolToVisibilityConverter}}">
@@ -1085,7 +1085,7 @@
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
                                         Width="20"
-										Height="16" 
+										Height="20" 
 										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Window_Restore}"
 										Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
@@ -1099,7 +1099,7 @@
 										Command="{Binding Path=CloseWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
                                         Width="20"
-										Height="16" Margin="0,0,3,0"
+										Height="20" Margin="0,0,3,0"
 										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Document_Close}"
 										Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
@@ -1137,7 +1137,7 @@
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
                 <shell:WindowChrome
-					CaptionHeight="20"
+					CaptionHeight="30"
 					CornerRadius="0"
 					GlassFrameThickness="0"
 					ResizeBorderThickness="10"
@@ -1154,7 +1154,7 @@
 							BorderThickness="{TemplateBinding BorderThickness}">
                             <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" MinHeight="16" />
+                                    <RowDefinition Height="Auto" MinHeight="30" />
                                     <!--  https://github.com/xceedsoftware/wpftoolkit/issues/1203  -->
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
@@ -1169,7 +1169,7 @@
                                     <Rectangle x:Name="HeaderBG" Grid.ColumnSpan="4" Fill="{TemplateBinding Background}"></Rectangle>
                                     <Border Visibility="{Binding Path=Model.IsSinglePane, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                         <avalonDockControls:DropDownControlArea x:Name="Header" DropDownContextMenu="{Binding Model.Root.Manager.AnchorableContextMenu, RelativeSource={RelativeSource TemplatedParent}}" DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}">
-                                            <ContentPresenter VerticalAlignment="Center" Margin="3"
+                                            <ContentPresenter VerticalAlignment="Center" Margin="10,3,0,3"
 												Content="{Binding Model.SinglePane.SelectedContent, RelativeSource={RelativeSource TemplatedParent}}"
 												ContentTemplate="{Binding Model.Root.Manager.AnchorableTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
 												ContentTemplateSelector="{Binding Model.Root.Manager.AnchorableTitleTemplateSelector, RelativeSource={RelativeSource TemplatedParent}}" />
@@ -1180,7 +1180,7 @@
 										x:Name="SinglePaneContextMenu"
 										Grid.Column="1"
                                         Width="20"
-										Height="16"
+										Height="20"
 										shell:WindowChrome.IsHitTestVisibleInChrome="True"
 										DropDownContextMenu="{Binding Model.Root.Manager.AnchorableContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
 										DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}"
@@ -1195,7 +1195,7 @@
                                     <Button
 										Grid.Column="2"
                                         Width="20"
-										Height="16"
+										Height="20"
 										shell:WindowChrome.IsHitTestVisibleInChrome="True"
 										Command="{x:Static shell:SystemCommands.MaximizeWindowCommand}"
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -1210,7 +1210,7 @@
                                     <Button
 										Grid.Column="2"
                                         Width="20"
-										Height="16"
+										Height="20"
 										shell:WindowChrome.IsHitTestVisibleInChrome="True"
 										Command="{x:Static shell:SystemCommands.RestoreWindowCommand}"
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
@@ -1226,7 +1226,7 @@
 										x:Name="CloseButton"
 										Grid.Column="3"
                                         Width="20"
-										Height="16" Margin="0,0,3,0"
+										Height="20" Margin="0,0,3,0"
 										shell:WindowChrome.IsHitTestVisibleInChrome="True"
 										Command="{Binding HideWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
