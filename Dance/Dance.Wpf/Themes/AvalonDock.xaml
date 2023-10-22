@@ -495,8 +495,8 @@
 
     <ControlTemplate x:Key="AnchorTemplate" TargetType="{x:Type avalonDockControls:LayoutAnchorControl}">
         <Border x:Name="border"
-			Margin="2"
-			Padding="2"
+			Margin="3"
+			Padding="3"
             Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"
 			BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
 			BorderThickness="1">
@@ -507,8 +507,11 @@
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="border" Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}"></Setter>
+                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}"></Setter>
             </Trigger>
+            <DataTrigger Binding="{Binding Path=Model.IsActive, RelativeSource={RelativeSource Mode=Self}}" Value="True">
+                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
+            </DataTrigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
