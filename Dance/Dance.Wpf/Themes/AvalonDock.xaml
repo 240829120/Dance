@@ -20,6 +20,30 @@
     <PathGeometry x:Key="PinDocMenu" Figures="M 608,0.000223796L 640,0.000223796L 640,7.70652L 608,7.70652L 608,0.000223796 Z M 624.021,32.0002L 608,16.0001L 640,16.0001L 624.021,32.0002 Z " />
     <PathGeometry x:Key="Locked" Figures="M 1.77411,12.4183L 23.0627,12.4183C 24.0423,12.4183 24.8366,13.2126 24.8366,14.1925L 24.8366,30.1588C 24.8366,31.1386 24.0423,31.9329 23.0627,31.9329L 1.77411,31.9329C 0.794312,31.9329 0,31.1386 0,30.1588L 0,14.1925C 0,13.2126 0.794312,12.4183 1.77411,12.4183 Z M 14.5149,22.095C 15.0955,21.6111 15.4826,20.9337 15.4826,20.1595C 15.4826,18.805 14.4182,17.7404 13.0635,17.7404C 11.7087,17.7404 10.6442,18.8048 10.6442,20.1595C 10.6442,20.9337 11.0313,21.6111 11.6119,22.095L 11.6119,24.0302C 11.6119,24.8044 12.2893,25.4818 13.0633,25.4818C 13.8375,25.4818 14.5149,24.8044 14.5149,24.0302L 14.5149,22.095 Z M 20.9659,12.4183L 18.063,12.4183L 18.063,8.70894C 18.063,5.51565 15.4504,2.90304 12.257,2.90304C 9.06372,2.90304 6.45111,5.51565 6.45111,8.70894L 6.45111,12.4183L 3.54816,12.4183L 3.54816,8.70894C 3.54816,3.87069 7.41882,2.03401e-005 12.257,2.03401e-005C 17.0955,2.03401e-005 20.9659,3.87069 20.9659,8.70894L 20.9659,12.4183 Z " />
 
+    <Style x:Key="AvalonDockToolButton" TargetType="Button">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Width" Value="20"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type avalonDockControls:ContextMenuEx}">
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
         <Setter Property="FontFamily" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_FAMILY}}"/>
@@ -380,7 +404,7 @@
 								Grid.Column="2"
 								Command="{Binding Path=LayoutItem.AutoHideCommand, RelativeSource={RelativeSource TemplatedParent}}"
 								Focusable="False"
-								Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+								Style="{StaticResource AvalonDockToolButton}"
 								ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnAutoHide_Hint}"
 								Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                 <Border Background="Transparent">
@@ -395,7 +419,7 @@
 								Grid.Column="3"
 								Command="{Binding Path=LayoutItem.HideCommand, RelativeSource={RelativeSource TemplatedParent}}"
 								Focusable="False"
-								Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+								Style="{StaticResource AvalonDockToolButton}"
 								ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnClose_Hint}"
 								Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                 <Border Background="Transparent">
@@ -496,8 +520,8 @@
                     <Canvas x:Name="PART_DropTargetsContainer" Opacity="0.9">
                         <Path
 							x:Name="PART_PreviewBox"
-							Fill="AliceBlue"
-							Stroke="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"
+							Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}"
+							Stroke="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"
 							StrokeThickness="2" />
                         <Grid x:Name="PART_DockingManagerDropTargets">
                             <Image
@@ -727,6 +751,20 @@
 			Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}" />
     </ContextMenu>
 
+    <!--  LayoutGridResizerControl  -->
+    <Style x:Key="{x:Type avalonDockControls:LayoutGridResizerControl}" TargetType="{x:Type avalonDockControls:LayoutGridResizerControl}">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BackgroundWhileDragging" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
+        <Setter Property="OpacityWhileDragging" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type avalonDockControls:LayoutGridResizerControl}">
+                    <Border Background="{TemplateBinding Background}" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!--  DockingManager  -->
     <Style x:Key="{x:Type avalonDock:DockingManager}" TargetType="{x:Type avalonDock:DockingManager}">
         <Setter Property="DocumentPaneControlStyle" Value="{StaticResource DocumentPaneControlStyle}" />
@@ -742,6 +780,8 @@
         <Setter Property="DocumentContextMenu" Value="{DynamicResource DocumentContextMenu}" />
         <Setter Property="DocumentPaneMenuItemHeaderTemplate" Value="{StaticResource DocumentHeaderTemplate}" />
         <Setter Property="IconContentTemplate" Value="{StaticResource IconContentTemplate}" />
+        <Setter Property="GridSplitterVerticalStyle" Value="{StaticResource {x:Type avalonDockControls:LayoutGridResizerControl}}"></Setter>
+        <Setter Property="GridSplitterHorizontalStyle" Value="{StaticResource {x:Type avalonDockControls:LayoutGridResizerControl}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type avalonDock:DockingManager}">
@@ -799,20 +839,6 @@
         </Setter>
     </Style>
 
-    <!--  LayoutGridResizerControl  -->
-    <Style x:Key="{x:Type avalonDockControls:LayoutGridResizerControl}" TargetType="{x:Type avalonDockControls:LayoutGridResizerControl}">
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BackgroundWhileDragging" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
-        <Setter Property="OpacityWhileDragging" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"></Setter>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type avalonDockControls:LayoutGridResizerControl}">
-                    <Border Background="{TemplateBinding Background}" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
     <Style TargetType="{x:Type avalonDockControls:LayoutDocumentControl}">
         <Setter Property="Template">
             <Setter.Value>
@@ -855,7 +881,7 @@
 									Grid.Column="2"
                                     Width="20" Height="16"
 									Command="{Binding Path=LayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
-									Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+									Style="{StaticResource AvalonDockToolButton}"
 									ToolTip="{x:Static avalonDockProperties:Resources.Document_Close}"
 									Visibility="Hidden">
                                     <Path x:Name="PART_ImgPinClose" Width="10" Height="10" Margin="1,0,0,1" VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -999,7 +1025,7 @@
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
                 <shell:WindowChrome
-					CaptionHeight="16"
+					CaptionHeight="20"
 					CornerRadius="0"
 					GlassFrameThickness="0"
 					ResizeBorderThickness="10"
@@ -1009,18 +1035,20 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type avalonDockControls:LayoutDocumentFloatingWindowControl}">
-                    <Grid>
+                    <Grid Background="{TemplateBinding Background}">
                         <Border
 							x:Name="WindowBorder"
 							Background="{TemplateBinding Background}"
 							BorderBrush="{TemplateBinding BorderBrush}"
 							BorderThickness="{TemplateBinding BorderThickness}">
-                            <Grid Margin="3">
+                            <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" MinHeight="16" />
                                     <!--  https://github.com/xceedsoftware/wpftoolkit/issues/1203  -->
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
+                                <Rectangle x:Name="HeaderBG" Fill="{TemplateBinding Background}"></Rectangle>
+
                                 <Grid UseLayoutRounding="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -1028,7 +1056,7 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <Border Visibility="{Binding Path=Model.IsSinglePane, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
-                                        <avalonDockControls:DropDownControlArea DropDownContextMenu="{Binding Model.Root.Manager.DocumentContextMenu, RelativeSource={RelativeSource TemplatedParent}}" DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <avalonDockControls:DropDownControlArea x:Name="Header" DropDownContextMenu="{Binding Model.Root.Manager.DocumentContextMenu, RelativeSource={RelativeSource TemplatedParent}}" DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}">
                                             <ContentPresenter VerticalAlignment="Center" Margin="3"
 												Content="{Binding Model.SinglePane.SelectedContent, RelativeSource={RelativeSource TemplatedParent}}"
 												ContentTemplate="{Binding Model.Root.Manager.DocumentTitleTemplate, RelativeSource={RelativeSource TemplatedParent}}"
@@ -1041,10 +1069,13 @@
 										Command="{x:Static shell:SystemCommands.MaximizeWindowCommand}"
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                        Width="20"
+										Height="16" 
+										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Window_Maximize}"
 										Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:InverseBoolToVisibilityConverter}}">
-                                        <Image Source="/AvalonDock;component/Themes/Generic/Images/PinMaximize.png" />
+                                        <Path x:Name="PART_ImgPinMaximize" Width="9" Height="9" VerticalAlignment="Center" Data="{StaticResource PinMaximize}" Stretch="Uniform"
+											  Fill="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}" />
                                     </Button>
 
                                     <Button
@@ -1053,10 +1084,13 @@
 										Command="{x:Static shell:SystemCommands.RestoreWindowCommand}"
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                        Width="20"
+										Height="16" 
+										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Window_Restore}"
 										Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
-                                        <Image Source="/AvalonDock;component/Themes/Generic/Images/PinRestore.png" />
+                                        <Path x:Name="PART_ImgPinRestore" Width="10" Height="10" Margin="1,1,0,0" VerticalAlignment="Center" Data="{StaticResource PinRestore}" Stretch="Uniform"
+											  Fill="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}" />
                                     </Button>
 
                                     <Button
@@ -1064,10 +1098,13 @@
 										shell:WindowChrome.IsHitTestVisibleInChrome="True"
 										Command="{Binding Path=CloseWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+                                        Width="20"
+										Height="16" Margin="0,0,3,0"
+										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Document_Close}"
 										Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
-                                        <Image Source="/AvalonDock;component/Themes/Generic/Images/PinClose.png" />
+                                        <Path x:Name="PART_ImgPinClose" Width="10" Height="10" Margin="1,0,0,1" VerticalAlignment="Center" Data="{StaticResource PinClose}" Stretch="Uniform"
+											  Fill="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}" />
                                     </Button>
                                 </Grid>
                                 <ContentPresenter Grid.Row="1" Content="{TemplateBinding Content}" Margin="3" />
@@ -1080,6 +1117,12 @@
                         </Trigger>
                         <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Self}}" Value="True">
                             <Setter TargetName="WindowBorder" Property="BorderBrush" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}" />
+                            <Setter TargetName="HeaderBG" Property="Fill" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}" />
+                            <Setter TargetName="Header" Property="Foreground" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}" />
+
+                            <Setter TargetName="PART_ImgPinMaximize" Property="Fill" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}" />
+                            <Setter TargetName="PART_ImgPinRestore" Property="Fill" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}" />
+                            <Setter TargetName="PART_ImgPinClose" Property="Fill" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}" />
                         </DataTrigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -1094,7 +1137,7 @@
         <Setter Property="shell:WindowChrome.WindowChrome">
             <Setter.Value>
                 <shell:WindowChrome
-					CaptionHeight="16"
+					CaptionHeight="20"
 					CornerRadius="0"
 					GlassFrameThickness="0"
 					ResizeBorderThickness="10"
@@ -1157,7 +1200,7 @@
 										Command="{x:Static shell:SystemCommands.MaximizeWindowCommand}"
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Window_Maximize}"
 										Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:InverseBoolToVisibilityConverter}}">
                                         <Path x:Name="PART_ImgPinMaximize" Width="9" Height="9" VerticalAlignment="Center" Data="{StaticResource PinMaximize}" Stretch="Uniform"
@@ -1172,7 +1215,7 @@
 										Command="{x:Static shell:SystemCommands.RestoreWindowCommand}"
 										CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Window_Restore}"
 										Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                         <Path x:Name="PART_ImgPinRestore" Width="10" Height="10" Margin="1,1,0,0" VerticalAlignment="Center" Data="{StaticResource PinRestore}" Stretch="Uniform"
@@ -1187,7 +1230,7 @@
 										shell:WindowChrome.IsHitTestVisibleInChrome="True"
 										Command="{Binding HideWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
+										Style="{StaticResource AvalonDockToolButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnClose_Hint}"
 										Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                         <Path x:Name="PART_ImgPinClose" Width="10" Height="10" Margin="1,0,0,1" VerticalAlignment="Center" Data="{StaticResource PinClose}" Stretch="Uniform"
@@ -1273,7 +1316,7 @@
     </Style>
 
     <Style x:Key="{x:Type avalonDockControls:NavigatorWindow}" TargetType="{x:Type avalonDockControls:NavigatorWindow}">
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Setter Property="Background" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}" />
         <Setter Property="SizeToContent" Value="WidthAndHeight" />
         <Setter Property="ResizeMode" Value="NoResize" />
         <Setter Property="shell:WindowChrome.WindowChrome">

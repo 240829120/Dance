@@ -1,4 +1,5 @@
-﻿using Dance.Wpf;
+﻿using AvalonDock.Controls;
+using Dance.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
