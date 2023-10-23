@@ -13,6 +13,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/RadioButton.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Slider.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Menu.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/ProgressBar.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Calendar.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/DateTimePicker.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
