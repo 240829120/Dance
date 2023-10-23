@@ -241,7 +241,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="MinWidth" Value="80"></Setter>
+        <Setter Property="MinWidth" Value="60"></Setter>
         <Setter Property="MinHeight" Value="24"></Setter>
         <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
         <Style.Triggers>
