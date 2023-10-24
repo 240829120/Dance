@@ -20,12 +20,18 @@ namespace Dance.Wpf
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
-            return item is DanceTreeViewItem;
+            if (item is DanceTreeViewItem node)
+            {
+                node.Level = 1;
+                return true;
+            }
+
+            return false;
         }
 
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new DanceTreeViewItem();
+            return new DanceTreeViewItem() { Level = 1 };
         }
     }
 }

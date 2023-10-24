@@ -18,11 +18,6 @@ namespace Dance.Wpf
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTreeViewItem), new FrameworkPropertyMetadata(typeof(DanceTreeViewItem)));
         }
 
-        public DanceTreeViewItem()
-        {
-            this.Loaded += DanceTreeViewItem_Loaded;
-        }
-
         #region Level -- 等级
 
         /// <summary>
@@ -42,16 +37,20 @@ namespace Dance.Wpf
 
         #endregion
 
-        /// <summary>
-        /// 加载
-        /// </summary>
-        private void DanceTreeViewItem_Loaded(object sender, RoutedEventArgs e)
+        protected override bool IsItemItsOwnContainerOverride(object item)
         {
-            DanceTreeViewItem? parent = DanceXamlExpansion.GetVisualTreeParent<DanceTreeViewItem>(this);
-            if (parent == null)
-                return;
+            if (item is DanceTreeViewItem node)
+            {
+                node.Level = this.Level + 1;
+                return true;
+            }
 
-            this.Level = parent.Level + 1;
+            return false;
+        }
+
+        protected override DependencyObject GetContainerForItemOverride()
+        {
+            return new DanceTreeViewItem() { Level = this.Level + 1 };
         }
     }
 }

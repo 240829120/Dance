@@ -314,4 +314,8 @@
         </Setter>
     </Style>
 
+    <Style TargetType="Separator">
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Setter>
+    </Style>
+
 </ResourceDictionary>

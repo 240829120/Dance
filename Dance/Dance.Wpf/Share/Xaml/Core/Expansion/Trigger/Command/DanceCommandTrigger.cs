@@ -177,7 +177,7 @@ namespace Dance.Wpf
 
         #endregion
 
-        #region UnloadedOnceCommand 卸载一次命令
+        #region UnloadedOnceCommand -- 卸载一次命令
 
         /// <summary>
         /// 获取卸载一次命令
@@ -229,6 +229,83 @@ namespace Dance.Wpf
                 log.Error(ex);
             }
         }
+
+        #endregion
+
+        #region DoubleClickCommand -- 双击命令
+
+        /// <summary>
+        /// 获取双击命令
+        /// </summary>
+        public static ICommand GetDoubleClickCommand(DependencyObject obj)
+        {
+            return (ICommand)obj.GetValue(DoubleClickCommandProperty);
+        }
+
+        /// <summary>
+        /// 设置双击命令
+        /// </summary>
+        public static void SetDoubleClickCommand(DependencyObject obj, ICommand value)
+        {
+            obj.SetValue(DoubleClickCommandProperty, value);
+        }
+
+        /// <summary>
+        /// 双击命令
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandProperty =
+            DependencyProperty.RegisterAttached("DoubleClickCommand", typeof(ICommand), typeof(DanceCommandTrigger), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not FrameworkElement element)
+                    return;
+
+                element.PreviewMouseLeftButtonDown -= Execute_PreviewMouseLeftButtonDown;
+                element.PreviewMouseLeftButtonDown += Execute_PreviewMouseLeftButtonDown;
+            })));
+
+        /// <summary>
+        /// 执行鼠标点击命令
+        /// </summary>
+        private static void Execute_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (e.ClickCount != 2 || sender is not FrameworkElement element || GetDoubleClickCommand(element) is not ICommand command)
+                    return;
+
+                command.Execute(GetDoubleClickCommandParameter(element));
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        #endregion
+
+        #region DoubleClickCommandParameter -- 双击命令参数
+
+        /// <summary>
+        /// 获取双击命令参数
+        /// </summary>
+        public static object GetDoubleClickCommandParameter(DependencyObject obj)
+        {
+            return (object)obj.GetValue(DoubleClickCommandParameterProperty);
+        }
+
+        /// <summary>
+        /// 设置双击命令参数
+        /// </summary>
+        public static void SetDoubleClickCommandParameter(DependencyObject obj, object value)
+        {
+            obj.SetValue(DoubleClickCommandParameterProperty, value);
+        }
+
+        /// <summary>
+        /// 双击命令参数
+        /// </summary>
+        public static readonly DependencyProperty DoubleClickCommandParameterProperty =
+            DependencyProperty.RegisterAttached("DoubleClickCommandParameter", typeof(object), typeof(DanceCommandTrigger), new PropertyMetadata(null));
 
         #endregion
     }
