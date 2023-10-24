@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
 using log4net;
+using SharpVectors.Dom;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,6 +35,32 @@ namespace Dance.Wpf
 
         // ================================================================================================
         // Property
+
+        #region IsDraging -- 是否正在拖拽
+
+        /// <summary>
+        /// 获取是否正在拖拽
+        /// </summary>
+        public static bool GetIsDraging(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsDragingProperty);
+        }
+
+        /// <summary>
+        /// 设置是否正在拖拽
+        /// </summary>
+        public static void SetIsDraging(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsDragingProperty, value);
+        }
+
+        /// <summary>
+        /// 是否正在拖拽
+        /// </summary>
+        public static readonly DependencyProperty IsDragingProperty =
+            DependencyProperty.RegisterAttached("IsDraging", typeof(bool), typeof(DanceDragTrigger), new PropertyMetadata(false));
+
+        #endregion
 
         #region DragBeginCommand -- 开始拖拽命令
 
@@ -210,14 +237,14 @@ namespace Dance.Wpf
         /// </summary>
         private static void SourceElement_MouseMove(object sender, MouseEventArgs e)
         {
+            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
+                return;
+
+            if (GetDragBeginCommand(element) is not RelayCommand<DanceDragBeginEventArgs> cmd)
+                return;
+
             try
             {
-                if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
-                    return;
-
-                if (GetDragBeginCommand(element) is not RelayCommand<DanceDragBeginEventArgs> cmd)
-                    return;
-
                 DanceDragBeginEventArgs args = new(element);
                 cmd.Execute(args);
                 if (args.IsCancel)
@@ -226,9 +253,11 @@ namespace Dance.Wpf
                 CompositionTarget.Rendering -= CompositionTarget_Rendering;
                 CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-                DragAdorner = new DanceDragAdorner(element) { Opacity = 0.5 };
+                DragAdorner = new DanceDragAdorner(element) { Opacity = 0.7 };
                 DragAdornerLayer = AdornerLayer.GetAdornerLayer(window.Content as FrameworkElement);
                 DragAdornerLayer.Add(DragAdorner);
+
+                element.Dispatcher.Invoke(() => { });
 
                 DragDrop.DoDragDrop(element, args.Data, args.Effects);
             }
@@ -242,6 +271,8 @@ namespace Dance.Wpf
                 DragAdornerLayer?.Remove(DragAdorner);
                 DragAdorner = null;
                 DragAdornerLayer = null;
+
+                element.SetValue(DanceDragTrigger.IsDragingProperty, false);
             }
         }
 
