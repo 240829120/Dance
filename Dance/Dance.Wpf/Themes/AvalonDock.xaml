@@ -495,34 +495,37 @@
 
     <ControlTemplate x:Key="AnchorTemplate" TargetType="{x:Type avalonDockControls:LayoutAnchorControl}">
         <Border x:Name="border"
-			    Padding="5,0,5,0"
+                Padding="3"
+                Margin="0,3,3,0"
+			    BorderThickness="0,0,0,5"
                 Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"
-			    BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
-			    BorderThickness="1">
-            <ContentPresenter
+			    BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}">
+            <ContentPresenter x:Name="content" Opacity="0.7"
 				Content="{Binding Model, RelativeSource={RelativeSource TemplatedParent}}"
 				ContentTemplate="{Binding AnchorableHeaderTemplate, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type avalonDock:DockingManager}, Mode=FindAncestor}}"
 				ContentTemplateSelector="{Binding AnchorableHeaderTemplateSelector, Mode=OneWay, RelativeSource={RelativeSource AncestorType={x:Type avalonDock:DockingManager}, Mode=FindAncestor}}" />
         </Border>
         <ControlTemplate.Triggers>
             <Trigger Property="Side" Value="Left">
-                <Setter TargetName="border" Property="Margin" Value="0,3,3,0"></Setter>
+                <Setter TargetName="border" Property="Margin" Value="0,5,5,0"></Setter>
+                <Setter TargetName="border" Property="BorderThickness" Value="0,0,0,5"></Setter>
             </Trigger>
             <Trigger Property="Side" Value="Right">
-                <Setter TargetName="border" Property="Margin" Value="0,0,3,3"></Setter>
+                <Setter TargetName="border" Property="Margin" Value="0,0,5,5"></Setter>
+                <Setter TargetName="border" Property="BorderThickness" Value="0,5,0,0"></Setter>
             </Trigger>
             <Trigger Property="Side" Value="Top">
-                <Setter TargetName="border" Property="Margin" Value="0,3,3,0"></Setter>
+                <Setter TargetName="border" Property="Margin" Value="0,5,5,0"></Setter>
+                <Setter TargetName="border" Property="BorderThickness" Value="0,5,0,0"></Setter>
             </Trigger>
             <Trigger Property="Side" Value="Bottom">
-                <Setter TargetName="border" Property="Margin" Value="0,3,3,0"></Setter>
+                <Setter TargetName="border" Property="Margin" Value="0,5,5,0"></Setter>
+                <Setter TargetName="border" Property="BorderThickness" Value="0,0,0,5"></Setter>
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MOUSE_OVER}}"></Setter>
-            </Trigger>
-            <DataTrigger Binding="{Binding Path=Model.IsActive, RelativeSource={RelativeSource Mode=Self}}" Value="True">
                 <Setter TargetName="border" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
-            </DataTrigger>
+                <Setter TargetName="content" Property="Opacity" Value="1"></Setter>
+            </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
 
