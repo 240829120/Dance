@@ -33,9 +33,14 @@ namespace Dance.Wpf
     public class DanceMappingConverter : DanceConverterBase
     {
         /// <summary>
-        /// 默认值
+        /// 默认转化值
         /// </summary>
-        public object? DefaultValue { get; set; }
+        public object? DefaultConvertValue { get; set; }
+
+        /// <summary>
+        /// 默认翻转值
+        /// </summary>
+        public object? DefaultConvertBackValue { get; set; }
 
         /// <summary>
         /// 项集合
@@ -47,10 +52,21 @@ namespace Dance.Wpf
         /// </summary>
         public override object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null || this.Items.Count == 0)
-                return this.DefaultValue;
+            if (this.Items.Count == 0)
+                return this.DefaultConvertValue;
 
-            return this.Items.FirstOrDefault(p => object.Equals(value, p.From))?.To ?? this.DefaultValue;
+            return this.Items.FirstOrDefault(p => object.Equals(value, p.From))?.To ?? this.DefaultConvertValue;
+        }
+
+        /// <summary>
+        /// 翻转
+        /// </summary>
+        public override object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (this.Items.Count == 0)
+                return this.DefaultConvertBackValue;
+
+            return this.Items.FirstOrDefault(p => object.Equals(value, p.To))?.From ?? this.DefaultConvertBackValue;
         }
     }
 }
