@@ -101,6 +101,10 @@ namespace Dance.Wpf
                 {
                     this.TreeView.SelectedItems.Remove(this);
                 }
+
+                this.TreeView.UpdateSelectedValues();
+
+                return;
             }
             else if (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift))
             {
@@ -111,10 +115,22 @@ namespace Dance.Wpf
                     this.TreeView.SelectedItems.Clear();
                     this.TreeView.SelectedItems.Add(this);
 
+                    this.TreeView.UpdateSelectedValues();
+
                     return;
                 }
 
+                List<DanceTreeViewItem> items = new();
+                this.TraversalTreeViewItem(items, from, this);
 
+                this.TreeView.SelectedItems.ForEach(p => p.IsMultiSelected = false);
+                this.TreeView.SelectedItems.Clear();
+                items.ForEach(p => p.IsMultiSelected = true);
+                this.TreeView.SelectedItems.AddRange(items);
+
+                this.TreeView.UpdateSelectedValues();
+
+                return;
             }
             else
             {
@@ -123,7 +139,24 @@ namespace Dance.Wpf
                 this.IsMultiSelected = true;
                 this.TreeView.SelectedItems.Clear();
                 this.TreeView.SelectedItems.Add(this);
+
+                this.TreeView.UpdateSelectedValues();
             }
+        }
+
+        /// <summary>
+        /// 便利书节点
+        /// </summary>
+        /// <param name="list">便利结果集合</param>
+        /// <param name="from">开始节点</param>
+        /// <param name="to">结束节点</param>
+        private void TraversalTreeViewItem(List<DanceTreeViewItem> list, DanceTreeViewItem from, DanceTreeViewItem to)
+        {
+            var items = DanceXamlExpansion.GetVisualTreeDescendants<DanceTreeViewItem>(this.TreeView);
+            int start = items.IndexOf(from);
+            int end = items.IndexOf(to);
+
+            list.AddRange(items.Skip(start).Take(end - start + 1));
         }
     }
 }

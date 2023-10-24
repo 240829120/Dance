@@ -253,7 +253,7 @@ namespace Dance.Wpf
                 CompositionTarget.Rendering -= CompositionTarget_Rendering;
                 CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-                DragAdorner = new DanceDragAdorner(element) { Opacity = 0.7 };
+                DragAdorner = new DanceDragAdorner(element) { Opacity = 1 };
                 DragAdornerLayer = AdornerLayer.GetAdornerLayer(window.Content as FrameworkElement);
                 DragAdornerLayer.Add(DragAdorner);
 

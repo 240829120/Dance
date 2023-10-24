@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Collections.ObjectModel;
 
 namespace Dance.Wpf
 {
@@ -17,6 +18,11 @@ namespace Dance.Wpf
         static DanceTreeView()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTreeView), new FrameworkPropertyMetadata(typeof(DanceTreeView)));
+        }
+
+        public DanceTreeView()
+        {
+            this.SelectedValues = new ObservableCollection<object>();
         }
 
         // =======================================================================================
@@ -76,14 +82,19 @@ namespace Dance.Wpf
         public IList SelectedValues
         {
             get { return (IList)GetValue(SelectedValuesProperty); }
-            set { SetValue(SelectedValuesProperty, value); }
+            private set { SetValue(SelectedValuesPropertyKey, value); }
         }
 
         /// <summary>
         /// 当前选中项集合
         /// </summary>
-        public static readonly DependencyProperty SelectedValuesProperty =
-            DependencyProperty.Register("SelectedValues", typeof(IList), typeof(DanceTreeView), new PropertyMetadata(null));
+        public static readonly DependencyPropertyKey SelectedValuesPropertyKey =
+            DependencyProperty.RegisterReadOnly("SelectedValues", typeof(IList), typeof(DanceTreeView), new PropertyMetadata(null));
+
+        /// <summary>
+        /// 当前选中项集合
+        /// </summary>
+        public static readonly DependencyProperty SelectedValuesProperty = SelectedValuesPropertyKey.DependencyProperty;
 
         #endregion
 
@@ -105,6 +116,19 @@ namespace Dance.Wpf
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new DanceTreeViewItem() { Level = 1, TreeView = this };
+        }
+
+        // =======================================================================================
+        // Internal Function
+
+        /// <summary>
+        /// 更新选中值
+        /// </summary>
+        internal void UpdateSelectedValues()
+        {
+            this.SelectedValues.Clear();
+
+            this.SelectedItems.ForEach(p => this.SelectedValues.Add(p.DataContext));
         }
     }
 }
