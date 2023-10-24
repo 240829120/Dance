@@ -67,7 +67,7 @@
                                                   SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Margin="{TemplateBinding Padding}"/>
                             </Grid>
                         </dance:DanceMouseOver>
-                        <ItemsPresenter x:Name="ItemsHost" Grid.Row="1"/>
+                        <ItemsPresenter x:Name="ItemsHost" Grid.Row="1" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="false">
@@ -76,7 +76,7 @@
                         <Trigger Property="HasItems" Value="false">
                             <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
                         </Trigger>
-                        <Trigger Property="IsSelected" Value="true">
+                        <Trigger Property="IsMultiSelected" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"/>
                             <Setter Property="TextBlock.Foreground" TargetName="Bd" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}"/>
                         </Trigger>
