@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -55,7 +56,13 @@ namespace Dance.Wpf
             if (this.Items.Count == 0)
                 return this.DefaultConvertValue;
 
-            return this.Items.FirstOrDefault(p => object.Equals(value, p.From))?.To ?? this.DefaultConvertValue;
+            object? result = this.Items.FirstOrDefault(p => object.Equals(value, p.From))?.To ?? this.DefaultConvertValue;
+
+#if DEBUG
+            Debug.WriteLine($"DanceMappingConverter: [Convert] ====> from: {value} to: {result} , tag: {this.Tag}, parameter: {parameter}");
+#endif
+
+            return result;
         }
 
         /// <summary>
@@ -66,7 +73,13 @@ namespace Dance.Wpf
             if (this.Items.Count == 0)
                 return this.DefaultConvertBackValue;
 
-            return this.Items.FirstOrDefault(p => object.Equals(value, p.To))?.From ?? this.DefaultConvertBackValue;
+            object? result = this.Items.FirstOrDefault(p => object.Equals(value, p.To))?.From ?? this.DefaultConvertBackValue;
+
+#if DEBUG
+            Debug.WriteLine($"DanceMappingConverter: [ConvertBack] ====> from: {value} to: {result} , tag: {this.Tag}, parameter: {parameter}");
+#endif
+
+            return result;
         }
     }
 }

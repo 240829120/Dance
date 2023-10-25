@@ -1,0 +1,90 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dance="clr-namespace:Dance.Wpf"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <!-- BooleanToVisibilityConverter_Visible_Hidden_Hidden -->
+    <dance:DanceMappingConverter x:Key="BooleanToVisibilityConverter_Visible_Hidden_Hidden">
+        <!-- True ==== Visibile -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Visible</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- False ==== Hidden -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Hidden</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- Null ==== Hidden -->
+        <dance:DanceMappingConverterItem From="{x:Null}">
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Hidden</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+    </dance:DanceMappingConverter>
+
+    <!-- BooleanToVisibilityConverter_Visible_Collapsed_Collapsed -->
+    <dance:DanceMappingConverter x:Key="BooleanToVisibilityConverter_Visible_Collapsed_Collapsed">
+        <!-- True ==== Visibile -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Visible</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- False ==== Hidden -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Collapsed</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- Null ==== Hidden -->
+        <dance:DanceMappingConverterItem From="{x:Null}">
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Collapsed</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+    </dance:DanceMappingConverter>
+
+    <!-- BooleanToVisibilityConverter_Collapsed_Visible_Visible -->
+    <dance:DanceMappingConverter x:Key="BooleanToVisibilityConverter_Collapsed_Visible_Visible">
+        <!-- True ==== Visibile -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Collapsed</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- False ==== Hidden -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Visible</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- Null ==== Hidden -->
+        <dance:DanceMappingConverterItem From="{x:Null}">
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Visible</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+    </dance:DanceMappingConverter>
+
+</ResourceDictionary>
