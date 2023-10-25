@@ -76,7 +76,7 @@
                         <Trigger Property="HasItems" Value="false">
                             <Setter Property="Visibility" TargetName="Expander" Value="Hidden"/>
                         </Trigger>
-                        <Trigger Property="IsMultiSelected" Value="true">
+                        <Trigger Property="IsSelected" Value="true">
                             <Setter Property="Background" TargetName="Bd" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"/>
                             <Setter Property="TextBlock.Foreground" TargetName="Bd" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}"/>
                         </Trigger>
