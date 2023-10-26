@@ -3,6 +3,31 @@
                     xmlns:dance="clr-namespace:Dance.Wpf"
                     xmlns:sys="clr-namespace:System;assembly=mscorlib">
 
+    <!-- ===================================================================================================================== -->
+
+    <!-- IsNullConverter -->
+    <dance:DanceIsNullConverter x:Key="IsNullConverter">
+        <dance:DanceIsNullConverter.DefaultValue>
+            <sys:Boolean>False</sys:Boolean>
+        </dance:DanceIsNullConverter.DefaultValue>
+        <dance:DanceIsNullConverter.NullValue>
+            <sys:Boolean>True</sys:Boolean>
+        </dance:DanceIsNullConverter.NullValue>
+    </dance:DanceIsNullConverter>
+
+    <!-- IsNotNullConverter -->
+    <dance:DanceIsNullConverter x:Key="IsNotNullConverter">
+        <dance:DanceIsNullConverter.DefaultValue>
+            <sys:Boolean>True</sys:Boolean>
+        </dance:DanceIsNullConverter.DefaultValue>
+        <dance:DanceIsNullConverter.NullValue>
+            <sys:Boolean>False</sys:Boolean>
+        </dance:DanceIsNullConverter.NullValue>
+    </dance:DanceIsNullConverter>
+
+    <!-- ===================================================================================================================== -->
+    <!-- Boolean **** Visibility [ True_False_Null ] -->
+
     <!-- BooleanToVisibilityConverter_Visible_Hidden_Hidden -->
     <dance:DanceMappingConverter x:Key="BooleanToVisibilityConverter_Visible_Hidden_Hidden">
         <!-- True ==== Visibile -->
@@ -83,6 +108,65 @@
         <dance:DanceMappingConverterItem From="{x:Null}">
             <dance:DanceMappingConverterItem.To>
                 <Visibility>Visible</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+    </dance:DanceMappingConverter>
+
+    <!-- ===================================================================================================================== -->
+    <!-- Boolean **** Boolean [ True_False_Null ] -->
+
+    <!-- BooleanToBooleanConverter_True_False_False -->
+    <dance:DanceMappingConverter x:Key="BooleanToBooleanConverter_True_False_False">
+        <!-- True ==== True -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- False ==== False -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- Null ==== False -->
+        <dance:DanceMappingConverterItem From="{x:Null}">
+            <dance:DanceMappingConverterItem.To>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+    </dance:DanceMappingConverter>
+
+    <!-- BooleanToBooleanConverter_False_True_True -->
+    <dance:DanceMappingConverter x:Key="BooleanToBooleanConverter_False_True_True">
+        <!-- True ==== False -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- False ==== True -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <sys:Boolean>False</sys:Boolean>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <sys:Boolean>True</sys:Boolean>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <!-- Null ==== True -->
+        <dance:DanceMappingConverterItem From="{x:Null}">
+            <dance:DanceMappingConverterItem.To>
+                <sys:Boolean>True</sys:Boolean>
             </dance:DanceMappingConverterItem.To>
         </dance:DanceMappingConverterItem>
     </dance:DanceMappingConverter>

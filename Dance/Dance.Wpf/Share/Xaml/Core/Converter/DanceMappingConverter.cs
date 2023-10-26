@@ -58,10 +58,6 @@ namespace Dance.Wpf
 
             object? result = this.Items.FirstOrDefault(p => object.Equals(value, p.From))?.To ?? this.DefaultConvertValue;
 
-#if DEBUG
-            Debug.WriteLine($"DanceMappingConverter: [Convert] ====> from: {value} to: {result} , tag: {this.Tag}, parameter: {parameter}");
-#endif
-
             return result;
         }
 
@@ -74,10 +70,6 @@ namespace Dance.Wpf
                 return this.DefaultConvertBackValue;
 
             object? result = this.Items.FirstOrDefault(p => object.Equals(value, p.To))?.From ?? this.DefaultConvertBackValue;
-
-#if DEBUG
-            Debug.WriteLine($"DanceMappingConverter: [ConvertBack] ====> from: {value} to: {result} , tag: {this.Tag}, parameter: {parameter}");
-#endif
 
             return result;
         }
