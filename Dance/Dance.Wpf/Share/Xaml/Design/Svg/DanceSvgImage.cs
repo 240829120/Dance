@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Dance.Wpf
 {
@@ -23,6 +25,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 源
         /// </summary>
+        [TypeConverter(typeof(UriTypeConverter))]
         public Uri Source
         {
             get { return (Uri)GetValue(SourceProperty); }

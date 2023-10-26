@@ -113,7 +113,7 @@ namespace Dance.Wpf
         public static readonly DependencyProperty UnitLengthProperty =
             DependencyProperty.Register("UnitLength", typeof(double), typeof(DanceShuttle), new PropertyMetadata(30d, new PropertyChangedCallback((s, e) =>
             {
-                if (s is not DanceShuttle shuttle)
+                if (s is not DanceShuttle shuttle || DanceXamlExpansion.IsInDesignMode)
                     return;
 
                 double to = shuttle.Index < 0 ? (-2 * shuttle.UnitLength) : shuttle.UnitLength * shuttle.Index;
@@ -143,7 +143,7 @@ namespace Dance.Wpf
         public static readonly DependencyProperty IndexProperty =
             DependencyProperty.Register("Index", typeof(int), typeof(DanceShuttle), new PropertyMetadata(-2, new PropertyChangedCallback((s, e) =>
             {
-                if (s is not DanceShuttle shuttle)
+                if (s is not DanceShuttle shuttle || DanceXamlExpansion.IsInDesignMode)
                     return;
 
                 double to = shuttle.Index < 0 ? (-2 * shuttle.UnitLength) : shuttle.UnitLength * shuttle.Index;
