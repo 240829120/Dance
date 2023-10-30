@@ -91,6 +91,30 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region IsDragOver -- 拖拽是否滑过
+
+        /// <summary>
+        /// 拖拽是否滑过
+        /// </summary>
+        public bool IsDragOver
+        {
+            get { return (bool)GetValue(IsDragOverProperty); }
+            private set { SetValue(IsDragOverPropertyKey, value); }
+        }
+
+        /// <summary>
+        /// 拖拽是否滑过
+        /// </summary>
+        public static readonly DependencyPropertyKey IsDragOverPropertyKey =
+            DependencyProperty.RegisterReadOnly("IsDragOver", typeof(bool), typeof(DanceTreeViewItem), new PropertyMetadata(false));
+
+        /// <summary>
+        /// 拖拽是否滑过
+        /// </summary>
+        public static readonly DependencyProperty IsDragOverProperty = IsDragOverPropertyKey.DependencyProperty;
+
+        #endregion
+
         // =======================================================================================
         // Override Function
 
@@ -109,6 +133,20 @@ namespace Dance.Wpf
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new DanceTreeViewItem() { Level = this.Level + 1, TreeView = this.TreeView };
+        }
+
+        protected override void OnDragEnter(DragEventArgs e)
+        {
+            base.OnDragEnter(e);
+
+            this.IsDragOver = true;
+        }
+
+        protected override void OnDragLeave(DragEventArgs e)
+        {
+            base.OnDragLeave(e);
+
+            this.IsDragOver = false;
         }
     }
 }

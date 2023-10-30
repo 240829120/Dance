@@ -43,22 +43,107 @@ namespace Dance.Wpf
         /// </summary>
         public static bool GetIsDraging(DependencyObject obj)
         {
-            return (bool)obj.GetValue(IsDragingProperty);
+            return (bool)obj.GetValue(IsDragingPropertyKey.DependencyProperty);
         }
 
         /// <summary>
         /// 设置是否正在拖拽
         /// </summary>
-        public static void SetIsDraging(DependencyObject obj, bool value)
+        private static void SetIsDraging(DependencyObject obj, bool value)
         {
-            obj.SetValue(IsDragingProperty, value);
+            obj.SetValue(IsDragingPropertyKey, value);
         }
 
         /// <summary>
         /// 是否正在拖拽
         /// </summary>
-        public static readonly DependencyProperty IsDragingProperty =
-            DependencyProperty.RegisterAttached("IsDraging", typeof(bool), typeof(DanceDragTrigger), new PropertyMetadata(false));
+        public static readonly DependencyPropertyKey IsDragingPropertyKey =
+            DependencyProperty.RegisterAttachedReadOnly("IsDraging", typeof(bool), typeof(DanceDragTrigger), new PropertyMetadata(false));
+
+        #endregion
+
+        #region IsWaitDraging -- 是否正在等待拖拽
+
+        /// <summary>
+        /// 获取是否正在等待拖拽
+        /// </summary>
+        public static bool GetIsWaitDraging(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsWaitDragingPropertyKey.DependencyProperty);
+        }
+
+        /// <summary>
+        /// 设置是否正在等待拖拽
+        /// </summary>
+        private static void SetIsWaitDraging(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsWaitDragingPropertyKey, value);
+        }
+
+        /// <summary>
+        /// 是否正在等待拖拽
+        /// </summary>
+        public static readonly DependencyPropertyKey IsWaitDragingPropertyKey =
+            DependencyProperty.RegisterAttachedReadOnly("IsWaitDraging", typeof(bool), typeof(DanceDragTrigger), new PropertyMetadata(false));
+
+        #endregion
+
+        #region DragTriggerKind -- 拖拽触发类型
+
+        /// <summary>
+        /// 获取拖拽触发类型
+        /// </summary>
+        public static DanceDragTriggerKind GetDragTriggerKind(DependencyObject obj)
+        {
+            return (DanceDragTriggerKind)obj.GetValue(DragTriggerKindProperty);
+        }
+
+        /// <summary>
+        /// 设置拖拽触发类型
+        /// </summary>
+        public static void SetDragTriggerKind(DependencyObject obj, DanceDragTriggerKind value)
+        {
+            obj.SetValue(DragTriggerKindProperty, value);
+        }
+
+        /// <summary>
+        /// 拖拽触发类型
+        /// </summary>
+        public static readonly DependencyProperty DragTriggerKindProperty =
+            DependencyProperty.RegisterAttached("DragTriggerKind", typeof(DanceDragTriggerKind), typeof(DanceDragTrigger), new PropertyMetadata(DanceDragTriggerKind.MouseMove, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not FrameworkElement element)
+                    return;
+
+                SourceElement_UpdateTriggerKind(element);
+
+            })));
+
+        #endregion
+
+        #region DragAdornerOpacity -- 拖拽包装器透明度
+
+        /// <summary>
+        /// 获取拖拽包装器透明度
+        /// </summary>
+        public static double GetDragAdornerOpacity(DependencyObject obj)
+        {
+            return (double)obj.GetValue(DragAdornerOpacityProperty);
+        }
+
+        /// <summary>
+        /// 设置拖拽包装器透明度
+        /// </summary>
+        public static void SetDragAdornerOpacity(DependencyObject obj, double value)
+        {
+            obj.SetValue(DragAdornerOpacityProperty, value);
+        }
+
+        /// <summary>
+        /// 拖拽包装器透明度
+        /// </summary>
+        public static readonly DependencyProperty DragAdornerOpacityProperty =
+            DependencyProperty.RegisterAttached("DragAdornerOpacity", typeof(double), typeof(DanceDragTrigger), new PropertyMetadata(0.5d));
 
         #endregion
 
@@ -89,8 +174,7 @@ namespace Dance.Wpf
                 if (s is not FrameworkElement element)
                     return;
 
-                element.MouseMove -= SourceElement_MouseMove;
-                element.MouseMove += SourceElement_MouseMove;
+                SourceElement_UpdateTriggerKind(element);
 
             })));
 
@@ -233,31 +317,89 @@ namespace Dance.Wpf
         // Private Function
 
         /// <summary>
-        /// 源鼠标移动
+        /// 源更新触发拖拽类型
         /// </summary>
-        private static void SourceElement_MouseMove(object sender, MouseEventArgs e)
+        /// <param name="element">元素</param>
+        private static void SourceElement_UpdateTriggerKind(FrameworkElement element)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
+            DanceDragTriggerKind kind = GetDragTriggerKind(element);
+
+            switch (kind)
+            {
+                case DanceDragTriggerKind.MouseMove:
+                    //Move
+                    element.MouseMove -= SourceElement_MouseMove;
+                    element.MouseMove += SourceElement_MouseMove;
+                    // Leave
+                    element.MouseDown -= SourceElement_MouseDown;
+                    element.MouseUp -= SourceElement_MouseDown;
+                    element.MouseLeave -= SourceElement_MouseLeave;
+
+                    break;
+                case DanceDragTriggerKind.MouseLeave:
+                    //Move
+                    element.MouseMove -= SourceElement_MouseMove;
+                    // Leave
+                    element.MouseDown -= SourceElement_MouseDown;
+                    element.MouseDown += SourceElement_MouseDown;
+                    element.MouseUp -= SourceElement_MouseDown;
+                    element.MouseUp += SourceElement_MouseDown;
+                    element.MouseLeave -= SourceElement_MouseLeave;
+                    element.MouseLeave += SourceElement_MouseLeave;
+
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// 源鼠标按下
+        /// </summary>
+        private static void SourceElement_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is not FrameworkElement element)
                 return;
 
-            if (GetDragBeginCommand(element) is not RelayCommand<DanceDragBeginEventArgs> cmd)
+            SetIsWaitDraging(element, true);
+        }
+
+        /// <summary>
+        /// 源鼠标抬起
+        /// </summary>
+        private static void SourceElement_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is not FrameworkElement element)
                 return;
 
+            SetIsWaitDraging(element, false);
+        }
+
+        /// <summary>
+        /// 源执行拖拽
+        /// </summary>
+        /// <param name="element">元素</param>
+        /// <param name="window">元素所属窗口</param>
+        private static void SourceElement_ExecuteDrag(FrameworkElement element, Window window)
+        {
             try
             {
+                if (GetDragBeginCommand(element) is not RelayCommand<DanceDragBeginEventArgs> cmd)
+                    return;
+
                 DanceDragBeginEventArgs args = new(element);
                 cmd.Execute(args);
                 if (args.IsCancel)
                     return;
 
+                SetIsDraging(element, true);
+
                 CompositionTarget.Rendering -= CompositionTarget_Rendering;
                 CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-                DragAdorner = new DanceDragAdorner(element) { Opacity = 1 };
+                DragAdorner = new DanceDragAdorner(element) { Opacity = GetDragAdornerOpacity(element) };
                 DragAdornerLayer = AdornerLayer.GetAdornerLayer(window.Content as FrameworkElement);
                 DragAdornerLayer.Add(DragAdorner);
-
-                element.Dispatcher.Invoke(() => { });
 
                 DragDrop.DoDragDrop(element, args.Data, args.Effects);
             }
@@ -272,8 +414,34 @@ namespace Dance.Wpf
                 DragAdorner = null;
                 DragAdornerLayer = null;
 
-                element.SetValue(DanceDragTrigger.IsDragingProperty, false);
+                SetIsDraging(element, false);
             }
+        }
+
+        /// <summary>
+        /// 源鼠标离开
+        /// </summary>
+        private static void SourceElement_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
+                return;
+
+            if (!GetIsWaitDraging(element))
+                return;
+
+            SetIsWaitDraging(element, false);
+            SourceElement_ExecuteDrag(element, window);
+        }
+
+        /// <summary>
+        /// 源鼠标移动
+        /// </summary>
+        private static void SourceElement_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
+                return;
+
+            SourceElement_ExecuteDrag(element, window);
         }
 
         /// <summary>
@@ -286,10 +454,8 @@ namespace Dance.Wpf
                 if (sender is not FrameworkElement element || GetDragEnterCommand(element) is not RelayCommand<DanceDragEventArgs> cmd)
                     return;
 
-                DanceDragEventArgs args = new(element, e.Data);
+                DanceDragEventArgs args = new(element, e);
                 cmd.Execute(args);
-
-                e.Effects = args.Effects;
             }
             catch (Exception ex)
             {
@@ -307,10 +473,8 @@ namespace Dance.Wpf
                 if (sender is not FrameworkElement element || GetDragLeaveCommand(element) is not RelayCommand<DanceDragEventArgs> cmd)
                     return;
 
-                DanceDragEventArgs args = new(element, e.Data);
+                DanceDragEventArgs args = new(element, e);
                 cmd.Execute(args);
-
-                e.Effects = args.Effects;
             }
             catch (Exception ex)
             {
@@ -328,10 +492,8 @@ namespace Dance.Wpf
                 if (sender is not FrameworkElement element || GetDragOverCommand(element) is not RelayCommand<DanceDragEventArgs> cmd)
                     return;
 
-                DanceDragEventArgs args = new(element, e.Data);
+                DanceDragEventArgs args = new(element, e);
                 cmd.Execute(args);
-
-                e.Effects = args.Effects;
             }
             catch (Exception ex)
             {
@@ -349,7 +511,7 @@ namespace Dance.Wpf
                 if (sender is not FrameworkElement element || GetDropCommand(element) is not RelayCommand<DanceDragEventArgs> cmd)
                     return;
 
-                DanceDragEventArgs args = new(element, e.Data);
+                DanceDragEventArgs args = new(element, e);
                 cmd.Execute(args);
             }
             catch (Exception ex)
