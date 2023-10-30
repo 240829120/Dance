@@ -88,6 +88,32 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region IsUseDragAdorner -- 是否使用拖拽包装器
+
+        /// <summary>
+        /// 获取是否使用拖拽包装器
+        /// </summary>
+        public static bool GetIsUseDragAdorner(DependencyObject obj)
+        {
+            return (bool)obj.GetValue(IsUseDragAdornerProperty);
+        }
+
+        /// <summary>
+        /// 设置是否使用拖拽包装器
+        /// </summary>
+        public static void SetIsUseDragAdorner(DependencyObject obj, bool value)
+        {
+            obj.SetValue(IsUseDragAdornerProperty, value);
+        }
+
+        /// <summary>
+        /// 是否使用拖拽包装器
+        /// </summary>
+        public static readonly DependencyProperty IsUseDragAdornerProperty =
+            DependencyProperty.RegisterAttached("IsUseDragAdorner", typeof(bool), typeof(DanceDragTrigger), new PropertyMetadata(true));
+
+        #endregion
+
         #region DragTriggerKind -- 拖拽触发类型
 
         /// <summary>
@@ -394,12 +420,15 @@ namespace Dance.Wpf
 
                 SetIsDraging(element, true);
 
-                CompositionTarget.Rendering -= CompositionTarget_Rendering;
-                CompositionTarget.Rendering += CompositionTarget_Rendering;
+                if (GetIsUseDragAdorner(element))
+                {
+                    CompositionTarget.Rendering -= CompositionTarget_Rendering;
+                    CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-                DragAdorner = new DanceDragAdorner(element) { Opacity = GetDragAdornerOpacity(element) };
-                DragAdornerLayer = AdornerLayer.GetAdornerLayer(window.Content as FrameworkElement);
-                DragAdornerLayer.Add(DragAdorner);
+                    DragAdorner = new DanceDragAdorner(element) { Opacity = GetDragAdornerOpacity(element) };
+                    DragAdornerLayer = AdornerLayer.GetAdornerLayer(window.Content as FrameworkElement);
+                    DragAdornerLayer.Add(DragAdorner);
+                }
 
                 DragDrop.DoDragDrop(element, args.Data, args.Effects);
             }

@@ -43,30 +43,6 @@ namespace Dance.Wpf
         // =======================================================================================
         // Property 
 
-        #region SelectedValue -- 当前选中项
-
-        /// <summary>
-        /// 当前选中项
-        /// </summary>
-        public object SelectedValue
-        {
-            get { return (object)GetValue(SelectedValueProperty); }
-            private set { SetValue(SelectedValuePropertyKey, value); }
-        }
-
-        /// <summary>
-        /// 当前选中项
-        /// </summary>
-        public static readonly DependencyPropertyKey SelectedValuePropertyKey =
-            DependencyProperty.RegisterReadOnly("SelectedValue", typeof(object), typeof(DanceTreeView), new PropertyMetadata(null));
-
-        /// <summary>
-        /// 当前选中项
-        /// </summary>
-        public static readonly DependencyProperty SelectedValueProperty = SelectedValuePropertyKey.DependencyProperty;
-
-        #endregion
-
         #region IsMultiSelection -- 是否是多选
 
         /// <summary>
@@ -85,6 +61,26 @@ namespace Dance.Wpf
             DependencyProperty.Register("IsMultiSelection", typeof(bool), typeof(DanceTreeView), new PropertyMetadata(false));
 
         #endregion
+
+        /// <summary>
+        /// 获取选中项的值
+        /// </summary>
+        public List<object> GetSelectedValues()
+        {
+            List<object> result = new();
+
+            if (this.SelectedNodes.Count == 0)
+            {
+                return result;
+            }
+
+            foreach (DanceTreeViewItem item in this.SelectedNodes)
+            {
+                result.Add(item.DataContext);
+            }
+
+            return result;
+        }
 
         // =======================================================================================
         // Override Function
@@ -310,5 +306,6 @@ namespace Dance.Wpf
 
             return result;
         }
+
     }
 }

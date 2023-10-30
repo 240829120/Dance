@@ -148,5 +148,12 @@ namespace Dance.Wpf
 
             this.IsDragOver = false;
         }
+
+        protected override void OnDrop(DragEventArgs e)
+        {
+            base.OnDrop(e);
+
+            this.IsDragOver = false;
+        }
     }
 }
