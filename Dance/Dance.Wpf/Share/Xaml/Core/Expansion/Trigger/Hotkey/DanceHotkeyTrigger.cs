@@ -128,6 +128,9 @@ namespace Dance.Wpf
                             {
                                 try
                                 {
+                                    if (!item.Command.CanExecute(item.CommandParameter))
+                                        continue;
+
                                     item.Command.Execute(item.CommandParameter);
                                 }
                                 catch (Exception ex)
