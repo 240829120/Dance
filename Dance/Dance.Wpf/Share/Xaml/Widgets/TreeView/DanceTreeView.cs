@@ -28,7 +28,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 当前选中的节点集合
         /// </summary>
-        private List<DanceTreeViewItem> SelectedNodes = new();
+        private readonly List<DanceTreeViewItem> SelectedNodes = new();
 
         /// <summary>
         /// 用于标记Shift键的节点
@@ -251,7 +251,7 @@ namespace Dance.Wpf
             // 加选
             if (this.IsMultiSelection && Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
             {
-                this.UpdateSelectionAfter_Add(item);
+                this.UpdateSelectionAfter_Add();
                 return;
             }
 
@@ -280,8 +280,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 更新选择区域 -- 后置 -- 加选
         /// </summary>
-        /// <param name="item">节点</param>
-        private void UpdateSelectionAfter_Add(DanceTreeViewItem item)
+        private void UpdateSelectionAfter_Add()
         {
             if (this.ControlCancelSelectedNode != null)
             {

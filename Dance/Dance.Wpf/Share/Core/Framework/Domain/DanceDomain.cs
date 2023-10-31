@@ -24,6 +24,8 @@ namespace Dance.Wpf
             this.Builders.Add(new DanceDomainBuilder_SingletonProcess());
             // 日志
             this.Builders.Add(new DanceDomainBuilder_Log());
+            // 释放
+            this.Builders.Add(new DanceDomainBuilder_Dispose());
             // 操作日志
             this.Builders.Add(new DanceDomainBuilder_Record());
             // 延时
