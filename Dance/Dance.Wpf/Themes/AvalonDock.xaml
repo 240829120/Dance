@@ -44,6 +44,30 @@
         </Style.Triggers>
     </Style>
 
+    <Style x:Key="AvalonDockToolToggleButton" TargetType="ToggleButton">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Width" Value="20"></Setter>
+        <Setter Property="Height" Value="20"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ToggleButton">
+                    <Border BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH_MOUSE_OVER}}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <Style TargetType="{x:Type avalonDockControls:ContextMenuEx}">
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
         <Setter Property="FontFamily" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_FAMILY}}"/>
@@ -109,7 +133,7 @@
 								x:Name="MenuDropDownButton"
 								Grid.Column="1"
 								Focusable="False"
-								Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
+								Style="{StaticResource AvalonDockToolToggleButton}">
                                 <avalonDockControls:DropDownButton.DropDownContextMenu>
                                     <avalonDockControls:ContextMenuEx ItemsSource="{Binding Model.ChildrenSorted, RelativeSource={RelativeSource TemplatedParent}}">
                                         <avalonDockControls:ContextMenuEx.ItemContainerStyle>
@@ -123,7 +147,7 @@
                                         </avalonDockControls:ContextMenuEx.ItemContainerStyle>
                                     </avalonDockControls:ContextMenuEx>
                                 </avalonDockControls:DropDownButton.DropDownContextMenu>
-                                <Border Background="White">
+                                <Border Background="Transparent">
                                     <Path x:Name="MenuDropDownButtonImage" Height="8" HorizontalAlignment="Center" VerticalAlignment="Center" Data="{StaticResource PinDocMenu}" Stretch="Uniform" 
 									      Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}"/>
                                 </Border>
@@ -390,7 +414,7 @@
 								DropDownContextMenu="{Binding Model.Root.Manager.AnchorableContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
 								DropDownContextMenuDataContext="{Binding Path=LayoutItem, RelativeSource={RelativeSource TemplatedParent}}"
 								Focusable="False"
-								Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+								Style="{StaticResource AvalonDockToolToggleButton}"
 								ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_CxMenu_Hint}">
                                 <Border Background="Transparent">
                                     <Path x:Name="PART_ImgPinMenu" Margin="0,0,0,1" Width="8" Height="8" Stretch="Uniform"
@@ -1202,7 +1226,7 @@
 										DropDownContextMenu="{Binding Model.Root.Manager.AnchorableContextMenu, RelativeSource={RelativeSource TemplatedParent}}"
 										DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}"
 										Focusable="False"
-										Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
+										Style="{StaticResource AvalonDockToolToggleButton}"
 										ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_CxMenu_Hint}"
 										Visibility="{Binding Path=Model.IsSinglePane, RelativeSource={RelativeSource TemplatedParent}, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                         <Path x:Name="PART_ImgPinMenu" Margin="0,0,0,1" Width="8" Height="8" Data="{StaticResource PinMenu}" Stretch="Uniform"
