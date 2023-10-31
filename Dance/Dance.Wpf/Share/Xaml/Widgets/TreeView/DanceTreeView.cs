@@ -141,7 +141,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 鼠标左键抬起
         /// </summary>
-        protected override void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e)
+        protected override void OnPreviewMouseUp(MouseButtonEventArgs e)
         {
             if (e.OriginalSource is not FrameworkElement element || DanceXamlExpansion.GetVisualTreeParent<DanceTreeViewItem>(element) is not DanceTreeViewItem item)
                 return;
