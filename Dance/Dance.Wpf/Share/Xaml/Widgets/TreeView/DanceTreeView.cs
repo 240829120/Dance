@@ -82,6 +82,19 @@ namespace Dance.Wpf
             return result;
         }
 
+        /// <summary>
+        /// 清理选中项
+        /// </summary>
+        public void ClearSelected()
+        {
+            foreach (DanceTreeViewItem item in this.SelectedNodes)
+            {
+                item.IsSelected = false;
+            }
+
+            this.SelectedNodes.Clear();
+        }
+
         // =======================================================================================
         // Override Function
 
@@ -111,6 +124,7 @@ namespace Dance.Wpf
                 return;
 
             item.IsExpanded = !item.IsExpanded;
+            e.Handled = true;
         }
 
         /// <summary>
