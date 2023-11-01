@@ -15,44 +15,83 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceMenuTrigger : DependencyObject
     {
-        #region IsSubmenuOpenedUpdateStatus -- 子菜单打开时更新状态
+        #region IsMenuOpendUpdateStatus -- 菜单打开时更新状态
 
         /// <summary>
-        /// 获取子菜单打开时更新命令
+        /// 获取菜单打开时更新状态
         /// </summary>
-        public static bool GetIsSubmenuOpenedUpdateStatus(DependencyObject obj)
+        public static bool GetIsMenuOpendUpdateStatus(DependencyObject obj)
         {
-            return (bool)obj.GetValue(IsSubmenuOpenedUpdateStatusProperty);
+            return (bool)obj.GetValue(IsMenuOpendUpdateStatusProperty);
         }
 
         /// <summary>
-        /// 设置子菜单打开时更新命令
+        /// 设置菜单打开时更新状态
         /// </summary>
-        public static void SetIsSubmenuOpenedUpdateStatus(DependencyObject obj, bool value)
+        public static void SetIsMenuOpendUpdateStatus(DependencyObject obj, bool value)
         {
-            obj.SetValue(IsSubmenuOpenedUpdateStatusProperty, value);
+            obj.SetValue(IsMenuOpendUpdateStatusProperty, value);
         }
 
         /// <summary>
-        /// 子菜单打开时更新命令
+        /// 菜单打开时更新状态
         /// </summary>
-        public static readonly DependencyProperty IsSubmenuOpenedUpdateStatusProperty =
-            DependencyProperty.RegisterAttached("IsSubmenuOpenedUpdateStatus", typeof(bool), typeof(DanceMenuTrigger), new PropertyMetadata(false, new PropertyChangedCallback((s, e) =>
+        public static readonly DependencyProperty IsMenuOpendUpdateStatusProperty =
+            DependencyProperty.RegisterAttached("IsMenuOpendUpdateStatus", typeof(bool), typeof(DanceMenuTrigger), new PropertyMetadata(false, new PropertyChangedCallback((s, e) =>
             {
-                if (s is not MenuItem menuItem)
-                    return;
+                bool register = false;
+                if (e.NewValue is bool newValue)
+                {
+                    register = newValue;
+                }
 
-                menuItem.SubmenuOpened -= MenuItem_SubmenuOpened;
-                menuItem.SubmenuOpened += MenuItem_SubmenuOpened;
+                if (s is MenuItem menuItem)
+                {
+                    menuItem.SubmenuOpened -= MenuItem_SubmenuOpened;
+                    if (register)
+                    {
+                        menuItem.SubmenuOpened += MenuItem_SubmenuOpened;
+                    }
+                }
+
+                if (s is ContextMenu contextMenu)
+                {
+                    contextMenu.Opened -= ContextMenu_Opened;
+                    if (register)
+                    {
+                        contextMenu.Opened += ContextMenu_Opened;
+                    }
+                }
 
             })));
 
+
+        /// <summary>
+        /// 子菜单打开
+        /// </summary>
         private static void MenuItem_SubmenuOpened(object sender, RoutedEventArgs e)
         {
-            if (sender is not MenuItem menuItem)
+            if (sender is not MenuItem menu)
                 return;
 
-            foreach (object obj in menuItem.Items)
+            foreach (object obj in menu.Items)
+            {
+                if (obj is not MenuItem item || item.Command is not IRelayCommand cmd)
+                    continue;
+
+                cmd.NotifyCanExecuteChanged();
+            }
+        }
+
+        /// <summary>
+        /// 右键菜单打开
+        /// </summary>
+        private static void ContextMenu_Opened(object sender, RoutedEventArgs e)
+        {
+            if (sender is not ContextMenu menu)
+                return;
+
+            foreach (object obj in menu.Items)
             {
                 if (obj is not MenuItem item || item.Command is not IRelayCommand cmd)
                     continue;
@@ -62,5 +101,6 @@ namespace Dance.Wpf
         }
 
         #endregion
+
     }
 }

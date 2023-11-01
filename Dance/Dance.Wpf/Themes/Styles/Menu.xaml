@@ -243,6 +243,7 @@
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="MinWidth" Value="60"></Setter>
         <Setter Property="MinHeight" Value="24"></Setter>
+        <Setter Property="dance:DanceMenuTrigger.IsMenuOpendUpdateStatus" Value="True"></Setter>
         <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
@@ -294,6 +295,7 @@
         <Setter Property="HasDropShadow" Value="True"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+        <Setter Property="dance:DanceMenuTrigger.IsMenuOpendUpdateStatus" Value="True"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ContextMenu}">
