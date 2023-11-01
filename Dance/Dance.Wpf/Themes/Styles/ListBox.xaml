@@ -17,7 +17,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true"
-                            Padding="{TemplateBinding Padding}">
+                            Padding="{TemplateBinding Padding}" UseLayoutRounding="True">
                         <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
                                           SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                     </Border>
@@ -51,7 +51,7 @@
                         <ScrollViewer x:Name="_tv_scrollviewer_" Background="{TemplateBinding Background}" CanContentScroll="false" Focusable="false" 
                                       HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}" Padding="{TemplateBinding Padding}" 
                                       SnapsToDevicePixels="True" VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
-                            <Grid>
+                            <Grid UseLayoutRounding="True" SnapsToDevicePixels="True">
                                 <dance:DanceShuttle UnitLength="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
                                                     Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=ListBox,Mode=FindAncestor}}" 
                                                     Orientation="Vertical" 
