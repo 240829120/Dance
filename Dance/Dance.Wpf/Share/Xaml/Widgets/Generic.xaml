@@ -7,6 +7,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/TreeView/DanceTreeView.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/WindowPart/DanceWindowPart.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/DataGrid/DanceDataGrid.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/GroupBox/DanceGroupBox.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/QRCoder/DanceQRCoder.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/MessageBox/DanceMessageBox.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>

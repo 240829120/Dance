@@ -24,10 +24,9 @@
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <ContentPresenter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-
+                        <ContentPresenter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
                         <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stroke="{TemplateBinding BorderBrush}"></dance:DanceDashedLine>
-                        <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" Grid.Column="1"
+                        <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="True" Grid.Column="1"
                                           VerticalAlignment="Center" Margin="5,0,5,0" 
                                           TextBlock.FontSize="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}}"/>
                         <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="2" Stroke="{TemplateBinding BorderBrush}"></dance:DanceDashedLine>

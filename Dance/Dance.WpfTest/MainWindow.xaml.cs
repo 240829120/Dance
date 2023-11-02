@@ -26,6 +26,18 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace Dance.WpfTest
 {
+    public class TestItem : DanceModel
+    {
+        public string? Name { get; set; }
+    }
+
+    public class TestGroup : DanceModel
+    {
+        public string? Name { get; set; }
+
+        public List<TestItem>? Items { get; set; }
+    }
+
     public class MainWindowModel : DanceViewModel
     {
         public MainWindowModel()
@@ -51,7 +63,7 @@ namespace Dance.WpfTest
             if (e == null)
                 return;
 
-            string? data = e.Data.GetData(typeof(string))?.ToString();
+            string? data = e.EventArgs.Data.GetData(typeof(string))?.ToString();
             DanceMessageExpansion.ShowNotify(ToolTipIcon.Info, "测试", data ?? string.Empty);
         }
     }
@@ -67,7 +79,30 @@ namespace Dance.WpfTest
 
             this.DataContext = new MainWindowModel();
 
+            this.Loaded += MainWindow_Loaded;
             this.Closed += MainWindow_Closed;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            List<TestGroup> groups = new();
+            groups.Add(new TestGroup { Name = "Group 1" });
+            groups.Add(new TestGroup { Name = "Group 2" });
+            groups.Add(new TestGroup { Name = "Group 3" });
+
+            groups[0].Items = new List<TestItem>();
+            groups[0].Items.Add(new TestItem { Name = "Item 1 -- 1" });
+            groups[0].Items.Add(new TestItem { Name = "Item 1 -- 2" });
+
+            groups[1].Items = new List<TestItem>();
+            groups[1].Items.Add(new TestItem { Name = "Item 2 -- 1" });
+            groups[1].Items.Add(new TestItem { Name = "Item 2 -- 2" });
+
+            groups[2].Items = new List<TestItem>();
+            groups[2].Items.Add(new TestItem { Name = "Item 3 -- 1" });
+            groups[2].Items.Add(new TestItem { Name = "Item 3 -- 2" });
+
+            this.groupBox.ItemsSource = groups;
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

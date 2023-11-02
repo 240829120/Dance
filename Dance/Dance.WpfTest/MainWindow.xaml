@@ -7,54 +7,29 @@
         xmlns:local="clr-namespace:Dance.WpfTest" 
         xmlns:dock="https://github.com/Dirkster99/AvalonDock"
         WindowStartupLocation="CenterScreen"
-        mc:Ignorable="d" Background="White"
+        mc:Ignorable="d" Background="White" x:Name="uc"
         Title="MainWindow" Height="800" Width="1400">
     <Grid Background="Transparent">
-        <dock:DockingManager Margin="5">
-            <LayoutRoot>
-                <LayoutPanel Orientation="Horizontal">
-                    <LayoutPanel Orientation="Vertical">
-                        <LayoutDocumentPane>
-                            <LayoutDocument Title="doc1111111111111111">
-                                <TextBlock Text="doc1"></TextBlock>
-                            </LayoutDocument>
-                            <LayoutDocument Title="doc22222222">
-                                <TextBlock Text="doc2"></TextBlock>
-                            </LayoutDocument>
-                            <LayoutDocument Title="doc3">
-                                <TextBlock Text="doc3"></TextBlock>
-                            </LayoutDocument>
-                            <LayoutDocument Title="doc4444444">
-                                <TextBlock Text="doc4"></TextBlock>
-                            </LayoutDocument>
-                        </LayoutDocumentPane>
-                        <LayoutAnchorablePaneGroup DockHeight="128" Orientation="Horizontal">
-                            <LayoutAnchorablePane Name="ErrorsPane">
-                                <LayoutAnchorable Title="ErrorsPane">
-                                    <TextBlock Text="ErrorsPane"></TextBlock>
-                                </LayoutAnchorable>
-                            </LayoutAnchorablePane>
-                            <LayoutAnchorablePane Name="OutputPane">
-                                <LayoutAnchorable Title="OutputPane">
-                                    <TextBlock Text="OutputPane"></TextBlock>
-                                </LayoutAnchorable>
-                            </LayoutAnchorablePane>
-                        </LayoutAnchorablePaneGroup>
-                    </LayoutPanel>
-                    <LayoutAnchorablePaneGroup DockWidth="256" Orientation="Vertical">
-                        <LayoutAnchorablePane Name="ExplorerPane" DockHeight="2*">
-                            <LayoutAnchorable Title="ExplorerPane">
-                                <TextBlock Text="ExplorerPane"></TextBlock>
-                            </LayoutAnchorable>
-                        </LayoutAnchorablePane>
-                        <LayoutAnchorablePane Name="PropertiesPane">
-                            <LayoutAnchorable Title="PropertiesPane">
-                                <TextBlock Text="PropertiesPane"></TextBlock>
-                            </LayoutAnchorable>
-                        </LayoutAnchorablePane>
-                    </LayoutAnchorablePaneGroup>
-                </LayoutPanel>
-            </LayoutRoot>
-        </dock:DockingManager>
+        <dance:DanceGroupBox x:Name="groupBox" GroupItemsSourcePath="Items" Margin="20">
+            <dance:DanceGroupBox.GroupHeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Path=Name}" Opacity="0.7" FontWeight="Bold"></TextBlock>
+                </DataTemplate>
+            </dance:DanceGroupBox.GroupHeaderTemplate>
+            <dance:DanceGroupBox.ItemTemplate>
+                <DataTemplate>
+                    <Border Background="Transparent"
+                            dance:DanceDragTrigger.DragBeginCommand="{Binding ElementName=uc, Path=DataContext.DragBeginCommand}"
+                            dance:DanceDragTrigger.DropCommand="{Binding ElementName=uc, Path=DataContext.DropCommand}">
+                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
+                    </Border>
+                </DataTemplate>
+            </dance:DanceGroupBox.ItemTemplate>
+            <dance:DanceGroupBox.GroupItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel></WrapPanel>
+                </ItemsPanelTemplate>
+            </dance:DanceGroupBox.GroupItemsPanel>
+        </dance:DanceGroupBox>
     </Grid>
 </Window>
