@@ -885,6 +885,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type avalonDockControls:LayoutDocumentControl}">
                     <Border
+                        Focusable="True"
+                        dance:DanceFocusTrigger.IsMouseDownFocus="True"
 						Background="{TemplateBinding Background}"
 						BorderBrush="{TemplateBinding BorderBrush}"
 						BorderThickness="{TemplateBinding BorderThickness}">
@@ -999,6 +1001,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type avalonDockControls:LayoutAnchorableControl}">
                     <Border x:Name="Bd"
+                        Focusable="True"
+                        dance:DanceFocusTrigger.IsMouseDownFocus="True"
 						Background="{TemplateBinding Background}"
                         BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
 						KeyboardNavigation.TabNavigation="Cycle">

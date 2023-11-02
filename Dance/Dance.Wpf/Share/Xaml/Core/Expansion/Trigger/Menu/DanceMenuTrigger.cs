@@ -79,7 +79,6 @@ namespace Dance.Wpf
                 if (obj is not MenuItem item || item.Command is not IRelayCommand cmd)
                     continue;
 
-                item.DataContext = menu.DataContext;
                 cmd.NotifyCanExecuteChanged();
             }
         }
@@ -97,7 +96,6 @@ namespace Dance.Wpf
                 if (obj is not MenuItem item || item.Command is not IRelayCommand cmd)
                     continue;
 
-                item.DataContext = menu.DataContext;
                 cmd.NotifyCanExecuteChanged();
             }
         }
