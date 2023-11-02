@@ -9,7 +9,7 @@ using System.Windows.Data;
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 
+    /// 算法
     /// </summary>
     public enum DanceSimpleMathConverterType
     {
