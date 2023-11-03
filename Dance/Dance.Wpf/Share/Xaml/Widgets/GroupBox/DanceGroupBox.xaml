@@ -9,6 +9,7 @@
         <Setter Property="BorderThickness" Value="0"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
         <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="ContextMenu" Value="{Binding Path=GroupItemContextMenu,RelativeSource={RelativeSource AncestorType=dance:DanceGroupBox,Mode=FindAncestor}}"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceGroupItem">
@@ -31,8 +32,10 @@
         <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="ItemTemplate" Value="{Binding Path=GroupItemTemplate,RelativeSource={RelativeSource AncestorType=dance:DanceGroupBox,Mode=FindAncestor}}"></Setter>
         <Setter Property="ItemsPanel" Value="{Binding Path=GroupItemsPanel,RelativeSource={RelativeSource AncestorType=dance:DanceGroupBox,Mode=FindAncestor}}"></Setter>
+        <Setter Property="ContextMenu" Value="{Binding Path=GroupContextMenu,RelativeSource={RelativeSource AncestorType=dance:DanceGroupBox,Mode=FindAncestor}}"></Setter>
         <Setter Property="Padding" Value="0"></Setter>
         <Setter Property="Margin" Value="0,5,0,5"></Setter>
+        <Setter Property="MinHeight" Value="80"></Setter>
         <Setter Property="AllowDrop" Value="True"></Setter>
         <Setter Property="ItemsSource">
             <Setter.Value>
@@ -49,23 +52,28 @@
                         <Grid.RowDefinitions>
                             <RowDefinition MinHeight="30"/>
                             <RowDefinition Height="*"/>
+                            <RowDefinition MinHeight="10"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="24"></ColumnDefinition>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <ItemsPresenter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
-
                         <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stroke="{TemplateBinding BorderBrush}"
                                                StrokeDashArray="5 5"></dance:DanceDashedLine>
                         <ContentControl x:Name="header" SnapsToDevicePixels="True" Grid.Column="1"
                                         VerticalAlignment="Center" Margin="5,0,5,0" 
                                         TextBlock.FontSize="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE_HEADER}}"
+                                        TextBlock.Foreground="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
                                         ContentTemplate="{Binding Path=GroupHeaderTemplate,RelativeSource={RelativeSource AncestorType=dance:DanceGroupBox,Mode=FindAncestor}}"
                                         Content="{Binding }"/>
                         <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="2" Stroke="{TemplateBinding BorderBrush}"
                                                StrokeDashArray="5 5"></dance:DanceDashedLine>
+
+                        <ItemsPresenter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
+
+                        <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stroke="{TemplateBinding BorderBrush}"
+                                               StrokeDashArray="5 5" Grid.Row="2" Grid.ColumnSpan="3"></dance:DanceDashedLine>
                     </Grid>
 
                     <ControlTemplate.Triggers>

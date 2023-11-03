@@ -15,17 +15,28 @@ namespace Dance.Wpf
     /// </summary>
     public partial class DanceDragAdorner : Adorner
     {
-        public DanceDragAdorner(UIElement adornedElement) : base(adornedElement)
+        /// <summary>
+        /// 拖拽装饰器
+        /// </summary>
+        /// <param name="adornedElement">元素</param>
+        /// <param name="background">背景</param>
+        public DanceDragAdorner(UIElement adornedElement, Brush? background) : base(adornedElement)
         {
             this.IsHitTestVisible = false;
             this.VisualBrush = new VisualBrush(adornedElement);
             this.VisualPen = new Pen(Brushes.Transparent, 0);
+            this.Background = background;
         }
 
         /// <summary>
         /// 虚拟画刷
         /// </summary>
         private readonly VisualBrush VisualBrush;
+
+        /// <summary>
+        /// 背景
+        /// </summary>
+        private readonly Brush? Background;
 
         /// <summary>
         /// 虚拟画笔
@@ -46,6 +57,10 @@ namespace Dance.Wpf
             Point pos = PointFromScreen(new Point(screenPos.X, screenPos.Y));
             Rect rect = new(pos.X, pos.Y, element.ActualWidth, element.ActualHeight);
             drawingContext.PushOpacity(1);
+            if (this.Background != null)
+            {
+                drawingContext.DrawRectangle(this.Background, this.VisualPen, rect);
+            }
             drawingContext.DrawRectangle(this.VisualBrush, this.VisualPen, rect);
             drawingContext.Pop();
         }

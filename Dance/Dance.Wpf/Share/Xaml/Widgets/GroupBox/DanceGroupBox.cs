@@ -95,6 +95,44 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region GroupContextMenu -- 分组右键菜单
+
+        /// <summary>
+        /// 分组右键菜单
+        /// </summary>
+        public ContextMenu GroupContextMenu
+        {
+            get { return (ContextMenu)GetValue(GroupContextMenuProperty); }
+            set { SetValue(GroupContextMenuProperty, value); }
+        }
+
+        /// <summary>
+        /// 分组右键菜单
+        /// </summary>
+        public static readonly DependencyProperty GroupContextMenuProperty =
+            DependencyProperty.Register("GroupContextMenu", typeof(ContextMenu), typeof(DanceGroupBox), new PropertyMetadata(null));
+
+        #endregion
+
+        #region GroupItemContextMenu -- 分组项右键菜单
+
+        /// <summary>
+        /// 分组项右键菜单
+        /// </summary>
+        public ContextMenu GroupItemContextMenu
+        {
+            get { return (ContextMenu)GetValue(GroupItemContextMenuProperty); }
+            set { SetValue(GroupItemContextMenuProperty, value); }
+        }
+
+        /// <summary>
+        /// 分组项右键菜单
+        /// </summary>
+        public static readonly DependencyProperty GroupItemContextMenuProperty =
+            DependencyProperty.Register("GroupItemContextMenu", typeof(ContextMenu), typeof(DanceGroupBox), new PropertyMetadata(null));
+
+        #endregion
+
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is DanceGroup;

@@ -114,6 +114,58 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region DragAdornerOwner -- 拖拽包装器所属元素
+
+        /// <summary>
+        /// 获取拖拽包装器所属元素
+        /// </summary>
+        public static FrameworkElement GetDragAdornerOwner(DependencyObject obj)
+        {
+            return (FrameworkElement)obj.GetValue(DragAdornerOwnerProperty);
+        }
+
+        /// <summary>
+        /// 设置拖拽包装器所属元素
+        /// </summary>
+        public static void SetDragAdornerOwner(DependencyObject obj, FrameworkElement value)
+        {
+            obj.SetValue(DragAdornerOwnerProperty, value);
+        }
+
+        /// <summary>
+        /// 拖拽包装器所属元素
+        /// </summary>
+        public static readonly DependencyProperty DragAdornerOwnerProperty =
+            DependencyProperty.RegisterAttached("DragAdornerOwner", typeof(FrameworkElement), typeof(DanceDragTrigger), new PropertyMetadata(null));
+
+        #endregion
+
+        #region DragAdornerBackground -- 拖拽包装器背景
+
+        /// <summary>
+        /// 获取拖拽包装器背景
+        /// </summary>
+        public static Brush GetDragAdornerBackground(DependencyObject obj)
+        {
+            return (Brush)obj.GetValue(DragAdornerBackgroundProperty);
+        }
+
+        /// <summary>
+        /// 设置拖拽包装器背景
+        /// </summary>
+        public static void SetDragAdornerBackground(DependencyObject obj, Brush value)
+        {
+            obj.SetValue(DragAdornerBackgroundProperty, value);
+        }
+
+        /// <summary>
+        /// 拖拽包装器背景
+        /// </summary>
+        public static readonly DependencyProperty DragAdornerBackgroundProperty =
+            DependencyProperty.RegisterAttached("DragAdornerBackground", typeof(Brush), typeof(DanceDragTrigger), new PropertyMetadata(null));
+
+        #endregion
+
         #region DragTriggerKind -- 拖拽触发类型
 
         /// <summary>
@@ -405,8 +457,7 @@ namespace Dance.Wpf
         /// 源执行拖拽
         /// </summary>
         /// <param name="element">元素</param>
-        /// <param name="window">元素所属窗口</param>
-        private static void SourceElement_ExecuteDrag(FrameworkElement element, Window window)
+        private static void SourceElement_ExecuteDrag(FrameworkElement element)
         {
             try
             {
@@ -419,14 +470,17 @@ namespace Dance.Wpf
                     return;
 
                 SetIsDraging(element, true);
+                FrameworkElement? owner = GetDragAdornerOwner(element) ?? Window.GetWindow(element).Content as FrameworkElement;
+                Brush? background = GetDragAdornerBackground(element);
+                double opacity = GetDragAdornerOpacity(element);
 
-                if (GetIsUseDragAdorner(element))
+                if (GetIsUseDragAdorner(element) && owner != null)
                 {
                     CompositionTarget.Rendering -= CompositionTarget_Rendering;
                     CompositionTarget.Rendering += CompositionTarget_Rendering;
 
-                    DragAdorner = new DanceDragAdorner(element) { Opacity = GetDragAdornerOpacity(element) };
-                    DragAdornerLayer = AdornerLayer.GetAdornerLayer(window.Content as FrameworkElement);
+                    DragAdorner = new DanceDragAdorner(element, background) { Opacity = opacity };
+                    DragAdornerLayer = AdornerLayer.GetAdornerLayer(owner);
                     DragAdornerLayer.Add(DragAdorner);
                 }
 
@@ -452,14 +506,14 @@ namespace Dance.Wpf
         /// </summary>
         private static void SourceElement_MouseLeave(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
+            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null)
                 return;
 
             if (!GetIsWaitDraging(element))
                 return;
 
             SetIsWaitDraging(element, false);
-            SourceElement_ExecuteDrag(element, window);
+            SourceElement_ExecuteDrag(element);
         }
 
         /// <summary>
@@ -467,10 +521,10 @@ namespace Dance.Wpf
         /// </summary>
         private static void SourceElement_MouseMove(object sender, MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null || Window.GetWindow(element) is not Window window)
+            if (e.LeftButton != MouseButtonState.Pressed || sender is not FrameworkElement element || DragAdorner != null)
                 return;
 
-            SourceElement_ExecuteDrag(element, window);
+            SourceElement_ExecuteDrag(element);
         }
 
         /// <summary>
