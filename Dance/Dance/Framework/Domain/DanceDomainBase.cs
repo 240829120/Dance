@@ -44,7 +44,7 @@ namespace Dance
         /// <summary>
         /// 构建
         /// </summary>
-        public void Build()
+        public virtual void Build()
         {
 #if DEBUG
             Stopwatch stopwatch = new();
