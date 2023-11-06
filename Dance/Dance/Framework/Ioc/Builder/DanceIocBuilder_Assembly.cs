@@ -24,7 +24,6 @@ namespace Dance
             List<Assembly> assemblies = new();
 
             files.AddRange(Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll").Where(p => Path.GetFileName(p).StartsWith(assemblyPrefix)));
-            files.AddRange(Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.exe").Where(p => Path.GetFileName(p).StartsWith(assemblyPrefix)));
 
             assemblies.AddRange(files.Select(p => Assembly.Load(AssemblyName.GetAssemblyName(p))));
 
