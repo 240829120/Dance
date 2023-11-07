@@ -18,8 +18,11 @@ namespace Dance
         /// <typeparam name="T">元素类型</typeparam>
         /// <param name="collection">列表</param>
         /// <param name="items">项集合</param>
-        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> items)
+        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T>? items)
         {
+            if (items == null)
+                return;
+
             foreach (T item in items)
             {
                 collection.Add(item);
