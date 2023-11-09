@@ -6,30 +6,16 @@
         xmlns:dance="http://schemas.dance.com/wpf"
         xmlns:local="clr-namespace:Dance.WpfTest" 
         xmlns:dock="https://github.com/Dirkster99/AvalonDock"
+        xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Background="White" x:Name="uc"
         Title="MainWindow" Height="800" Width="1400">
+
+    <Window.Resources>
+        <ResourceDictionary Source="pack://application:,,,/Dance.Wpf;component/Themes/ToolKit/PropertyGrid.xaml"></ResourceDictionary>
+    </Window.Resources>
+
     <Grid Background="Transparent">
-        <dance:DanceGroupBox x:Name="groupBox" GroupItemsSourcePath="Items" Margin="20">
-            <dance:DanceGroupBox.GroupHeaderTemplate>
-                <DataTemplate>
-                    <TextBlock Text="{Binding Path=Name}" Opacity="0.7" FontWeight="Bold"></TextBlock>
-                </DataTemplate>
-            </dance:DanceGroupBox.GroupHeaderTemplate>
-            <dance:DanceGroupBox.ItemTemplate>
-                <DataTemplate>
-                    <Border Background="Transparent"
-                            dance:DanceDragTrigger.DragBeginCommand="{Binding ElementName=uc, Path=DataContext.DragBeginCommand}"
-                            dance:DanceDragTrigger.DropCommand="{Binding ElementName=uc, Path=DataContext.DropCommand}">
-                        <TextBlock Text="{Binding Path=Name}"></TextBlock>
-                    </Border>
-                </DataTemplate>
-            </dance:DanceGroupBox.ItemTemplate>
-            <dance:DanceGroupBox.GroupItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel></WrapPanel>
-                </ItemsPanelTemplate>
-            </dance:DanceGroupBox.GroupItemsPanel>
-        </dance:DanceGroupBox>
+        <toolkit:PropertyGrid x:Name="propertyGrid"></toolkit:PropertyGrid>
     </Grid>
 </Window>

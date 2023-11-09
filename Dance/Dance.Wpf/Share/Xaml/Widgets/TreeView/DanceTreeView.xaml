@@ -14,7 +14,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
                     <Border Background="Transparent">
-                        <Path x:Name="ExpandPath"  RenderTransformOrigin="0.5 0.5" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        <Path x:Name="ExpandPath" RenderTransformOrigin="0.5 0.5" HorizontalAlignment="Center" VerticalAlignment="Center"
                               Data="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.PATH_ARROW_MARK}}" 
                               Fill="{TemplateBinding Foreground}">
                             <Path.RenderTransform>

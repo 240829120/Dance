@@ -33,11 +33,24 @@
 	  <None Remove="Themes\Resources\Icon\info.svg" />
 	  <None Remove="Themes\Resources\Icon\success.svg" />
 	  <None Remove="Themes\Resources\Icon\warning.svg" />
+	  <None Remove="Themes\ToolKit\Images\AdvancedProperties11.png" />
+	  <None Remove="Themes\ToolKit\Images\Categorize16.png" />
+	  <None Remove="Themes\ToolKit\Images\ClearFilter16.png" />
+	  <None Remove="Themes\ToolKit\Images\ClearFilter16_Green.png" />
+	  <None Remove="Themes\ToolKit\Images\ClearFilter16_White.png" />
+	  <None Remove="Themes\ToolKit\Images\Database11.png" />
+	  <None Remove="Themes\ToolKit\Images\Inheritance11.png" />
+	  <None Remove="Themes\ToolKit\Images\Local11.png" />
+	  <None Remove="Themes\ToolKit\Images\Resource11.png" />
+	  <None Remove="Themes\ToolKit\Images\SortAscending16.png" />
+	  <None Remove="Themes\ToolKit\Images\SortAscending16_White.png" />
+	  <None Remove="Themes\ToolKit\Images\Style11.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Aether.Physics2D" Version="2.0.0" />
 		<PackageReference Include="Dirkster.AvalonDock" Version="4.72.1" />
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.5.1" />
 		<PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
 		<PackageReference Include="MouseKeyHook" Version="5.7.1" />
 		<PackageReference Include="QRCoder" Version="1.4.3" />
@@ -55,6 +68,18 @@
 	  <Resource Include="Themes\Resources\Icon\info.svg" />
 	  <Resource Include="Themes\Resources\Icon\success.svg" />
 	  <Resource Include="Themes\Resources\Icon\warning.svg" />
+	  <Resource Include="Themes\ToolKit\Images\AdvancedProperties11.png" />
+	  <Resource Include="Themes\ToolKit\Images\Categorize16.png" />
+	  <Resource Include="Themes\ToolKit\Images\ClearFilter16.png" />
+	  <Resource Include="Themes\ToolKit\Images\ClearFilter16_Green.png" />
+	  <Resource Include="Themes\ToolKit\Images\ClearFilter16_White.png" />
+	  <Resource Include="Themes\ToolKit\Images\Database11.png" />
+	  <Resource Include="Themes\ToolKit\Images\Inheritance11.png" />
+	  <Resource Include="Themes\ToolKit\Images\Local11.png" />
+	  <Resource Include="Themes\ToolKit\Images\Resource11.png" />
+	  <Resource Include="Themes\ToolKit\Images\SortAscending16.png" />
+	  <Resource Include="Themes\ToolKit\Images\SortAscending16_White.png" />
+	  <Resource Include="Themes\ToolKit\Images\Style11.png" />
 	</ItemGroup>
 
 	<ItemGroup>
