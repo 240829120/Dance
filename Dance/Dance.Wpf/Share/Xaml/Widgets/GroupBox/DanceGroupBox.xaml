@@ -53,7 +53,6 @@
                         <Grid.RowDefinitions>
                             <RowDefinition MinHeight="30"/>
                             <RowDefinition Height="*"/>
-                            <RowDefinition MinHeight="10"/>
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="24"></ColumnDefinition>
@@ -72,12 +71,13 @@
                                                StrokeDashArray="5 5"></dance:DanceDashedLine>
 
                         <ItemsPresenter Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="True"/>
-
-                        <dance:DanceDashedLine Height="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Stroke="{TemplateBinding BorderBrush}"
-                                               StrokeDashArray="5 5" Grid.Row="2" Grid.ColumnSpan="3"></dance:DanceDashedLine>
                     </Grid>
 
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
+                            <Setter TargetName="header" Property="TextBlock.Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
+                        </Trigger>
                         <Trigger Property="IsDragOver" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
                             <Setter TargetName="header" Property="TextBlock.Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
