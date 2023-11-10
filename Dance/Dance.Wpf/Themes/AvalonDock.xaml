@@ -447,7 +447,7 @@
 								ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnClose_Hint}"
 								Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={avalonDockConverters:BoolToVisibilityConverter}}">
                                 <Border Background="Transparent">
-                                    <Path x:Name="PART_ImgHidePin" Width="10" Height="10" Margin="1,0,0,1" VerticalAlignment="Center"
+                                    <Path x:Name="PART_ImgHidePin" Width="10" Height="10" VerticalAlignment="Center"
 									      Data="{StaticResource PinClose}" Stretch="Uniform"
 										  Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}"/>
                                 </Border>
@@ -927,7 +927,7 @@
 									Style="{StaticResource AvalonDockToolButton}"
 									ToolTip="{x:Static avalonDockProperties:Resources.Document_Close}"
 									Visibility="Hidden">
-                                    <Path x:Name="PART_ImgPinClose" Width="10" Height="10" Margin="1,0,0,1" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                    <Path x:Name="PART_ImgPinClose" Width="10" Height="10" VerticalAlignment="Center" HorizontalAlignment="Center"
                                           Data="{StaticResource PinClose}" Stretch="Uniform"
 										  Fill="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}"/>
                                 </Button>
