@@ -16,6 +16,6 @@
     </Window.Resources>
 
     <Grid Background="Transparent">
-        <toolkit:PropertyGrid x:Name="propertyGrid"></toolkit:PropertyGrid>
+        <toolkit:PropertyGrid x:Name="propertyGrid" Margin="20"></toolkit:PropertyGrid>
     </Grid>
 </Window>

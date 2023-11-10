@@ -33,6 +33,7 @@
 	  <None Remove="Themes\Resources\Icon\info.svg" />
 	  <None Remove="Themes\Resources\Icon\success.svg" />
 	  <None Remove="Themes\Resources\Icon\warning.svg" />
+	  <None Remove="Themes\ToolKit\Icons\ClearFilter16.svg" />
 	  <None Remove="Themes\ToolKit\Images\AdvancedProperties11.png" />
 	  <None Remove="Themes\ToolKit\Images\Categorize16.png" />
 	  <None Remove="Themes\ToolKit\Images\ClearFilter16.png" />
@@ -68,6 +69,7 @@
 	  <Resource Include="Themes\Resources\Icon\info.svg" />
 	  <Resource Include="Themes\Resources\Icon\success.svg" />
 	  <Resource Include="Themes\Resources\Icon\warning.svg" />
+	  <Resource Include="Themes\ToolKit\Icons\ClearFilter16.svg" />
 	  <Resource Include="Themes\ToolKit\Images\AdvancedProperties11.png" />
 	  <Resource Include="Themes\ToolKit\Images\Categorize16.png" />
 	  <Resource Include="Themes\ToolKit\Images\ClearFilter16.png" />

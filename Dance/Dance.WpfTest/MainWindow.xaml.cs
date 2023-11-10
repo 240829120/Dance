@@ -29,8 +29,35 @@ namespace Dance.WpfTest
 {
     public class Student
     {
+        [Category("基础"), Description("描述描述123")]
+        public string? Property_1_1 { get; set; }
+
+
         [Category("基础")]
-        public string? Name { get; set; }
+        public int Property_1_2 { get; set; }
+
+
+        [Category("基础")]
+        public string? Property_1_3 { get; set; }
+
+        [Category("基础")]
+        public string? Property_1_4 { get; set; }
+
+
+        [Category("基础2")]
+        public string? Property_2_1 { get; set; }
+
+        [Category("基础2")]
+        public string? Property_2_2 { get; set; }
+
+        [Category("基础2")]
+        public string? Property_2_3 { get; set; }
+
+        [Category("基础2")]
+        public string? Property_2_4 { get; set; }
+
+        [Category("基础2")]
+        public string? Property_2_5 { get; set; }
     }
 
     /// <summary>
