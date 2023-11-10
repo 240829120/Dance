@@ -1014,15 +1014,21 @@
                                           Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
                                           Visibility="{Binding ShowSummary, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" >
                             </GridSplitter>
-                            <StackPanel Grid.Row="4" Margin="0,0,0,5"
-                                        Visibility="{Binding ShowSummary, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
-                                <TextBlock Padding="2 2 2 0" FontWeight="Bold"
+
+                            <Grid Grid.Row="4" Margin="0,0,0,5"
+                                  Visibility="{Binding ShowSummary, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"></RowDefinition>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <TextBlock FontWeight="Bold" VerticalAlignment="Top" Margin="5"
                                            Text="{Binding SelectedPropertyItem.DisplayName, RelativeSource={RelativeSource TemplatedParent}}" >
                                 </TextBlock>
-                                <TextBlock Padding="5 2 2 0" TextWrapping="WrapWithOverflow"
+
+                                <TextBlock TextWrapping="WrapWithOverflow" Grid.Row="1" Margin="5" Opacity="0.7"
                                            Text="{Binding SelectedPropertyItem.Description, RelativeSource={RelativeSource TemplatedParent}}" >
                                 </TextBlock>
-                            </StackPanel>
+                            </Grid>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>

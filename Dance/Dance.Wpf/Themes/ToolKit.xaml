@@ -1,0 +1,13 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:dance="clr-namespace:Dance.Wpf">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/Glyphs.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/ButtonSpinner.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/NumericUpDown.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/PropertyGrid.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/WatermarkTextBox.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
+</ResourceDictionary>
