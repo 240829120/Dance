@@ -32,6 +32,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles.xaml"></ResourceDictionary>
         <ResourceDictionary Source="./NumericUpDown.xaml" />
         <ResourceDictionary Source="./WatermarkTextBox.xaml" />
+        <ResourceDictionary Source="./ColorPicker.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 
@@ -255,27 +256,21 @@
     </Style>
 
     <!-- PropertyGrid ColorPicker Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorColorPicker}"
-         BasedOn="{StaticResource {x:Type local:ColorPicker}}">
-        <Setter Property="DisplayColorAndName"
-            Value="True" />
-        <Setter Property="BorderThickness"
-            Value="0" />
+    <Style TargetType="{x:Type editor:PropertyGridEditorColorPicker}"
+           BasedOn="{StaticResource {x:Type local:ColorPicker}}">
+        <Setter Property="DisplayColorAndName" Value="True" />
+        <Setter Property="BorderBrush" Value="Transparent" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsKeyboardFocusWithin"
-                     Value="False" />
-                    <Condition Property="IsMouseOver"
-                     Value="False" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                    <Condition Property="IsMouseOver" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="BorderBrush"
-                Value="Transparent" />
-                <Setter Property="ShowDropDownButton"
-                Value="False" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="ShowDropDownButton" Value="False" />
             </MultiTrigger>
         </Style.Triggers>
-    </Style>-->
+    </Style>
 
 
     <!-- PropertyGrid PrimitiveTypeCollectionControl Editors -->
@@ -582,46 +577,15 @@
     </Style>
 
     <!-- 右键菜单 -->
-    <Style TargetType="{x:Type pg:PropertyGridContextMenu}">
-        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"/>
-        <Setter Property="FontFamily" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_FAMILY}}"/>
-        <Setter Property="FontSize" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FONT_SIZE}}"/>
-        <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"/>
-        <Setter Property="Padding" Value="1"/>
-        <Setter Property="Grid.IsSharedSizeScope" Value="true"/>
-        <Setter Property="HasDropShadow" Value="True"/>
-        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type ContextMenu}">
-                    <Border Name="ContextMenuBorder" Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                        <ScrollViewer Name="ContextMenuScrollViewer"
-                                      Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
-                            <Grid RenderOptions.ClearTypeHint="Enabled">
-                                <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Padding}"
-                                            KeyboardNavigation.DirectionalNavigation="Cycle"
-                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                            </Grid>
-                        </ScrollViewer>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <Style TargetType="{x:Type pg:PropertyGridContextMenu}" BasedOn="{x:Type ContextMenu}"></Style>
 
     <!-- 属性表格右键菜单 -->
-    <pg:PropertyGridContextMenu x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}">
+    <!--<pg:PropertyGridContextMenu x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}">
         <MenuItem Header="重置值"
                   Command="commands:PropertyItemCommands.ResetValue"
                   CommandParameter="{Binding}"
                   CommandTarget="{Binding Path=PlacementTarget, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ContextMenu}}}"/>
-    </pg:PropertyGridContextMenu>
+    </pg:PropertyGridContextMenu>-->
 
     <!-- 类别分组样式选择器 -->
     <pg:CategoryGroupStyleSelector x:Key="categoryGroupStyleSelector"
@@ -838,7 +802,8 @@
 
     <!-- 属性表格 -->
     <Style TargetType="{x:Type pg:PropertyGrid}">
-        <Setter Property="AdvancedOptionsMenu" Value="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}}" />
+        <!--<Setter Property="AdvancedOptionsMenu" Value="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}}" />-->
+        <Setter Property="AdvancedOptionsMenu" Value="{x:Null}" />
         <Setter Property="Background" Value="White" />
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" />

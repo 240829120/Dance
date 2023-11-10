@@ -8,6 +8,8 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/NumericUpDown.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/PropertyGrid.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/WatermarkTextBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/ColorCanvas.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/ColorPicker.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

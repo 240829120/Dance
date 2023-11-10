@@ -45,6 +45,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"/>
+        <Setter Property="dance:DanceShuttleOption.UnitLength" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}"></Setter>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Template">
@@ -58,7 +59,7 @@
                         <Rectangle Height="1" VerticalAlignment="Bottom" 
                                    Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"></Rectangle>
                         <StackPanel Background="Transparent" IsItemsHost="true" Orientation="Horizontal" Grid.Row="0" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1" />
-                        <dance:DanceShuttle UnitLength="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}" 
+                        <dance:DanceShuttle UnitLength="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TabControl}}" 
                                             Index="{Binding SelectedIndex,RelativeSource={RelativeSource AncestorType=TabControl,Mode=FindAncestor}}" 
                                             Duration="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.ANIMATION_DURATION_TIMESPAN}}" 
                                             IsHitTestVisible="False">
@@ -66,7 +67,7 @@
                                 <BackEase EasingMode="EaseOut" Amplitude="0.5"/>
                             </dance:DanceShuttle.SwitchEasing>
                             <Rectangle Height="2" 
-                                       Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}}" 
+                                       Width="{Binding Path=(dance:DanceShuttleOption.UnitLength),RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TabControl}}" 
                                        Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"
                                        VerticalAlignment="Bottom"></Rectangle>
                         </dance:DanceShuttle>

@@ -20,6 +20,10 @@
                     xmlns:local="http://schemas.xceed.com/wpf/xaml/toolkit"
                     xmlns:dance="clr-namespace:Dance.Wpf">
 
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/Menu.xaml"></ResourceDictionary>
+    </ResourceDictionary.MergedDictionaries>
+
     <DataTemplate x:Key="DefaultWatermarkTemplate">
         <ContentControl Content="{Binding}" 
                         Foreground="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" 

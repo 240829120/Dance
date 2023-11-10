@@ -15,7 +15,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -58,7 +57,7 @@ namespace Dance.WpfTest
         public string? Property_2_4 { get; set; }
 
         [Category("基础2")]
-        public bool Property_2_5 { get; set; }
+        public System.Windows.Media.Color Property_2_5 { get; set; }
     }
 
     /// <summary>
