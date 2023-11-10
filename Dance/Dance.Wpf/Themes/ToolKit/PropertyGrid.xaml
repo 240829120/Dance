@@ -29,7 +29,9 @@
                     xmlns:dance="clr-namespace:Dance.Wpf">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles.xaml"></ResourceDictionary>
         <ResourceDictionary Source="./NumericUpDown.xaml" />
+        <ResourceDictionary Source="./WatermarkTextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 
@@ -194,101 +196,63 @@
     </Style>-->
 
     <!-- PropertyGrid ComboBox Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorComboBox}"
-         BasedOn="{StaticResource {x:Type ComboBox}}">
-        <Style.Triggers>
-            <MultiTrigger>
-                <MultiTrigger.Conditions>
-                    <Condition Property="IsKeyboardFocusWithin"
-                     Value="False" />
-                    <Condition Property="IsMouseOver"
-                     Value="False" />
-                </MultiTrigger.Conditions>
-                <Setter Property="BorderBrush"
-                Value="Transparent" />
-                <Setter Property="Background"
-                Value="Transparent" />
-            </MultiTrigger>
-            <Trigger Property="IsReadOnly"
-               Value="True">
-                <Setter Property="IsEnabled"
-                Value="False" />
-            </Trigger>
-            <Trigger Property="IsEnabled"
-               Value="False">
-                <Setter Property="Foreground"
-                Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>-->
+    <Style TargetType="{x:Type editor:PropertyGridEditorComboBox}"
+           BasedOn="{StaticResource {x:Type ComboBox}}">
+
+    </Style>
 
     <!-- PropertyGrid CheckBox Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorCheckBox}"
+    <Style TargetType="{x:Type editor:PropertyGridEditorCheckBox}"
          BasedOn="{StaticResource {x:Type CheckBox}}">
-        <Setter Property="Margin"
-            Value="5,0,0,0" />
-        <Setter Property="Margin"
-            Value="5,0,0,0" />
-    </Style>-->
+    </Style>
 
     <!-- PropertyGrid Enum CheckBox Editors -->
     <!--<Style TargetType="{x:Type editor:PropertyGridEditorEnumCheckComboBox}"
-         BasedOn="{StaticResource CheckComboBox}">
-        <Setter Property="Margin"
-            Value="5,0,0,0" />
-        <Setter Property="Margin"
-            Value="5,0,0,0" />
+           BasedOn="{StaticResource CheckComboBox}">
+
     </Style>-->
 
     <!-- PropertyGrid TextBox Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorTextBox}"
-         BasedOn="{StaticResource WatermarkTextBox}">
+    <Style TargetType="{x:Type editor:PropertyGridEditorTextBox}"
+           BasedOn="{StaticResource WatermarkTextBox}">
+        <Setter Property="Padding" Value="1,0,1,0"></Setter>
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsKeyboardFocusWithin"
-                     Value="False" />
-                    <Condition Property="IsMouseOver"
-                     Value="False" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                    <Condition Property="IsMouseOver" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="BorderBrush"
-                Value="Transparent" />
+                <Setter Property="BorderBrush" Value="Transparent" />
             </MultiTrigger>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsEnabled"
-                     Value="False" />
+                    <Condition Property="IsEnabled" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="BorderThickness"
-                Value="0" />
+                <Setter Property="BorderThickness" Value="0" />
             </MultiTrigger>
         </Style.Triggers>
-    </Style>-->
+    </Style>
 
     <!-- PropertyGrid TextBlock Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorTextBlock}"
-         BasedOn="{StaticResource {x:Type TextBlock}}">
-        <Setter Property="Foreground"
-            Value="Gray" />
-        <Setter Property="Margin"
-            Value="5,0,0,0" />
-        <Setter Property="TextTrimming"
-            Value="CharacterEllipsis" />
-    </Style>-->
+    <Style TargetType="{x:Type editor:PropertyGridEditorTextBlock}"
+           BasedOn="{StaticResource {x:Type TextBlock}}">
+        <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" />
+        <Setter Property="Margin" Value="5,0,0,0" />
+        <Setter Property="TextTrimming" Value="CharacterEllipsis" />
+        <Setter Property="TextWrapping" Value="NoWrap"></Setter>
+    </Style>
 
     <!-- PropertyGrid MaskedTextBox Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorMaskedTextBox}"
-         BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="BorderThickness"
-            Value="0" />
-    </Style>-->
+    <Style TargetType="{x:Type editor:PropertyGridEditorMaskedTextBox}"
+           BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
 
     <!-- PropertyGrid Password Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorWatermarkPasswordBox}"
-         BasedOn="{StaticResource {x:Type TextBox}}">
-        <Setter Property="BorderThickness"
-            Value="0" />
-    </Style>-->
+    <Style TargetType="{x:Type editor:PropertyGridEditorWatermarkPasswordBox}"
+           BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="BorderThickness" Value="0" />
+    </Style>
 
     <!-- PropertyGrid ColorPicker Editors -->
     <!--<Style TargetType="{x:Type editor:PropertyGridEditorColorPicker}"

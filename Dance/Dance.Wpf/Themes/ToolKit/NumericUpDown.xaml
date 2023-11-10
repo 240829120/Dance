@@ -26,6 +26,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="./Glyphs.xaml" />
         <ResourceDictionary Source="./ButtonSpinner.xaml" />
+        <ResourceDictionary Source="./WatermarkTextBox.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
@@ -44,7 +45,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" />
         <Setter Property="BorderThickness" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" />
-        <Setter Property="MinHeight" Value="24"></Setter>
+        <Setter Property="Height" Value="24"></Setter>
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Left" />
@@ -81,7 +82,7 @@
                                                 HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                 IsUndoEnabled="{Binding IsUndoEnabled, RelativeSource={RelativeSource TemplatedParent}}"
                                                 IsTabStop="True"
-                                                MinWidth="20"
+                                                MinWidth="20" Height="20"
                                                 AcceptsReturn="False"
                                                 Padding="{TemplateBinding Padding}"
                                                 AutoSelectBehavior="{Binding AutoSelectBehavior, RelativeSource={RelativeSource TemplatedParent}}"

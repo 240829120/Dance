@@ -24,6 +24,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
+using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace Dance.WpfTest
 {
@@ -57,7 +58,7 @@ namespace Dance.WpfTest
         public string? Property_2_4 { get; set; }
 
         [Category("基础2")]
-        public string? Property_2_5 { get; set; }
+        public bool Property_2_5 { get; set; }
     }
 
     /// <summary>
