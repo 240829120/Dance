@@ -112,4 +112,77 @@
         </Setter>
     </Style>
 
+    <Style TargetType="local:DanceWindowResizePart">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Cursor" Value="SizeWE"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceWindowResizePart">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}"></Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="ResizeMode" Value="Right">
+                <Setter Property="Cursor" Value="SizeWE"></Setter>
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="Top">
+                <Setter Property="Cursor" Value="SizeNS"></Setter>
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="Bottom">
+                <Setter Property="Cursor" Value="SizeNS"></Setter>
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="LeftTop">
+                <Setter Property="Cursor" Value="SizeNWSE"></Setter>
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="LeftBottom">
+                <Setter Property="Cursor" Value="SizeNESW"></Setter>
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="RightTop">
+                <Setter Property="Cursor" Value="SizeNESW"></Setter>
+            </Trigger>
+            <Trigger Property="ResizeMode" Value="RightBottom">
+                <Setter Property="Cursor" Value="SizeNWSE"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="local:DanceWindowResizeContainerPart">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceWindowResizeContainerPart">
+                    <Grid Background="{TemplateBinding Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="5"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="5"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="5"></ColumnDefinition>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="5"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <local:DanceWindowResizePart Grid.Row="0" Grid.Column="0" ResizeMode="LeftTop"></local:DanceWindowResizePart>
+                        <local:DanceWindowResizePart Grid.Row="0" Grid.Column="1" ResizeMode="Top"></local:DanceWindowResizePart>
+                        <local:DanceWindowResizePart Grid.Row="0" Grid.Column="2" ResizeMode="RightTop"></local:DanceWindowResizePart>
+
+                        <local:DanceWindowResizePart Grid.Row="1" Grid.Column="0" ResizeMode="Left"></local:DanceWindowResizePart>
+                        <local:DanceWindowResizePart Grid.Row="1" Grid.Column="2" ResizeMode="Right"></local:DanceWindowResizePart>
+
+                        <local:DanceWindowResizePart Grid.Row="2" Grid.Column="0" ResizeMode="LeftBottom"></local:DanceWindowResizePart>
+                        <local:DanceWindowResizePart Grid.Row="2" Grid.Column="1" ResizeMode="Bottom"></local:DanceWindowResizePart>
+                        <local:DanceWindowResizePart Grid.Row="2" Grid.Column="2" ResizeMode="RightBottom"></local:DanceWindowResizePart>
+
+                        <ContentPresenter Grid.Row="1" Grid.Column="1"></ContentPresenter>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 </ResourceDictionary>

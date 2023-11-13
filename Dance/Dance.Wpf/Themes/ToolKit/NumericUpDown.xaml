@@ -45,7 +45,7 @@
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" />
         <Setter Property="BorderThickness" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" />
         <Setter Property="Foreground" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" />
-        <Setter Property="Height" Value="24"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
         <Setter Property="IsTabStop" Value="False" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="TextAlignment" Value="Left" />

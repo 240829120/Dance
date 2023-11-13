@@ -34,7 +34,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="ListBox">
+    <Style x:Key="ListBox" TargetType="ListBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_MASK}}"/>
@@ -77,5 +77,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="ListBox" BasedOn="{StaticResource ListBox}"></Style>
 
 </ResourceDictionary>

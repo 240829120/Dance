@@ -27,6 +27,26 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace Dance.WpfTest
 {
+    public class Lession
+    {
+
+        [Category("基础"), Description("描述描述123")]
+        public string? Name { get; set; }
+    }
+
+    public class Teacher
+    {
+
+        [Category("基础"), Description("描述描述123")]
+        public string? Name { get; set; }
+
+        [Category("基础"), Description("描述描述123")]
+        public int Age { get; set; }
+
+        [Category("基础"), Description("描述描述1231111")]
+        public List<Lession> Lessions { get; set; } = new() { new Lession { Name = "t1" } };
+    }
+
     public class Student
     {
         [Category("基础"), Description("描述描述123")]
@@ -51,13 +71,22 @@ namespace Dance.WpfTest
         public string? Property_2_2 { get; set; }
 
         [Category("基础2")]
-        public string? Property_2_3 { get; set; }
+        public DateTime DateTime { get; set; }
 
         [Category("基础2")]
-        public TimeSpan Property_2_4 { get; set; }
+        public TimeSpan TimeSpan { get; set; }
 
         [Category("基础2")]
-        public System.Windows.Media.Color Property_2_5 { get; set; }
+        public System.Windows.Media.Color Color { get; set; }
+
+        [Category("老师")]
+        public Teacher Teacher { get; set; } = new();
+
+        [Category("列表")]
+        public List<Teacher> Items { get; set; } = new() { new Teacher { Name = "zs", Age = 17 } };
+
+        [Category("列表")]
+        public List<string> Items2 { get; set; } = new();
     }
 
     /// <summary>

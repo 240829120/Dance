@@ -33,10 +33,10 @@
     </DataTemplate>
 
     <!-- =============================================================================== -->
-    <!-- TimeSpanUpDown                                                                  -->
+    <!-- DateTimeUpDown                                                                  -->
     <!-- =============================================================================== -->
 
-    <Style x:Key="TimeSpanUpDown" TargetType="{x:Type local:TimeSpanUpDown}">
+    <Style x:Key="DateTimeUpDown" TargetType="{x:Type local:DateTimeUpDown}">
         <Setter Property="Background" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}" />
         <Setter Property="BorderBrush" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" />
         <Setter Property="BorderThickness" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" />
@@ -53,7 +53,7 @@
         <Setter Property="ButtonSpinnerDownDisabledContentTemplate" Value="{StaticResource DecreaseGlyphDisabledKey}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:TimeSpanUpDown}">
+                <ControlTemplate TargetType="{x:Type local:DateTimeUpDown}">
                     <local:ButtonSpinner x:Name="PART_Spinner"
                                          IsTabStop="False"
                                          Background="{TemplateBinding Background}"
@@ -71,47 +71,44 @@
                                          AllowSpin="{TemplateBinding AllowSpin}"
                                          ShowSpinner="{TemplateBinding ShowButtonSpinner}">
                         <local:WatermarkTextBox x:Name="PART_TextBox"
-                                          BorderThickness="0" 
-                                          Background="Transparent"
-                                          VerticalAlignment="Center"
-                                          ContextMenu="{TemplateBinding ContextMenu}"
-                                          FontFamily="{TemplateBinding FontFamily}"
-                                          FontSize="{TemplateBinding FontSize}"
-                                          FontStretch="{TemplateBinding FontStretch}"
-                                          FontStyle="{TemplateBinding FontStyle}"
-                                          FontWeight="{TemplateBinding FontWeight}"
-                                          Foreground="{TemplateBinding Foreground}"
-                                          HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          IsUndoEnabled="{Binding IsUndoEnabled, RelativeSource={RelativeSource TemplatedParent}}"
-                                          IsTabStop="True"
-                                          MinWidth="20" Height="22"
-                                          AcceptsReturn="False"
-                                          Padding="{TemplateBinding Padding}"
-                                          TextAlignment="{TemplateBinding TextAlignment}"
-                                          TextWrapping="NoWrap"
-                                          TabIndex="{TemplateBinding TabIndex}"
-                                          Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
-                                          Watermark="{TemplateBinding Watermark}"
-                                          WatermarkTemplate="{TemplateBinding WatermarkTemplate}" />
+                                                BorderThickness="0"
+                                                Background="Transparent"
+                                                ContextMenu="{TemplateBinding ContextMenu}"
+                                                FontFamily="{TemplateBinding FontFamily}"
+                                                FontSize="{TemplateBinding FontSize}"
+                                                FontStretch="{TemplateBinding FontStretch}"
+                                                FontStyle="{TemplateBinding FontStyle}"
+                                                FontWeight="{TemplateBinding FontWeight}"
+                                                Foreground="{TemplateBinding Foreground}"
+                                                HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                IsUndoEnabled="{Binding IsUndoEnabled, RelativeSource={RelativeSource TemplatedParent}}"
+                                                IsTabStop="True"
+                                                AutoSelectBehavior="OnFocus"
+                                                MinWidth="20" Height="22"
+                                                AcceptsReturn="False"
+                                                Padding="{TemplateBinding Padding}"
+                                                TextAlignment="{TemplateBinding TextAlignment}"
+                                                TextWrapping="NoWrap"
+                                                TabIndex="{TemplateBinding TabIndex}"
+                                                Text="{Binding Text, RelativeSource={RelativeSource TemplatedParent}}"
+                                                Watermark="{TemplateBinding Watermark}"
+                                                WatermarkTemplate="{TemplateBinding WatermarkTemplate}" />
                     </local:ButtonSpinner>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsFocused" Value="True">
+                            <Setter TargetName="PART_TextBox" Property="FocusManager.FocusedElement" Value="{Binding ElementName=PART_TextBox}" />
+                        </Trigger>
                         <MultiDataTrigger>
                             <MultiDataTrigger.Conditions>
                                 <Condition Binding="{Binding IsReadOnly, RelativeSource={RelativeSource Self}}" Value="False" />
                                 <Condition Binding="{Binding AllowTextInput, RelativeSource={RelativeSource Self}}" Value="False" />
                             </MultiDataTrigger.Conditions>
-                            <Setter Property="IsReadOnly"
-                                    Value="True"
-                                    TargetName="PART_TextBox" />
+                            <Setter Property="IsReadOnly" Value="True" TargetName="PART_TextBox" />
                         </MultiDataTrigger>
                         <DataTrigger Binding="{Binding IsReadOnly, RelativeSource={RelativeSource Self}}" Value="True">
                             <Setter Property="IsReadOnly" Value="True" TargetName="PART_TextBox" />
                         </DataTrigger>
-                        <Trigger Property="IsFocused" Value="True">
-                            <Setter TargetName="PART_TextBox" Property="FocusManager.FocusedElement"
-                                    Value="{Binding ElementName=PART_TextBox}" />
-                        </Trigger>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter Property="BorderBrush" Value="{DynamicResource {x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
                         </Trigger>
@@ -124,7 +121,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="{x:Type local:TimeSpanUpDown}"
-           BasedOn="{StaticResource TimeSpanUpDown}" />
+    <Style TargetType="{x:Type local:DateTimeUpDown}"
+           BasedOn="{StaticResource DateTimeUpDown}" />
 
 </ResourceDictionary>

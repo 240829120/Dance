@@ -11,10 +11,6 @@
         mc:Ignorable="d" Background="White" x:Name="uc"
         Title="MainWindow" Height="800" Width="1400">
 
-    <Window.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Dance.Wpf;component/Themes/ToolKit/PropertyGrid.xaml"></ResourceDictionary>
-    </Window.Resources>
-
     <Grid Background="Transparent">
         <toolkit:PropertyGrid x:Name="propertyGrid" Margin="20" Background="White">
 

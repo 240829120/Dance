@@ -37,7 +37,24 @@
     <conv:InverseBoolConverter x:Key="InverseBoolConverter" />
     <conv:ColorToSolidColorBrushConverter x:Key="ColorToSolidColorBrushConverter" />
     <conv:AdditionConverter x:Key="AdditionConverter" />
-    <conv:ColorModeToTabItemSelectedConverter x:Key="ColorModeToTabItemSelectedConverter" />
+
+    <dance:DanceMappingConverter x:Key="ColorModeToTabItemSelectedConverter">
+        <!-- ColorCanvas ===> 0 -->
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <local:ColorMode>ColorCanvas</local:ColorMode>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <sys:Int32>0</sys:Int32>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+        <dance:DanceMappingConverter.DefaultConvertValue>
+            <sys:Int32>1</sys:Int32>
+        </dance:DanceMappingConverter.DefaultConvertValue>
+        <dance:DanceMappingConverter.DefaultConvertBackValue>
+            <local:ColorMode>ColorPalette</local:ColorMode>
+        </dance:DanceMappingConverter.DefaultConvertBackValue>
+    </dance:DanceMappingConverter>
 
     <LinearGradientBrush x:Key="ColorPickerDarkBorderBrush"
                          EndPoint="0.5,1"
@@ -219,7 +236,7 @@
         <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" />
         <Setter Property="ButtonStyle" Value="{StaticResource ColorPickerToggleButtonStyle}" />
         <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="Height" Value="24"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="MaxDropDownWidth" Value="250" />
@@ -286,9 +303,29 @@
                                             Background="Transparent"
                                             dance:DanceShuttleOption.UnitLength="60"
                                             SelectedIndex="{Binding ColorMode, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ColorModeToTabItemSelectedConverter}}">
+
+                                    <TabItem x:Name="AdvancedTabItem"
+                                             Width="60"
+                                             Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"
+                                             Header="{Binding AdvancedTabHeader, RelativeSource={RelativeSource TemplatedParent}}"
+                                             Foreground="{TemplateBinding TabForeground}">
+                                        <!-- ColorCanvas -->
+                                        <!-- ConverterParameter is margin/Padding from Popup-->
+                                        <Grid x:Name="_colorCanvasHost"
+                                              Width="{Binding MaxDropDownWidth, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource AdditionConverter}, ConverterParameter=-18}">
+                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                                                          VerticalScrollBarVisibility="Hidden">
+                                                <local:ColorCanvas Background="Transparent"
+                                                                   BorderThickness="0"
+                                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                   UsingAlphaChannel="{Binding UsingAlphaChannel, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                   SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}}" />
+                                            </ScrollViewer>
+                                        </Grid>
+                                    </TabItem>
                                     <TabItem x:Name="StandardTabItem"
                                              Width="60" 
-                                             Height="24"
+                                             Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"
                                              Header="{Binding StandardTabHeader, RelativeSource={RelativeSource TemplatedParent}}"
                                              Foreground="{TemplateBinding TabForeground}">
                                         <Grid x:Name="_colorPaletteHost" Margin="4">
@@ -364,25 +401,6 @@
                                                     </ListBox>
                                                 </Grid>
                                             </Grid>
-                                        </Grid>
-                                    </TabItem>
-                                    <TabItem x:Name="AdvancedTabItem"
-                                             Width="60"
-                                             Height="24"
-                                             Header="{Binding AdvancedTabHeader, RelativeSource={RelativeSource TemplatedParent}}"
-                                             Foreground="{TemplateBinding TabForeground}">
-                                        <!-- ColorCanvas -->
-                                        <!-- ConverterParameter is margin/Padding from Popup-->
-                                        <Grid x:Name="_colorCanvasHost"
-                                              Width="{Binding MaxDropDownWidth, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource AdditionConverter}, ConverterParameter=-18}">
-                                            <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                                                          VerticalScrollBarVisibility="Hidden">
-                                                <local:ColorCanvas Background="Transparent"
-                                                                   BorderThickness="0"
-                                                                   Foreground="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                   UsingAlphaChannel="{Binding UsingAlphaChannel, RelativeSource={RelativeSource TemplatedParent}}"
-                                                                   SelectedColor="{Binding SelectedColor, RelativeSource={RelativeSource TemplatedParent}}" />
-                                            </ScrollViewer>
                                         </Grid>
                                     </TabItem>
                                 </TabControl>

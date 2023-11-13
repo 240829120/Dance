@@ -40,6 +40,7 @@
     <!-- 编辑 -->
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_WIDTH}">120</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}">30</sys:Double>
+    <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}">24</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_MIDDLE}">40</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_LARGE}">50</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_NEGATIVE}">-30</sys:Double>

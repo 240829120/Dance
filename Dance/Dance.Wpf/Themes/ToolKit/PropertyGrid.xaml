@@ -34,18 +34,10 @@
         <ResourceDictionary Source="./WatermarkTextBox.xaml" />
         <ResourceDictionary Source="./ColorPicker.xaml" />
         <ResourceDictionary Source="./TimeSpanUpDown.xaml" />
+        <ResourceDictionary Source="./DateTimeUpDown.xaml" />
+        <ResourceDictionary Source="./MultiLineTextEditor.xaml" />
+        <ResourceDictionary Source="./CollectionControl.xaml" />
     </ResourceDictionary.MergedDictionaries>
-
-
-    <!--<ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="../../NumericUpDown/Themes/Generic.xaml" />
-        <ResourceDictionary Source="../../DateTimeUpDown/Themes/Generic.xaml" />
-        <ResourceDictionary Source="../../TimeSpanUpDown/Themes/Generic.xaml" />
-        <ResourceDictionary Source="../../CheckComboBox/Themes/Generic.xaml" />
-        <ResourceDictionary Source="../../WatermarkTextBox/Themes/Generic.xaml" />
-        <ResourceDictionary Source="../../ColorPicker/Themes/Generic.xaml" />
-        <ResourceDictionary Source="../../CollectionControl/Themes/Generic.xaml" />
-    </ResourceDictionary.MergedDictionaries>-->
 
     <!-- =============================================================================== -->
     <!-- PropertyGrid                                                                    -->
@@ -156,25 +148,20 @@
     </Style>
 
     <!-- PropertyGrid DateTime Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorDateTimeUpDown}"
-         BasedOn="{StaticResource DateTimeUpDown}">
-        <Setter Property="TextAlignment"
-            Value="Left" />
+    <Style TargetType="{x:Type editor:PropertyGridEditorDateTimeUpDown}"
+           BasedOn="{StaticResource DateTimeUpDown}">
+        <Setter Property="TextAlignment" Value="Left" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsKeyboardFocusWithin"
-                     Value="False" />
-                    <Condition Property="IsMouseOver"
-                     Value="False" />
+                    <Condition Property="IsKeyboardFocusWithin" Value="False" />
+                    <Condition Property="IsMouseOver" Value="False" />
                 </MultiTrigger.Conditions>
-                <Setter Property="BorderBrush"
-                Value="Transparent" />
-                <Setter Property="ShowButtonSpinner"
-                Value="False" />
+                <Setter Property="BorderBrush" Value="Transparent" />
+                <Setter Property="ShowButtonSpinner" Value="False" />
             </MultiTrigger>
         </Style.Triggers>
-    </Style>-->
+    </Style>
 
     <!-- PropertyGrid TimeSpan Editors -->
     <Style TargetType="{x:Type editor:PropertyGridEditorTimeSpanUpDown}" BasedOn="{StaticResource TimeSpanUpDown}">
@@ -200,7 +187,7 @@
 
     <!-- PropertyGrid CheckBox Editors -->
     <Style TargetType="{x:Type editor:PropertyGridEditorCheckBox}"
-         BasedOn="{StaticResource {x:Type CheckBox}}">
+           BasedOn="{StaticResource {x:Type CheckBox}}">
     </Style>
 
     <!-- PropertyGrid Enum CheckBox Editors -->
@@ -270,22 +257,17 @@
 
 
     <!-- PropertyGrid PrimitiveTypeCollectionControl Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorPrimitiveTypeCollectionControl}"
-         BasedOn="{StaticResource PrimitiveTypeCollectionControl}">
-        <Setter Property="Content"
-            Value="(Collection)" />
-        <Setter Property="BorderThickness"
-            Value="0" />
-        <Setter Property="BorderThickness"
-            Value="0" />
-        <Setter Property="Content"
-            Value="(Collection)" />
-    </Style>-->
+    <Style TargetType="{x:Type editor:PropertyGridEditorPrimitiveTypeCollectionControl}"
+           BasedOn="{StaticResource PrimitiveTypeCollectionControl}">
+        <Setter Property="Content" Value="{}{集合}" />
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="BorderThickness" Value="1"></Setter>
+    </Style>
 
     <!-- PropertyGrid CollectionControl Editors -->
-    <!--<Style TargetType="{x:Type editor:PropertyGridEditorCollectionControl}"
-         BasedOn="{StaticResource CollectionControlButton}">
-    </Style>-->
+    <Style TargetType="{x:Type editor:PropertyGridEditorCollectionControl}"
+           BasedOn="{StaticResource CollectionControlButton}">
+    </Style>
 
     <!-- ===============================================================================   -->
     <!-- Style for all internal derived types of NumericUpDown will be done in code-behind -->
@@ -354,8 +336,8 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="1" />
-        <Setter Property="Height" Value="24" />
-        <Setter Property="Width" Value="24" />
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}" />
+        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RadioButton}">
@@ -390,8 +372,8 @@
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="Width" Value="24"></Setter>
-        <Setter Property="Height" Value="24" />
+        <Setter Property="Width" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
@@ -463,7 +445,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Background="{TemplateBinding Background}"
-                                BorderBrush="#FFF0F0F0">
+                                BorderBrush="Transparent">
                             <ToggleButton Template="{StaticResource ExpanderToggleButton}"
                                           IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
                                           OverridesDefaultStyle="True">

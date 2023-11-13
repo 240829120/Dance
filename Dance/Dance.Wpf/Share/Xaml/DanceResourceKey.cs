@@ -160,6 +160,11 @@ namespace Dance.Wpf
         public const string EDIT_HEIGHT = "EDIT_HEIGHT";
 
         /// <summary>
+        /// 编辑 -- 高度 -- 小号
+        /// </summary>
+        public const string EDIT_HEIGHT_SMALL = "EDIT_HEIGHT_SMALL";
+
+        /// <summary>
         /// 编辑 -- 高度 -- 中号
         /// </summary>
         public const string EDIT_HEIGHT_MIDDLE = "EDIT_HEIGHT_MIDDLE";
