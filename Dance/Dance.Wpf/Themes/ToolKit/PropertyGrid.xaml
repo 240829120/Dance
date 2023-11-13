@@ -405,12 +405,11 @@
 
     <!-- 分组展开按钮 -->
     <ControlTemplate x:Key="ExpanderToggleButton" TargetType="{x:Type ToggleButton}">
-        <Grid Background="Transparent">
+        <Grid Background="Transparent" Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="20" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
             <Path x:Name="ExpandPath" RenderTransformOrigin="0.5 0.5" HorizontalAlignment="Center" VerticalAlignment="Center"
                   Data="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.PATH_ARROW_MARK}}" 
                   Fill="{TemplateBinding Foreground}">
@@ -418,7 +417,6 @@
                     <RotateTransform Angle="-90"/>
                 </Path.RenderTransform>
             </Path>
-
             <ContentPresenter Grid.Column="1" />
         </Grid>
         <ControlTemplate.Triggers>
@@ -454,11 +452,13 @@
                                                   TextElement.FontWeight="Bold" />
                             </ToggleButton>
                         </Border>
-                        <ContentPresenter x:Name="content" Grid.Row="1" Visibility="Collapsed"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
-                                          Margin="{TemplateBinding Padding}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                          Focusable="False" />
+                        <Border x:Name="content" Padding="0,0,0,0" Grid.Row="1" Visibility="Collapsed"
+                                Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}">
+                            <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                              Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              Focusable="False" />
+                        </Border>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="True">
@@ -472,11 +472,11 @@
 
     <!-- 属性展开Expander -->
     <Style x:Key="PropertyExpanderStyle" TargetType="{x:Type Expander}">
-        <Setter Property="Padding" Value="10 0 0 0" />
+        <Setter Property="Padding" Value="0 0 0 0" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Expander}">
-                    <ContentPresenter x:Name="content"
+                    <ContentPresenter x:Name="content" Visibility="Collapsed"
                                       HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                       VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                       Focusable="False" />
@@ -582,8 +582,7 @@
                                     BorderThickness="{TemplateBinding BorderThickness}"
                                     VerticalAlignment="Stretch"
                                     HorizontalAlignment="Stretch">
-                                <Grid Margin="2,2,2,2"
-                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <Grid VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
@@ -592,10 +591,9 @@
                                     <Grid Margin="{Binding Level, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ExpandableObjectMarginConverter}}">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition x:Name="_expandableButtonColumn"
-                                                              Width="{Binding PropertyNameLeftPadding, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type pg:PropertyGrid}}}" />
+                                                              Width="20" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-
                                         <ToggleButton x:Name="_expandableButton"
                                                       Grid.Column="0"
                                                       Template="{StaticResource ExpanderToggleButton}"

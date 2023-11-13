@@ -183,7 +183,7 @@
                                         <dance:DanceSvgImage Width="14" Height="14" HorizontalAlignment="Center" VerticalAlignment="Center"
                                                              Source="pack://application:,,,/Dance.Wpf;component/Themes/ToolKit/Icons/move_up.svg"></dance:DanceSvgImage>
                                     </Button>
-                                    <Button Margin="0,1,0,0"
+                                    <Button Margin="0,10,0,0"
                                             Style="{StaticResource Button_Secondary}"
                                             Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"
                                             Height="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT}}"

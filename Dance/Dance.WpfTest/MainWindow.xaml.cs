@@ -34,6 +34,7 @@ namespace Dance.WpfTest
         public string? Name { get; set; }
     }
 
+    [ExpandableObject]
     public class Teacher
     {
 
@@ -87,6 +88,9 @@ namespace Dance.WpfTest
 
         [Category("列表")]
         public List<string> Items2 { get; set; } = new();
+
+        [Category("列表")]
+        public List<int> Items3 { get; set; } = new List<int>() { 1, 2, 3 };
     }
 
     /// <summary>
