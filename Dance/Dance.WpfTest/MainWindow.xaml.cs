@@ -27,11 +27,16 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace Dance.WpfTest
 {
+    [ExpandableObject]
     public class Lession
     {
-
         [Category("基础"), Description("描述描述123")]
         public string? Name { get; set; }
+
+        [Category("基础"), Description("描述描述123")]
+        public int Age { get; set; }
+
+
     }
 
     [ExpandableObject]
@@ -46,6 +51,10 @@ namespace Dance.WpfTest
 
         [Category("基础"), Description("描述描述1231111")]
         public List<Lession> Lessions { get; set; } = new() { new Lession { Name = "t1" } };
+
+
+        [Category("基础"), Description("描述描述1231111")]
+        public Lession Lession2 { get; set; } = new Lession();
     }
 
     public class Student

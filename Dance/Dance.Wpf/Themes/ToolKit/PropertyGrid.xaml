@@ -55,6 +55,8 @@
     <pgconv:PropertyItemEditorConverter x:Key="PropertyItemEditorConverter" />
     <pgconv:PropertyNameTextTrimmingConverter x:Key="PropertyNameTextTrimmingConverter" />
 
+    <dance:DanceDoubleThicknessConverter x:Key="DanceDoubleThicknessConverter" UnitThickness="15" ThicknessMask="1,0,0,0"></dance:DanceDoubleThicknessConverter>
+
     <!-- PropertyGrid numeric Editors -->
     <Style TargetType="{x:Type editor:PropertyGridEditorByteUpDown}" BasedOn="{StaticResource NumericUpDown}">
         <Style.Triggers>
@@ -439,10 +441,11 @@
                 <ControlTemplate TargetType="{x:Type Expander}">
                     <Grid>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="24" />
+                            <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Background="{TemplateBinding Background}"
+                                Padding="{Binding DataContext.Level, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=pg:PropertyItemsControl}, Converter={StaticResource DanceDoubleThicknessConverter},ConverterParameter=1}"
                                 BorderBrush="Transparent">
                             <ToggleButton Template="{StaticResource ExpanderToggleButton}"
                                           IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
@@ -590,18 +593,9 @@
 
                                     <Grid Margin="{Binding Level, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource ExpandableObjectMarginConverter}}">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition x:Name="_expandableButtonColumn"
-                                                              Width="20" />
+                                            <ColumnDefinition Width="20" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
-                                        <ToggleButton x:Name="_expandableButton"
-                                                      Grid.Column="0"
-                                                      Template="{StaticResource ExpanderToggleButton}"
-                                                      OverridesDefaultStyle="True"
-                                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
-                                                      Visibility="{Binding IsExpandable, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" >
-                                        </ToggleButton>
-
                                         <pg:TrimmedTextBlock x:Name="_text"
                                                              Grid.Column="1"
                                                              Text="{Binding DisplayName, RelativeSource={RelativeSource TemplatedParent}}"
@@ -613,6 +607,13 @@
                                                              TextWrapping="{Binding PropertyNameTextWrapping, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pg:PropertyGrid}}"
                                                              IsEnabled="{Binding IsReadOnly, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=pg:PropertyGrid}, Converter={StaticResource InverseBoolConverter}}" >
                                         </pg:TrimmedTextBlock>
+                                        <ToggleButton x:Name="_expandableButton"
+                                                      Grid.ColumnSpan="2"
+                                                      Template="{StaticResource ExpanderToggleButton}"
+                                                      OverridesDefaultStyle="True"
+                                                      IsChecked="{Binding IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                                      Visibility="{Binding IsExpandable, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                                        </ToggleButton>
                                     </Grid>
 
                                     <Grid Grid.Column="1"
@@ -722,10 +723,6 @@
                         </MultiDataTrigger>
                         <Trigger Property="Validation.HasError" Value="true">
                             <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors).CurrentItem.ErrorContent}" />
-                        </Trigger>
-                        <Trigger Property="Visibility" Value="Visible" SourceName="_expandableButton">
-                            <Setter Property="Focusable" Value="False" />
-                            <Setter Property="MinWidth" Value="15" TargetName="_expandableButtonColumn" />
                         </Trigger>
 
                         <DataTrigger Binding="{Binding ElementName=_optionsImage, Path=ToolTip}" Value="{x:Static pg:StringConstants.Local}">
