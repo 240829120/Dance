@@ -157,6 +157,22 @@ namespace Dance.Wpf
         }
 
         /// <summary>
+        /// 创建视图的数据模板
+        /// </summary>
+        /// <param name="viewType">视图类型</param>
+        /// <returns>创建数据模板</returns>
+        public static DataTemplate? CreateDataTemplate(Type viewType)
+        {
+            DataTemplate? template = new()
+            {
+                VisualTree = new FrameworkElementFactory(viewType)
+            };
+            template.Seal();
+
+            return template;
+        }
+
+        /// <summary>
         /// 获取SVG图片源
         /// </summary>
         /// <param name="uri">图片地址</param>

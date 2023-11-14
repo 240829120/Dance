@@ -75,10 +75,10 @@ namespace Dance.WpfTest
 
 
         [Category("基础2")]
-        public string? Property_2_1 { get; set; }
+        public System.Windows.Media.SolidColorBrush Brush { get; set; }
 
         [Category("基础2")]
-        public string? Property_2_2 { get; set; }
+        public Thickness Thickness { get; set; } = new Thickness(1, 2, 3, 4);
 
         [Category("基础2")]
         public DateTime DateTime { get; set; }
