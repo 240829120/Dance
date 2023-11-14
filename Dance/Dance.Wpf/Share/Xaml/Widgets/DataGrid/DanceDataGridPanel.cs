@@ -32,6 +32,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region ActualWidthOffset -- 真实宽度偏移量
+
+        /// <summary>
+        /// 真实宽度偏移量
+        /// </summary>
+        public double ActualWidthOffset
+        {
+            get { return (double)GetValue(ActualWidthOffsetProperty); }
+            set { SetValue(ActualWidthOffsetProperty, value); }
+        }
+
+        /// <summary>
+        /// 真实宽度偏移量
+        /// </summary>
+        public static readonly DependencyProperty ActualWidthOffsetProperty =
+            DependencyProperty.Register("ActualWidthOffset", typeof(double), typeof(DanceDataGridPanel), new PropertyMetadata(-20d));
+
+        #endregion
+
         /// <summary>
         /// 测量
         /// </summary>
@@ -92,7 +111,7 @@ namespace Dance.Wpf
 
             if (starColumns.Count > 0)
             {
-                double starOneWidth = (headers.ActualWidth - size.Width) / stars;
+                double starOneWidth = (int)((headers.ActualWidth + this.ActualWidthOffset - size.Width) / stars);
                 foreach (DanceDataGridColumn column in starColumns)
                 {
                     column.ActualWidth = (int)Math.Max(column.MinWindth, starOneWidth * column.Width.Value);

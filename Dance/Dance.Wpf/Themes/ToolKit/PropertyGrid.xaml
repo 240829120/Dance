@@ -757,7 +757,7 @@
     <Style TargetType="{x:Type pg:PropertyGrid}">
         <!--<Setter Property="AdvancedOptionsMenu" Value="{StaticResource {ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}}" />-->
         <Setter Property="AdvancedOptionsMenu" Value="{x:Null}" />
-        <Setter Property="Background" Value="White" />
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}" />
         <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" />
         <Setter Property="SelectedObjectType" Value="{Binding RelativeSource={RelativeSource Self}, Path=SelectedObject, Converter={StaticResource objectConverter}, ConverterParameter=Type}" />
@@ -898,7 +898,7 @@
                                                     SnapsToDevicePixels="True">
                                                 <ScrollViewer x:Name="ScrollBar"
                                                               Padding="{TemplateBinding Padding}"
-                                                              Focusable="False"
+                                                              Focusable="False" 
                                                               VerticalScrollBarVisibility="Auto"
                                                               HorizontalScrollBarVisibility="Disabled">
                                                     <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
