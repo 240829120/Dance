@@ -9,7 +9,7 @@ namespace Dance.UnitTest
 {
     public abstract class StudentBase : IDanceJsonObject
     {
-        public string DanceJsonObjectType => this.GetType().AssemblyQualifiedName ?? string.Empty;
+        public string PART_DanceObjectType => this.GetType().AssemblyQualifiedName ?? string.Empty;
 
         public string? ID { get; set; }
     }

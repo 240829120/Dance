@@ -3,16 +3,16 @@
                     xmlns:dance="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/Glyphs.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/ButtonSpinner.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/NumericUpDown.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/DateTimeUpDown.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/TimeSpanUpDown.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/WatermarkTextBox.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/CollectionControl.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/ColorCanvas.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/ColorPicker.xaml"></ResourceDictionary>
-        <ResourceDictionary Source="/Dance.Wpf;component/Themes/ToolKit/PropertyGrid.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/Glyphs.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/ButtonSpinner.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/NumericUpDown.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/DateTimeUpDown.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/TimeSpanUpDown.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/WatermarkTextBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/CollectionControl.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/ColorCanvas.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/ColorPicker.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Themes/Toolkit/PropertyGrid.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

@@ -14,6 +14,6 @@ namespace Dance
         /// <summary>
         /// 对象类型
         /// </summary>
-        string DanceJsonObjectType { get; }
+        string PART_DanceObjectType { get; }
     }
 }

@@ -23,11 +23,11 @@ namespace Dance
         {
             JObject jObject = JObject.Load(reader);
 
-            JProperty? property = jObject.Property(nameof(IDanceJsonObject.DanceJsonObjectType));
+            JProperty? property = jObject.Property(nameof(IDanceJsonObject.PART_DanceObjectType));
             if (property == null || property.Value.Value<string>() is not string value || string.IsNullOrWhiteSpace(value))
                 return null;
 
-            if (Type.GetType(value) is not Type type)
+            if (Type.GetType(value) is not Type type || string.IsNullOrWhiteSpace(type.FullName))
                 return null;
 
             object? target = type.Assembly.CreateInstance(type.FullName);
