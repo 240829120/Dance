@@ -69,5 +69,21 @@ namespace Dance
             return JsonConvert.DeserializeObject<T>(json);
         }
 
+        /// <summary>
+        /// 读取Json文件
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="path">文件路径</param>
+        /// <param name="converters">转化器</param>
+        /// <returns>对象</returns>
+        public static T? ReadJson<T>(string path, params JsonConverter[] converters) where T : class
+        {
+            using StreamReader sr = new(path, Encoding.UTF8);
+            string json = sr.ReadToEnd();
+            if (string.IsNullOrWhiteSpace(json))
+                return default;
+
+            return JsonConvert.DeserializeObject<T>(json, converters);
+        }
     }
 }

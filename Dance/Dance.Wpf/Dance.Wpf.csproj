@@ -32,6 +32,7 @@
 	  <None Remove="Themes\Resources\Icon\failure.svg" />
 	  <None Remove="Themes\Resources\Icon\info.svg" />
 	  <None Remove="Themes\Resources\Icon\success.svg" />
+	  <None Remove="Themes\Resources\Icon\transparent.svg" />
 	  <None Remove="Themes\Resources\Icon\warning.svg" />
 	  <None Remove="Themes\ToolKit\Icons\ClearFilter16.svg" />
 	  <None Remove="Themes\ToolKit\Icons\copy.svg" />
@@ -101,6 +102,7 @@
 	  <Resource Include="Themes\Resources\Icon\failure.svg" />
 	  <Resource Include="Themes\Resources\Icon\info.svg" />
 	  <Resource Include="Themes\Resources\Icon\success.svg" />
+	  <Resource Include="Themes\Resources\Icon\transparent.svg" />
 	  <Resource Include="Themes\Resources\Icon\warning.svg" />
 	  <Resource Include="Themes\ToolKit\Icons\ClearFilter16.svg" />
 	  <Resource Include="Themes\ToolKit\Icons\copy.svg">
