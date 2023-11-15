@@ -159,4 +159,8 @@
 	  </None>
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Share\Core\Manager\TypeDescriptor\" />
+	</ItemGroup>
+
 </Project>

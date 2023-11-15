@@ -12,7 +12,7 @@
         Title="MainWindow" Height="800" Width="1400">
 
     <Grid Background="Transparent">
-        <toolkit:PropertyGrid x:Name="propertyGrid" Margin="20" Background="White">
+        <toolkit:PropertyGrid x:Name="propertyGrid" Margin="20" Background="White" AutoGenerateProperties="True" HideInheritedProperties="True">
 
         </toolkit:PropertyGrid>
     </Grid>
