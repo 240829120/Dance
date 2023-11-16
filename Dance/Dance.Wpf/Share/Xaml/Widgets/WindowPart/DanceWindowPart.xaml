@@ -167,6 +167,8 @@
                             <ColumnDefinition Width="*"></ColumnDefinition>
                             <ColumnDefinition Width="5"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
+                        <ContentPresenter Grid.Row="1" Grid.Column="1" Margin="-5"></ContentPresenter>
+                        
                         <local:DanceWindowResizePart Grid.Row="0" Grid.Column="0" ResizeMode="LeftTop"></local:DanceWindowResizePart>
                         <local:DanceWindowResizePart Grid.Row="0" Grid.Column="1" ResizeMode="Top"></local:DanceWindowResizePart>
                         <local:DanceWindowResizePart Grid.Row="0" Grid.Column="2" ResizeMode="RightTop"></local:DanceWindowResizePart>
@@ -178,7 +180,6 @@
                         <local:DanceWindowResizePart Grid.Row="2" Grid.Column="1" ResizeMode="Bottom"></local:DanceWindowResizePart>
                         <local:DanceWindowResizePart Grid.Row="2" Grid.Column="2" ResizeMode="RightBottom"></local:DanceWindowResizePart>
 
-                        <ContentPresenter Grid.Row="1" Grid.Column="1"></ContentPresenter>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
