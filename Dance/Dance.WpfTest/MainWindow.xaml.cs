@@ -89,8 +89,8 @@ namespace Dance.WpfTest
         [Category("基础2")]
         public System.Windows.Media.Color Color { get; set; }
 
-        [Category("老师")]
-        public Teacher Teacher { get; set; } = new();
+        //[Category("老师")]
+        //public Teacher Teacher { get; set; } = new();
 
         [Category("列表")]
         public List<Teacher> Items { get; set; } = new() { new Teacher { Name = "zs", Age = 17 } };

@@ -223,6 +223,7 @@
     <Style TargetType="{x:Type editor:PropertyGridEditorTextBlock}"
            BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" />
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
         <Setter Property="Margin" Value="5,0,0,0" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="TextWrapping" Value="NoWrap"></Setter>
@@ -445,7 +446,7 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Background="{TemplateBinding Background}"
-                                Padding="{Binding DataContext.Level, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=pg:PropertyItemsControl}, Converter={StaticResource DanceDoubleThicknessConverter},ConverterParameter=1}"
+                                Padding="{Binding DataContext.Level, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=pg:PropertyItemsControl,AncestorLevel=1}, Converter={StaticResource DanceDoubleThicknessConverter},ConverterParameter=1}"
                                 BorderBrush="Transparent">
                             <ToggleButton Template="{StaticResource ExpanderToggleButton}"
                                           IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
