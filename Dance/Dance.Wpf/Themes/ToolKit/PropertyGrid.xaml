@@ -223,7 +223,8 @@
     <Style TargetType="{x:Type editor:PropertyGridEditorTextBlock}"
            BasedOn="{StaticResource {x:Type TextBlock}}">
         <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH}}" />
-        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
+        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+        <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"></Setter>
         <Setter Property="Margin" Value="5,0,0,0" />
         <Setter Property="TextTrimming" Value="CharacterEllipsis" />
         <Setter Property="TextWrapping" Value="NoWrap"></Setter>
@@ -446,15 +447,21 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
                         <Border Background="{TemplateBinding Background}"
-                                Padding="{Binding DataContext.Level, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=pg:PropertyItemsControl,AncestorLevel=1}, Converter={StaticResource DanceDoubleThicknessConverter},ConverterParameter=1}"
                                 BorderBrush="Transparent">
-                            <ToggleButton Template="{StaticResource ExpanderToggleButton}"
-                                          IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
-                                          OverridesDefaultStyle="True">
-                                <ContentPresenter RecognizesAccessKey="True"
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <dance:DanceToolkitPropertyGridIndent></dance:DanceToolkitPropertyGridIndent>
+                                <ToggleButton Template="{StaticResource ExpanderToggleButton}" Grid.Column="1"
+                                              IsChecked="{Binding Path=IsExpanded, Mode=TwoWay, RelativeSource={RelativeSource TemplatedParent}}"
+                                              OverridesDefaultStyle="True">
+                                    <ContentPresenter RecognizesAccessKey="True"
                                                   ContentSource="Header" VerticalAlignment="Center"
                                                   TextElement.FontWeight="Bold" />
-                            </ToggleButton>
+                                </ToggleButton>
+                            </Grid>
                         </Border>
                         <Border x:Name="content" Padding="0,0,0,0" Grid.Row="1" Visibility="Collapsed"
                                 Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}">
