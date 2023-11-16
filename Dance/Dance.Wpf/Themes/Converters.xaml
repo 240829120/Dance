@@ -26,6 +26,29 @@
     </dance:DanceIsNullConverter>
 
     <!-- ===================================================================================================================== -->
+    <!-- Null **** Visibility [ Null_NotNull ] -->
+
+    <!-- NullToVisibilityConverter_Visible_Collapsed -->
+    <dance:DanceIsNullConverter x:Key="NullToVisibilityConverter_Visible_Collapsed">
+        <dance:DanceIsNullConverter.DefaultValue>
+            <Visibility>Collapsed</Visibility>
+        </dance:DanceIsNullConverter.DefaultValue>
+        <dance:DanceIsNullConverter.NullValue>
+            <Visibility>Visible</Visibility>
+        </dance:DanceIsNullConverter.NullValue>
+    </dance:DanceIsNullConverter>
+
+    <!-- NullToVisibilityConverter_Collapsed_Visible -->
+    <dance:DanceIsNullConverter x:Key="NullToVisibilityConverter_Collapsed_Visible">
+        <dance:DanceIsNullConverter.DefaultValue>
+            <Visibility>Visible</Visibility>
+        </dance:DanceIsNullConverter.DefaultValue>
+        <dance:DanceIsNullConverter.NullValue>
+            <Visibility>Collapsed</Visibility>
+        </dance:DanceIsNullConverter.NullValue>
+    </dance:DanceIsNullConverter>
+
+    <!-- ===================================================================================================================== -->
     <!-- Boolean **** Visibility [ True_False_Null ] -->
 
     <!-- BooleanToVisibilityConverter_Visible_Hidden_Hidden -->
@@ -170,5 +193,7 @@
             </dance:DanceMappingConverterItem.To>
         </dance:DanceMappingConverterItem>
     </dance:DanceMappingConverter>
+
+
 
 </ResourceDictionary>
