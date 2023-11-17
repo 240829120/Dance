@@ -50,53 +50,55 @@
                                 <DropShadowEffect Color="Black" Direction="-20" ShadowDepth="5" BlurRadius="10" Opacity="0.3"></DropShadowEffect>
                             </Border.Effect>
                         </Border>
-                        <Border Margin="10" BorderThickness="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"
-                                BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}">
+                        <Border Margin="10,10,10,15" BorderThickness="0">
                             <dance:DanceWindowResizeContainerPart Margin="-5">
-                                <Grid Background="White" Grid.Row="1" Grid.Column="1">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                        <RowDefinition Height="20"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <!-- 标题 -->
-                                    <Grid Background="#FFFAFAFA">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*"></ColumnDefinition>
-                                            <ColumnDefinition Width="120"></ColumnDefinition>
-                                        </Grid.ColumnDefinitions>
-                                        <dance:DanceWindowDragPart Grid.ColumnSpan="2"></dance:DanceWindowDragPart>
-                                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
-                                            <Image Width="20" Height="20" Source="/Dance.Art.Module;component/Themes/Resources/Icons/logo.png" VerticalAlignment="Center"></Image>
-                                            <TextBlock Text="列表" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
-                                        </StackPanel>
-                                        <Grid Grid.Column="1">
+                                <Border BorderThickness="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"
+                                        BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}">
+                                    <Grid Background="White" Grid.Row="1" Grid.Column="1">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"></RowDefinition>
+                                            <RowDefinition Height="*"></RowDefinition>
+                                            <RowDefinition Height="20"></RowDefinition>
+                                        </Grid.RowDefinitions>
+                                        <!-- 标题 -->
+                                        <Grid Background="#FFFAFAFA">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*"></ColumnDefinition>
-                                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                <ColumnDefinition Width="120"></ColumnDefinition>
                                             </Grid.ColumnDefinitions>
-                                            <dance:DanceWindowMinPart HorizontalAlignment="Right"></dance:DanceWindowMinPart>
-                                            <dance:DanceWindowMaxOrNormalPart HorizontalAlignment="Right" Grid.Column="1"></dance:DanceWindowMaxOrNormalPart>
-                                            <dance:DanceWindowClosePart HorizontalAlignment="Right" Grid.Column="2"></dance:DanceWindowClosePart>
+                                            <dance:DanceWindowDragPart Grid.ColumnSpan="2"></dance:DanceWindowDragPart>
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" Margin="10,0,0,0">
+                                                <Image Width="20" Height="20" Source="/Dance.Art.Module;component/Themes/Resources/Icons/logo.png" VerticalAlignment="Center"></Image>
+                                                <TextBlock Text="列表" VerticalAlignment="Center" Margin="10,0,0,0"></TextBlock>
+                                            </StackPanel>
+                                            <Grid Grid.Column="1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <dance:DanceWindowMinPart HorizontalAlignment="Right"></dance:DanceWindowMinPart>
+                                                <dance:DanceWindowMaxOrNormalPart HorizontalAlignment="Right" Grid.Column="1"></dance:DanceWindowMaxOrNormalPart>
+                                                <dance:DanceWindowClosePart HorizontalAlignment="Right" Grid.Column="2"></dance:DanceWindowClosePart>
+                                            </Grid>
                                         </Grid>
-                                    </Grid>
-                                    <!-- 内容 -->
-                                    <ContentPresenter Grid.Row="1" Margin="10,10,20,10"></ContentPresenter>
-                                    <!-- 覆盖按钮 -->
-                                    <Border Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"
-                                            Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="70" Width="380">
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,20,10" HorizontalAlignment="Right" VerticalAlignment="Center">
-                                            <Button Style="{StaticResource Button_Master}" Content="确定" Margin="10"
-                                                    dance:DanceButtonTrigger.CallPrivateFunctionTarget="{Binding .,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CollectionControlDialog}}"
-                                                    dance:DanceButtonTrigger.CallPrivateFunction="OkButton_Click"></Button>
-                                            <Button Style="{StaticResource Button_Secondary}" Content="取消" Grid.Column="1" Margin="10"
-                                                    dance:DanceButtonTrigger.CallPrivateFunctionTarget="{Binding .,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CollectionControlDialog}}"
-                                                    dance:DanceButtonTrigger.CallPrivateFunction="CancelButton_Click"></Button>
-                                        </StackPanel>
-                                    </Border>
+                                        <!-- 内容 -->
+                                        <ContentPresenter Grid.Row="1" Margin="10,10,20,10"></ContentPresenter>
+                                        <!-- 覆盖按钮 -->
+                                        <Border Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"
+                                                Grid.Row="1" Grid.RowSpan="2" VerticalAlignment="Bottom" HorizontalAlignment="Right" Height="70" Width="380">
+                                            <StackPanel Orientation="Horizontal" Margin="0,0,20,10" HorizontalAlignment="Right" VerticalAlignment="Center">
+                                                <Button Style="{StaticResource Button_Master}" Content="确定" Margin="10"
+                                                        dance:DanceButtonTrigger.CallPrivateFunctionTarget="{Binding .,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CollectionControlDialog}}"
+                                                        dance:DanceButtonTrigger.CallPrivateFunction="OkButton_Click"></Button>
+                                                <Button Style="{StaticResource Button_Secondary}" Content="取消" Grid.Column="1" Margin="10"
+                                                        dance:DanceButtonTrigger.CallPrivateFunctionTarget="{Binding .,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=local:CollectionControlDialog}}"
+                                                        dance:DanceButtonTrigger.CallPrivateFunction="CancelButton_Click"></Button>
+                                            </StackPanel>
+                                        </Border>
 
-                                </Grid>
+                                    </Grid>
+                                </Border>
                             </dance:DanceWindowResizeContainerPart>
                         </Border>
                     </Grid>
