@@ -118,7 +118,7 @@
                             BorderThickness="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" 
                             MaxHeight="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}}" 
                             SnapsToDevicePixels="True" UseLayoutRounding="True" MinWidth="{Binding ActualWidth, ElementName=root}">
-                        <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                        <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden">
                             <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </ScrollViewer>
                     </Border>
@@ -130,7 +130,7 @@
                                   VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                   HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                   ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
-                                  Margin="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN}}" 
+                                  Margin="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_WITH_RIGHT}}" 
                                   IsHitTestVisible="false"/>
             </Grid>
         </Border>

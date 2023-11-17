@@ -182,9 +182,96 @@
     </Style>
 
     <!-- PropertyGrid ComboBox Editors -->
-    <Style TargetType="{x:Type editor:PropertyGridEditorComboBox}"
-           BasedOn="{StaticResource {x:Type ComboBox}}">
+    <Style x:Key="ComboBoxToggleButton_PropertyGrid" TargetType="{x:Type ToggleButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="ClickMode" Value="Press"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Grid Background="Transparent">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <Border Grid.Column="1"
+                                Width="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_PART_WIDTH}}">
+                            <Path x:Name="path" Visibility="Collapsed"
+                                  Data="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.PATH_ARROW_MARK}}"
+                                  Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.FOREGROUND_BRUSH_MARK}}"
+                                  SnapsToDevicePixels="True"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Focusable="False" />
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="path" Property="Visibility" Value="Visible"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
+
+    <Style TargetType="{x:Type editor:PropertyGridEditorComboBox}">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+        <Setter Property="Background" Value="White"></Setter>
+        <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"></Setter>
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Border x:Name="root" SnapsToDevicePixels="True" UseLayoutRounding="True"
+                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Popup x:Name="PART_Popup" AllowsTransparency="true" IsOpen="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                   Margin="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.POPUP_MARGIN}}" 
+                                   Placement="Bottom" PlacementTarget="{Binding ElementName=root}" PopupAnimation="Slide">
+                                <Border Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}" 
+                                        BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}" 
+                                        BorderThickness="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" 
+                                        MaxHeight="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}}" 
+                                        SnapsToDevicePixels="True" UseLayoutRounding="True" MinWidth="{Binding ActualWidth, ElementName=root}">
+                                    <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+                                        <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                            <ToggleButton IsChecked="{Binding IsDropDownOpen, Mode=TwoWay, RelativeSource={RelativeSource Mode=TemplatedParent}}" 
+                                          Style="{StaticResource ComboBoxToggleButton_PropertyGrid}"/>
+                            <ContentPresenter ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              Content="{TemplateBinding SelectionBoxItem}" 
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}" 
+                                              Margin="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_WITH_RIGHT}}" 
+                                              IsHitTestVisible="false"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="root" Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Style.Triggers>
+            <Trigger Property="IsEditable" Value="True">
+                <Setter Property="Template" Value="{StaticResource ComboBox_Edit}"></Setter>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CONTROL_OPACITY_DISABLED}}"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <!-- PropertyGrid CheckBox Editors -->

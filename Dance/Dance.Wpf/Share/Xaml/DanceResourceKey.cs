@@ -249,6 +249,11 @@ namespace Dance.Wpf
         /// </summary>
         public const string EDIT_CONTENT_MARGIN_LARGE = "EDIT_PART_CONTENT_MARGIN_LARGE";
 
+        /// <summary>
+        /// 编辑 -- 部件 -- 内容外边距 -- 右边拥有控件
+        /// </summary>
+        public const string EDIT_CONTENT_MARGIN_WITH_RIGHT = "EDIT_CONTENT_MARGIN_WITH_RIGHT";
+
         // -----------------------------------------------------------------------------------------------------
         // 滚动
         // -----------------------------------------------------------------------------------------------------

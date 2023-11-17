@@ -100,6 +100,10 @@ namespace Dance.WpfTest
 
         [Category("列表")]
         public List<int> Items3 { get; set; } = new List<int>() { 1, 2, 3 };
+
+
+        [Category("测试")]
+        public HorizontalAlignment HorizontalAlignment { get; set; }
     }
 
     /// <summary>
@@ -118,8 +122,6 @@ namespace Dance.WpfTest
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.propertyGrid.SelectedObject = new Student();
-
-            this.cb.ItemsSource = new List<string> { "1", "2", "3" };
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

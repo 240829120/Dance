@@ -57,6 +57,7 @@
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_MIDDLE}">30</sys:Double>
     <sys:Double x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_PART_HEIGHT_LARGE}">60</sys:Double>
     <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN}">5,0,5,0</Thickness>
+    <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_WITH_RIGHT}">5,0,25,0</Thickness>
     <Thickness x:Key="{x:Static Member=dance:DanceResourceKey.EDIT_CONTENT_MARGIN_LARGE}">10,0,10,0</Thickness>
 
     <!-- 滚动 -->
