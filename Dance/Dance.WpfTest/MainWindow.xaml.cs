@@ -118,6 +118,8 @@ namespace Dance.WpfTest
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             this.propertyGrid.SelectedObject = new Student();
+
+            this.cb.ItemsSource = new List<string> { "1", "2", "3" };
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

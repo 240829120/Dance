@@ -118,7 +118,7 @@
                             BorderThickness="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}" 
                             MaxHeight="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.POPUP_MAX_HEIGHT}}" 
                             SnapsToDevicePixels="True" UseLayoutRounding="True" MinWidth="{Binding ActualWidth, ElementName=root}">
-                        <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden">
+                        <ScrollViewer x:Name="DropDownScrollViewer" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
                             <ItemsPresenter x:Name="ItemsPresenter" KeyboardNavigation.DirectionalNavigation="Contained" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
                         </ScrollViewer>
                     </Border>
@@ -168,7 +168,7 @@
         </Grid>
     </ControlTemplate>
 
-    <Style TargetType="ComboBox">
+    <Style x:Key="ComboBox" TargetType="ComboBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -186,5 +186,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="ComboBox" BasedOn="{StaticResource ComboBox}"></Style>
 
 </ResourceDictionary>

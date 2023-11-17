@@ -46,14 +46,14 @@ namespace Dance.Wpf
                     register = newValue;
                 }
 
-                element.PreviewMouseDown -= Element_PreviewMouseDown;
+                element.MouseDown -= Element_MouseDown;
                 if (register)
                 {
-                    element.PreviewMouseDown += Element_PreviewMouseDown;
+                    element.MouseDown += Element_MouseDown;
                 }
             })));
 
-        private static void Element_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private static void Element_MouseDown(object sender, MouseButtonEventArgs e)
         {
             if (sender is not FrameworkElement element)
                 return;

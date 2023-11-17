@@ -6,7 +6,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Theme.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <Style TargetType="CheckBox">
+    <Style x:Key="CheckBox" TargetType="CheckBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="HorizontalContentAlignment" Value="Left"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
@@ -68,5 +68,7 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style TargetType="CheckBox" BasedOn="{StaticResource CheckBox}"></Style>
 
 </ResourceDictionary>

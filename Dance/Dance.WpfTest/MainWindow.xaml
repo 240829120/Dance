@@ -16,5 +16,9 @@
                               FilterWatermark="搜索">
 
         </toolkit:PropertyGrid>
+
+        <Border Background="White">
+            <ComboBox x:Name="cb"></ComboBox>
+        </Border>
     </Grid>
 </Window>
