@@ -190,6 +190,7 @@
     <!-- PropertyGrid CheckBox Editors -->
     <Style TargetType="{x:Type editor:PropertyGridEditorCheckBox}"
            BasedOn="{StaticResource {x:Type CheckBox}}">
+        <Setter Property="Height" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.EDIT_HEIGHT_SMALL}}"></Setter>
     </Style>
 
     <!-- PropertyGrid Enum CheckBox Editors -->
@@ -934,10 +935,11 @@
                                 </Thumb>
                             </Grid>
 
+                            <dance:DanceDashedLine Grid.Row="3" HorizontalAlignment="Stretch" StrokeDashArray="5 5" IsHitTestVisible="False"
+                                                   Visibility="{Binding ShowSummary, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"></dance:DanceDashedLine>
                             <GridSplitter Height="1"
                                           Grid.Row="3"
-                                          HorizontalAlignment="Stretch"
-                                          Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
+                                          HorizontalAlignment="Stretch" Background="Transparent"
                                           Visibility="{Binding ShowSummary, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}" >
                             </GridSplitter>
 
