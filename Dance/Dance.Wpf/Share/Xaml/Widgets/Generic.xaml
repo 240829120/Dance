@@ -10,6 +10,7 @@
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/GroupBox/DanceGroupBox.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/QRCoder/DanceQRCoder.xaml"></ResourceDictionary>
         <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/MessageBox/DanceMessageBox.xaml"></ResourceDictionary>
+        <ResourceDictionary Source="/Dance.Wpf;component/Share/Xaml/Widgets/Timeline/DanceTimeline.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>

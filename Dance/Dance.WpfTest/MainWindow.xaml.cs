@@ -106,6 +106,20 @@ namespace Dance.WpfTest
         public HorizontalAlignment HorizontalAlignment { get; set; }
     }
 
+    public class TimelineTrackItemModel
+    {
+        public TimeSpan BeginTime { get; set; }
+
+        public TimeSpan EndTime { get; set; }
+    }
+
+    public class TimelineTrackModel
+    {
+        public string Name { get; set; }
+
+        public ObservableCollection<TimelineTrackItemModel> Items { get; } = new();
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -121,7 +135,23 @@ namespace Dance.WpfTest
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            this.propertyGrid.SelectedObject = new Student();
+            //this.propertyGrid.SelectedObject = new Student();
+
+            List<TimelineTrackModel> list = new()
+            {
+                new TimelineTrackModel() { Name = "轨道1" },
+                new TimelineTrackModel() { Name = "轨道2" },
+            };
+
+            list[0].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:00:01"), EndTime = TimeSpan.Parse("00:00:02") });
+            list[0].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:00:03"), EndTime = TimeSpan.Parse("00:00:10") });
+
+            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:01:01"), EndTime = TimeSpan.Parse("00:01:02") });
+            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:05:03"), EndTime = TimeSpan.Parse("00:05:10") });
+            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:10:01"), EndTime = TimeSpan.Parse("00:10:02") });
+            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:20:03"), EndTime = TimeSpan.Parse("00:20:10") });
+
+            this.timeline.ItemsSource = list;
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

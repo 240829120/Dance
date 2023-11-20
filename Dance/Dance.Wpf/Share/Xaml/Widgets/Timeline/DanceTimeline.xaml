@@ -1,0 +1,128 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dance.Wpf">
+
+    <Style TargetType="local:DanceTimelineTrackHeader">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+        <Setter Property="Height" Value="{Binding TrackHeight,RelativeSource={RelativeSource AncestorType=local:DanceTimeline,Mode=FindAncestor}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceTimelineTrackHeader">
+                    <Border Background="{TemplateBinding Background}" Margin="0,0,0,2">
+                        <ContentPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.BACKGROUND_BRUSH_SELECTED}}"></Setter>
+                <Setter Property="Foreground" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.FOREGROUND_BRUSH_SELECTED}}"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="local:DanceTimelineTrackHeaderContainer">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceTimelineTrackHeaderContainer">
+                    <ItemsPresenter></ItemsPresenter>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 时间线轨道项 -->
+    <Style TargetType="local:DanceTimelineTrackItem">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceTimelineTrackItem">
+                    <Border Background="Transparent">
+                        <ContentPresenter></ContentPresenter>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 时间线轨道 -->
+    <Style TargetType="local:DanceTimelineTrack">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"></Setter>
+        <Setter Property="ItemTemplate" Value="{Binding TrackItemDataTemplate,RelativeSource={RelativeSource AncestorType=local:DanceTimeline,Mode=FindAncestor}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceTimelineTrack">
+                    <Grid Margin="0,0,0,2">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="0" Margin="-30,0,-30,0"></Border>
+                        <ItemsPresenter></ItemsPresenter>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <local:DanceTimelineTrackPanel></local:DanceTimelineTrackPanel>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- 时间线 -->
+    <Style TargetType="local:DanceTimeline">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.BORDER_BRUSH}}"></Setter>
+        <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.BORDER_THICKNESS}}"></Setter>
+        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=local:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="local:DanceTimeline">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150" MinWidth="100" MaxWidth="500"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            <ScrollViewer x:Name="PART_TrackScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <local:DanceTimelineTrackHeaderContainer ItemsSource="{Binding Path=ItemsSource,RelativeSource={RelativeSource AncestorType={x:Type local:DanceTimeline},Mode=FindAncestor}}" Grid.Row="1"
+                                                                             ItemTemplate="{Binding Path=TrackHeaderDataTemplate,RelativeSource={RelativeSource AncestorType={x:Type local:DanceTimeline},Mode=FindAncestor}}"
+                                                  >
+                                    </local:DanceTimelineTrackHeaderContainer>
+                                </Grid>
+                            </ScrollViewer>
+                            <GridSplitter Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch"></GridSplitter>
+                            <ScrollViewer x:Name="PART_ScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1">
+                                <Grid x:Name="PART_Root" Margin="30,0,30,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="40"></RowDefinition>
+                                        <RowDefinition Height="*"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <ItemsPresenter Grid.Row="1" HorizontalAlignment="Left"></ItemsPresenter>
+                                    <local:DanceTimelineScale x:Name="PART_Scale" Grid.RowSpan="2" IsHitTestVisible="False"></local:DanceTimelineScale>
+                                </Grid>
+                            </ScrollViewer>
+                        </Grid>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <local:DanceTimelinePanel></local:DanceTimelinePanel>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+</ResourceDictionary>
