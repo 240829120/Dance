@@ -20,7 +20,7 @@
         </Setter>
     </Style>
 
-    <Style TargetType="TextBox">
+    <Style x:Key="TextBox" TargetType="TextBox">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"></Setter>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BACKGROUND_BRUSH}}"></Setter>
@@ -52,4 +52,7 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style TargetType="TextBox" BasedOn="{StaticResource TextBox}"></Style>
+
 </ResourceDictionary>
