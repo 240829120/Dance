@@ -24,6 +24,7 @@ using System.Windows.Shapes;
 using CommunityToolkit.Mvvm.Input;
 using System.ComponentModel;
 using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
+using System.Collections;
 
 namespace Dance.WpfTest
 {
@@ -113,11 +114,23 @@ namespace Dance.WpfTest
         public TimeSpan EndTime { get; set; }
     }
 
-    public class TimelineTrackModel
+    public class TimelineTrackModel : DanceModel, IDanceTimelineTrack
     {
         public string Name { get; set; }
 
-        public ObservableCollection<TimelineTrackItemModel> Items { get; } = new();
+        #region IsSelected 
+
+        private bool isSelected;
+
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { isSelected = value; this.OnPropertyChanged(); }
+        }
+
+        #endregion
+
+        public IList Items { get; } = new ObservableCollection<TimelineTrackItemModel>();
     }
 
     /// <summary>
@@ -158,6 +171,11 @@ namespace Dance.WpfTest
         {
             DanceDomain.Current?.Dispose();
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.timeline.IsPlaying = !this.timeline.IsPlaying;
         }
     }
 }

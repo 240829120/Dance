@@ -57,6 +57,7 @@ namespace Dance.Wpf
         protected override void OnRender(DrawingContext drawingContext)
         {
             this.TryGetOwner();
+
             this.DrawScale(drawingContext);
             this.DrawScaleNumber(drawingContext);
         }
@@ -111,9 +112,9 @@ namespace Dance.Wpf
             // 15秒
             if (secondWidth * 15 >= DanceTimeline.MIN_NUMBER_WIDTH)
             {
-                for (int i = (int)beginTime.TotalSeconds; i <= endTime.TotalSeconds; i += 15)
+                for (int i = (int)beginTime.TotalSeconds - ((int)beginTime.TotalSeconds % 15); i <= endTime.TotalSeconds; i += 15)
                 {
-                    if (i % 60 == 0 || i % 15 != 0)
+                    if (i % 60 == 0)
                         continue;
 
                     double x = (i * secondWidth) - beginX;
@@ -129,7 +130,7 @@ namespace Dance.Wpf
             {
                 for (int i = (int)beginTime.TotalSeconds; i <= endTime.TotalSeconds; i++)
                 {
-                    if (i % 60 == 0 || i % 15 != 0)
+                    if (i % 60 == 0 || i % 15 == 0)
                         continue;
 
                     double x = (i * secondWidth) - beginX;
@@ -182,7 +183,7 @@ namespace Dance.Wpf
                     if (x < 0 || x > this.ScrollViewer.ViewportWidth)
                         continue;
 
-                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface("微软雅黑"), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 15 - txt.Height - 5));
                 }
             }
@@ -199,7 +200,7 @@ namespace Dance.Wpf
                     if (x < 0 || x > this.ScrollViewer.ViewportWidth)
                         continue;
 
-                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface("微软雅黑"), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 10 - txt.Height - 5));
                 }
             }
@@ -207,16 +208,16 @@ namespace Dance.Wpf
             // 15秒
             if (secondWidth * 15 >= DanceTimeline.MIN_NUMBER_WIDTH)
             {
-                for (int i = (int)beginTime.TotalSeconds; i <= endTime.TotalSeconds; i += 15)
+                for (int i = (int)beginTime.TotalSeconds - ((int)beginTime.TotalSeconds % 15); i <= endTime.TotalSeconds; i += 15)
                 {
-                    if (i % 60 == 0 || i % 15 != 0)
+                    if (i % 60 == 0)
                         continue;
 
                     double x = (i * secondWidth) - beginX;
                     if (x < 0 || x > this.ScrollViewer.ViewportWidth)
                         continue;
 
-                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface("微软雅黑"), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 8 - txt.Height - 5));
                 }
             }
@@ -233,7 +234,7 @@ namespace Dance.Wpf
                     if (x < 0 || x > this.ScrollViewer.ViewportWidth)
                         continue;
 
-                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface("微软雅黑"), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 8 - txt.Height - 5));
                 }
             }
@@ -261,7 +262,7 @@ namespace Dance.Wpf
         {
             if (e.HorizontalChange != 0)
             {
-                this.InvalidateVisual();
+                this.Timeline?.PART_Scale?.InvalidateVisual();
             }
         }
     }

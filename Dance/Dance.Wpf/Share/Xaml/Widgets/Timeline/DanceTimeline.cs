@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
@@ -23,6 +24,7 @@ namespace Dance.Wpf
         public DanceTimeline()
         {
             this.Loaded += DanceTimeline_Loaded;
+            this.Unloaded += DanceTimeline_Unloaded;
         }
 
         /// <summary>
@@ -40,6 +42,11 @@ namespace Dance.Wpf
         /// </summary>
         public const int MIN_NUMBER_WIDTH = 30;
 
+        /// <summary>
+        /// 刻度字体
+        /// </summary>
+        public const string FONT_FAMILY = "Microsoft Yahei UI";
+
         // =============================================================================================
         // Field
 
@@ -54,9 +61,24 @@ namespace Dance.Wpf
         internal DanceTimelineScale? PART_Scale;
 
         /// <summary>
+        /// 进度
+        /// </summary>
+        internal DanceTimelineProgress? PART_Progress;
+
+        /// <summary>
+        /// 滚动条
+        /// </summary>
+        internal ScrollViewer? PART_ScrollViewer;
+
+        /// <summary>
         /// 时间线面板
         /// </summary>
         internal DanceTimelinePanel? TimeLinePanel;
+
+        /// <summary>
+        /// 播放开始时间
+        /// </summary>
+        private DateTime? PlayTime;
 
         // =============================================================================================
         // Property
@@ -86,6 +108,31 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region CurrentTime -- 当前时间
+
+        /// <summary>
+        /// 当前时间
+        /// </summary>
+        public TimeSpan CurrentTime
+        {
+            get { return (TimeSpan)GetValue(CurrentTimeProperty); }
+            set { SetValue(CurrentTimeProperty, value); }
+        }
+
+        /// <summary>
+        /// 当前时间
+        /// </summary>
+        public static readonly DependencyProperty CurrentTimeProperty =
+            DependencyProperty.Register("CurrentTime", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimeline timeline || timeline.PART_ScrollViewer == null)
+                    return;
+
+                timeline.PART_ScrollViewer.ScrollToHorizontalOffset(timeline.CurrentTime.TotalHours * DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Zoom - timeline.ActualWidth / 2d);
+            })));
+
+        #endregion
+
         #region Zoom -- 缩放
 
         /// <summary>
@@ -107,6 +154,7 @@ namespace Dance.Wpf
                     return;
 
                 timeline.PART_Root.Width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Duration.TotalHours * timeline.Zoom;
+                timeline.PART_Progress?.UpdateMargin();
             })));
 
         #endregion
@@ -168,6 +216,31 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region IsPlaying -- 是否正在播放
+
+        /// <summary>
+        /// 是否正在播放
+        /// </summary>
+        public bool IsPlaying
+        {
+            get { return (bool)GetValue(IsPlayingProperty); }
+            set { SetValue(IsPlayingProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否正在播放
+        /// </summary>
+        public static readonly DependencyProperty IsPlayingProperty =
+            DependencyProperty.Register("IsPlaying", typeof(bool), typeof(DanceTimeline), new PropertyMetadata(false, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimeline timeline)
+                    return;
+
+                timeline.PlayTime = null;
+            })));
+
+        #endregion
+
         // =============================================================================================
         // Override
 
@@ -177,6 +250,8 @@ namespace Dance.Wpf
 
             this.PART_Root = this.Template.FindName(nameof(PART_Root), this) as FrameworkElement;
             this.PART_Scale = this.Template.FindName(nameof(PART_Scale), this) as DanceTimelineScale;
+            this.PART_Progress = this.Template.FindName(nameof(PART_Progress), this) as DanceTimelineProgress;
+            this.PART_ScrollViewer = this.Template.FindName(nameof(PART_ScrollViewer), this) as ScrollViewer;
         }
 
         protected override bool IsItemItsOwnContainerOverride(object item)
@@ -190,8 +265,14 @@ namespace Dance.Wpf
         }
 
         // =============================================================================================
+        // Public Function
+
+        // =============================================================================================
         // Private Function
 
+        /// <summary>
+        /// 控件加载
+        /// </summary>
         private void DanceTimeline_Loaded(object sender, RoutedEventArgs e)
         {
             if (this.PART_Root == null)
@@ -199,7 +280,30 @@ namespace Dance.Wpf
 
             this.PART_Root.Width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Duration.TotalHours * this.Zoom;
             this.PART_Scale?.InvalidateVisual();
+
+
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
+            CompositionTarget.Rendering += CompositionTarget_Rendering;
         }
 
+        /// <summary>
+        /// 卸载
+        /// </summary>
+        private void DanceTimeline_Unloaded(object sender, RoutedEventArgs e)
+        {
+            CompositionTarget.Rendering -= CompositionTarget_Rendering;
+        }
+
+        /// <summary>
+        /// 更新
+        /// </summary>
+        private void CompositionTarget_Rendering(object? sender, EventArgs e)
+        {
+            if (!this.IsVisible || !this.IsPlaying)
+                return;
+
+            this.PlayTime ??= DateTime.Now;
+            this.CurrentTime = DateTime.Now - this.PlayTime.Value;
+        }
     }
 }
