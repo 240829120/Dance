@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Transparent" BorderThickness="1"  Margin="50">
-            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="1" CurrentTime="00:01:00">
+            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="1" CurrentTime="00:01:00" IsFollowingProgress="True">
                 <dance:DanceTimeline.ItemContainerStyle>
                     <Style TargetType="dance:DanceTimelineTrack">
                         <Setter Property="ItemsSource" Value="{Binding Path=Items}"></Setter>

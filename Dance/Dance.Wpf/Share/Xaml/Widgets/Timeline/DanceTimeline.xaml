@@ -112,6 +112,10 @@
                                 <ColumnDefinition Width="150" MinWidth="100" MaxWidth="500"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
+                            <Border Height="40" VerticalAlignment="Top">
+                                <TextBlock Text="{Binding CurrentTime,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},StringFormat=hh\\:mm\\:ss}"
+                                       FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                            </Border>
                             <ScrollViewer x:Name="PART_TrackScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
                                 <Grid>
                                     <Grid.RowDefinitions>

@@ -108,6 +108,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region IsFollowingProgress -- 是否跟踪进度
+
+        /// <summary>
+        /// 是否跟踪进度
+        /// </summary>
+        public bool IsFollowingProgress
+        {
+            get { return (bool)GetValue(IsFollowingProgressProperty); }
+            set { SetValue(IsFollowingProgressProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否跟踪进度
+        /// </summary>
+        public static readonly DependencyProperty IsFollowingProgressProperty =
+            DependencyProperty.Register("IsFollowingProgress", typeof(bool), typeof(DanceTimeline), new PropertyMetadata(false));
+
+        #endregion
+
         #region CurrentTime -- 当前时间
 
         /// <summary>
@@ -126,6 +145,9 @@ namespace Dance.Wpf
             DependencyProperty.Register("CurrentTime", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not DanceTimeline timeline || timeline.PART_ScrollViewer == null)
+                    return;
+
+                if (!timeline.IsFollowingProgress)
                     return;
 
                 timeline.PART_ScrollViewer.ScrollToHorizontalOffset(timeline.CurrentTime.TotalHours * DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Zoom - timeline.ActualWidth / 2d);
