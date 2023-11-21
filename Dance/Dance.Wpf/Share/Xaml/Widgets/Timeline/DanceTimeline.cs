@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -30,7 +31,17 @@ namespace Dance.Wpf
         /// <summary>
         /// ZOOM 值为1 时1秒绘制宽度
         /// </summary>
-        public const int ONE_HOUR_DEFAULT_WIDTH = 10000;
+        public const int ONE_HOUR_DEFAULT_WIDTH = 1000;
+
+        /// <summary>
+        /// 最小缩放值
+        /// </summary>
+        public const double MIN_ZOOM = 1;
+
+        /// <summary>
+        /// 最大缩放值
+        /// </summary>
+        public const double MAX_ZOOM = 500;
 
         /// <summary>
         /// 最小刻度宽度，小于该宽度不绘制刻度线
@@ -71,14 +82,29 @@ namespace Dance.Wpf
         internal ScrollViewer? PART_ScrollViewer;
 
         /// <summary>
+        /// 轨道滚动条
+        /// </summary>
+        internal ScrollViewer? PART_TrackScrollViewer;
+
+        /// <summary>
+        /// 标题
+        /// </summary>
+        internal FrameworkElement? PART_Title;
+
+        /// <summary>
         /// 时间线面板
         /// </summary>
         internal DanceTimelinePanel? TimeLinePanel;
 
         /// <summary>
-        /// 播放开始时间
+        /// 开始播放时间
         /// </summary>
-        private DateTime? PlayTime;
+        private DateTime? PlayBeginTime;
+
+        /// <summary>
+        /// 空格键移动开始坐标
+        /// </summary>
+        private Point? SpaceMoveBeginPoint;
 
         // =============================================================================================
         // Property
@@ -147,10 +173,10 @@ namespace Dance.Wpf
                 if (s is not DanceTimeline timeline || timeline.PART_ScrollViewer == null)
                     return;
 
-                if (!timeline.IsFollowingProgress)
+                if (!timeline.IsPlaying || !timeline.IsFollowingProgress)
                     return;
 
-                timeline.PART_ScrollViewer.ScrollToHorizontalOffset(timeline.CurrentTime.TotalHours * DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Zoom - timeline.ActualWidth / 2d);
+                timeline.PART_ScrollViewer.ScrollToHorizontalOffset(timeline.CurrentTime.TotalHours * DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Zoom - timeline.PART_ScrollViewer.ViewportWidth / 2d);
             })));
 
         #endregion
@@ -258,7 +284,7 @@ namespace Dance.Wpf
                 if (s is not DanceTimeline timeline)
                     return;
 
-                timeline.PlayTime = null;
+                timeline.PlayBeginTime = null;
             })));
 
         #endregion
@@ -266,6 +292,9 @@ namespace Dance.Wpf
         // =============================================================================================
         // Override
 
+        /// <summary>
+        /// 应用模板
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -273,17 +302,64 @@ namespace Dance.Wpf
             this.PART_Root = this.Template.FindName(nameof(PART_Root), this) as FrameworkElement;
             this.PART_Scale = this.Template.FindName(nameof(PART_Scale), this) as DanceTimelineScale;
             this.PART_Progress = this.Template.FindName(nameof(PART_Progress), this) as DanceTimelineProgress;
+            this.PART_Title = this.Template.FindName(nameof(PART_Title), this) as FrameworkElement;
             this.PART_ScrollViewer = this.Template.FindName(nameof(PART_ScrollViewer), this) as ScrollViewer;
+            this.PART_TrackScrollViewer = this.Template.FindName(nameof(PART_TrackScrollViewer), this) as ScrollViewer;
+
+            if (this.PART_ScrollViewer != null)
+            {
+                this.PART_ScrollViewer.ScrollChanged -= PART_ScrollViewer_ScrollChanged;
+                this.PART_ScrollViewer.ScrollChanged += PART_ScrollViewer_ScrollChanged;
+            }
+
+            if (this.PART_Root != null)
+            {
+                this.PART_Root.MouseLeftButtonDown -= PART_Root_MouseLeftButtonDown;
+                this.PART_Root.MouseLeftButtonDown += PART_Root_MouseLeftButtonDown;
+
+                this.PART_Root.MouseLeftButtonUp -= PART_Root_MouseLeftButtonUp;
+                this.PART_Root.MouseLeftButtonUp += PART_Root_MouseLeftButtonUp;
+
+                this.PART_Root.MouseMove -= PART_Root_MouseMove;
+                this.PART_Root.MouseMove += PART_Root_MouseMove;
+            }
         }
 
+        /// <summary>
+        /// 判断容器
+        /// </summary>
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is DanceTimelineTrack;
         }
 
+        /// <summary>
+        /// 获取容器
+        /// </summary>
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new DanceTimelineTrack() { Timeline = this };
+        }
+
+        /// <summary>
+        /// 鼠标滚轮
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        {
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                double offset = this.Zoom + (e.Delta > 0 ? 1 : -1);
+                offset = offset < MIN_ZOOM ? MIN_ZOOM : offset;
+                offset = offset > MAX_ZOOM ? MAX_ZOOM : offset;
+
+                this.Zoom = offset;
+                e.Handled = true;
+
+                return;
+            }
+
+            base.OnPreviewMouseWheel(e);
         }
 
         // =============================================================================================
@@ -317,15 +393,68 @@ namespace Dance.Wpf
         }
 
         /// <summary>
+        /// 滚动条滚动
+        /// </summary>
+        private void PART_ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            if (this.PART_TrackScrollViewer == null || this.PART_ScrollViewer == null || this.PART_Scale == null || this.PART_Title == null || e.VerticalChange == 0)
+                return;
+
+            this.PART_TrackScrollViewer.ScrollToVerticalOffset(this.PART_ScrollViewer.VerticalOffset);
+            this.PART_Title.Margin = new Thickness(0, this.PART_ScrollViewer.VerticalOffset, 0, 0);
+            this.PART_Scale.Margin = new Thickness(0, this.PART_ScrollViewer.VerticalOffset, 0, 0);
+        }
+
+        /// <summary>
         /// 更新
         /// </summary>
         private void CompositionTarget_Rendering(object? sender, EventArgs e)
         {
-            if (!this.IsVisible || !this.IsPlaying)
+            if (!this.IsVisible || !this.IsPlaying || e is not RenderingEventArgs args)
                 return;
 
-            this.PlayTime ??= DateTime.Now;
-            this.CurrentTime = DateTime.Now - this.PlayTime.Value;
+            this.PlayBeginTime ??= DateTime.Now;
+            this.CurrentTime += DateTime.Now - this.PlayBeginTime.Value;
+            this.PlayBeginTime = DateTime.Now;
+        }
+
+        /// <summary>
+        /// 鼠标移动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private void PART_Root_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (this.PART_Root == null || this.PART_ScrollViewer == null || this.SpaceMoveBeginPoint == null || !Keyboard.IsKeyDown(Key.Space))
+                return;
+
+            Point endPoint = e.GetPosition(this.PART_Root);
+            this.PART_ScrollViewer.ScrollToHorizontalOffset(this.PART_ScrollViewer.HorizontalOffset - (endPoint.X - this.SpaceMoveBeginPoint.Value.X));
+        }
+
+        /// <summary>
+        /// 鼠标抬起
+        /// </summary>
+        private void PART_Root_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (this.PART_Root == null)
+                return;
+
+            this.SpaceMoveBeginPoint = null;
+            this.PART_Root.ReleaseMouseCapture();
+        }
+
+        /// <summary>
+        /// 鼠标按下
+        /// </summary>
+        private void PART_Root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (this.PART_Root == null || !Keyboard.IsKeyDown(Key.Space))
+                return;
+
+            this.SpaceMoveBeginPoint = e.GetPosition(this.PART_Root);
+            this.PART_Root.CaptureMouse();
         }
     }
 }

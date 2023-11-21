@@ -107,8 +107,13 @@ namespace Dance.WpfTest
         public HorizontalAlignment HorizontalAlignment { get; set; }
     }
 
-    public class TimelineTrackItemModel
+    public class TimelineTrackItemModel : IDanceTimelineTrackItem
     {
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public IDanceTimelineTrackItemCategory Category { get; } = IDanceTimelineTrackItemCategory.KeyArea;
+
         public TimeSpan BeginTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
@@ -154,6 +159,9 @@ namespace Dance.WpfTest
             {
                 new TimelineTrackModel() { Name = "轨道1" },
                 new TimelineTrackModel() { Name = "轨道2" },
+                new TimelineTrackModel() { Name = "轨道3" },
+                new TimelineTrackModel() { Name = "轨道4" },
+                new TimelineTrackModel() { Name = "轨道5" },
             };
 
             list[0].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:00:01"), EndTime = TimeSpan.Parse("00:00:02") });

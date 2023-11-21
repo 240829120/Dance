@@ -5,6 +5,7 @@
     <!-- 时间线进度条 -->
     <Style TargetType="dance:DanceTimelineProgress">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Cursor" Value="SizeWE"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineProgress">
@@ -49,6 +50,13 @@
                 <ControlTemplate TargetType="dance:DanceTimelineTrackHeaderContainer">
                     <ItemsPresenter></ItemsPresenter>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <dance:DanceTimelineTrackHeaderPanel></dance:DanceTimelineTrackHeaderPanel>
+                </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
     </Style>
@@ -112,32 +120,24 @@
                                 <ColumnDefinition Width="150" MinWidth="100" MaxWidth="500"></ColumnDefinition>
                                 <ColumnDefinition Width="*"></ColumnDefinition>
                             </Grid.ColumnDefinitions>
-                            <Border Height="40" VerticalAlignment="Top">
-                                <TextBlock Text="{Binding CurrentTime,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},StringFormat=hh\\:mm\\:ss}"
-                                       FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
-                            </Border>
-                            <ScrollViewer x:Name="PART_TrackScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden">
+                            <ScrollViewer x:Name="PART_TrackScrollViewer" VerticalScrollBarVisibility="Hidden" HorizontalScrollBarVisibility="Hidden" Grid.Row="1">
                                 <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <dance:DanceTimelineTrackHeaderContainer ItemsSource="{Binding Path=ItemsSource,RelativeSource={RelativeSource AncestorType={x:Type dance:DanceTimeline},Mode=FindAncestor}}" Grid.Row="1"
+                                    <Border x:Name="PART_Title" Height="40" VerticalAlignment="Top">
+                                        <TextBlock Text="{Binding CurrentTime,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},StringFormat=hh\\:mm\\:ss\\.f}"
+                                           FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"></TextBlock>
+                                    </Border>
+                                    <dance:DanceTimelineTrackHeaderContainer ItemsSource="{Binding Path=ItemsSource,RelativeSource={RelativeSource AncestorType={x:Type dance:DanceTimeline},Mode=FindAncestor}}" 
                                                                              ItemTemplate="{Binding Path=TrackHeaderDataTemplate,RelativeSource={RelativeSource AncestorType={x:Type dance:DanceTimeline},Mode=FindAncestor}}"
-                                                  >
+                                                                             Grid.Row="1" Margin="0,40,0,0">
                                     </dance:DanceTimelineTrackHeaderContainer>
                                 </Grid>
                             </ScrollViewer>
-                            <GridSplitter Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch"></GridSplitter>
-                            <ScrollViewer x:Name="PART_ScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1">
-                                <Grid x:Name="PART_Root">
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="40"></RowDefinition>
-                                        <RowDefinition Height="*"></RowDefinition>
-                                    </Grid.RowDefinitions>
-                                    <ItemsPresenter Grid.Row="1" HorizontalAlignment="Left"></ItemsPresenter>
-                                    <dance:DanceTimelineScale x:Name="PART_Scale" Grid.RowSpan="2" IsHitTestVisible="False"></dance:DanceTimelineScale>
-                                    <dance:DanceTimelineProgress x:Name="PART_Progress" Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Width="5"
+                            <GridSplitter Width="2" HorizontalAlignment="Right" VerticalAlignment="Stretch" Grid.Row="1" Background="Transparent"></GridSplitter>
+                            <ScrollViewer x:Name="PART_ScrollViewer" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Column="1" Grid.RowSpan="2">
+                                <Grid x:Name="PART_Root" Background="Transparent" HorizontalAlignment="Left" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                                    <ItemsPresenter Grid.Row="1" HorizontalAlignment="Left" Margin="0,40,0,0"></ItemsPresenter>
+                                    <dance:DanceTimelineScale x:Name="PART_Scale" Grid.RowSpan="2" Height="40" VerticalAlignment="Top" Background="White"></dance:DanceTimelineScale>
+                                    <dance:DanceTimelineProgress x:Name="PART_Progress" HorizontalAlignment="Left" Width="5"
                                                                  CurrentTime="{Binding CurrentTime,RelativeSource={RelativeSource AncestorType={x:Type dance:DanceTimeline},Mode=FindAncestor}}"></dance:DanceTimelineProgress>
                                 </Grid>
                             </ScrollViewer>

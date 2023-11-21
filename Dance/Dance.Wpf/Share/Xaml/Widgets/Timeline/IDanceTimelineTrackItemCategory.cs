@@ -7,13 +7,18 @@ using System.Threading.Tasks;
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 时间线轨道项
+    /// 时间线轨道项类型
     /// </summary>
-    public interface IDanceTimelineTrackItem
+    public enum IDanceTimelineTrackItemCategory
     {
         /// <summary>
-        /// 类型
+        /// 关键帧
         /// </summary>
-        IDanceTimelineTrackItemCategory Category { get; }
+        KeyFrame,
+
+        /// <summary>
+        /// 关键区域
+        /// </summary>
+        KeyArea
     }
 }

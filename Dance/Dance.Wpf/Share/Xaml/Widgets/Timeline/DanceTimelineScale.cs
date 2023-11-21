@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Dance.Wpf
@@ -13,7 +15,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线刻度
     /// </summary>
-    public class DanceTimelineScale : Control
+    public class DanceTimelineScale : Border
     {
         /// <summary>
         /// 所属时间线
@@ -54,13 +56,40 @@ namespace Dance.Wpf
 
         #endregion
 
+        // ======================================================================================================================
+        // Override
+
         protected override void OnRender(DrawingContext drawingContext)
         {
+            base.OnRender(drawingContext);
+
             this.TryGetOwner();
 
             this.DrawScale(drawingContext);
             this.DrawScaleNumber(drawingContext);
         }
+
+        /// <summary>
+        /// 鼠标左键按下
+        /// </summary>
+        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnPreviewMouseLeftButtonDown(e);
+
+            if (this.Timeline == null)
+                return;
+
+            Point ponint = e.GetPosition(this);
+
+            TimeSpan dest = TimeSpan.FromHours(ponint.X / (DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Zoom));
+            dest = dest > this.Timeline.Duration ? this.Timeline.Duration : dest;
+            dest = dest < TimeSpan.Zero ? TimeSpan.Zero : dest;
+
+            this.Timeline.CurrentTime = dest;
+        }
+
+        // ======================================================================================================================
+        // Private Function
 
         /// <summary>
         /// 绘制刻度
@@ -183,7 +212,7 @@ namespace Dance.Wpf
                     if (x < 0 || x > this.ScrollViewer.ViewportWidth)
                         continue;
 
-                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 15 - txt.Height - 5));
                 }
             }
@@ -265,5 +294,6 @@ namespace Dance.Wpf
                 this.Timeline?.PART_Scale?.InvalidateVisual();
             }
         }
+
     }
 }

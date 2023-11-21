@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Dance.Wpf
 {
@@ -59,6 +60,13 @@ namespace Dance.Wpf
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new DanceTimelineTrackItem() { Timeline = this.Timeline, TimelineTrack = this };
+        }
+
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            this.IsSelected = true;
         }
     }
 }
