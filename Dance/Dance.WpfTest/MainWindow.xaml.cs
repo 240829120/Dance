@@ -107,19 +107,14 @@ namespace Dance.WpfTest
         public HorizontalAlignment HorizontalAlignment { get; set; }
     }
 
-    public class TimelineTrackItemModel : IDanceTimelineTrackItem
+    public class TimelineTrackItemModel
     {
-        /// <summary>
-        /// 类型
-        /// </summary>
-        public IDanceTimelineTrackItemCategory Category { get; } = IDanceTimelineTrackItemCategory.KeyArea;
-
         public TimeSpan BeginTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
     }
 
-    public class TimelineTrackModel : DanceModel, IDanceTimelineTrack
+    public class TimelineTrackModel : DanceModel
     {
         public string Name { get; set; }
 

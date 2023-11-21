@@ -9,20 +9,21 @@ using System.Windows.Controls;
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 时间线头部容器
+    /// 时间线轨道头部容器
     /// </summary>
-    public class DanceTimelineTrackHeaderContainer : ListBox
+    public class DanceTimelineTrackHeaderItems : ItemsControl
     {
-        static DanceTimelineTrackHeaderContainer()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTimelineTrackHeaderContainer), new FrameworkPropertyMetadata(typeof(DanceTimelineTrackHeaderContainer)));
-        }
-
+        /// <summary>
+        /// 是否是子元素容器
+        /// </summary>
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
             return item is DanceTimelineTrackHeader;
         }
 
+        /// <summary>
+        /// 获取子元素容器
+        /// </summary>
         protected override DependencyObject GetContainerForItemOverride()
         {
             return new DanceTimelineTrackHeader();

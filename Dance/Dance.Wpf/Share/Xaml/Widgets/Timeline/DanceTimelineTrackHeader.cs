@@ -11,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线轨道头部
     /// </summary>
-    public class DanceTimelineTrackHeader : ListBoxItem
+    public class DanceTimelineTrackHeader : ContentControl
     {
         static DanceTimelineTrackHeader()
         {

@@ -1,95 +1,70 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
+using System.Windows.Media;
 
 namespace Dance.Wpf
 {
     /// <summary>
     /// 时间线进度
     /// </summary>
-    public class DanceTimelineProgress : Control
+    public class DanceTimelineProgress : Border
     {
-        static DanceTimelineProgress()
+        public DanceTimelineProgress()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTimelineProgress), new FrameworkPropertyMetadata(typeof(DanceTimelineProgress)));
+            this.Loaded += DanceTimelineProgress_Loaded;
         }
 
-        // ============================================================================================================================================
+        // ==========================================================================================================================================
         // Field
+
+        /// <summary>
+        /// 画笔
+        /// </summary>
+        private readonly Pen Pen = new(Brushes.Red, 1);
 
         /// <summary>
         /// 所属时间线
         /// </summary>
-        internal DanceTimeline? Timeline;
+        internal DanceTimeline? OwnerTimeline;
 
         /// <summary>
-        /// 开始拖拽点
+        /// 开始拖拽坐标点
         /// </summary>
         private Point? BeginDragPoint;
 
-        // ============================================================================================================================================
-        // Property
-
-        #region CurrentTime -- 当前时间
-
         /// <summary>
-        /// 当前时间
+        /// 开始拖拽时间
         /// </summary>
-        public TimeSpan CurrentTime
-        {
-            get { return (TimeSpan)GetValue(CurrentTimeProperty); }
-            set { SetValue(CurrentTimeProperty, value); }
-        }
+        private TimeSpan? BeginDragTime;
 
-        /// <summary>
-        /// 当前时间
-        /// </summary>
-        public static readonly DependencyProperty CurrentTimeProperty =
-            DependencyProperty.Register("CurrentTime", typeof(TimeSpan), typeof(DanceTimelineProgress), new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceTimelineProgress progress)
-                    return;
-
-                progress.UpdateMargin();
-            })));
-
-        #endregion
-
-        // ============================================================================================================================================
-        // Public Function
-
-        /// <summary>
-        /// 更新边距
-        /// </summary>
-        public void UpdateMargin()
-        {
-            this.TryGetOwner();
-            if (this.Timeline == null)
-                return;
-
-            this.Margin = new Thickness((int)(this.CurrentTime.TotalHours * DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Zoom - this.ActualWidth / 2d), 0, 0, 0);
-        }
-
-        // ============================================================================================================================================
+        // ==========================================================================================================================================
         // Override
 
         /// <summary>
-        /// 鼠标按下
+        /// 绘制
+        /// </summary>
+        protected override void OnRender(DrawingContext dc)
+        {
+            base.OnRender(dc);
+
+            dc.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(this.ActualWidth / 2d, 0), new Point(this.ActualWidth / 2d, this.ActualHeight));
+        }
+
+        /// <summary>
+        /// 鼠标左键按下
         /// </summary>
         protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
         {
             base.OnPreviewMouseLeftButtonDown(e);
 
-            this.BeginDragPoint = e.GetPosition(this);
-            this.CaptureMouse();
+            this.TryBeginDrag(e);
         }
 
         /// <summary>
@@ -99,7 +74,11 @@ namespace Dance.Wpf
         {
             base.OnPreviewMouseLeftButtonUp(e);
 
+            if (this.OwnerTimeline == null)
+                return;
+
             this.BeginDragPoint = null;
+            this.BeginDragTime = null;
             this.ReleaseMouseCapture();
         }
 
@@ -110,28 +89,43 @@ namespace Dance.Wpf
         {
             base.OnPreviewMouseMove(e);
 
-            if (this.Timeline == null || this.BeginDragPoint == null)
+            if (this.OwnerTimeline == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || this.BeginDragPoint == null || this.BeginDragTime == null)
                 return;
 
-            Point endPoint = e.GetPosition(this);
+            Point endPoint = e.GetPosition(this.OwnerTimeline);
+            TimeSpan offset = this.OwnerTimeline.GetTimeSpanFromPixel(endPoint.X - this.BeginDragPoint.Value.X);
+            TimeSpan dest = this.BeginDragTime.Value + offset;
+            dest = this.OwnerTimeline.GetEffectiveTimeSpan(dest);
 
-            TimeSpan offset = TimeSpan.FromHours((endPoint.X - this.BeginDragPoint.Value.X) / (DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Zoom));
-            TimeSpan dest = this.Timeline.CurrentTime + TimeSpan.FromSeconds(Math.Round(offset.TotalSeconds, 1));
-
-            dest = dest > this.Timeline.Duration ? this.Timeline.Duration : dest;
-            dest = dest < TimeSpan.Zero ? TimeSpan.Zero : dest;
-
-            this.Timeline.CurrentTime = dest;
+            this.OwnerTimeline.CurrentTime = dest;
         }
 
-        // ============================================================================================================================================
+        // ==========================================================================================================================================
         // Private Function
 
-        private void TryGetOwner()
+        /// <summary>
+        /// 尝试开始拖拽
+        /// </summary>
+        internal void TryBeginDrag(MouseButtonEventArgs e)
         {
-            this.Timeline ??= DanceXamlExpansion.GetVisualTreeParent<DanceTimeline>(this);
+            if (this.OwnerTimeline == null || this.OwnerTimeline.IsPlaying)
+                return;
+
+            this.BeginDragPoint = e.GetPosition(this.OwnerTimeline);
+            this.BeginDragTime = this.OwnerTimeline.CurrentTime;
+            this.CaptureMouse();
         }
 
+        // ==========================================================================================================================================
+        // Private Function
+
+        /// <summary>
+        /// 加载
+        /// </summary>
+        private void DanceTimelineProgress_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.OwnerTimeline = DanceXamlExpansion.GetVisualTreeParent<DanceTimeline>(this);
+        }
 
     }
 }

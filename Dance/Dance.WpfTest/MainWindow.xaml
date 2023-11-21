@@ -28,37 +28,27 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Transparent" BorderThickness="1"  Margin="50">
-            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="1" CurrentTime="00:01:00" IsFollowingProgress="True">
-                <dance:DanceTimeline.ItemContainerStyle>
-                    <Style TargetType="dance:DanceTimelineTrack">
-                        <Setter Property="ItemsSource" Value="{Binding Path=Items}"></Setter>
-                        <Setter Property="ItemContainerStyle">
-                            <Setter.Value>
-                                <Style TargetType="dance:DanceTimelineTrackItem">
-                                    <Setter Property="BeginTime" Value="{Binding Path=BeginTime}"></Setter>
-                                    <Setter Property="EndTime" Value="{Binding Path=EndTime}"></Setter>
-                                </Style>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </dance:DanceTimeline.ItemContainerStyle>
-                <dance:DanceTimeline.TrackItemDataTemplate>
-                    <DataTemplate>
-                        <Border Background="#FF1890FF"></Border>
-                    </DataTemplate>
-                </dance:DanceTimeline.TrackItemDataTemplate>
-                <dance:DanceTimeline.TrackHeaderDataTemplate>
+            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="50" CurrentTime="00:00:00" >
+                <dance:DanceTimeline.HeaderTemplate>
                     <DataTemplate>
                         <Border>
                             <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,10,0"></TextBlock>
                         </Border>
                     </DataTemplate>
-                </dance:DanceTimeline.TrackHeaderDataTemplate>
+                </dance:DanceTimeline.HeaderTemplate>
             </dance:DanceTimeline>
         </Border>
 
-        <TextBlock Grid.Row="1" Text="{Binding ElementName=timeline,Path=Zoom,Mode=OneWay}"></TextBlock>
-        <Slider Grid.Row="2" VerticalAlignment="Center" Minimum="1" Maximum="500" Value="{Binding ElementName=timeline,Path=Zoom,Mode=TwoWay}" Margin="50,0,50,0"
+        <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock Text="跟随" Margin="20,0,0,0"></TextBlock>
+            <CheckBox x:Name="cbFlow" IsChecked="{Binding ElementName=timeline,Path=IsFollowProgress,Mode=TwoWay}"></CheckBox>
+
+            <TextBlock Text="Zoom" Margin="20,0,0,0"></TextBlock>
+            <TextBlock Text="{Binding ElementName=timeline,Path=Zoom,Mode=OneWay}" Margin="20,0,0,0"></TextBlock>
+            <TextBlock Text="CurrentTime" Margin="20,0,0,0"></TextBlock>
+            <TextBlock Text="{Binding ElementName=timeline,Path=CurrentTime,Mode=OneWay}" Margin="20,0,0,0"></TextBlock>
+        </StackPanel>
+        <Slider Grid.Row="2" VerticalAlignment="Center" Minimum="1" Maximum="100" Value="{Binding ElementName=timeline,Path=Zoom,Mode=TwoWay}" Margin="50,0,50,0"
                 SmallChange="1"></Slider>
 
         <Button Grid.Row="3" Click="Button_Click"></Button>

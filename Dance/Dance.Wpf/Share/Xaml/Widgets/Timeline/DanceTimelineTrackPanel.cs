@@ -13,39 +13,28 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceTimelineTrackPanel : Panel
     {
+        public DanceTimelineTrackPanel()
+        {
+            this.Loaded += DanceTimelineTrackPanel_Loaded;
+        }
+
+        // ==========================================================================================================================================
+        // Field
+
         /// <summary>
         /// 所属时间线
         /// </summary>
-        internal DanceTimeline? Timeline;
+        internal DanceTimeline? OwnerTimeline;
 
-        /// <summary>
-        /// 所属轨道
-        /// </summary>
-        internal DanceTimelineTrack? TimelineTrack;
+        // ==========================================================================================================================================
+        // Override
 
         /// <summary>
         /// 测量
         /// </summary>
         protected override Size MeasureOverride(Size availableSize)
         {
-            this.TryGetOwner();
-            if (this.Timeline == null)
-                return availableSize;
-
-            double width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Duration.TotalHours * this.Timeline.Zoom;
-            double height = this.Timeline.TrackHeight;
-
-            foreach (DanceTimelineTrackItem item in this.Children)
-            {
-                if (item == null)
-                    continue;
-
-                double itemWidth = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * ((item.EndTime ?? TimeSpan.Zero) - (item.BeginTime ?? TimeSpan.Zero)).TotalHours * this.Timeline.Zoom;
-
-                item.Measure(new Size(itemWidth, height));
-            }
-
-            return new Size(width, height);
+            return availableSize;
         }
 
         /// <summary>
@@ -53,35 +42,40 @@ namespace Dance.Wpf
         /// </summary>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            this.TryGetOwner();
-            if (this.Timeline == null)
+            if (this.OwnerTimeline == null)
                 return finalSize;
 
-            double width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Duration.TotalHours * this.Timeline.Zoom;
-            double height = this.Timeline.TrackHeight;
-
-            foreach (DanceTimelineTrackItem item in this.Children)
+            foreach (UIElement item in this.Children)
             {
-
-                if (item == null)
+                if (item is not DanceTimelineElement element)
                     continue;
 
-                double x = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * (item.BeginTime ?? TimeSpan.Zero).TotalHours * this.Timeline.Zoom;
-                double itemWidth = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * ((item.EndTime ?? TimeSpan.Zero) - (item.BeginTime ?? TimeSpan.Zero)).TotalHours * this.Timeline.Zoom;
+                double beginX = this.OwnerTimeline.GetPixelFromTimeSpan(element.BeginTime) - this.OwnerTimeline.PART_HorizontalScrollBar.Value;
+                double endX = this.OwnerTimeline.GetPixelFromTimeSpan(element.EndTime) - this.OwnerTimeline.PART_HorizontalScrollBar.Value;
 
-                item.Arrange(new Rect(x, 0, itemWidth, height));
+                if (endX <= 0 || beginX >= this.ActualWidth)
+                {
+                    element.Visibility = Visibility.Collapsed;
+                    continue;
+                }
+
+                element.Visibility = Visibility.Visible;
+                element.Arrange(new Rect(beginX, 0, endX - beginX, this.ActualHeight));
             }
 
-            return new Size(width, height);
+            return finalSize;
         }
 
+        // ==========================================================================================================================================
+        // Private Function
+
         /// <summary>
-        /// 尝试获取所属
+        /// 加载
         /// </summary>
-        private void TryGetOwner()
+        private void DanceTimelineTrackPanel_Loaded(object sender, RoutedEventArgs e)
         {
-            this.Timeline ??= DanceXamlExpansion.GetVisualTreeParent<DanceTimeline>(this);
-            this.TimelineTrack ??= DanceXamlExpansion.GetVisualTreeParent<DanceTimelineTrack>(this);
+            this.OwnerTimeline = DanceXamlExpansion.GetVisualTreeParent<DanceTimeline>(this);
+            this.InvalidateVisual();
         }
     }
 }

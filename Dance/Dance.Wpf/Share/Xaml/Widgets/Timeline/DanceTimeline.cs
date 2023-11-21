@@ -1,20 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Input;
+using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
 {
     /// <summary>
-    /// 时间线控件
+    /// 时间线
     /// </summary>
+    [TemplatePart(Name = nameof(PART_VerticalScrollBar), Type = typeof(ScrollBar))]
+    [TemplatePart(Name = nameof(PART_HorizontalScrollBar), Type = typeof(ScrollBar))]
+    [TemplatePart(Name = nameof(PART_Scale), Type = typeof(DanceTimelineScale))]
+    [TemplatePart(Name = nameof(PART_HeaderItems), Type = typeof(DanceTimelineTrackHeaderItems))]
+    [TemplatePart(Name = nameof(PART_TrackItems), Type = typeof(ItemsPresenter))]
+    [TemplatePart(Name = nameof(PART_Progress), Type = typeof(DanceTimelineProgress))]
     public class DanceTimeline : ItemsControl
     {
         static DanceTimeline()
@@ -28,128 +36,113 @@ namespace Dance.Wpf
             this.Unloaded += DanceTimeline_Unloaded;
         }
 
-        /// <summary>
-        /// ZOOM 值为1 时1秒绘制宽度
-        /// </summary>
-        public const int ONE_HOUR_DEFAULT_WIDTH = 1000;
-
-        /// <summary>
-        /// 最小缩放值
-        /// </summary>
-        public const double MIN_ZOOM = 1;
-
-        /// <summary>
-        /// 最大缩放值
-        /// </summary>
-        public const double MAX_ZOOM = 500;
-
-        /// <summary>
-        /// 最小刻度宽度，小于该宽度不绘制刻度线
-        /// </summary>
-        public const int MIN_SCALE_WIDTH = 5;
-
-        /// <summary>
-        /// 最小刻度值宽度，小于该宽度不绘制刻度值
-        /// </summary>
-        public const int MIN_NUMBER_WIDTH = 30;
-
-        /// <summary>
-        /// 刻度字体
-        /// </summary>
-        public const string FONT_FAMILY = "Microsoft Yahei UI";
-
-        // =============================================================================================
+        // ==========================================================================================================================================
         // Field
 
         /// <summary>
-        /// 根元素
+        /// 默认Zoom为1时的1秒宽度
         /// </summary>
-        internal FrameworkElement? PART_Root;
+        public const double ONE_SECOND_DEFAULT_WIDTH = 1d;
 
         /// <summary>
-        /// 刻度尺
+        /// 刻度最小宽度
         /// </summary>
-        internal DanceTimelineScale? PART_Scale;
+        public const double MIN_SCALE_WIDTH = 5d;
+
+        /// <summary>
+        /// 刻度间隔超过该值则绘制长刻度
+        /// </summary>
+        public const double MIN_LARGE_SCALE_WIDTH = 60d;
+
+        /// <summary>
+        /// 数字最小宽度
+        /// </summary>
+        public const double MIN_NUMBER_WIDTH = 30d;
+
+        /// <summary>
+        /// 字体
+        /// </summary>
+        public const string FONT_FAMILY = "Microsoft Yahei UI";
+
+        /// <summary>
+        /// 垂直滚动条
+        /// </summary>
+        [NotNull]
+        internal ScrollBar? PART_VerticalScrollBar = null;
+
+        /// <summary>
+        /// 水平滚动条
+        /// </summary>
+        [NotNull]
+        internal ScrollBar? PART_HorizontalScrollBar = null;
+
+        /// <summary>
+        /// 刻度
+        /// </summary>
+        [NotNull]
+        internal DanceTimelineScale? PART_Scale = null;
 
         /// <summary>
         /// 进度
         /// </summary>
-        internal DanceTimelineProgress? PART_Progress;
+        [NotNull]
+        internal DanceTimelineProgress? PART_Progress = null;
 
         /// <summary>
-        /// 滚动条
+        /// 头部集合
         /// </summary>
-        internal ScrollViewer? PART_ScrollViewer;
+        [NotNull]
+        internal DanceTimelineTrackHeaderItems? PART_HeaderItems = null;
 
         /// <summary>
-        /// 轨道滚动条
+        /// 轨道集合
         /// </summary>
-        internal ScrollViewer? PART_TrackScrollViewer;
+        [NotNull]
+        internal ItemsPresenter? PART_TrackItems = null;
 
         /// <summary>
-        /// 标题
+        /// 上一次更新时间
         /// </summary>
-        internal FrameworkElement? PART_Title;
+        private DateTime? LastUpdateTime;
 
-        /// <summary>
-        /// 时间线面板
-        /// </summary>
-        internal DanceTimelinePanel? TimeLinePanel;
-
-        /// <summary>
-        /// 开始播放时间
-        /// </summary>
-        private DateTime? PlayBeginTime;
-
-        /// <summary>
-        /// 空格键移动开始坐标
-        /// </summary>
-        private Point? SpaceMoveBeginPoint;
-
-        // =============================================================================================
+        // ==========================================================================================================================================
         // Property
 
-        #region Duration -- 持续时间
+        #region TitleTemplate -- 标题模板
 
         /// <summary>
-        /// 持续时间
+        /// 标题模板
         /// </summary>
-        public TimeSpan Duration
+        public DataTemplate TitleTemplate
         {
-            get { return (TimeSpan)GetValue(DurationProperty); }
-            set { SetValue(DurationProperty, value); }
+            get { return (DataTemplate)GetValue(TitleTemplateProperty); }
+            set { SetValue(TitleTemplateProperty, value); }
         }
 
         /// <summary>
-        /// 持续时间
+        /// 标题模板
         /// </summary>
-        public static readonly DependencyProperty DurationProperty =
-            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.FromMinutes(1), new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceTimeline timeline || timeline.PART_Root == null)
-                    return;
-
-                timeline.PART_Root.Width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Duration.TotalHours * timeline.Zoom;
-            })));
+        public static readonly DependencyProperty TitleTemplateProperty =
+            DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
 
         #endregion
 
-        #region IsFollowingProgress -- 是否跟踪进度
+        #region HeaderTemplate -- 头部模板
 
         /// <summary>
-        /// 是否跟踪进度
+        /// 头部模板
         /// </summary>
-        public bool IsFollowingProgress
+        public DataTemplate HeaderTemplate
         {
-            get { return (bool)GetValue(IsFollowingProgressProperty); }
-            set { SetValue(IsFollowingProgressProperty, value); }
+            get { return (DataTemplate)GetValue(MyPropertyProperty); }
+            set { SetValue(MyPropertyProperty, value); }
         }
 
         /// <summary>
-        /// 是否跟踪进度
+        /// 头部模板
         /// </summary>
-        public static readonly DependencyProperty IsFollowingProgressProperty =
-            DependencyProperty.Register("IsFollowingProgress", typeof(bool), typeof(DanceTimeline), new PropertyMetadata(false));
+        public static readonly DependencyProperty MyPropertyProperty =
+            DependencyProperty.Register("MyProperty", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
 
         #endregion
 
@@ -170,14 +163,37 @@ namespace Dance.Wpf
         public static readonly DependencyProperty CurrentTimeProperty =
             DependencyProperty.Register("CurrentTime", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback((s, e) =>
             {
-                if (s is not DanceTimeline timeline || timeline.PART_ScrollViewer == null)
+                if (s is not DanceTimeline timeline)
                     return;
 
-                if (!timeline.IsPlaying || !timeline.IsFollowingProgress)
+                if (timeline.IsPlaying && timeline.IsFollowProgress && timeline.PART_HorizontalScrollBar != null && timeline.PART_TrackItems != null)
+                {
+                    timeline.PART_HorizontalScrollBar.Value = timeline.GetPixelFromTimeSpan(timeline.CurrentTime + timeline.GetTimeSpanFromPixel(timeline.PART_TrackItems.ActualWidth / 2d));
                     return;
+                }
 
-                timeline.PART_ScrollViewer.ScrollToHorizontalOffset(timeline.CurrentTime.TotalHours * DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Zoom - timeline.PART_ScrollViewer.ViewportWidth / 2d);
+                timeline.Update();
+
             })));
+
+        #endregion
+
+        #region Duration -- 持续时间
+
+        /// <summary>
+        /// 持续时间
+        /// </summary>
+        public TimeSpan Duration
+        {
+            get { return (TimeSpan)GetValue(DurationProperty); }
+            set { SetValue(DurationProperty, value); }
+        }
+
+        /// <summary>
+        /// 持续时间
+        /// </summary>
+        public static readonly DependencyProperty DurationProperty =
+            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.FromHours(1)));
 
         #endregion
 
@@ -198,69 +214,30 @@ namespace Dance.Wpf
         public static readonly DependencyProperty ZoomProperty =
             DependencyProperty.Register("Zoom", typeof(double), typeof(DanceTimeline), new PropertyMetadata(1d, new PropertyChangedCallback((s, e) =>
             {
-                if (s is not DanceTimeline timeline || timeline.PART_Root == null)
+                if (s is not DanceTimeline timeline)
                     return;
 
-                timeline.PART_Root.Width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * timeline.Duration.TotalHours * timeline.Zoom;
-                timeline.PART_Progress?.UpdateMargin();
+                timeline.Update();
             })));
 
         #endregion
 
-        #region TrackHeight -- 轨道高度
+        #region ProgressWidth -- 进度条宽度
 
         /// <summary>
-        /// 轨道高度
+        /// 进度条宽度
         /// </summary>
-        public double TrackHeight
+        public double ProgressWidth
         {
-            get { return (double)GetValue(TrackHeightProperty); }
-            set { SetValue(TrackHeightProperty, value); }
+            get { return (double)GetValue(ProgressWidthProperty); }
+            set { SetValue(ProgressWidthProperty, value); }
         }
 
         /// <summary>
-        /// 轨道高度
+        /// 进度条宽度
         /// </summary>
-        public static readonly DependencyProperty TrackHeightProperty =
-            DependencyProperty.Register("TrackHeight", typeof(double), typeof(DanceTimeline), new PropertyMetadata(25d));
-
-        #endregion
-
-        #region TrackItemDataTemplate -- 轨道项数据模板
-
-        /// <summary>
-        /// 轨道项数据模板
-        /// </summary>
-        public DataTemplate TrackItemDataTemplate
-        {
-            get { return (DataTemplate)GetValue(TrackItemDataTemplateProperty); }
-            set { SetValue(TrackItemDataTemplateProperty, value); }
-        }
-
-        /// <summary>
-        /// 轨道项数据模板
-        /// </summary>
-        public static readonly DependencyProperty TrackItemDataTemplateProperty =
-            DependencyProperty.Register("TrackItemDataTemplate", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
-
-        #endregion
-
-        #region TrackHeaderDataTemplate -- 轨道头部数据模板
-
-        /// <summary>
-        /// 轨道头部数据模板
-        /// </summary>
-        public DataTemplate TrackHeaderDataTemplate
-        {
-            get { return (DataTemplate)GetValue(TrackHeaderDataTemplateProperty); }
-            set { SetValue(TrackHeaderDataTemplateProperty, value); }
-        }
-
-        /// <summary>
-        /// 轨道头部数据模板
-        /// </summary>
-        public static readonly DependencyProperty TrackHeaderDataTemplateProperty =
-            DependencyProperty.Register("TrackHeaderDataTemplate", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
+        public static readonly DependencyProperty ProgressWidthProperty =
+            DependencyProperty.Register("ProgressWidth", typeof(double), typeof(DanceTimeline), new PropertyMetadata(5d));
 
         #endregion
 
@@ -284,12 +261,32 @@ namespace Dance.Wpf
                 if (s is not DanceTimeline timeline)
                     return;
 
-                timeline.PlayBeginTime = null;
+                timeline.LastUpdateTime = null;
+
             })));
 
         #endregion
 
-        // =============================================================================================
+        #region IsFollowProgress -- 是否跟随进度
+
+        /// <summary>
+        /// 是否跟随进度
+        /// </summary>
+        public bool IsFollowProgress
+        {
+            get { return (bool)GetValue(IsFollowProgressProperty); }
+            set { SetValue(IsFollowProgressProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否跟随进度
+        /// </summary>
+        public static readonly DependencyProperty IsFollowProgressProperty =
+            DependencyProperty.Register("IsFollowProgress", typeof(bool), typeof(DanceTimeline), new PropertyMetadata(false));
+
+        #endregion
+
+        // ==========================================================================================================================================
         // Override
 
         /// <summary>
@@ -299,34 +296,35 @@ namespace Dance.Wpf
         {
             base.OnApplyTemplate();
 
-            this.PART_Root = this.Template.FindName(nameof(PART_Root), this) as FrameworkElement;
             this.PART_Scale = this.Template.FindName(nameof(PART_Scale), this) as DanceTimelineScale;
+            this.PART_HeaderItems = this.Template.FindName(nameof(PART_HeaderItems), this) as DanceTimelineTrackHeaderItems;
+            this.PART_TrackItems = this.Template.FindName(nameof(PART_TrackItems), this) as ItemsPresenter;
             this.PART_Progress = this.Template.FindName(nameof(PART_Progress), this) as DanceTimelineProgress;
-            this.PART_Title = this.Template.FindName(nameof(PART_Title), this) as FrameworkElement;
-            this.PART_ScrollViewer = this.Template.FindName(nameof(PART_ScrollViewer), this) as ScrollViewer;
-            this.PART_TrackScrollViewer = this.Template.FindName(nameof(PART_TrackScrollViewer), this) as ScrollViewer;
 
-            if (this.PART_ScrollViewer != null)
+            if (this.PART_Scale != null)
             {
-                this.PART_ScrollViewer.ScrollChanged -= PART_ScrollViewer_ScrollChanged;
-                this.PART_ScrollViewer.ScrollChanged += PART_ScrollViewer_ScrollChanged;
+                this.PART_Scale.OwnerTimeline = this;
             }
 
-            if (this.PART_Root != null)
+            this.PART_VerticalScrollBar = this.Template.FindName(nameof(PART_VerticalScrollBar), this) as ScrollBar;
+            if (this.PART_VerticalScrollBar != null)
             {
-                this.PART_Root.MouseLeftButtonDown -= PART_Root_MouseLeftButtonDown;
-                this.PART_Root.MouseLeftButtonDown += PART_Root_MouseLeftButtonDown;
-
-                this.PART_Root.MouseLeftButtonUp -= PART_Root_MouseLeftButtonUp;
-                this.PART_Root.MouseLeftButtonUp += PART_Root_MouseLeftButtonUp;
-
-                this.PART_Root.MouseMove -= PART_Root_MouseMove;
-                this.PART_Root.MouseMove += PART_Root_MouseMove;
+                this.PART_VerticalScrollBar.ValueChanged -= PART_VerticalScrollBar_ValueChanged;
+                this.PART_VerticalScrollBar.ValueChanged += PART_VerticalScrollBar_ValueChanged;
             }
+
+            this.PART_HorizontalScrollBar = this.Template.FindName(nameof(PART_HorizontalScrollBar), this) as ScrollBar;
+            if (this.PART_HorizontalScrollBar != null)
+            {
+                this.PART_HorizontalScrollBar.ValueChanged -= PART_HorizontalScrollBar_ValueChanged;
+                this.PART_HorizontalScrollBar.ValueChanged += PART_HorizontalScrollBar_ValueChanged;
+            }
+
+            this.Update();
         }
 
         /// <summary>
-        /// 判断容器
+        /// 是否是子元素容器
         /// </summary>
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
@@ -334,51 +332,87 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 获取容器
+        /// 获取子元素容器
         /// </summary>
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new DanceTimelineTrack() { Timeline = this };
+            return new DanceTimelineTrack() { OwnerTimeline = this };
         }
 
         /// <summary>
-        /// 鼠标滚轮
+        /// 渲染大小改变
         /// </summary>
-        /// <param name="e"></param>
-        protected override void OnPreviewMouseWheel(MouseWheelEventArgs e)
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                double offset = this.Zoom + (e.Delta > 0 ? 1 : -1);
-                offset = offset < MIN_ZOOM ? MIN_ZOOM : offset;
-                offset = offset > MAX_ZOOM ? MAX_ZOOM : offset;
+            base.OnRenderSizeChanged(sizeInfo);
 
-                this.Zoom = offset;
-                e.Handled = true;
-
-                return;
-            }
-
-            base.OnPreviewMouseWheel(e);
+            this.Update();
         }
 
-        // =============================================================================================
-        // Public Function
+        // ==========================================================================================================================================
+        // Internal Function
 
-        // =============================================================================================
+        /// <summary>
+        /// 根据时间获取像素
+        /// </summary>
+        /// <param name="timeSpan">时间间隔</param>
+        /// <returns>像素</returns>
+        internal double GetPixelFromTimeSpan(TimeSpan timeSpan)
+        {
+            return timeSpan.TotalSeconds * ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
+        }
+
+        /// <summary>
+        /// 根据像素获取时间间隔
+        /// </summary>
+        /// <param name="pixel">像素</param>
+        /// <returns>时间间隔</returns>
+        internal TimeSpan GetTimeSpanFromPixel(double pixel)
+        {
+            return TimeSpan.FromSeconds(pixel / (ONE_SECOND_DEFAULT_WIDTH * this.Zoom));
+        }
+
+        /// <summary>
+        /// 获取有效的时间间隔
+        /// </summary>
+        /// <param name="timeSpan">时间间隔</param>
+        /// <returns>有效的时间间隔</returns>
+        internal TimeSpan GetEffectiveTimeSpan(TimeSpan timeSpan)
+        {
+            TimeSpan dest = timeSpan < TimeSpan.Zero ? TimeSpan.Zero : timeSpan;
+            dest = dest > this.Duration ? this.Duration : dest;
+            dest = TimeSpan.FromSeconds(Math.Round(dest.TotalSeconds, 1));
+
+            return dest;
+        }
+
+        // ==========================================================================================================================================
         // Private Function
 
         /// <summary>
-        /// 控件加载
+        /// 更新
+        /// </summary>
+        private void Update()
+        {
+            if (this.PART_HorizontalScrollBar == null || this.PART_VerticalScrollBar == null || this.PART_Scale == null || this.PART_HeaderItems == null || this.PART_Progress == null)
+                return;
+
+            this.PART_VerticalScrollBar.Maximum = this.PART_TrackItems.ActualHeight;
+            this.PART_HorizontalScrollBar.Maximum = this.Duration.TotalSeconds * ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
+            this.PART_HorizontalScrollBar.ViewportSize = this.PART_HorizontalScrollBar.Maximum * 0.1d;
+            double left = this.PART_HorizontalScrollBar.Value - this.GetPixelFromTimeSpan(this.CurrentTime);
+            this.PART_Progress.Margin = new Thickness(-left - this.ProgressWidth / 2d, 0, 0, 0);
+            this.PART_Progress.Visibility = (-left < 0 || left > this.ProgressWidth) ? Visibility.Collapsed : Visibility.Visible;
+            this.PART_Scale.InvalidateVisual();
+            DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackPanel>(this)?.ForEach(p => p.InvalidateVisual());
+        }
+
+        /// <summary>
+        /// 加载
         /// </summary>
         private void DanceTimeline_Loaded(object sender, RoutedEventArgs e)
         {
-            if (this.PART_Root == null)
-                return;
-
-            this.PART_Root.Width = DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Duration.TotalHours * this.Zoom;
-            this.PART_Scale?.InvalidateVisual();
-
+            this.Update();
 
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
             CompositionTarget.Rendering += CompositionTarget_Rendering;
@@ -393,68 +427,41 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 滚动条滚动
-        /// </summary>
-        private void PART_ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
-        {
-            if (this.PART_TrackScrollViewer == null || this.PART_ScrollViewer == null || this.PART_Scale == null || this.PART_Title == null || e.VerticalChange == 0)
-                return;
-
-            this.PART_TrackScrollViewer.ScrollToVerticalOffset(this.PART_ScrollViewer.VerticalOffset);
-            this.PART_Title.Margin = new Thickness(0, this.PART_ScrollViewer.VerticalOffset, 0, 0);
-            this.PART_Scale.Margin = new Thickness(0, this.PART_ScrollViewer.VerticalOffset, 0, 0);
-        }
-
-        /// <summary>
         /// 更新
         /// </summary>
         private void CompositionTarget_Rendering(object? sender, EventArgs e)
         {
-            if (!this.IsVisible || !this.IsPlaying || e is not RenderingEventArgs args)
+            if (!this.IsVisible || !this.IsPlaying)
                 return;
 
-            this.PlayBeginTime ??= DateTime.Now;
-            this.CurrentTime += DateTime.Now - this.PlayBeginTime.Value;
-            this.PlayBeginTime = DateTime.Now;
+            this.LastUpdateTime ??= DateTime.Now;
+            TimeSpan offset = DateTime.Now - this.LastUpdateTime.Value;
+            offset = this.GetEffectiveTimeSpan(offset);
+            if (offset <= TimeSpan.Zero)
+                return;
+
+            this.CurrentTime += offset;
+            this.LastUpdateTime = DateTime.Now;
         }
 
         /// <summary>
-        /// 鼠标移动
+        /// 水平滚动条值改变
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <exception cref="NotImplementedException"></exception>
-        private void PART_Root_MouseMove(object sender, MouseEventArgs e)
+        private void PART_HorizontalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (this.PART_Root == null || this.PART_ScrollViewer == null || this.SpaceMoveBeginPoint == null || !Keyboard.IsKeyDown(Key.Space))
-                return;
-
-            Point endPoint = e.GetPosition(this.PART_Root);
-            this.PART_ScrollViewer.ScrollToHorizontalOffset(this.PART_ScrollViewer.HorizontalOffset - (endPoint.X - this.SpaceMoveBeginPoint.Value.X));
+            this.Update();
         }
 
         /// <summary>
-        /// 鼠标抬起
+        /// 垂直滚动条值改变
         /// </summary>
-        private void PART_Root_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void PART_VerticalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (this.PART_Root == null)
+            if (this.PART_HeaderItems == null || this.PART_TrackItems == null)
                 return;
 
-            this.SpaceMoveBeginPoint = null;
-            this.PART_Root.ReleaseMouseCapture();
-        }
-
-        /// <summary>
-        /// 鼠标按下
-        /// </summary>
-        private void PART_Root_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            if (this.PART_Root == null || !Keyboard.IsKeyDown(Key.Space))
-                return;
-
-            this.SpaceMoveBeginPoint = e.GetPosition(this.PART_Root);
-            this.PART_Root.CaptureMouse();
+            this.PART_HeaderItems.Margin = new Thickness(0, -this.PART_VerticalScrollBar.Value, 0, 0);
+            this.PART_TrackItems.Margin = new Thickness(0, -this.PART_VerticalScrollBar.Value, 0, 0);
         }
     }
 }

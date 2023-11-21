@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,282 +18,349 @@ namespace Dance.Wpf
     public class DanceTimelineScale : Border
     {
         /// <summary>
+        /// 刻度线绘制上下文
+        /// </summary>
+        private class DanceTimelineScaleDrawContext
+        {
+            /// <summary>
+            /// 开始坐标
+            /// </summary>
+            public double BeginX;
+
+            /// <summary>
+            /// 结束坐标
+            /// </summary>
+            public double EndX;
+
+            /// <summary>
+            /// 开始时间
+            /// </summary>
+            public TimeSpan BeginTime;
+
+            /// <summary>
+            /// 结束时间
+            /// </summary>
+            public TimeSpan EndTime;
+
+            /// <summary>
+            /// 100毫秒宽度
+            /// </summary>
+            public double Millisecond100Width;
+
+            /// <summary>
+            /// 1秒宽度
+            /// </summary>
+            public double SecondWidth;
+
+            /// <summary>
+            /// 15秒宽度
+            /// </summary>
+            public double Second15Width;
+
+            /// <summary>
+            /// 1分钟宽度
+            /// </summary>
+            public double MinuteWidth;
+
+            /// <summary>
+            /// 15分钟宽度
+            /// </summary>
+            public double Minute15Width;
+
+            /// <summary>
+            /// 1小时宽度
+            /// </summary>
+            public double HourWidth;
+        }
+
+        // ==========================================================================================================================================
+        // Field
+
+        /// <summary>
         /// 所属时间线
         /// </summary>
-        internal DanceTimeline? Timeline;
-
-        /// <summary>
-        /// 所属滚动条
-        /// </summary>
-        internal ScrollViewer? ScrollViewer;
-
-        /// <summary>
-        /// 画刷
-        /// </summary>
-        internal Brush Brush = Brushes.Black;
+        [NotNull]
+        internal DanceTimeline? OwnerTimeline = null;
 
         /// <summary>
         /// 画笔
         /// </summary>
-        internal Pen Pen = new(Brushes.Black, 1);
-
-        #region ScaleHeight -- 刻度高度
+        private readonly Pen Pen = new(Brushes.Black, 1);
 
         /// <summary>
-        /// 刻度高度
+        /// 画刷
         /// </summary>
-        public double ScaleHeight
-        {
-            get { return (double)GetValue(ScaleHeightProperty); }
-            set { SetValue(ScaleHeightProperty, value); }
-        }
-
-        /// <summary>
-        /// 刻度高度
-        /// </summary>
-        public static readonly DependencyProperty ScaleHeightProperty =
-            DependencyProperty.Register("ScaleHeight", typeof(double), typeof(DanceTimelineScale), new PropertyMetadata(40d));
-
-        #endregion
+        private readonly Brush Brush = Brushes.Black;
 
         // ======================================================================================================================
         // Override
 
+        /// <summary>
+        /// 渲染大小改变
+        /// </summary>
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        {
+            base.OnRenderSizeChanged(sizeInfo);
+
+            this.InvalidateVisual();
+        }
+
+        /// <summary>
+        /// 绘制
+        /// </summary>
         protected override void OnRender(DrawingContext drawingContext)
         {
             base.OnRender(drawingContext);
 
-            this.TryGetOwner();
+            if (this.OwnerTimeline == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || this.OwnerTimeline.ActualHeight <= 0)
+                return;
 
-            this.DrawScale(drawingContext);
-            this.DrawScaleNumber(drawingContext);
+            DanceTimelineScaleDrawContext context = new();
+
+            context.BeginX = this.OwnerTimeline.PART_HorizontalScrollBar.Value;
+            context.EndX = context.BeginX + this.ActualWidth;
+
+            context.SecondWidth = DanceTimeline.ONE_SECOND_DEFAULT_WIDTH * this.OwnerTimeline.Zoom;
+            context.Millisecond100Width = 0.1d * context.SecondWidth;
+            context.Second15Width = 15d * context.SecondWidth;
+            context.MinuteWidth = 60d * context.SecondWidth;
+            context.Minute15Width = 15d * context.MinuteWidth;
+            context.HourWidth = 60d * context.MinuteWidth;
+
+            context.BeginTime = TimeSpan.FromSeconds(context.BeginX / context.SecondWidth);
+            context.EndTime = TimeSpan.FromSeconds(context.EndX / context.SecondWidth);
+            context.EndTime = this.OwnerTimeline.Duration < context.EndTime ? this.OwnerTimeline.Duration : context.EndTime;
+
+            this.DrawScaleHour(drawingContext, context);
+            this.DrawScaleMinute15(drawingContext, context);
+            this.DrawScaleMinute(drawingContext, context);
+            this.DrawScaleSecond15(drawingContext, context);
+            this.DrawScaleSecond(drawingContext, context);
+            this.DrawScaleMillisecond100(drawingContext, context);
         }
 
         /// <summary>
-        /// 鼠标左键按下
+        /// 鼠标左键点击
         /// </summary>
-        protected override void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e)
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
         {
-            base.OnPreviewMouseLeftButtonDown(e);
+            base.OnMouseLeftButtonDown(e);
 
-            if (this.Timeline == null)
+            if (this.OwnerTimeline == null || this.OwnerTimeline.IsPlaying || this.OwnerTimeline.PART_HorizontalScrollBar == null)
                 return;
 
-            Point ponint = e.GetPosition(this);
+            Point point = e.GetPosition(this);
+            if (point.X < 0 || point.X > this.ActualWidth)
+                return;
 
-            TimeSpan dest = TimeSpan.FromHours(ponint.X / (DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Zoom));
-            dest = dest > this.Timeline.Duration ? this.Timeline.Duration : dest;
-            dest = dest < TimeSpan.Zero ? TimeSpan.Zero : dest;
-
-            this.Timeline.CurrentTime = dest;
+            TimeSpan offset = this.OwnerTimeline.GetTimeSpanFromPixel(point.X);
+            TimeSpan begin = this.OwnerTimeline.GetTimeSpanFromPixel(this.OwnerTimeline.PART_HorizontalScrollBar.Value);
+            TimeSpan dest = begin + offset;
+            this.OwnerTimeline.CurrentTime = this.OwnerTimeline.GetEffectiveTimeSpan(dest);
+            this.OwnerTimeline.PART_Progress?.TryBeginDrag(e);
         }
 
         // ======================================================================================================================
         // Private Function
 
         /// <summary>
-        /// 绘制刻度
+        /// 绘制1小时
         /// </summary>
-        /// <param name="drawingContext">绘制上下文</param>
-        private void DrawScale(DrawingContext drawingContext)
+        private void DrawScaleHour(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (this.Timeline == null || this.ScrollViewer == null)
+            if (context.HourWidth < DanceTimeline.MIN_SCALE_WIDTH)
                 return;
 
-            double beginX = this.ScrollViewer.HorizontalOffset;
-            double endX = beginX + this.ScrollViewer.ViewportWidth;
+            int lengthOffset = 15;
 
-            double hourWidth = (long)(DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Zoom);
-            double minuteWidth = hourWidth / 60;
-            double secondWidth = minuteWidth / 60;
-            double millisecond100Width = secondWidth / 10;
-
-            TimeSpan beginTime = TimeSpan.FromHours(beginX / hourWidth);
-            TimeSpan endTime = TimeSpan.FromHours(endX / hourWidth);
-            endTime = this.Timeline.Duration < endTime ? this.Timeline.Duration : endTime;
-
-            // 小时
-            if (hourWidth >= DanceTimeline.MIN_SCALE_WIDTH)
+            for (int i = (int)context.BeginTime.TotalHours; i <= context.EndTime.TotalHours; i++)
             {
-                for (int i = (int)beginTime.TotalHours; i <= endTime.TotalHours; i++)
-                {
-                    double x = (i * hourWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
+                double x = (i * context.HourWidth) - context.BeginX;
+                if (x < 0 || x > this.ActualWidth)
+                    continue;
 
-                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x + beginX, this.ScaleHeight - 15), new Point(x + beginX, this.ScaleHeight));
+                if (context.HourWidth > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
-            }
-
-            // 分钟
-            if (minuteWidth >= DanceTimeline.MIN_SCALE_WIDTH)
-            {
-                for (int i = (int)beginTime.TotalMinutes; i <= endTime.TotalMinutes; i++)
+                else
                 {
-                    double x = (i * minuteWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x + beginX, this.ScaleHeight - 10), new Point(x + beginX, this.ScaleHeight));
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
-            }
 
-            // 15秒
-            if (secondWidth * 15 >= DanceTimeline.MIN_NUMBER_WIDTH)
-            {
-                for (int i = (int)beginTime.TotalSeconds - ((int)beginTime.TotalSeconds % 15); i <= endTime.TotalSeconds; i += 15)
+                if (context.HourWidth > DanceTimeline.MIN_NUMBER_WIDTH)
                 {
-                    if (i % 60 == 0)
-                        continue;
-
-                    double x = (i * secondWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x + beginX, this.ScaleHeight - 8), new Point(x + beginX, this.ScaleHeight));
-                }
-            }
-
-            // 秒
-            if (secondWidth >= DanceTimeline.MIN_SCALE_WIDTH)
-            {
-                for (int i = (int)beginTime.TotalSeconds; i <= endTime.TotalSeconds; i++)
-                {
-                    if (i % 60 == 0 || i % 15 == 0)
-                        continue;
-
-                    double x = (i * secondWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x + beginX, this.ScaleHeight - 8), new Point(x + beginX, this.ScaleHeight));
-                }
-            }
-
-            // 0.1秒
-            if (millisecond100Width >= DanceTimeline.MIN_SCALE_WIDTH)
-            {
-                for (int i = (int)(beginTime.TotalMilliseconds / 100); i <= (endTime.TotalMilliseconds / 100); i++)
-                {
-                    double x = (i * millisecond100Width) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x + beginX, this.ScaleHeight - 6), new Point(x + beginX, this.ScaleHeight));
+                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
         }
 
         /// <summary>
-        /// 绘制秒数字
+        /// 绘制15分钟
         /// </summary>
-        private void DrawScaleNumber(DrawingContext drawingContext)
+        private void DrawScaleMinute15(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (this.Timeline == null || this.ScrollViewer == null)
+            if (context.Minute15Width < DanceTimeline.MIN_SCALE_WIDTH)
                 return;
 
-            double beginX = this.ScrollViewer.HorizontalOffset;
-            double endX = beginX + this.ScrollViewer.ViewportWidth;
+            int lengthOffset = 12;
 
-            double hourWidth = (long)(DanceTimeline.ONE_HOUR_DEFAULT_WIDTH * this.Timeline.Zoom);
-            double minuteWidth = hourWidth / 60;
-            double secondWidth = minuteWidth / 60;
-
-            TimeSpan beginTime = TimeSpan.FromHours(beginX / hourWidth);
-            TimeSpan endTime = TimeSpan.FromHours(endX / hourWidth);
-            endTime = this.Timeline.Duration < endTime ? this.Timeline.Duration : endTime;
-
-            // 小时
-            if (hourWidth >= DanceTimeline.MIN_NUMBER_WIDTH)
+            for (int i = (int)context.BeginTime.TotalMinutes - (int)(context.BeginTime.TotalMinutes % 15); i <= context.EndTime.TotalMinutes; i += 15)
             {
-                for (int i = (int)beginTime.TotalHours; i <= endTime.TotalHours; i++)
-                {
-                    double x = (i * hourWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
+                if (i % 60 == 0)
+                    continue;
 
-                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
-                    drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 15 - txt.Height - 5));
+                double x = (i * context.MinuteWidth) - context.BeginX;
+                if (x < 0 || x > this.ActualWidth)
+                    continue;
+
+                if (context.Minute15Width > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
-            }
-
-            // 分钟
-            if (minuteWidth >= DanceTimeline.MIN_NUMBER_WIDTH)
-            {
-                for (int i = (int)beginTime.TotalMinutes; i <= endTime.TotalMinutes; i++)
+                else
                 {
-                    if (i % 60 == 0)
-                        continue;
-
-                    double x = (i * minuteWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
-                    drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 10 - txt.Height - 5));
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
-            }
 
-            // 15秒
-            if (secondWidth * 15 >= DanceTimeline.MIN_NUMBER_WIDTH)
-            {
-                for (int i = (int)beginTime.TotalSeconds - ((int)beginTime.TotalSeconds % 15); i <= endTime.TotalSeconds; i += 15)
+                if (context.Minute15Width > DanceTimeline.MIN_NUMBER_WIDTH)
                 {
-                    if (i % 60 == 0)
-                        continue;
-
-                    double x = (i * secondWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
-                    drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 8 - txt.Height - 5));
-                }
-            }
-
-            // 秒
-            if (secondWidth >= DanceTimeline.MIN_NUMBER_WIDTH)
-            {
-                for (int i = (int)beginTime.TotalSeconds; i <= endTime.TotalSeconds; i++)
-                {
-                    if (i % 60 == 0 || i % 15 == 0)
-                        continue;
-
-                    double x = (i * secondWidth) - beginX;
-                    if (x < 0 || x > this.ScrollViewer.ViewportWidth)
-                        continue;
-
-                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
-                    drawingContext.DrawText(txt, new Point(x + beginX - txt.Width / 2d, this.ScaleHeight - 8 - txt.Height - 5));
+                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
         }
 
         /// <summary>
-        /// 尝试获取所属控件
+        /// 绘制1分钟
         /// </summary>
-        private void TryGetOwner()
+        private void DrawScaleMinute(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            this.Timeline ??= DanceXamlExpansion.GetVisualTreeParent<DanceTimeline>(this);
+            if (context.Minute15Width < DanceTimeline.MIN_SCALE_WIDTH)
+                return;
 
-            if (this.ScrollViewer == null)
+            int lengthOffset = 10;
+
+            for (int i = (int)context.BeginTime.TotalMinutes; i <= context.EndTime.TotalMinutes; i++)
             {
-                this.ScrollViewer = DanceXamlExpansion.GetVisualTreeParent<ScrollViewer>(this);
-                if (this.ScrollViewer != null)
+                if (i % 15 == 0)
+                    continue;
+
+                double x = (i * context.MinuteWidth) - context.BeginX;
+                if (x < 0 || x > this.ActualWidth)
+                    continue;
+
+                if (context.Minute15Width > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
                 {
-                    this.ScrollViewer.ScrollChanged -= ScrollViewer_ScrollChanged;
-                    this.ScrollViewer.ScrollChanged += ScrollViewer_ScrollChanged;
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
+                }
+                else
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
+                }
+
+                if (context.Minute15Width > DanceTimeline.MIN_NUMBER_WIDTH)
+                {
+                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
         }
 
-        private void ScrollViewer_ScrollChanged(object sender, ScrollChangedEventArgs e)
+        /// <summary>
+        /// 绘制15秒
+        /// </summary>
+        private void DrawScaleSecond15(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (e.HorizontalChange != 0)
+            if (context.Second15Width < DanceTimeline.MIN_SCALE_WIDTH)
+                return;
+
+            int lengthOffset = 8;
+
+            for (int i = (int)context.BeginTime.TotalSeconds - (int)(context.BeginTime.TotalSeconds % 15); i <= context.EndTime.TotalSeconds; i += 15)
             {
-                this.Timeline?.PART_Scale?.InvalidateVisual();
+                if (i % 60 == 0)
+                    continue;
+
+                double x = (i * context.SecondWidth) - context.BeginX;
+                if (x < 0 || x > this.ActualWidth)
+                    continue;
+
+                if (context.Second15Width > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
+                }
+                else
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
+                }
+
+                if (context.Second15Width > DanceTimeline.MIN_NUMBER_WIDTH)
+                {
+                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
+                }
             }
         }
 
+        /// <summary>
+        /// 绘制1秒
+        /// </summary>
+        private void DrawScaleSecond(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
+        {
+            if (context.SecondWidth < DanceTimeline.MIN_SCALE_WIDTH)
+                return;
+
+            int lengthOffset = 8;
+
+            for (int i = (int)context.BeginTime.TotalSeconds; i <= context.EndTime.TotalSeconds; i++)
+            {
+                if (i % 15 == 0)
+                    continue;
+
+                double x = (i * context.SecondWidth) - context.BeginX;
+                if (x < 0 || x > this.ActualWidth)
+                    continue;
+
+                if (context.SecondWidth > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
+                }
+                else
+                {
+                    drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
+                }
+
+                if (context.SecondWidth > DanceTimeline.MIN_NUMBER_WIDTH)
+                {
+                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
+                }
+            }
+        }
+
+        /// <summary>
+        /// 绘制100毫秒
+        /// </summary>
+        private void DrawScaleMillisecond100(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
+        {
+            if (context.Millisecond100Width < DanceTimeline.MIN_SCALE_WIDTH)
+                return;
+
+            int lengthOffset = 5;
+
+            for (double i = (int)context.BeginTime.TotalSeconds; i <= context.EndTime.TotalSeconds; i += 0.1d)
+            {
+                if (i % 1 == 0)
+                    continue;
+
+                double x = (i * context.SecondWidth) - context.BeginX;
+                if (x < 0 || x > this.ActualWidth)
+                    continue;
+
+                drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
+            }
+        }
     }
 }
