@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.Input;
+using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -32,6 +34,21 @@ namespace Dance.Wpf
         /// 所属轨道
         /// </summary>
         internal DanceTimelineTrack? OwnerTrack = null;
+
+        /// <summary>
+        /// 鼠标左键点击坐标
+        /// </summary>
+        private Point? MouseLeftButtonDownPoint;
+
+        /// <summary>
+        /// 鼠标左键点击时的开始时间
+        /// </summary>
+        private TimeSpan? MouseLeftButtonDownBeginTime;
+
+        /// <summary>
+        /// 鼠标左键点击时的结束时间
+        /// </summary>
+        private TimeSpan? MouseLeftButtonDownEndTime;
 
         // ==========================================================================================================================================
         // Property
@@ -94,21 +111,92 @@ namespace Dance.Wpf
         #endregion
 
         // ==========================================================================================================================================
-        // Command -- 拖拽开始命令
-
-        #region DragBeginCommand -- 拖拽开始命令
-
-        #endregion
-
-        // ==========================================================================================================================================
         // Override
 
+        /// <summary>
+        /// 应用模板
+        /// </summary>
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
 
             this.OwnerTimeline = this.GetVisualTreeParent<DanceTimeline>();
             this.OwnerTrack = this.GetVisualTreeParent<DanceTimelineTrack>();
+        }
+
+        /// <summary>
+        /// 鼠标左键点击
+        /// </summary>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            e.Handled = true;
+
+            if (this.OwnerTimeline == null)
+                return;
+
+            this.MouseLeftButtonDownPoint = e.GetPosition(this.OwnerTimeline);
+            this.MouseLeftButtonDownBeginTime = this.BeginTime;
+            this.MouseLeftButtonDownEndTime = this.EndTime;
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                this.OwnerTimeline.SelectElement(this);
+            }
+            else
+            {
+                this.OwnerTimeline.ClearSelectElement();
+                this.OwnerTimeline.SelectElement(this);
+            }
+
+            this.OwnerTimeline.InvokeElementSelectionChanged();
+
+            this.CaptureMouse();
+        }
+
+        /// <summary>
+        /// 鼠标抬起
+        /// </summary>
+        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonUp(e);
+
+            e.Handled = true;
+
+            this.MouseLeftButtonDownPoint = null;
+            this.ReleaseMouseCapture();
+        }
+
+        /// <summary>
+        /// 鼠标移动
+        /// </summary>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (this.OwnerTimeline == null || this.OwnerTrack == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || this.OwnerTimeline.PART_VerticalScrollBar == null)
+                return;
+
+            if (this.MouseLeftButtonDownPoint == null || this.MouseLeftButtonDownBeginTime == null || this.MouseLeftButtonDownEndTime == null)
+                return;
+
+            if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.LeftAlt))
+            {
+                e.Handled = true;
+
+                Point endPoint = e.GetPosition(this.OwnerTimeline);
+
+                double offset = endPoint.X - this.MouseLeftButtonDownPoint.Value.X;
+                TimeSpan offsetTime = this.OwnerTimeline.GetTimeSpanFromPixel(offset);
+                TimeSpan beginTime = this.MouseLeftButtonDownBeginTime.Value + offsetTime;
+                TimeSpan endTime = this.MouseLeftButtonDownEndTime.Value + offsetTime;
+
+                this.BeginTime = this.OwnerTimeline.GetEffectiveTimeSpan(beginTime);
+                this.EndTime = this.OwnerTimeline.GetEffectiveTimeSpan(endTime);
+
+                this.OwnerTimeline.Update();
+            }
         }
     }
 }

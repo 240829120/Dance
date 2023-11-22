@@ -79,6 +79,7 @@ namespace Dance.Wpf
                 }
 
                 element.Visibility = Visibility.Visible;
+                element.Width = endX - beginX;
                 element.Arrange(new Rect(beginX, 0, endX - beginX, this.ActualHeight));
             }
 

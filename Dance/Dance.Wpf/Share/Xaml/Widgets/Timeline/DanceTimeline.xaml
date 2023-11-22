@@ -37,8 +37,7 @@
         <Setter Property="BorderBrush" Value="SkyBlue"></Setter>
         <Setter Property="IsSelected" Value="{Binding Path=IsSelected,Mode=TwoWay}"></Setter>
         <Setter Property="BorderThickness" Value="3"></Setter>
-        <Setter Property="Width" Value="NaN"></Setter>
-        <Setter Property="MinWidth" Value="1"></Setter>
+        <!--<Setter Property="dance:DanceDragTrigger.DragBeginCommand" Value="{Binding DragBeginCommand,RelativeSource={RelativeSource Mode=Self}}"></Setter>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineElement">

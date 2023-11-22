@@ -36,6 +36,11 @@
                         </Border>
                     </DataTemplate>
                 </dance:DanceTimeline.HeaderTemplate>
+                <dance:DanceTimeline.ElementTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
+                    </DataTemplate>
+                </dance:DanceTimeline.ElementTemplate>
             </dance:DanceTimeline>
         </Border>
 

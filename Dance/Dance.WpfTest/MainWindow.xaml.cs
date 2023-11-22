@@ -111,6 +111,8 @@ namespace Dance.WpfTest
     {
         public string PART_DanceObjectType => this.GetType().AssemblyQualifiedName ?? string.Empty;
 
+        public string Name { get; set; }
+
         #region BeginTime -- 开始时间
 
         private TimeSpan beginTime;
@@ -190,13 +192,13 @@ namespace Dance.WpfTest
 
             Random random = new();
 
-            for (int t = 0; t < 20; t++)
+            for (int t = 0; t < 2; t++)
             {
                 TimelineTrackModel track = new() { Name = $"轨道{t}" };
 
                 TimeSpan beginTime = TimeSpan.FromSeconds(random.Next(0, (int)TimeSpan.FromMinutes(5).TotalSeconds));
 
-                for (int i = 0; i < 100; ++i)
+                for (int i = 0; i < 1; ++i)
                 {
                     TimeSpan endTime = TimeSpan.FromSeconds(random.Next((int)beginTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds));
 
@@ -206,7 +208,8 @@ namespace Dance.WpfTest
                     TimelineTrackItemModel item = new()
                     {
                         BeginTime = beginTime,
-                        EndTime = endTime
+                        EndTime = endTime,
+                        Name = $"{t}_{i}"
                     };
 
                     track.Items.Add(item);
