@@ -192,13 +192,13 @@ namespace Dance.WpfTest
 
             Random random = new();
 
-            for (int t = 0; t < 2; t++)
+            for (int t = 0; t < 20; t++)
             {
                 TimelineTrackModel track = new() { Name = $"轨道{t}" };
 
                 TimeSpan beginTime = TimeSpan.FromSeconds(random.Next(0, (int)TimeSpan.FromMinutes(5).TotalSeconds));
 
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 100; ++i)
                 {
                     TimeSpan endTime = TimeSpan.FromSeconds(random.Next((int)beginTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds));
 

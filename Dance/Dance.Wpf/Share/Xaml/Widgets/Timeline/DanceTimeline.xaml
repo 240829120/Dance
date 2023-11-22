@@ -187,6 +187,12 @@
                                        Style="{StaticResource ScrollBar_General}"></ScrollBar>
                         </Grid>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPlaying" Value="True">
+                            <Setter TargetName="PART_Progress" Property="IsHitTestVisible" Value="False"></Setter>
+                            <Setter TargetName="PART_TrackItems" Property="IsHitTestVisible" Value="False"></Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
