@@ -6,6 +6,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -119,14 +120,14 @@ namespace Dance.Wpf
         internal DanceFrameSelect? PART_FrameSelect = null;
 
         /// <summary>
+        /// 当前选中的元素
+        /// </summary>
+        internal readonly List<DanceTimelineElement> SelectedElements = new();
+
+        /// <summary>
         /// 上一次更新时间
         /// </summary>
         private DateTime? LastUpdateTime;
-
-        /// <summary>
-        /// 当前选中的元素
-        /// </summary>
-        private readonly List<DanceTimelineElement> SelectedElements = new();
 
         // ==========================================================================================================================================
         // Event

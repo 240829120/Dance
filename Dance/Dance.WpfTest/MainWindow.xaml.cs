@@ -198,7 +198,7 @@ namespace Dance.WpfTest
 
                 TimeSpan beginTime = TimeSpan.FromSeconds(random.Next(0, (int)TimeSpan.FromMinutes(5).TotalSeconds));
 
-                for (int i = 0; i < 1; ++i)
+                for (int i = 0; i < 10; ++i)
                 {
                     TimeSpan endTime = TimeSpan.FromSeconds(random.Next((int)beginTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds));
 

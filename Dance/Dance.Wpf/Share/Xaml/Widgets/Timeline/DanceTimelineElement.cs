@@ -1,4 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.Input;
+using log4net;
+using Microsoft.VisualBasic.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,12 +30,17 @@ namespace Dance.Wpf
         /// <summary>
         /// 所属时间线
         /// </summary>
-        internal DanceTimeline? OwnerTimeline = null;
+        internal DanceTimeline? OwnerTimeline;
 
         /// <summary>
         /// 所属轨道
         /// </summary>
-        internal DanceTimelineTrack? OwnerTrack = null;
+        internal DanceTimelineTrack? OwnerTrack;
+
+        /// <summary>
+        /// 所属轨道容器
+        /// </summary>
+        internal DanceTimelineTrackPanel? OwnerTrackPanel;
 
         /// <summary>
         /// 鼠标左键点击坐标
@@ -41,14 +48,9 @@ namespace Dance.Wpf
         private Point? MouseLeftButtonDownPoint;
 
         /// <summary>
-        /// 鼠标左键点击时的开始时间
+        /// 元素移动缓存
         /// </summary>
-        private TimeSpan? MouseLeftButtonDownBeginTime;
-
-        /// <summary>
-        /// 鼠标左键点击时的结束时间
-        /// </summary>
-        private TimeSpan? MouseLeftButtonDownEndTime;
+        private readonly Dictionary<DanceTimelineElement, Tuple<TimeSpan, TimeSpan>> ElementMoveCacheDic = new();
 
         // ==========================================================================================================================================
         // Property
@@ -122,6 +124,7 @@ namespace Dance.Wpf
 
             this.OwnerTimeline = this.GetVisualTreeParent<DanceTimeline>();
             this.OwnerTrack = this.GetVisualTreeParent<DanceTimelineTrack>();
+            this.OwnerTrackPanel = this.GetVisualTreeParent<DanceTimelineTrackPanel>();
         }
 
         /// <summary>
@@ -137,8 +140,6 @@ namespace Dance.Wpf
                 return;
 
             this.MouseLeftButtonDownPoint = e.GetPosition(this.OwnerTimeline);
-            this.MouseLeftButtonDownBeginTime = this.BeginTime;
-            this.MouseLeftButtonDownEndTime = this.EndTime;
 
             if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
             {
@@ -146,11 +147,20 @@ namespace Dance.Wpf
             }
             else
             {
-                this.OwnerTimeline.ClearSelectElement();
+                if (!Keyboard.IsKeyDown(Key.LeftAlt) && !Keyboard.IsKeyDown(Key.RightAlt))
+                {
+                    this.OwnerTimeline.ClearSelectElement();
+                }
                 this.OwnerTimeline.SelectElement(this);
             }
 
             this.OwnerTimeline.InvokeElementSelectionChanged();
+
+            this.ElementMoveCacheDic.Clear();
+            foreach (DanceTimelineElement item in this.OwnerTimeline.GetSelectedElements())
+            {
+                this.ElementMoveCacheDic[item] = new Tuple<TimeSpan, TimeSpan>(item.BeginTime, item.EndTime);
+            }
 
             this.CaptureMouse();
         }
@@ -165,6 +175,7 @@ namespace Dance.Wpf
             e.Handled = true;
 
             this.MouseLeftButtonDownPoint = null;
+            this.ElementMoveCacheDic.Clear();
             this.ReleaseMouseCapture();
         }
 
@@ -175,28 +186,59 @@ namespace Dance.Wpf
         {
             base.OnMouseMove(e);
 
-            if (this.OwnerTimeline == null || this.OwnerTrack == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || this.OwnerTimeline.PART_VerticalScrollBar == null)
+            if (this.OwnerTimeline == null || this.OwnerTrack == null || this.OwnerTrackPanel == null)
                 return;
 
-            if (this.MouseLeftButtonDownPoint == null || this.MouseLeftButtonDownBeginTime == null || this.MouseLeftButtonDownEndTime == null)
+            if (this.MouseLeftButtonDownPoint == null)
                 return;
 
-            if (Keyboard.IsKeyDown(Key.LeftAlt) || Keyboard.IsKeyDown(Key.LeftAlt))
+            if (!Keyboard.IsKeyDown(Key.LeftAlt) && !Keyboard.IsKeyDown(Key.RightAlt))
+                return;
+
+            e.Handled = true;
+
+            if (this.ElementMoveCacheDic.Count == 0)
+                return;
+
+            Point endPoint = e.GetPosition(this.OwnerTimeline);
+            double offset = endPoint.X - this.MouseLeftButtonDownPoint.Value.X;
+            TimeSpan offsetTime = this.OwnerTimeline.GetTimeSpanFromPixel(offset);
+
+            foreach (var kv in this.ElementMoveCacheDic)
             {
-                e.Handled = true;
-
-                Point endPoint = e.GetPosition(this.OwnerTimeline);
-
-                double offset = endPoint.X - this.MouseLeftButtonDownPoint.Value.X;
-                TimeSpan offsetTime = this.OwnerTimeline.GetTimeSpanFromPixel(offset);
-                TimeSpan beginTime = this.MouseLeftButtonDownBeginTime.Value + offsetTime;
-                TimeSpan endTime = this.MouseLeftButtonDownEndTime.Value + offsetTime;
-
-                this.BeginTime = this.OwnerTimeline.GetEffectiveTimeSpan(beginTime);
-                this.EndTime = this.OwnerTimeline.GetEffectiveTimeSpan(endTime);
-
-                this.OwnerTimeline.Update();
+                kv.Key.TryMove(offsetTime, kv.Value.Item1, kv.Value.Item2);
             }
+
+            this.OwnerTimeline.Update();
+        }
+
+
+        // ==========================================================================================================================================
+        // Internal
+
+        /// <summary>
+        /// 尝试移动
+        /// </summary>
+        /// <param name="offsetTime">偏移量时间</param>
+        /// <returns>是否成功移动</returns>
+        internal bool TryMove(TimeSpan offsetTime, TimeSpan cacheBeginTime, TimeSpan cacheEndTime)
+        {
+            if (this.OwnerTimeline == null || this.OwnerTrackPanel == null)
+                return false;
+
+            TimeSpan beginTime = cacheBeginTime + offsetTime;
+            TimeSpan endTime = cacheEndTime + offsetTime;
+            beginTime = this.OwnerTimeline.GetEffectiveTimeSpan(beginTime);
+            endTime = this.OwnerTimeline.GetEffectiveTimeSpan(endTime);
+            TimeSpan width = this.EndTime - this.BeginTime;
+
+            if (!this.OwnerTrackPanel.GetEffectiveMoveTimeSpan(ref beginTime, ref endTime, width, this))
+                return false;
+
+            this.BeginTime = beginTime;
+            this.EndTime = endTime;
+
+            return true;
         }
     }
 }
