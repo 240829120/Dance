@@ -13,6 +13,11 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceTimelineTrackHeaderItems : ItemsControl
     {
+        static DanceTimelineTrackHeaderItems()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTimelineTrackHeaderItems), new FrameworkPropertyMetadata(typeof(DanceTimelineTrackHeaderItems)));
+        }
+
         /// <summary>
         /// 是否是子元素容器
         /// </summary>

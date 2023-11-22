@@ -150,22 +150,35 @@ namespace Dance.WpfTest
         {
             //this.propertyGrid.SelectedObject = new Student();
 
-            List<TimelineTrackModel> list = new()
+            List<TimelineTrackModel> list = new();
+
+            Random random = new();
+
+            for (int t = 0; t < 20; t++)
             {
-                new TimelineTrackModel() { Name = "轨道1" },
-                new TimelineTrackModel() { Name = "轨道2" },
-                new TimelineTrackModel() { Name = "轨道3" },
-                new TimelineTrackModel() { Name = "轨道4" },
-                new TimelineTrackModel() { Name = "轨道5" },
-            };
+                TimelineTrackModel track = new() { Name = $"轨道{t}" };
 
-            list[0].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:00:01"), EndTime = TimeSpan.Parse("00:00:02") });
-            list[0].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:00:03"), EndTime = TimeSpan.Parse("00:00:10") });
+                TimeSpan beginTime = TimeSpan.FromSeconds(random.Next(0, (int)TimeSpan.FromMinutes(5).TotalSeconds));
 
-            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:01:01"), EndTime = TimeSpan.Parse("00:01:02") });
-            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:05:03"), EndTime = TimeSpan.Parse("00:05:10") });
-            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:10:01"), EndTime = TimeSpan.Parse("00:10:02") });
-            list[1].Items.Add(new TimelineTrackItemModel() { BeginTime = TimeSpan.Parse("00:20:03"), EndTime = TimeSpan.Parse("00:20:10") });
+                for (int i = 0; i < 10; ++i)
+                {
+                    TimeSpan endTime = TimeSpan.FromSeconds(random.Next((int)beginTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds));
+
+                    if (beginTime >= this.timeline.Duration || endTime >= this.timeline.Duration)
+                        break;
+
+                    TimelineTrackItemModel item = new();
+
+                    item.BeginTime = beginTime;
+                    item.EndTime = endTime;
+
+                    track.Items.Add(item);
+
+                    beginTime = TimeSpan.FromSeconds(random.Next((int)endTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds)); ;
+                }
+
+                list.Add(track);
+            }
 
             this.timeline.ItemsSource = list;
         }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -23,7 +24,7 @@ namespace Dance.Wpf
     [TemplatePart(Name = nameof(PART_HeaderItems), Type = typeof(DanceTimelineTrackHeaderItems))]
     [TemplatePart(Name = nameof(PART_TrackItems), Type = typeof(ItemsPresenter))]
     [TemplatePart(Name = nameof(PART_Progress), Type = typeof(DanceTimelineProgress))]
-    public class DanceTimeline : ItemsControl
+    public partial class DanceTimeline : ItemsControl
     {
         static DanceTimeline()
         {
@@ -43,6 +44,16 @@ namespace Dance.Wpf
         /// 默认Zoom为1时的1秒宽度
         /// </summary>
         public const double ONE_SECOND_DEFAULT_WIDTH = 1d;
+
+        /// <summary>
+        /// 最小缩放值
+        /// </summary>
+        public const double MIN_ZOOM = 1d;
+
+        /// <summary>
+        /// 最大缩放值
+        /// </summary>
+        public const double MAX_ZOOM = 100d;
 
         /// <summary>
         /// 刻度最小宽度
@@ -193,7 +204,13 @@ namespace Dance.Wpf
         /// 持续时间
         /// </summary>
         public static readonly DependencyProperty DurationProperty =
-            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.FromHours(1)));
+            DependencyProperty.Register("Duration", typeof(TimeSpan), typeof(DanceTimeline), new PropertyMetadata(TimeSpan.FromHours(1), new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimeline timeline)
+                    return;
+
+                timeline.Update();
+            })));
 
         #endregion
 
@@ -237,7 +254,38 @@ namespace Dance.Wpf
         /// 进度条宽度
         /// </summary>
         public static readonly DependencyProperty ProgressWidthProperty =
-            DependencyProperty.Register("ProgressWidth", typeof(double), typeof(DanceTimeline), new PropertyMetadata(5d));
+            DependencyProperty.Register("ProgressWidth", typeof(double), typeof(DanceTimeline), new PropertyMetadata(5d, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimeline timeline)
+                    return;
+
+                timeline.Update();
+            })));
+
+        #endregion
+
+        #region TrackHeight -- 轨道高度
+
+        /// <summary>
+        /// 轨道高度
+        /// </summary>
+        public double TrackHeight
+        {
+            get { return (double)GetValue(TrackHeightProperty); }
+            set { SetValue(TrackHeightProperty, value); }
+        }
+
+        /// <summary>
+        /// 轨道高度
+        /// </summary>
+        public static readonly DependencyProperty TrackHeightProperty =
+            DependencyProperty.Register("TrackHeight", typeof(double), typeof(DanceTimeline), new PropertyMetadata(40d, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimeline timeline)
+                    return;
+
+                timeline.Update();
+            })));
 
         #endregion
 
@@ -386,6 +434,36 @@ namespace Dance.Wpf
             return dest;
         }
 
+        /// <summary>
+        /// 选择轨道
+        /// </summary>
+        /// <param name="index">轨道索引</param>
+        internal void SelectTrack(int index)
+        {
+            if (this.PART_HeaderItems == null || this.PART_TrackItems == null)
+                return;
+
+            DanceTimelineTrackHeaderPanel? headerPanel = this.PART_HeaderItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
+            if (headerPanel != null)
+            {
+                int i = 0;
+                foreach (DanceTimelineTrackHeader item in headerPanel.Children)
+                {
+                    item.IsSelected = index == i++;
+                }
+            }
+
+            DanceTimelineTrackHeaderPanel? trackPanel = this.PART_TrackItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
+            if (trackPanel != null)
+            {
+                int i = 0;
+                foreach (DanceTimelineTrack item in trackPanel.Children)
+                {
+                    item.IsSelected = index == i++;
+                }
+            }
+        }
+
         // ==========================================================================================================================================
         // Private Function
 
@@ -397,7 +475,7 @@ namespace Dance.Wpf
             if (this.PART_HorizontalScrollBar == null || this.PART_VerticalScrollBar == null || this.PART_Scale == null || this.PART_HeaderItems == null || this.PART_Progress == null)
                 return;
 
-            this.PART_VerticalScrollBar.Maximum = this.PART_TrackItems.ActualHeight;
+            this.PART_VerticalScrollBar.Maximum = this.Items.Count * this.TrackHeight;
             this.PART_HorizontalScrollBar.Maximum = this.Duration.TotalSeconds * ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
             this.PART_HorizontalScrollBar.ViewportSize = this.PART_HorizontalScrollBar.Maximum * 0.1d;
             double left = this.PART_HorizontalScrollBar.Value - this.GetPixelFromTimeSpan(this.CurrentTime);
@@ -405,6 +483,7 @@ namespace Dance.Wpf
             this.PART_Progress.Visibility = (-left < 0 || left > this.ProgressWidth) ? Visibility.Collapsed : Visibility.Visible;
             this.PART_Scale.InvalidateVisual();
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackPanel>(this)?.ForEach(p => p.InvalidateVisual());
+            DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>(this)?.ForEach(p => p.InvalidateVisual());
         }
 
         /// <summary>
@@ -457,11 +536,7 @@ namespace Dance.Wpf
         /// </summary>
         private void PART_VerticalScrollBar_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if (this.PART_HeaderItems == null || this.PART_TrackItems == null)
-                return;
-
-            this.PART_HeaderItems.Margin = new Thickness(0, -this.PART_VerticalScrollBar.Value, 0, 0);
-            this.PART_TrackItems.Margin = new Thickness(0, -this.PART_VerticalScrollBar.Value, 0, 0);
+            this.Update();
         }
     }
 }

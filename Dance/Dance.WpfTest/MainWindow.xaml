@@ -28,7 +28,7 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Transparent" BorderThickness="1"  Margin="50">
-            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="50" CurrentTime="00:00:00" >
+            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="50" CurrentTime="00:00:00">
                 <dance:DanceTimeline.HeaderTemplate>
                     <DataTemplate>
                         <Border>

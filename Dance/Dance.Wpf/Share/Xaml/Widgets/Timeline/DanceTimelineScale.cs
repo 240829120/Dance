@@ -150,7 +150,7 @@ namespace Dance.Wpf
                 return;
 
             Point point = e.GetPosition(this);
-            if (point.X < 0 || point.X > this.ActualWidth)
+            if (point.X < 0 || point.X > this.ActualWidth || point.Y < 0 || point.Y > this.ActualHeight)
                 return;
 
             TimeSpan offset = this.OwnerTimeline.GetTimeSpanFromPixel(point.X);

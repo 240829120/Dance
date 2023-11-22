@@ -114,6 +114,7 @@ namespace Dance.Wpf
             this.BeginDragPoint = e.GetPosition(this.OwnerTimeline);
             this.BeginDragTime = this.OwnerTimeline.CurrentTime;
             this.CaptureMouse();
+            e.Handled = true;
         }
 
         // ==========================================================================================================================================

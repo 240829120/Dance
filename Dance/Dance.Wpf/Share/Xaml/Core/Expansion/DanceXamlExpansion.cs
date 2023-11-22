@@ -111,7 +111,10 @@ namespace Dance.Wpf
                 return result;
 
             if (type.IsAssignableFrom(element.GetType()))
+            {
                 result.Add(element);
+                return result;
+            }
 
             int count = VisualTreeHelper.GetChildrenCount(element);
             for (int i = 0; i < count; ++i)

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Dance.Wpf
 {
@@ -25,16 +26,48 @@ namespace Dance.Wpf
         /// <summary>
         /// 所属时间线
         /// </summary>
-        [NotNull]
-        internal DanceTimeline? OwnerTimeline = null;
+        internal DanceTimeline? OwnerTimeline;
+
+        /// <summary>
+        /// 所属容器
+        /// </summary>
+        internal DanceTimelineTrackHeaderPanel? OwnerPanel;
 
         // ==========================================================================================================================================
         // Property
 
+        #region IsSelected -- 是否被选中
 
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return (bool)GetValue(IsSelectedProperty); }
+            set { SetValue(IsSelectedProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
+        public static readonly DependencyProperty IsSelectedProperty =
+            DependencyProperty.Register("IsSelected", typeof(bool), typeof(DanceTimelineTrack), new PropertyMetadata(false));
+
+        #endregion
 
         // ==========================================================================================================================================
-        // Property
+        // Override
+
+        /// <summary>
+        /// 应用模板
+        /// </summary>
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.OwnerTimeline = this.GetVisualTreeParent<DanceTimeline>();
+            this.OwnerPanel = this.GetVisualTreeParent<DanceTimelineTrackHeaderPanel>();
+        }
 
         /// <summary>
         /// 是否是子元素容器
@@ -49,11 +82,7 @@ namespace Dance.Wpf
         /// </summary>
         protected override DependencyObject GetContainerForItemOverride()
         {
-            return new DanceTimelineElement()
-            {
-                OwnerTimeline = this.OwnerTimeline,
-                OwnerTrack = this
-            };
+            return new DanceTimelineElement();
         }
     }
 }
