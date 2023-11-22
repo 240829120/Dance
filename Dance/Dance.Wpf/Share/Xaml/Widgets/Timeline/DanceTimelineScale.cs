@@ -115,9 +115,10 @@ namespace Dance.Wpf
             if (this.OwnerTimeline == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || this.OwnerTimeline.ActualHeight <= 0)
                 return;
 
-            DanceTimelineScaleDrawContext context = new();
-
-            context.BeginX = this.OwnerTimeline.PART_HorizontalScrollBar.Value;
+            DanceTimelineScaleDrawContext context = new()
+            {
+                BeginX = this.OwnerTimeline.PART_HorizontalScrollBar.Value
+            };
             context.EndX = context.BeginX + this.ActualWidth;
 
             context.SecondWidth = DanceTimeline.ONE_SECOND_DEFAULT_WIDTH * this.OwnerTimeline.Zoom;

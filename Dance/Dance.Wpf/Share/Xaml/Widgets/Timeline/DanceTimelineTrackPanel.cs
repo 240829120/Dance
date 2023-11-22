@@ -34,6 +34,25 @@ namespace Dance.Wpf
         /// </summary>
         protected override Size MeasureOverride(Size availableSize)
         {
+            if (this.OwnerTimeline == null || !this.IsVisible)
+                return availableSize;
+
+            foreach (UIElement item in this.Children)
+            {
+                if (item is not DanceTimelineElement element)
+                    continue;
+
+                double beginX = this.OwnerTimeline.GetPixelFromTimeSpan(element.BeginTime) - this.OwnerTimeline.PART_HorizontalScrollBar.Value;
+                double endX = this.OwnerTimeline.GetPixelFromTimeSpan(element.EndTime) - this.OwnerTimeline.PART_HorizontalScrollBar.Value;
+
+                if (endX <= 0 || beginX >= this.ActualWidth)
+                {
+                    continue;
+                }
+
+                element.Measure(new Size(endX - beginX, this.ActualHeight));
+            }
+
             return availableSize;
         }
 
@@ -42,7 +61,7 @@ namespace Dance.Wpf
         /// </summary>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (this.OwnerTimeline == null)
+            if (this.OwnerTimeline == null || !this.IsVisible)
                 return finalSize;
 
             foreach (UIElement item in this.Children)

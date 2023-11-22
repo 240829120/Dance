@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Dance.Wpf
 {
@@ -25,13 +26,11 @@ namespace Dance.Wpf
         /// <summary>
         /// 所属时间线
         /// </summary>
-        [NotNull]
         internal DanceTimeline? OwnerTimeline = null;
 
         /// <summary>
         /// 所属轨道
         /// </summary>
-        [NotNull]
         internal DanceTimelineTrack? OwnerTrack = null;
 
         // ==========================================================================================================================================
@@ -93,5 +92,39 @@ namespace Dance.Wpf
             DependencyProperty.Register("EndTime", typeof(TimeSpan), typeof(DanceTimelineElement), new PropertyMetadata(TimeSpan.Zero));
 
         #endregion
+
+        // ==========================================================================================================================================
+        // Override
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            this.OwnerTimeline = this.GetVisualTreeParent<DanceTimeline>();
+            this.OwnerTrack = this.GetVisualTreeParent<DanceTimelineTrack>();
+        }
+
+        /// <summary>
+        /// 鼠标左键点击
+        /// </summary>
+        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        {
+            base.OnMouseLeftButtonDown(e);
+
+            if (this.OwnerTimeline == null)
+                return;
+
+            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+            {
+                this.OwnerTimeline.SelectElement(this);
+            }
+            else
+            {
+                this.OwnerTimeline.ClearSelectElement();
+                this.OwnerTimeline.SelectElement(this);
+            }
+
+            this.OwnerTimeline.InvokeElementSelectionChanged();
+        }
     }
 }

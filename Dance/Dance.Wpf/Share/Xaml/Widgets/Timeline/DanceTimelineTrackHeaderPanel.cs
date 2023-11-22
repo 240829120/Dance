@@ -34,9 +34,12 @@ namespace Dance.Wpf
         /// </summary>
         protected override Size MeasureOverride(Size availableSize)
         {
+            if (this.OwnerTimeline == null)
+                return availableSize;
+
             foreach (UIElement item in this.Children)
             {
-                item.Measure(availableSize);
+                item.Measure(new Size(availableSize.Width, this.OwnerTimeline.TrackHeight));
             }
 
             return availableSize;
@@ -62,7 +65,7 @@ namespace Dance.Wpf
                 double shouldBeginY = index++ * trackHeight;
                 double shouldEndY = shouldBeginY + trackHeight;
 
-                if (shouldEndY < beginY || shouldBeginY >= this.ActualHeight)
+                if (shouldEndY < beginY || shouldBeginY >= (beginY + this.ActualHeight))
                 {
                     element.Visibility = Visibility.Collapsed;
                     continue;

@@ -24,6 +24,7 @@ namespace Dance.Wpf
     [TemplatePart(Name = nameof(PART_HeaderItems), Type = typeof(DanceTimelineTrackHeaderItems))]
     [TemplatePart(Name = nameof(PART_TrackItems), Type = typeof(ItemsPresenter))]
     [TemplatePart(Name = nameof(PART_Progress), Type = typeof(DanceTimelineProgress))]
+    [TemplatePart(Name = nameof(PART_FrameSelect), Type = typeof(DanceFrameSelect))]
     public partial class DanceTimeline : ItemsControl
     {
         static DanceTimeline()
@@ -112,31 +113,36 @@ namespace Dance.Wpf
         internal ItemsPresenter? PART_TrackItems = null;
 
         /// <summary>
+        /// 框选控件
+        /// </summary>
+        [NotNull]
+        internal DanceFrameSelect? PART_FrameSelect = null;
+
+        /// <summary>
         /// 上一次更新时间
         /// </summary>
         private DateTime? LastUpdateTime;
 
+        /// <summary>
+        /// 当前选中的元素
+        /// </summary>
+        private readonly List<DanceTimelineElement> SelectedElements = new();
+
+        // ==========================================================================================================================================
+        // Event
+
+        /// <summary>
+        /// 轨道选择改变时触发
+        /// </summary>
+        public event EventHandler<DanceTimelineTrackSelectionChangedEventArgs>? TrackSelectionChanged;
+
+        /// <summary>
+        /// 元素选择改变时触发
+        /// </summary>
+        public event EventHandler<DanceTimelineElementSelectionChangedEventArgs>? ElementSelectionChanged;
+
         // ==========================================================================================================================================
         // Property
-
-        #region TitleTemplate -- 标题模板
-
-        /// <summary>
-        /// 标题模板
-        /// </summary>
-        public DataTemplate TitleTemplate
-        {
-            get { return (DataTemplate)GetValue(TitleTemplateProperty); }
-            set { SetValue(TitleTemplateProperty, value); }
-        }
-
-        /// <summary>
-        /// 标题模板
-        /// </summary>
-        public static readonly DependencyProperty TitleTemplateProperty =
-            DependencyProperty.Register("TitleTemplate", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
-
-        #endregion
 
         #region HeaderTemplate -- 头部模板
 
@@ -179,8 +185,10 @@ namespace Dance.Wpf
 
                 if (timeline.IsPlaying && timeline.IsFollowProgress && timeline.PART_HorizontalScrollBar != null && timeline.PART_TrackItems != null)
                 {
-                    timeline.PART_HorizontalScrollBar.Value = timeline.GetPixelFromTimeSpan(timeline.CurrentTime + timeline.GetTimeSpanFromPixel(timeline.PART_TrackItems.ActualWidth / 2d));
-                    return;
+                    TimeSpan destTime = timeline.CurrentTime - timeline.GetTimeSpanFromPixel(timeline.PART_TrackItems.ActualWidth / 2d);
+                    destTime = timeline.GetEffectiveTimeSpan(destTime);
+
+                    timeline.PART_HorizontalScrollBar.Value = timeline.GetPixelFromTimeSpan(destTime);
                 }
 
                 timeline.Update();
@@ -310,7 +318,6 @@ namespace Dance.Wpf
                     return;
 
                 timeline.LastUpdateTime = null;
-
             })));
 
         #endregion
@@ -348,6 +355,7 @@ namespace Dance.Wpf
             this.PART_HeaderItems = this.Template.FindName(nameof(PART_HeaderItems), this) as DanceTimelineTrackHeaderItems;
             this.PART_TrackItems = this.Template.FindName(nameof(PART_TrackItems), this) as ItemsPresenter;
             this.PART_Progress = this.Template.FindName(nameof(PART_Progress), this) as DanceTimelineProgress;
+            this.PART_FrameSelect = this.Template.FindName(nameof(PART_FrameSelect), this) as DanceFrameSelect;
 
             if (this.PART_Scale != null)
             {
@@ -398,6 +406,18 @@ namespace Dance.Wpf
         }
 
         // ==========================================================================================================================================
+        // Public Function
+
+        /// <summary>
+        /// 获取选中的元素集合
+        /// </summary>
+        /// <returns>选中的元素集合</returns>
+        public List<DanceTimelineElement> GetSelectedElements()
+        {
+            return this.SelectedElements.ToList();
+        }
+
+        // ==========================================================================================================================================
         // Internal Function
 
         /// <summary>
@@ -443,6 +463,8 @@ namespace Dance.Wpf
             if (this.PART_HeaderItems == null || this.PART_TrackItems == null)
                 return;
 
+            DanceTimelineTrack? selectedTrack = null;
+
             DanceTimelineTrackHeaderPanel? headerPanel = this.PART_HeaderItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
             if (headerPanel != null)
             {
@@ -460,8 +482,60 @@ namespace Dance.Wpf
                 foreach (DanceTimelineTrack item in trackPanel.Children)
                 {
                     item.IsSelected = index == i++;
+                    if (item.IsSelected)
+                    {
+                        selectedTrack = item;
+                    }
                 }
             }
+
+            this.TrackSelectionChanged?.Invoke(this, new DanceTimelineTrackSelectionChangedEventArgs(this, selectedTrack));
+        }
+
+        /// <summary>
+        /// 选中元素
+        /// </summary>
+        /// <param name="element">待选中元素项</param>
+        internal void SelectElement(DanceTimelineElement element)
+        {
+            lock (this.SelectedElements)
+            {
+                element.IsSelected = true;
+                this.SelectedElements.Add(element);
+            }
+        }
+
+        /// <summary>
+        /// 选中元素
+        /// </summary>
+        /// <param name="elements">待选中元素项</param>
+        internal void SelectElement(List<DanceTimelineElement> elements)
+        {
+            lock (this.SelectedElements)
+            {
+                elements.ForEach(p => p.IsSelected = true);
+                this.SelectedElements.AddRange(elements);
+            }
+        }
+
+        /// <summary>
+        /// 清理选中的元素
+        /// </summary>
+        internal void ClearSelectElement()
+        {
+            lock (this.SelectedElements)
+            {
+                this.SelectedElements.ForEach(p => p.IsSelected = false);
+                this.SelectedElements.Clear();
+            }
+        }
+
+        /// <summary>
+        /// 触发元素选择改变事件
+        /// </summary>
+        internal void InvokeElementSelectionChanged()
+        {
+            this.ElementSelectionChanged?.Invoke(this, new DanceTimelineElementSelectionChangedEventArgs(this, this.SelectedElements.ToList()));
         }
 
         // ==========================================================================================================================================

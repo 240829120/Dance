@@ -107,11 +107,47 @@ namespace Dance.WpfTest
         public HorizontalAlignment HorizontalAlignment { get; set; }
     }
 
-    public class TimelineTrackItemModel
+    public class TimelineTrackItemModel : DanceModel, IDanceTimelineTrackElement
     {
-        public TimeSpan BeginTime { get; set; }
+        public string PART_DanceObjectType => this.GetType().AssemblyQualifiedName ?? string.Empty;
 
-        public TimeSpan EndTime { get; set; }
+        #region BeginTime -- 开始时间
+
+        private TimeSpan beginTime;
+
+        public TimeSpan BeginTime
+        {
+            get { return beginTime; }
+            set { beginTime = value; this.OnPropertyChanged(); }
+        }
+
+        #endregion
+
+        #region EndTime -- 结束时间
+
+        private TimeSpan endTime;
+
+        public TimeSpan EndTime
+        {
+            get { return endTime; }
+            set { endTime = value; this.OnPropertyChanged(); }
+        }
+
+        #endregion
+
+        #region IsSelected -- 是否被选中
+
+        private bool isSelected;
+        /// <summary>
+        /// 是否被选中
+        /// </summary>
+        public bool IsSelected
+        {
+            get { return isSelected; }
+            set { isSelected = value; this.OnPropertyChanged(); }
+        }
+
+        #endregion
     }
 
     public class TimelineTrackModel : DanceModel
@@ -154,23 +190,24 @@ namespace Dance.WpfTest
 
             Random random = new();
 
-            for (int t = 0; t < 20; t++)
+            for (int t = 0; t < 200; t++)
             {
                 TimelineTrackModel track = new() { Name = $"轨道{t}" };
 
                 TimeSpan beginTime = TimeSpan.FromSeconds(random.Next(0, (int)TimeSpan.FromMinutes(5).TotalSeconds));
 
-                for (int i = 0; i < 10; ++i)
+                for (int i = 0; i < 100; ++i)
                 {
                     TimeSpan endTime = TimeSpan.FromSeconds(random.Next((int)beginTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds));
 
                     if (beginTime >= this.timeline.Duration || endTime >= this.timeline.Duration)
                         break;
 
-                    TimelineTrackItemModel item = new();
-
-                    item.BeginTime = beginTime;
-                    item.EndTime = endTime;
+                    TimelineTrackItemModel item = new()
+                    {
+                        BeginTime = beginTime,
+                        EndTime = endTime
+                    };
 
                     track.Items.Add(item);
 

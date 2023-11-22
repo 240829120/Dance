@@ -35,10 +35,11 @@ namespace Dance.Wpf
         {
             base.OnMouseLeftButtonDown(e);
 
+            this.Focus();
+
             if (this.IsPlaying && this.IsFollowProgress || this.PART_HorizontalScrollBar == null || this.PART_VerticalScrollBar == null)
                 return;
 
-            this.Focus();
             this.MouseLeftButtonDownPoint = e.GetPosition(this);
             this.MouseLeftButtonDownScrollX = this.PART_HorizontalScrollBar.Value;
             this.MouseLeftButtonDownScrollY = this.PART_VerticalScrollBar.Value;
