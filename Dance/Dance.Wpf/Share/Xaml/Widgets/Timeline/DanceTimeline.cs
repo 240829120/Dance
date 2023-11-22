@@ -163,6 +163,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region ElementTemplate -- 元素模板
+
+        /// <summary>
+        /// 元素模板
+        /// </summary>
+        public DataTemplate ElementTemplate
+        {
+            get { return (DataTemplate)GetValue(ElementTemplateProperty); }
+            set { SetValue(ElementTemplateProperty, value); }
+        }
+
+        /// <summary>
+        /// 元素模板
+        /// </summary>
+        public static readonly DependencyProperty ElementTemplateProperty =
+            DependencyProperty.Register("ElementTemplate", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
+
+        #endregion
+
         #region CurrentTime -- 当前时间
 
         /// <summary>
@@ -449,7 +468,7 @@ namespace Dance.Wpf
         {
             TimeSpan dest = timeSpan < TimeSpan.Zero ? TimeSpan.Zero : timeSpan;
             dest = dest > this.Duration ? this.Duration : dest;
-            dest = TimeSpan.FromSeconds(Math.Round(dest.TotalSeconds, 1));
+            dest = TimeSpan.FromSeconds((int)(dest.TotalSeconds * 10) / 10d);
 
             return dest;
         }
@@ -538,13 +557,10 @@ namespace Dance.Wpf
             this.ElementSelectionChanged?.Invoke(this, new DanceTimelineElementSelectionChangedEventArgs(this, this.SelectedElements.ToList()));
         }
 
-        // ==========================================================================================================================================
-        // Private Function
-
         /// <summary>
         /// 更新
         /// </summary>
-        private void Update()
+        internal void Update()
         {
             if (this.PART_HorizontalScrollBar == null || this.PART_VerticalScrollBar == null || this.PART_Scale == null || this.PART_HeaderItems == null || this.PART_Progress == null)
                 return;
@@ -559,6 +575,9 @@ namespace Dance.Wpf
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackPanel>(this)?.ForEach(p => p.InvalidateVisual());
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>(this)?.ForEach(p => p.InvalidateVisual());
         }
+
+        // ==========================================================================================================================================
+        // Private Function
 
         /// <summary>
         /// 加载

@@ -8,6 +8,26 @@
 
     <dance:DanceDoubleGridLengthConverter x:Key="DanceDoubleGridLengthConverter"></dance:DanceDoubleGridLengthConverter>
 
+    <!-- 元素改变开始时间结束时间 -->
+    <Style TargetType="dance:DanceTimelineElementResize">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Width" Value="3"></Setter>
+        <Setter Property="Cursor" Value="SizeWE"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceTimelineElementResize">
+                    <Border Background="{TemplateBinding Background}"></Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="Red"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
     <!-- 元素 -->
     <Style TargetType="dance:DanceTimelineElement">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
@@ -17,12 +37,18 @@
         <Setter Property="BorderBrush" Value="SkyBlue"></Setter>
         <Setter Property="IsSelected" Value="{Binding Path=IsSelected,Mode=TwoWay}"></Setter>
         <Setter Property="BorderThickness" Value="3"></Setter>
+        <Setter Property="Width" Value="NaN"></Setter>
+        <Setter Property="MinWidth" Value="1"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineElement">
-                    <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                        <ContentPresenter></ContentPresenter>
-                    </Border>
+                    <Grid>
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter></ContentPresenter>
+                        </Border>
+                        <dance:DanceTimelineElementResize HorizontalAlignment="Left" ResizeType="BeginTime"></dance:DanceTimelineElementResize>
+                        <dance:DanceTimelineElementResize HorizontalAlignment="Right" ResizeType="EndTime"></dance:DanceTimelineElementResize>
+                    </Grid>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -38,6 +64,7 @@
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"></Setter>
         <Setter Property="ItemsSource" Value="{Binding Path=Items}"></Setter>
+        <Setter Property="ItemTemplate" Value="{Binding Path=ElementTemplate,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor}}"></Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -86,7 +113,6 @@
     </Style>
 
     <!-- 轨道头部容器 -->
-
     <Style TargetType="dance:DanceTimelineTrackHeaderItems">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="ItemsPanel">
@@ -117,6 +143,13 @@
                 <ItemsPanelTemplate>
                     <dance:DanceTimelineTrackHeaderPanel ClipToBounds="True"></dance:DanceTimelineTrackHeaderPanel>
                 </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ElementTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Border></Border>
+                </DataTemplate>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
