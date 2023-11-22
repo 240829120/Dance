@@ -103,28 +103,5 @@ namespace Dance.Wpf
             this.OwnerTimeline = this.GetVisualTreeParent<DanceTimeline>();
             this.OwnerTrack = this.GetVisualTreeParent<DanceTimelineTrack>();
         }
-
-        /// <summary>
-        /// 鼠标左键点击
-        /// </summary>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
-
-            if (this.OwnerTimeline == null)
-                return;
-
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                this.OwnerTimeline.SelectElement(this);
-            }
-            else
-            {
-                this.OwnerTimeline.ClearSelectElement();
-                this.OwnerTimeline.SelectElement(this);
-            }
-
-            this.OwnerTimeline.InvokeElementSelectionChanged();
-        }
     }
 }

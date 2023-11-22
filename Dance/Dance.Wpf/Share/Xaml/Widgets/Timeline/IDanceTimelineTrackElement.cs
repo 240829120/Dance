@@ -15,12 +15,12 @@ namespace Dance.Wpf
         /// <summary>
         /// 开始时间
         /// </summary>
-        TimeSpan BeginTime { get; }
+        TimeSpan BeginTime { get; set; }
 
         /// <summary>
         /// 结束时间
         /// </summary>
-        TimeSpan EndTime { get; }
+        TimeSpan EndTime { get; set; }
 
         /// <summary>
         /// 是否被选中

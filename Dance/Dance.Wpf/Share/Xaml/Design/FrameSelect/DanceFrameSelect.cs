@@ -71,7 +71,7 @@ namespace Dance.Wpf
         #endregion
 
         // ===========================================================================================================================
-        // Public Function
+        // Override
 
         protected override void OnRender(DrawingContext drawingContext)
         {
@@ -89,6 +89,26 @@ namespace Dance.Wpf
             drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new Point(right, top), new Point(right, bottom));
             drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new Point(right, bottom), new Point(left, bottom));
             drawingContext.DrawSnappedLinesBetweenPoints(this.StrokePen, this.StrokeThickness, new Point(left, bottom), new Point(left, top));
+        }
+
+        // ===========================================================================================================================
+        // Public Function
+
+        /// <summary>
+        /// 获取选择区域
+        /// </summary>
+        /// <returns>选择区域</returns>
+        public Rect? GetSelection()
+        {
+            if (this.BeginPoint == null || this.EndPoint == null)
+                return null;
+
+            double left = Math.Min(this.BeginPoint.Value.X, this.EndPoint.Value.X);
+            double right = Math.Max(this.BeginPoint.Value.X, this.EndPoint.Value.X);
+            double top = Math.Min(this.BeginPoint.Value.Y, this.EndPoint.Value.Y);
+            double bottom = Math.Max(this.BeginPoint.Value.Y, this.EndPoint.Value.Y);
+
+            return new Rect(left, top, right - left, bottom - top);
         }
     }
 }

@@ -16,7 +16,7 @@
         <Setter Property="Background" Value="SkyBlue"></Setter>
         <Setter Property="BorderBrush" Value="SkyBlue"></Setter>
         <Setter Property="IsSelected" Value="{Binding Path=IsSelected,Mode=TwoWay}"></Setter>
-        <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"></Setter>
+        <Setter Property="BorderThickness" Value="3"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineElement">
@@ -147,7 +147,7 @@
 
                             <Rectangle Fill="White" Grid.Row="1" Height="10" VerticalAlignment="Bottom"></Rectangle>
 
-                            <dance:DanceFrameSelect x:Name="PART_FrameSelect" Grid.RowSpan="2" Grid.ColumnSpan="2" IsHitTestVisible="False"></dance:DanceFrameSelect>
+                            <dance:DanceFrameSelect x:Name="PART_FrameSelect" Grid.Row="1" Grid.Column="1" IsHitTestVisible="False" StrokeDashArray="5 5"></dance:DanceFrameSelect>
 
                             <ScrollBar x:Name="PART_VerticalScrollBar" Orientation="Vertical" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Right" Visibility="Hidden"
                                        Style="{StaticResource ScrollBar_General}"></ScrollBar>
