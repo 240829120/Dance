@@ -194,7 +194,7 @@ namespace Dance.WpfTest
 
             Random random = new();
 
-            for (int t = 0; t < 10; t++)
+            for (int t = 0; t < 20; t++)
             {
                 TimelineTrackModel track = new() { Name = $"轨道{t}" };
 

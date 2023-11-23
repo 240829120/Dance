@@ -38,6 +38,7 @@ namespace Dance.Wpf
         {
             this.Loaded += DanceTimeline_Loaded;
             this.Unloaded += DanceTimeline_Unloaded;
+            this.IsVisibleChanged += DanceTimeline_IsVisibleChanged;
 
             this.Tools.Add(new DanceTimelineTrackTool(this));
             this.Tools.Add(new DanceTimelineZoomTool(this));
@@ -608,6 +609,20 @@ namespace Dance.Wpf
         private void DanceTimeline_Unloaded(object sender, RoutedEventArgs e)
         {
             CompositionTarget.Rendering -= CompositionTarget_Rendering;
+        }
+
+        /// <summary>
+        /// 可见性改变
+        /// </summary>
+        private void DanceTimeline_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
+            this.Cursor = Cursors.Arrow;
+
+            if (this.PART_Scale != null)
+            {
+                this.PART_Scale.IsHitTestVisible = true;
+            }
         }
 
         /// <summary>
