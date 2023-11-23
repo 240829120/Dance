@@ -99,9 +99,14 @@ namespace Dance.Wpf
             if (this.Element == null || this.Element.OwnerTimeline == null)
                 return;
 
+            if (this.Element.OwnerTimeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+                return;
+
+            e.Handled = true;
+
             this.MouseLeftButtonDownPoint = e.GetPosition(this.Element.OwnerTimeline);
             this.MouseLeftButtonDownTime = this.ResizeType == DanceTimelineElementResizeType.BeginTime ? this.Element.BeginTime : this.Element.EndTime;
-            e.Handled = true;
+
             this.CaptureMouse();
         }
 
@@ -111,6 +116,8 @@ namespace Dance.Wpf
         protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
         {
             base.OnMouseLeftButtonUp(e);
+
+            e.Handled = true;
 
             this.MouseLeftButtonDownPoint = null;
             this.MouseLeftButtonDownTime = null;
@@ -127,26 +134,33 @@ namespace Dance.Wpf
             if (this.Element == null || this.Element.OwnerTimeline == null || this.MouseLeftButtonDownPoint == null || this.MouseLeftButtonDownTime == null)
                 return;
 
+            if (this.Element.OwnerTimeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+                return;
+
+            e.Handled = true;
+
+            DanceTimelineResizeElementTool? resizeTool = this.Element.OwnerTimeline.GetTool<DanceTimelineResizeElementTool>();
+            if (resizeTool == null)
+                return;
+
             Point endPoint = e.GetPosition(this.Element.OwnerTimeline);
 
             double offset = endPoint.X - this.MouseLeftButtonDownPoint.Value.X;
             TimeSpan offsetTime = this.Element.OwnerTimeline.GetTimeSpanFromPixel(offset);
             TimeSpan destTime = this.MouseLeftButtonDownTime.Value + offsetTime;
 
+            DanceTimelineResizeElementInfo resizeInfo = new(this.Element, this, destTime);
+            if (!resizeTool.TryResizeElement(resizeInfo))
+                return;
+
             if (this.ResizeType == DanceTimelineElementResizeType.BeginTime)
             {
-                destTime = TimeSpan.FromSeconds(Math.Min(destTime.TotalSeconds, this.Element.EndTime.TotalSeconds - 1d));
-                destTime = this.Element.OwnerTimeline.GetEffectiveTimeSpan(destTime);
-
-                this.Element.BeginTime = destTime;
+                this.Element.BeginTime = resizeInfo.RealTime;
                 this.Element.OwnerTimeline.Update();
             }
-            else if (this.ResizeType == DanceTimelineElementResizeType.EndTime)
+            else
             {
-                destTime = TimeSpan.FromSeconds(Math.Max(destTime.TotalSeconds, this.Element.BeginTime.TotalSeconds + 1d));
-                destTime = this.Element.OwnerTimeline.GetEffectiveTimeSpan(destTime);
-
-                this.Element.EndTime = destTime;
+                this.Element.EndTime = resizeInfo.RealTime;
                 this.Element.OwnerTimeline.Update();
             }
         }

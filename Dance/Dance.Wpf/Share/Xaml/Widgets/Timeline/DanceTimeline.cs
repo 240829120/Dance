@@ -43,49 +43,12 @@ namespace Dance.Wpf
             this.Tools.Add(new DanceTimelineZoomTool(this));
             this.Tools.Add(new DanceTimelineMoveTool(this));
             this.Tools.Add(new DanceTimelineMoveElementTool(this));
+            this.Tools.Add(new DanceTimelineResizeElementTool(this));
             this.Tools.Add(new DanceTimelineFrameSelectTool(this));
         }
 
         // ==========================================================================================================================================
         // Field
-
-        // -----------------------------------------------------------------------------
-        // Const
-
-        /// <summary>
-        /// 默认Zoom为1时的1秒宽度
-        /// </summary>
-        public const double ONE_SECOND_DEFAULT_WIDTH = 1d;
-
-        /// <summary>
-        /// 最小缩放值
-        /// </summary>
-        public const double MIN_ZOOM = 1d;
-
-        /// <summary>
-        /// 最大缩放值
-        /// </summary>
-        public const double MAX_ZOOM = 100d;
-
-        /// <summary>
-        /// 刻度最小宽度
-        /// </summary>
-        public const double MIN_SCALE_WIDTH = 5d;
-
-        /// <summary>
-        /// 刻度间隔超过该值则绘制长刻度
-        /// </summary>
-        public const double MIN_LARGE_SCALE_WIDTH = 60d;
-
-        /// <summary>
-        /// 数字最小宽度
-        /// </summary>
-        public const double MIN_NUMBER_WIDTH = 30d;
-
-        /// <summary>
-        /// 字体
-        /// </summary>
-        public const string FONT_FAMILY = "Microsoft Yahei UI";
 
         // -----------------------------------------------------------------------------
         // PART
@@ -496,7 +459,7 @@ namespace Dance.Wpf
         /// <returns>像素</returns>
         internal double GetPixelFromTimeSpan(TimeSpan timeSpan)
         {
-            return timeSpan.TotalSeconds * ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
+            return timeSpan.TotalSeconds * DanceTimelineConstants.ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
         }
 
         /// <summary>
@@ -506,7 +469,7 @@ namespace Dance.Wpf
         /// <returns>时间间隔</returns>
         internal TimeSpan GetTimeSpanFromPixel(double pixel)
         {
-            return TimeSpan.FromSeconds(pixel / (ONE_SECOND_DEFAULT_WIDTH * this.Zoom));
+            return TimeSpan.FromSeconds(pixel / (DanceTimelineConstants.ONE_SECOND_DEFAULT_WIDTH * this.Zoom));
         }
 
         /// <summary>
@@ -549,7 +512,7 @@ namespace Dance.Wpf
                 return;
 
             this.PART_VerticalScrollBar.Maximum = this.Items.Count * this.TrackHeight;
-            this.PART_HorizontalScrollBar.Maximum = this.Duration.TotalSeconds * ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
+            this.PART_HorizontalScrollBar.Maximum = this.Duration.TotalSeconds * DanceTimelineConstants.ONE_SECOND_DEFAULT_WIDTH * this.Zoom;
             this.PART_HorizontalScrollBar.ViewportSize = this.PART_HorizontalScrollBar.Maximum * 0.1d;
             double left = this.PART_HorizontalScrollBar.Value - this.GetPixelFromTimeSpan(this.CurrentTime);
             this.PART_Progress.Margin = new Thickness(-left - this.ProgressWidth / 2d, 0, 0, 0);

@@ -32,7 +32,7 @@ namespace Dance.Wpf
                 return;
 
             double dest = this.Timeline.Zoom + (e.Delta > 0 ? 1 : -1);
-            if (dest < DanceTimeline.MIN_ZOOM || dest > DanceTimeline.MAX_ZOOM)
+            if (dest < DanceTimelineConstants.MIN_ZOOM || dest > DanceTimelineConstants.MAX_ZOOM)
                 return;
 
             this.Timeline.Zoom = dest;

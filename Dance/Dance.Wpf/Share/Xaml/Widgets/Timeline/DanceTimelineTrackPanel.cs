@@ -34,7 +34,7 @@ namespace Dance.Wpf
         /// </summary>
         protected override Size MeasureOverride(Size availableSize)
         {
-            if (this.OwnerTimeline == null || !this.IsVisible)
+            if (this.OwnerTimeline == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || !this.IsVisible)
                 return availableSize;
 
             foreach (UIElement item in this.Children)
@@ -61,7 +61,7 @@ namespace Dance.Wpf
         /// </summary>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            if (this.OwnerTimeline == null || !this.IsVisible)
+            if (this.OwnerTimeline == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || !this.IsVisible)
                 return finalSize;
 
             foreach (UIElement item in this.Children)

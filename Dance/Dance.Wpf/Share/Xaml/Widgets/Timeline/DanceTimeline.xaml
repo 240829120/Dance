@@ -1,12 +1,26 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib"
                     xmlns:dance="clr-namespace:Dance.Wpf">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Dance.Wpf;component/Themes/Styles/ScrollViewer.xaml"></ResourceDictionary>
     </ResourceDictionary.MergedDictionaries>
 
-    <dance:DanceDoubleGridLengthConverter x:Key="DanceDoubleGridLengthConverter"></dance:DanceDoubleGridLengthConverter>
+    <!-- 工具状态可见性转化器 -->
+    <dance:DanceMappingConverter x:Key="ToolStatusVisibilityConverter_MoveElement">
+        <dance:DanceMappingConverter.DefaultConvertValue>
+            <Visibility>Collapsed</Visibility>
+        </dance:DanceMappingConverter.DefaultConvertValue>
+        <dance:DanceMappingConverterItem>
+            <dance:DanceMappingConverterItem.From>
+                <dance:DanceTimelineToolStatus>MoveElement</dance:DanceTimelineToolStatus>
+            </dance:DanceMappingConverterItem.From>
+            <dance:DanceMappingConverterItem.To>
+                <Visibility>Visible</Visibility>
+            </dance:DanceMappingConverterItem.To>
+        </dance:DanceMappingConverterItem>
+    </dance:DanceMappingConverter>
 
     <!-- 元素改变开始时间结束时间 -->
     <Style TargetType="dance:DanceTimelineElementResize">
@@ -37,7 +51,6 @@
         <Setter Property="BorderBrush" Value="SkyBlue"></Setter>
         <Setter Property="IsSelected" Value="{Binding Path=IsSelected,Mode=TwoWay}"></Setter>
         <Setter Property="BorderThickness" Value="3"></Setter>
-        <!--<Setter Property="dance:DanceDragTrigger.DragBeginCommand" Value="{Binding DragBeginCommand,RelativeSource={RelativeSource Mode=Self}}"></Setter>-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineElement">
@@ -45,8 +58,10 @@
                         <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter></ContentPresenter>
                         </Border>
-                        <dance:DanceTimelineElementResize HorizontalAlignment="Left" ResizeType="BeginTime"></dance:DanceTimelineElementResize>
-                        <dance:DanceTimelineElementResize HorizontalAlignment="Right" ResizeType="EndTime"></dance:DanceTimelineElementResize>
+                        <dance:DanceTimelineElementResize HorizontalAlignment="Left" ResizeType="BeginTime"
+                                                          Visibility="{Binding Path=ToolStatus,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource ToolStatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
+                        <dance:DanceTimelineElementResize HorizontalAlignment="Right" ResizeType="EndTime"
+                                                          Visibility="{Binding Path=ToolStatus,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource ToolStatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

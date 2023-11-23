@@ -33,6 +33,9 @@ namespace Dance.Wpf
             timeline.MouseMove += MouseMove;
         }
 
+        // ===================================================================================================
+        // Field
+
         /// <summary>
         /// 开始坐标
         /// </summary>
@@ -43,6 +46,9 @@ namespace Dance.Wpf
         /// </summary>
         private double? BeginScrollX;
 
+        // ===================================================================================================
+        // Public Function
+
         /// <summary>
         /// 尝试移动元素
         /// </summary>
@@ -50,14 +56,68 @@ namespace Dance.Wpf
         /// <returns>是否可以移动</returns>
         public bool TryMoveElement(DanceTimelineMoveElementInfo moveInfo)
         {
-            if (!this.GetEffectiveMoveTimeSpan(moveInfo))
+            TimeSpan srcWidth = moveInfo.Element.EndTime - moveInfo.Element.BeginTime;
+            TimeSpan destWidth = moveInfo.WantEndTime - moveInfo.WantBeginTime;
+
+            if (srcWidth != destWidth || destWidth <= TimeSpan.Zero)
                 return false;
 
-            moveInfo.RealBeginTime = moveInfo.RealBeginTime;
-            moveInfo.RealEndTime = moveInfo.RealEndTime;
+            DanceTimelineTrackPanel? destPanel = moveInfo.DestTrack.GetVisualTreeDescendants<DanceTimelineTrackPanel>().FirstOrDefault();
+            if (destPanel == null)
+                return false;
+
+            if (moveInfo.WantBeginTime < TimeSpan.Zero)
+            {
+                moveInfo.RealBeginTime = TimeSpan.Zero;
+                moveInfo.RealEndTime = destWidth;
+            }
+            if (moveInfo.WantEndTime > this.Timeline.Duration)
+            {
+                moveInfo.RealEndTime = this.Timeline.Duration;
+                moveInfo.RealBeginTime = moveInfo.RealEndTime - destWidth;
+            }
+
+            foreach (DanceTimelineElement item in destPanel.Children)
+            {
+                if (item == moveInfo.Element)
+                    continue;
+
+                if (moveInfo.RealBeginTime <= item.EndTime && moveInfo.RealEndTime >= item.EndTime)
+                {
+                    moveInfo.RealBeginTime = item.EndTime;
+                    moveInfo.RealEndTime = moveInfo.RealBeginTime + destWidth;
+
+                    break;
+                }
+
+                if (moveInfo.RealEndTime >= item.BeginTime && moveInfo.RealBeginTime <= item.BeginTime)
+                {
+                    moveInfo.RealEndTime = item.BeginTime;
+                    moveInfo.RealBeginTime = moveInfo.RealEndTime - destWidth;
+
+                    break;
+                }
+            }
+
+            foreach (DanceTimelineElement item in destPanel.Children)
+            {
+                if (item == moveInfo.Element)
+                    continue;
+
+                if (!(moveInfo.RealEndTime <= item.BeginTime || moveInfo.RealBeginTime >= item.EndTime))
+                {
+                    return false;
+                }
+            }
+
+            if (moveInfo.RealBeginTime < TimeSpan.Zero || moveInfo.RealEndTime > this.Timeline.Duration)
+                return false;
 
             return true;
         }
+
+        // ===================================================================================================
+        // Private Function
 
         /// <summary>
         /// 键盘按下
@@ -67,7 +127,6 @@ namespace Dance.Wpf
             if (Keyboard.Modifiers == ModifierKeys.Alt)
             {
                 this.Timeline.ToolStatus = DanceTimelineToolStatus.MoveElement;
-                this.Timeline.Cursor = Cursors.ScrollWE;
             }
         }
 
@@ -163,74 +222,6 @@ namespace Dance.Wpf
             }
 
             this.Timeline.Update();
-        }
-
-
-        /// <summary>
-        /// 获取有效的时间移动
-        /// </summary>
-        /// <param name="moveInfo">移动信息</param>
-        /// <returns>是否可以移动</returns>
-        private bool GetEffectiveMoveTimeSpan(DanceTimelineMoveElementInfo moveInfo)
-        {
-            TimeSpan srcWidth = moveInfo.Element.EndTime - moveInfo.Element.BeginTime;
-            TimeSpan destWidth = moveInfo.WantEndTime - moveInfo.WantBeginTime;
-
-            if (srcWidth != destWidth || destWidth <= TimeSpan.Zero)
-                return false;
-
-            DanceTimelineTrackPanel? destPanel = moveInfo.DestTrack.GetVisualTreeDescendants<DanceTimelineTrackPanel>().FirstOrDefault();
-            if (destPanel == null)
-                return false;
-
-            if (moveInfo.WantBeginTime < TimeSpan.Zero)
-            {
-                moveInfo.RealBeginTime = TimeSpan.Zero;
-                moveInfo.RealEndTime = destWidth;
-            }
-            if (moveInfo.WantEndTime > this.Timeline.Duration)
-            {
-                moveInfo.RealEndTime = this.Timeline.Duration;
-                moveInfo.RealBeginTime = moveInfo.RealEndTime - destWidth;
-            }
-
-            foreach (DanceTimelineElement item in destPanel.Children)
-            {
-                if (item == moveInfo.Element)
-                    continue;
-
-                if (moveInfo.RealBeginTime <= item.EndTime && moveInfo.RealEndTime >= item.EndTime)
-                {
-                    moveInfo.RealBeginTime = item.EndTime;
-                    moveInfo.RealEndTime = moveInfo.RealBeginTime + destWidth;
-
-                    break;
-                }
-
-                if (moveInfo.RealEndTime >= item.BeginTime && moveInfo.RealBeginTime <= item.BeginTime)
-                {
-                    moveInfo.RealEndTime = item.BeginTime;
-                    moveInfo.RealBeginTime = moveInfo.RealEndTime - destWidth;
-
-                    break;
-                }
-            }
-
-            foreach (DanceTimelineElement item in destPanel.Children)
-            {
-                if (item == moveInfo.Element)
-                    continue;
-
-                if (!(moveInfo.RealEndTime <= item.BeginTime || moveInfo.RealBeginTime >= item.EndTime))
-                {
-                    return false;
-                }
-            }
-
-            if (moveInfo.RealBeginTime < TimeSpan.Zero || moveInfo.RealEndTime > this.Timeline.Duration)
-                return false;
-
-            return true;
         }
     }
 }

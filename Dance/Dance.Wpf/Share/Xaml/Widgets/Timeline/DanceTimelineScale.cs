@@ -121,7 +121,7 @@ namespace Dance.Wpf
             };
             context.EndX = context.BeginX + this.ActualWidth;
 
-            context.SecondWidth = DanceTimeline.ONE_SECOND_DEFAULT_WIDTH * this.OwnerTimeline.Zoom;
+            context.SecondWidth = DanceTimelineConstants.ONE_SECOND_DEFAULT_WIDTH * this.OwnerTimeline.Zoom;
             context.Millisecond100Width = 0.1d * context.SecondWidth;
             context.Second15Width = 15d * context.SecondWidth;
             context.MinuteWidth = 60d * context.SecondWidth;
@@ -169,7 +169,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleHour(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (context.HourWidth < DanceTimeline.MIN_SCALE_WIDTH)
+            if (context.HourWidth < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 15;
@@ -180,7 +180,7 @@ namespace Dance.Wpf
                 if (x < 0 || x > this.ActualWidth)
                     continue;
 
-                if (context.HourWidth > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                if (context.HourWidth > DanceTimelineConstants.MIN_LARGE_SCALE_WIDTH)
                 {
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
@@ -189,9 +189,9 @@ namespace Dance.Wpf
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
 
-                if (context.HourWidth > DanceTimeline.MIN_NUMBER_WIDTH)
+                if (context.HourWidth > DanceTimelineConstants.MIN_NUMBER_WIDTH)
                 {
-                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromHours(i):hh\\:mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimelineConstants.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
@@ -202,7 +202,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleMinute15(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (context.Minute15Width < DanceTimeline.MIN_SCALE_WIDTH)
+            if (context.Minute15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 12;
@@ -216,7 +216,7 @@ namespace Dance.Wpf
                 if (x < 0 || x > this.ActualWidth)
                     continue;
 
-                if (context.Minute15Width > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                if (context.Minute15Width > DanceTimelineConstants.MIN_LARGE_SCALE_WIDTH)
                 {
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
@@ -225,9 +225,9 @@ namespace Dance.Wpf
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
 
-                if (context.Minute15Width > DanceTimeline.MIN_NUMBER_WIDTH)
+                if (context.Minute15Width > DanceTimelineConstants.MIN_NUMBER_WIDTH)
                 {
-                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimelineConstants.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
@@ -238,7 +238,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleMinute(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (context.Minute15Width < DanceTimeline.MIN_SCALE_WIDTH)
+            if (context.Minute15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 10;
@@ -252,7 +252,7 @@ namespace Dance.Wpf
                 if (x < 0 || x > this.ActualWidth)
                     continue;
 
-                if (context.Minute15Width > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                if (context.Minute15Width > DanceTimelineConstants.MIN_LARGE_SCALE_WIDTH)
                 {
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
@@ -261,9 +261,9 @@ namespace Dance.Wpf
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
 
-                if (context.Minute15Width > DanceTimeline.MIN_NUMBER_WIDTH)
+                if (context.Minute15Width > DanceTimelineConstants.MIN_NUMBER_WIDTH)
                 {
-                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromMinutes(i):mm\\:ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimelineConstants.FONT_FAMILY), 12, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
@@ -274,7 +274,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleSecond15(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (context.Second15Width < DanceTimeline.MIN_SCALE_WIDTH)
+            if (context.Second15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 8;
@@ -288,7 +288,7 @@ namespace Dance.Wpf
                 if (x < 0 || x > this.ActualWidth)
                     continue;
 
-                if (context.Second15Width > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                if (context.Second15Width > DanceTimelineConstants.MIN_LARGE_SCALE_WIDTH)
                 {
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
@@ -297,9 +297,9 @@ namespace Dance.Wpf
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
 
-                if (context.Second15Width > DanceTimeline.MIN_NUMBER_WIDTH)
+                if (context.Second15Width > DanceTimelineConstants.MIN_NUMBER_WIDTH)
                 {
-                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimelineConstants.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
@@ -310,7 +310,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleSecond(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (context.SecondWidth < DanceTimeline.MIN_SCALE_WIDTH)
+            if (context.SecondWidth < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 8;
@@ -324,7 +324,7 @@ namespace Dance.Wpf
                 if (x < 0 || x > this.ActualWidth)
                     continue;
 
-                if (context.SecondWidth > DanceTimeline.MIN_LARGE_SCALE_WIDTH)
+                if (context.SecondWidth > DanceTimelineConstants.MIN_LARGE_SCALE_WIDTH)
                 {
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.OwnerTimeline.ActualHeight));
                 }
@@ -333,9 +333,9 @@ namespace Dance.Wpf
                     drawingContext.DrawSnappedLinesBetweenPoints(this.Pen, 1, new Point(x, this.ActualHeight - lengthOffset), new Point(x, this.ActualHeight));
                 }
 
-                if (context.SecondWidth > DanceTimeline.MIN_NUMBER_WIDTH)
+                if (context.SecondWidth > DanceTimelineConstants.MIN_NUMBER_WIDTH)
                 {
-                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimeline.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
+                    FormattedText txt = new($"{TimeSpan.FromSeconds(i):ss}", Thread.CurrentThread.CurrentUICulture, FlowDirection.LeftToRight, new Typeface(DanceTimelineConstants.FONT_FAMILY), 10, this.Brush, DanceXamlExpansion.DpiScale.DpiScaleX);
                     drawingContext.DrawText(txt, new Point(x - txt.Width / 2d, this.ActualHeight - lengthOffset - txt.Height - 5));
                 }
             }
@@ -346,7 +346,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleMillisecond100(DrawingContext drawingContext, DanceTimelineScaleDrawContext context)
         {
-            if (context.Millisecond100Width < DanceTimeline.MIN_SCALE_WIDTH)
+            if (context.Millisecond100Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 5;
