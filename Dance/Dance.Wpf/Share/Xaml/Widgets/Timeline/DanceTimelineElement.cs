@@ -47,11 +47,6 @@ namespace Dance.Wpf
         /// </summary>
         private Point? MouseLeftButtonDownPoint;
 
-        /// <summary>
-        /// 元素移动缓存
-        /// </summary>
-        private readonly Dictionary<DanceTimelineElement, Tuple<TimeSpan, TimeSpan>> ElementMoveCacheDic = new();
-
         // ==========================================================================================================================================
         // Property
 
@@ -127,90 +122,88 @@ namespace Dance.Wpf
             this.OwnerTrackPanel = this.GetVisualTreeParent<DanceTimelineTrackPanel>();
         }
 
-        /// <summary>
-        /// 鼠标左键点击
-        /// </summary>
-        protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonDown(e);
+        ///// <summary>
+        ///// 鼠标左键点击
+        ///// </summary>
+        //protected override void OnMouseLeftButtonDown(MouseButtonEventArgs e)
+        //{
+        //    base.OnMouseLeftButtonDown(e);
 
-            e.Handled = true;
+        //    e.Handled = true;
 
-            if (this.OwnerTimeline == null)
-                return;
+        //    if (this.OwnerTimeline == null)
+        //        return;
 
-            this.MouseLeftButtonDownPoint = e.GetPosition(this.OwnerTimeline);
+        //    this.MouseLeftButtonDownPoint = e.GetPosition(this.OwnerTimeline);
 
-            if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
-            {
-                this.OwnerTimeline.SelectElement(this);
-            }
-            else
-            {
-                if (!Keyboard.IsKeyDown(Key.LeftAlt) && !Keyboard.IsKeyDown(Key.RightAlt))
-                {
-                    this.OwnerTimeline.ClearSelectElement();
-                }
-                this.OwnerTimeline.SelectElement(this);
-            }
+        //    if (Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl))
+        //    {
+        //        this.OwnerTimeline.SelectElement(this);
+        //    }
+        //    else
+        //    {
+        //        if (!Keyboard.IsKeyDown(Key.LeftAlt) && !Keyboard.IsKeyDown(Key.RightAlt))
+        //        {
+        //            this.OwnerTimeline.ClearSelectElement();
+        //        }
+        //        this.OwnerTimeline.SelectElement(this);
+        //    }
 
-            this.OwnerTimeline.InvokeElementSelectionChanged();
+        //    this.OwnerTimeline.InvokeElementSelectionChanged();
 
-            this.ElementMoveCacheDic.Clear();
-            foreach (DanceTimelineElement item in this.OwnerTimeline.GetSelectedElements())
-            {
-                this.ElementMoveCacheDic[item] = new Tuple<TimeSpan, TimeSpan>(item.BeginTime, item.EndTime);
-            }
+        //    this.ElementMoveCacheDic.Clear();
+        //    foreach (DanceTimelineElement item in this.OwnerTimeline.GetSelectedElements())
+        //    {
+        //        this.ElementMoveCacheDic[item] = new Tuple<TimeSpan, TimeSpan>(item.BeginTime, item.EndTime);
+        //    }
 
-            this.CaptureMouse();
-        }
+        //    this.CaptureMouse();
+        //}
 
-        /// <summary>
-        /// 鼠标抬起
-        /// </summary>
-        protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
-        {
-            base.OnMouseLeftButtonUp(e);
+        ///// <summary>
+        ///// 鼠标抬起
+        ///// </summary>
+        //protected override void OnMouseLeftButtonUp(MouseButtonEventArgs e)
+        //{
+        //    base.OnMouseLeftButtonUp(e);
 
-            e.Handled = true;
+        //    e.Handled = true;
 
-            this.MouseLeftButtonDownPoint = null;
-            this.ElementMoveCacheDic.Clear();
-            this.ReleaseMouseCapture();
-        }
+        //    this.ReleaseMouseCapture();
+        //}
 
-        /// <summary>
-        /// 鼠标移动
-        /// </summary>
-        protected override void OnMouseMove(MouseEventArgs e)
-        {
-            base.OnMouseMove(e);
+        ///// <summary>
+        ///// 鼠标移动
+        ///// </summary>
+        //protected override void OnMouseMove(MouseEventArgs e)
+        //{
+        //    base.OnMouseMove(e);
 
-            if (this.OwnerTimeline == null || this.OwnerTrack == null || this.OwnerTrackPanel == null)
-                return;
+        //    if (this.OwnerTimeline == null || this.OwnerTrack == null || this.OwnerTrackPanel == null)
+        //        return;
 
-            if (this.MouseLeftButtonDownPoint == null)
-                return;
+        //    if (this.MouseLeftButtonDownPoint == null)
+        //        return;
 
-            if (!Keyboard.IsKeyDown(Key.LeftAlt) && !Keyboard.IsKeyDown(Key.RightAlt))
-                return;
+        //    if (!Keyboard.IsKeyDown(Key.LeftAlt) && !Keyboard.IsKeyDown(Key.RightAlt))
+        //        return;
 
-            e.Handled = true;
+        //    e.Handled = true;
 
-            if (this.ElementMoveCacheDic.Count == 0)
-                return;
+        //    if (this.ElementMoveCacheDic.Count == 0)
+        //        return;
 
-            Point endPoint = e.GetPosition(this.OwnerTimeline);
-            double offset = endPoint.X - this.MouseLeftButtonDownPoint.Value.X;
-            TimeSpan offsetTime = this.OwnerTimeline.GetTimeSpanFromPixel(offset);
+        //    Point endPoint = e.GetPosition(this.OwnerTimeline);
+        //    double offset = endPoint.X - this.MouseLeftButtonDownPoint.Value.X;
+        //    TimeSpan offsetTime = this.OwnerTimeline.GetTimeSpanFromPixel(offset);
 
-            foreach (var kv in this.ElementMoveCacheDic)
-            {
-                kv.Key.TryMove(offsetTime, kv.Value.Item1, kv.Value.Item2);
-            }
+        //    foreach (var kv in this.ElementMoveCacheDic)
+        //    {
+        //        kv.Key.TryMove(offsetTime, kv.Value.Item1, kv.Value.Item2);
+        //    }
 
-            this.OwnerTimeline.Update();
-        }
+        //    this.OwnerTimeline.Update();
+        //}
 
 
         // ==========================================================================================================================================

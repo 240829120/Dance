@@ -34,28 +34,6 @@ namespace Dance.Wpf
         internal DanceTimelineTrackHeaderPanel? OwnerPanel;
 
         // ==========================================================================================================================================
-        // Property
-
-        #region IsSelected -- 是否被选中
-
-        /// <summary>
-        /// 是否被选中
-        /// </summary>
-        public bool IsSelected
-        {
-            get { return (bool)GetValue(IsSelectedProperty); }
-            set { SetValue(IsSelectedProperty, value); }
-        }
-
-        /// <summary>
-        /// 是否被选中
-        /// </summary>
-        public static readonly DependencyProperty IsSelectedProperty =
-            DependencyProperty.Register("IsSelected", typeof(bool), typeof(DanceTimelineTrack), new PropertyMetadata(false));
-
-        #endregion
-
-        // ==========================================================================================================================================
         // Override
 
         /// <summary>

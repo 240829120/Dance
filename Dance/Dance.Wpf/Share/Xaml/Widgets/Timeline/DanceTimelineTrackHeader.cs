@@ -78,8 +78,12 @@ namespace Dance.Wpf
             if (this.OwnerTimeline == null || this.OwnerPanel == null)
                 return;
 
+            DanceTimelineTrackTool? tool = this.OwnerTimeline.GetTool<DanceTimelineTrackTool>();
+            if (tool == null)
+                return;
+
             int index = this.OwnerPanel.Children.IndexOf(this);
-            this.OwnerTimeline.SelectTrack(index);
+            tool.SelectTrack(index);
         }
     }
 }

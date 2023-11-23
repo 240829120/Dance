@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 
@@ -26,7 +27,7 @@ namespace Dance.Wpf
     [TemplatePart(Name = nameof(PART_TrackItems), Type = typeof(ItemsPresenter))]
     [TemplatePart(Name = nameof(PART_Progress), Type = typeof(DanceTimelineProgress))]
     [TemplatePart(Name = nameof(PART_FrameSelect), Type = typeof(DanceFrameSelect))]
-    public partial class DanceTimeline : ItemsControl
+    public class DanceTimeline : ItemsControl
     {
         static DanceTimeline()
         {
@@ -37,10 +38,19 @@ namespace Dance.Wpf
         {
             this.Loaded += DanceTimeline_Loaded;
             this.Unloaded += DanceTimeline_Unloaded;
+
+            this.Tools.Add(new DanceTimelineTrackTool(this));
+            this.Tools.Add(new DanceTimelineZoomTool(this));
+            this.Tools.Add(new DanceTimelineMoveTool(this));
+            this.Tools.Add(new DanceTimelineFrameSelectTool(this));
+            this.Tools.Add(new DanceTimelineElementMoveTool(this));
         }
 
         // ==========================================================================================================================================
         // Field
+
+        // -----------------------------------------------------------------------------
+        // Const
 
         /// <summary>
         /// 默认Zoom为1时的1秒宽度
@@ -77,52 +87,59 @@ namespace Dance.Wpf
         /// </summary>
         public const string FONT_FAMILY = "Microsoft Yahei UI";
 
+        // -----------------------------------------------------------------------------
+        // PART
+
         /// <summary>
         /// 垂直滚动条
         /// </summary>
-        [NotNull]
-        internal ScrollBar? PART_VerticalScrollBar = null;
+        internal ScrollBar? PART_VerticalScrollBar;
 
         /// <summary>
         /// 水平滚动条
         /// </summary>
-        [NotNull]
-        internal ScrollBar? PART_HorizontalScrollBar = null;
+        internal ScrollBar? PART_HorizontalScrollBar;
 
         /// <summary>
         /// 刻度
         /// </summary>
-        [NotNull]
-        internal DanceTimelineScale? PART_Scale = null;
+        internal DanceTimelineScale? PART_Scale;
 
         /// <summary>
         /// 进度
         /// </summary>
-        [NotNull]
-        internal DanceTimelineProgress? PART_Progress = null;
+        internal DanceTimelineProgress? PART_Progress;
 
         /// <summary>
         /// 头部集合
         /// </summary>
-        [NotNull]
-        internal DanceTimelineTrackHeaderItems? PART_HeaderItems = null;
+        internal DanceTimelineTrackHeaderItems? PART_HeaderItems;
 
         /// <summary>
         /// 轨道集合
         /// </summary>
-        [NotNull]
-        internal ItemsPresenter? PART_TrackItems = null;
+        internal ItemsPresenter? PART_TrackItems;
 
         /// <summary>
         /// 框选控件
         /// </summary>
-        [NotNull]
-        internal DanceFrameSelect? PART_FrameSelect = null;
+        internal DanceFrameSelect? PART_FrameSelect;
+
+        // -----------------------------------------------------------------------------
+        // Tool
 
         /// <summary>
-        /// 当前选中的元素
+        /// 工具状态
         /// </summary>
-        internal readonly List<DanceTimelineElement> SelectedElements = new();
+        internal DanceTimelineToolStatus ToolStatus = DanceTimelineToolStatus.FrameSelect;
+
+        /// <summary>
+        /// 工具集合
+        /// </summary>
+        internal List<DanceTimelineToolBase> Tools = new();
+
+        // -----------------------------------------------------------------------------
+        // Field
 
         /// <summary>
         /// 上一次更新时间
@@ -434,11 +451,29 @@ namespace Dance.Wpf
         /// <returns>选中的元素集合</returns>
         public List<DanceTimelineElement> GetSelectedElements()
         {
-            return this.SelectedElements.ToList();
+            List<DanceTimelineElement> result = new();
+
+            DanceTimelineFrameSelectTool? tool = this.GetTool<DanceTimelineFrameSelectTool>();
+            if (tool == null)
+                return result;
+
+            result.AddRange(tool.Selection.Select(p => p.Element));
+
+            return result;
         }
 
         // ==========================================================================================================================================
         // Internal Function
+
+        /// <summary>
+        /// 获取工具
+        /// </summary>
+        /// <typeparam name="T">工具类型</typeparam>
+        /// <returns>工具</returns>
+        internal T? GetTool<T>() where T : DanceTimelineToolBase
+        {
+            return this.Tools.FirstOrDefault(p => p is T) as T;
+        }
 
         /// <summary>
         /// 根据时间获取像素
@@ -475,79 +510,12 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 选择轨道
+        /// 触发轨道选择改变事件
         /// </summary>
-        /// <param name="index">轨道索引</param>
-        internal void SelectTrack(int index)
+        /// <param name="selectedTrack">当前选中的轨道</param>
+        internal void InvokeTrackSelectionChanged(DanceTimelineTrack? selectedTrack)
         {
-            if (this.PART_HeaderItems == null || this.PART_TrackItems == null)
-                return;
-
-            DanceTimelineTrack? selectedTrack = null;
-
-            DanceTimelineTrackHeaderPanel? headerPanel = this.PART_HeaderItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
-            if (headerPanel != null)
-            {
-                int i = 0;
-                foreach (DanceTimelineTrackHeader item in headerPanel.Children)
-                {
-                    item.IsSelected = index == i++;
-                }
-            }
-
-            DanceTimelineTrackHeaderPanel? trackPanel = this.PART_TrackItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
-            if (trackPanel != null)
-            {
-                int i = 0;
-                foreach (DanceTimelineTrack item in trackPanel.Children)
-                {
-                    item.IsSelected = index == i++;
-                    if (item.IsSelected)
-                    {
-                        selectedTrack = item;
-                    }
-                }
-            }
-
             this.TrackSelectionChanged?.Invoke(this, new DanceTimelineTrackSelectionChangedEventArgs(this, selectedTrack));
-        }
-
-        /// <summary>
-        /// 选中元素
-        /// </summary>
-        /// <param name="element">待选中元素项</param>
-        internal void SelectElement(DanceTimelineElement element)
-        {
-            lock (this.SelectedElements)
-            {
-                element.IsSelected = true;
-                this.SelectedElements.Add(element);
-            }
-        }
-
-        /// <summary>
-        /// 选中元素
-        /// </summary>
-        /// <param name="elements">待选中元素项</param>
-        internal void SelectElement(List<DanceTimelineElement> elements)
-        {
-            lock (this.SelectedElements)
-            {
-                elements.ForEach(p => p.IsSelected = true);
-                this.SelectedElements.AddRange(elements);
-            }
-        }
-
-        /// <summary>
-        /// 清理选中的元素
-        /// </summary>
-        internal void ClearSelectElement()
-        {
-            lock (this.SelectedElements)
-            {
-                this.SelectedElements.ForEach(p => p.IsSelected = false);
-                this.SelectedElements.Clear();
-            }
         }
 
         /// <summary>
@@ -555,7 +523,7 @@ namespace Dance.Wpf
         /// </summary>
         internal void InvokeElementSelectionChanged()
         {
-            this.ElementSelectionChanged?.Invoke(this, new DanceTimelineElementSelectionChangedEventArgs(this, this.SelectedElements.ToList()));
+            this.ElementSelectionChanged?.Invoke(this, new DanceTimelineElementSelectionChangedEventArgs(this, this.GetSelectedElements()));
         }
 
         /// <summary>
@@ -575,6 +543,51 @@ namespace Dance.Wpf
             this.PART_Scale.InvalidateVisual();
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackPanel>(this)?.ForEach(p => p.InvalidateVisual());
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>(this)?.ForEach(p => p.InvalidateVisual());
+        }
+
+        // ==========================================================================================================================================
+        // Override
+
+        /// <summary>
+        /// 鼠标按下
+        /// </summary>
+        protected override void OnMouseDown(MouseButtonEventArgs e)
+        {
+            this.Focus();
+
+            base.OnMouseDown(e);
+        }
+
+        /// <summary>
+        /// 鼠标抬起
+        /// </summary>
+        protected override void OnMouseUp(MouseButtonEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            this.ReleaseMouseCapture();
+        }
+
+        /// <summary>
+        /// 按键抬起
+        /// </summary>
+        protected override void OnKeyUp(KeyEventArgs e)
+        {
+            base.OnKeyUp(e);
+
+            this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
+            this.Cursor = Cursors.Arrow;
+        }
+
+        /// <summary>
+        /// 失去焦点
+        /// </summary>
+        protected override void OnLostFocus(RoutedEventArgs e)
+        {
+            base.OnLostFocus(e);
+
+            this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
+            this.Cursor = Cursors.Arrow;
         }
 
         // ==========================================================================================================================================
