@@ -19,22 +19,8 @@ namespace Dance.Wpf
         /// <param name="timeline">时间线</param>
         public DanceTimelineZoomTool(DanceTimeline timeline) : base(timeline)
         {
-            timeline.KeyDown -= KeyDown;
-            timeline.KeyDown += KeyDown;
-
             timeline.MouseWheel -= MouseWheel;
             timeline.MouseWheel += MouseWheel;
-        }
-
-        /// <summary>
-        /// 键盘按下
-        /// </summary>
-        private void KeyDown(object sender, KeyEventArgs e)
-        {
-            if (Keyboard.Modifiers != ModifierKeys.Control)
-                return;
-
-            this.Timeline.ToolStatus = DanceTimelineToolStatus.Zoom;
         }
 
         /// <summary>
@@ -42,7 +28,7 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseWheel(object sender, MouseWheelEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.Zoom)
+            if (Keyboard.Modifiers != ModifierKeys.Control)
                 return;
 
             double dest = this.Timeline.Zoom + (e.Delta > 0 ? 1 : -1);

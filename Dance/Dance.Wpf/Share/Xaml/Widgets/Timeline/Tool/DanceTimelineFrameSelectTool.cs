@@ -64,6 +64,21 @@ namespace Dance.Wpf
         }
 
         /// <summary>
+        /// 缓存当前时间
+        /// </summary>
+        public void CacheCurrentTime()
+        {
+            lock (this.Selection)
+            {
+                this.Selection.ForEach(p =>
+                {
+                    p.SelectedBeginTime = p.Element.BeginTime;
+                    p.SelectedEndTime = p.Element.EndTime;
+                });
+            }
+        }
+
+        /// <summary>
         /// 鼠标左键按下
         /// </summary>
         private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

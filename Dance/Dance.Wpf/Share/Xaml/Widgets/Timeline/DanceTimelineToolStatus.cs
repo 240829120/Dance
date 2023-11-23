@@ -17,18 +17,13 @@ namespace Dance.Wpf
         FrameSelect,
 
         /// <summary>
-        /// 缩放
-        /// </summary>
-        Zoom,
-
-        /// <summary>
         /// 移动
         /// </summary>
         Move,
 
         /// <summary>
-        /// 更新元素
+        /// 移动元素
         /// </summary>
-        UpdateElement
+        MoveElement
     }
 }

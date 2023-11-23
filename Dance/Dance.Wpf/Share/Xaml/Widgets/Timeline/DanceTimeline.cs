@@ -42,8 +42,8 @@ namespace Dance.Wpf
             this.Tools.Add(new DanceTimelineTrackTool(this));
             this.Tools.Add(new DanceTimelineZoomTool(this));
             this.Tools.Add(new DanceTimelineMoveTool(this));
+            this.Tools.Add(new DanceTimelineMoveElementTool(this));
             this.Tools.Add(new DanceTimelineFrameSelectTool(this));
-            this.Tools.Add(new DanceTimelineElementMoveTool(this));
         }
 
         // ==========================================================================================================================================
@@ -127,11 +127,6 @@ namespace Dance.Wpf
 
         // -----------------------------------------------------------------------------
         // Tool
-
-        /// <summary>
-        /// 工具状态
-        /// </summary>
-        internal DanceTimelineToolStatus ToolStatus = DanceTimelineToolStatus.FrameSelect;
 
         /// <summary>
         /// 工具集合
@@ -375,6 +370,25 @@ namespace Dance.Wpf
         /// </summary>
         public static readonly DependencyProperty IsFollowProgressProperty =
             DependencyProperty.Register("IsFollowProgress", typeof(bool), typeof(DanceTimeline), new PropertyMetadata(false));
+
+        #endregion
+
+        #region ToolStatus -- 工具状态
+
+        /// <summary>
+        /// 工具状态
+        /// </summary>
+        public DanceTimelineToolStatus ToolStatus
+        {
+            get { return (DanceTimelineToolStatus)GetValue(ToolStatusProperty); }
+            set { SetValue(ToolStatusProperty, value); }
+        }
+
+        /// <summary>
+        /// 工具状态
+        /// </summary>
+        public static readonly DependencyProperty ToolStatusProperty =
+            DependencyProperty.Register("ToolStatus", typeof(DanceTimelineToolStatus), typeof(DanceTimeline), new PropertyMetadata(DanceTimelineToolStatus.FrameSelect));
 
         #endregion
 
