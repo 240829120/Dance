@@ -31,11 +31,22 @@ namespace Dance.Wpf
             if (Keyboard.Modifiers != ModifierKeys.Control)
                 return;
 
+            if (this.Timeline.PART_HorizontalScrollBar == null || this.Timeline.PART_FrameSelect == null)
+                return;
+
             double dest = this.Timeline.Zoom + (e.Delta > 0 ? 1 : -1);
             if (dest < DanceTimelineConstants.MIN_ZOOM || dest > DanceTimelineConstants.MAX_ZOOM)
                 return;
 
+            double centerX = this.Timeline.PART_HorizontalScrollBar.Value + this.Timeline.PART_FrameSelect.ActualWidth / 2d;
+            TimeSpan centerTime = this.Timeline.GetTimeSpanFromPixel(centerX);
+
             this.Timeline.Zoom = dest;
+
+            double destCenterX = this.Timeline.GetPixelFromTimeSpan(centerTime);
+            double scrollX = destCenterX - this.Timeline.PART_FrameSelect.ActualWidth / 2d;
+
+            this.Timeline.PART_HorizontalScrollBar.Value = Math.Max(0, scrollX);
         }
     }
 }
