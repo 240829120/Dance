@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
 {
@@ -30,6 +31,20 @@ namespace Dance.Wpf
 
             timeline.MouseMove -= MouseMove;
             timeline.MouseMove += MouseMove;
+        }
+
+        /// <summary>
+        /// 销毁
+        /// </summary>
+        protected override void Destroy()
+        {
+            if (this.Timeline == null)
+                return;
+
+            this.Timeline.KeyDown -= KeyDown;
+            this.Timeline.MouseLeftButtonDown += MouseLeftButtonDown;
+            this.Timeline.MouseLeftButtonUp -= MouseLeftButtonUp;
+            this.Timeline.MouseMove -= MouseMove;
         }
 
         /// <summary>

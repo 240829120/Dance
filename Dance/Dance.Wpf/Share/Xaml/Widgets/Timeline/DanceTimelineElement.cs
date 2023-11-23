@@ -2,6 +2,7 @@
 using log4net;
 using Microsoft.VisualBasic.Logging;
 using Newtonsoft.Json;
+using SharpVectors.Dom;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -41,11 +42,6 @@ namespace Dance.Wpf
         /// 所属轨道容器
         /// </summary>
         internal DanceTimelineTrackPanel? OwnerTrackPanel;
-
-        /// <summary>
-        /// 鼠标左键点击坐标
-        /// </summary>
-        private Point? MouseLeftButtonDownPoint;
 
         // ==========================================================================================================================================
         // Property
@@ -120,6 +116,25 @@ namespace Dance.Wpf
             this.OwnerTimeline = this.GetVisualTreeParent<DanceTimeline>();
             this.OwnerTrack = this.GetVisualTreeParent<DanceTimelineTrack>();
             this.OwnerTrackPanel = this.GetVisualTreeParent<DanceTimelineTrackPanel>();
+        }
+
+        /// <summary>
+        /// 鼠标移动
+        /// </summary>
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (e.LeftButton != MouseButtonState.Pressed)
+                return;
+
+            if (this.OwnerTimeline == null || this.OwnerTimeline.ToolStatus != DanceTimelineToolStatus.CopyMoveElement)
+                return;
+
+            if (this.OwnerTimeline.IsPlaying)
+                return;
+
+            DragDrop.DoDragDrop(this, this, DragDropEffects.Copy);
         }
     }
 }

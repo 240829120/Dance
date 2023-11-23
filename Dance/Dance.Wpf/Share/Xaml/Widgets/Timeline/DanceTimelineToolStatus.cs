@@ -24,6 +24,11 @@ namespace Dance.Wpf
         /// <summary>
         /// 移动元素
         /// </summary>
-        MoveElement
+        MoveElement,
+
+        /// <summary>
+        /// 拷贝移动元素
+        /// </summary>
+        CopyMoveElement
     }
 }

@@ -33,6 +33,20 @@ namespace Dance.Wpf
             timeline.MouseMove += MouseMove;
         }
 
+        /// <summary>
+        /// 销毁
+        /// </summary>
+        protected override void Destroy()
+        {
+            if (this.Timeline == null)
+                return;
+
+            this.Timeline.KeyDown -= KeyDown;
+            this.Timeline.MouseLeftButtonDown += MouseLeftButtonDown;
+            this.Timeline.MouseLeftButtonUp -= MouseLeftButtonUp;
+            this.Timeline.MouseMove -= MouseMove;
+        }
+
         // ===================================================================================================
         // Field
 

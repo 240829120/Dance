@@ -24,6 +24,17 @@ namespace Dance.Wpf
         }
 
         /// <summary>
+        /// 销毁
+        /// </summary>
+        protected override void Destroy()
+        {
+            if (this.Timeline == null)
+                return;
+
+            this.Timeline.MouseWheel -= MouseWheel;
+        }
+
+        /// <summary>
         /// 鼠标滚轮滚动
         /// </summary>
         private void MouseWheel(object sender, MouseWheelEventArgs e)

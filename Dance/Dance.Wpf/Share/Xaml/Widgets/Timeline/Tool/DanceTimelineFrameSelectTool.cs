@@ -30,6 +30,19 @@ namespace Dance.Wpf
         }
 
         /// <summary>
+        /// 销毁
+        /// </summary>
+        protected override void Destroy()
+        {
+            if (this.Timeline == null)
+                return;
+
+            this.Timeline.MouseLeftButtonDown += MouseLeftButtonDown;
+            this.Timeline.MouseLeftButtonUp -= MouseLeftButtonUp;
+            this.Timeline.MouseMove -= MouseMove;
+        }
+
+        /// <summary>
         /// 开始坐标点
         /// </summary>
         private Point? BeginPoint;

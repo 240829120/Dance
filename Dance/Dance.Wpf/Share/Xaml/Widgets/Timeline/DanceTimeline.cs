@@ -45,6 +45,7 @@ namespace Dance.Wpf
             this.Tools.Add(new DanceTimelineMoveElementTool(this));
             this.Tools.Add(new DanceTimelineResizeElementTool(this));
             this.Tools.Add(new DanceTimelineFrameSelectTool(this));
+            this.Tools.Add(new DanceTimelineCopyMoveTool(this));
         }
 
         // ==========================================================================================================================================
@@ -439,18 +440,28 @@ namespace Dance.Wpf
             return result;
         }
 
-        // ==========================================================================================================================================
-        // Internal Function
-
         /// <summary>
         /// 获取工具
         /// </summary>
         /// <typeparam name="T">工具类型</typeparam>
         /// <returns>工具</returns>
-        internal T? GetTool<T>() where T : DanceTimelineToolBase
+        public T? GetTool<T>() where T : DanceTimelineToolBase
         {
             return this.Tools.FirstOrDefault(p => p is T) as T;
         }
+
+        /// <summary>
+        /// 移除工具
+        /// </summary>
+        /// <param name="tool">工具</param>
+        public void RemoveTool(DanceTimelineToolBase tool)
+        {
+            tool.Dispose();
+            this.Tools.Remove(tool);
+        }
+
+        // ==========================================================================================================================================
+        // Internal Function
 
         /// <summary>
         /// 根据时间获取像素
@@ -554,6 +565,11 @@ namespace Dance.Wpf
 
             this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
+
+            if (this.PART_Scale != null)
+            {
+                this.PART_Scale.IsHitTestVisible = true;
+            }
         }
 
         /// <summary>
@@ -565,6 +581,11 @@ namespace Dance.Wpf
 
             this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
+
+            if (this.PART_Scale != null)
+            {
+                this.PART_Scale.IsHitTestVisible = true;
+            }
         }
 
         // ==========================================================================================================================================

@@ -11,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线工具
     /// </summary>
-    public abstract class DanceTimelineToolBase
+    public abstract class DanceTimelineToolBase : DanceObject
     {
         /// <summary>
         /// 时间线工具

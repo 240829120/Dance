@@ -73,12 +73,19 @@
         </Style.Triggers>
     </Style>
 
+    <!-- 轨道高亮 -->
+    <Style TargetType="dance:DanceTimelineTrackHighlight">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Brush" Value="#44FF0000"></Setter>
+    </Style>
+
     <!-- 轨道 -->
     <Style TargetType="dance:DanceTimelineTrack">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
         <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"></Setter>
         <Setter Property="ItemsSource" Value="{Binding Path=Items}"></Setter>
         <Setter Property="ItemTemplate" Value="{Binding Path=ElementTemplate,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor}}"></Setter>
+        <Setter Property="AllowDrop" Value="True"></Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>
@@ -89,9 +96,12 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineTrack">
-                    <Border BorderThickness="0" Padding="0,0,0,1" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                    <Border BorderThickness="0" Padding="0,0,0,5" UseLayoutRounding="True" SnapsToDevicePixels="True">
                         <Border Background="{TemplateBinding Background}" BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <ItemsPresenter></ItemsPresenter>
+                            <Grid>
+                                <ItemsPresenter></ItemsPresenter>
+                                <dance:DanceTimelineTrackHighlight x:Name="PART_Highlight" IsHitTestVisible="False"></dance:DanceTimelineTrackHighlight>
+                            </Grid>
                         </Border>
                     </Border>
                 </ControlTemplate>
@@ -107,8 +117,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineTrackHeader">
-                    <Border BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                        <Border Background="{TemplateBinding Background}" BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Margin="0,0,0,1">
+                    <Border BorderThickness="0" Padding="0,0,0,5" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                        <Border Background="{TemplateBinding Background}" BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
                             <ContentPresenter ></ContentPresenter>
                         </Border>
                     </Border>
