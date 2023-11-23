@@ -152,8 +152,10 @@ namespace Dance.WpfTest
         #endregion
     }
 
-    public class TimelineTrackModel : DanceModel
+    public class TimelineTrackModel : DanceModel, IDanceTimelineTrack
     {
+        public string PART_DanceObjectType => this.GetType().AssemblyQualifiedName ?? string.Empty;
+
         public string Name { get; set; }
 
         #region IsSelected 
@@ -168,7 +170,7 @@ namespace Dance.WpfTest
 
         #endregion
 
-        public IList Items { get; } = new ObservableCollection<TimelineTrackItemModel>();
+        public IList<IDanceTimelineTrackElement> Items { get; } = new ObservableCollection<IDanceTimelineTrackElement>();
     }
 
     /// <summary>
@@ -184,15 +186,15 @@ namespace Dance.WpfTest
             this.Closed += MainWindow_Closed;
         }
 
+        private List<TimelineTrackModel> list = new();
+
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             //this.propertyGrid.SelectedObject = new Student();
 
-            List<TimelineTrackModel> list = new();
-
             Random random = new();
 
-            for (int t = 0; t < 20; t++)
+            for (int t = 0; t < 10; t++)
             {
                 TimelineTrackModel track = new() { Name = $"轨道{t}" };
 

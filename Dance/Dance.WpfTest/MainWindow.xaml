@@ -56,6 +56,9 @@
         <Slider Grid.Row="2" VerticalAlignment="Center" Minimum="1" Maximum="100" Value="{Binding ElementName=timeline,Path=Zoom,Mode=TwoWay}" Margin="50,0,50,0"
                 SmallChange="1"></Slider>
 
-        <Button Grid.Row="3" Click="Button_Click"></Button>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Width="120" Height="40" Content="播放/停止" Margin="20,0,0,0" Click="Button_Click"></Button>
+        </StackPanel>
+
     </Grid>
 </Window>

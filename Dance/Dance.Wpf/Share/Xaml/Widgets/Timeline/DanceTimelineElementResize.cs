@@ -36,6 +36,21 @@ namespace Dance.Wpf
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTimelineElementResize), new FrameworkPropertyMetadata(typeof(DanceTimelineElementResize)));
         }
 
+        public DanceTimelineElementResize()
+        {
+            this.IsVisibleChanged += DanceTimelineElementResize_IsVisibleChanged;
+        }
+
+        /// <summary>
+        /// 可见性改变
+        /// </summary>
+        private void DanceTimelineElementResize_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            this.MouseLeftButtonDownPoint = null;
+            this.MouseLeftButtonDownTime = null;
+            this.ReleaseMouseCapture();
+        }
+
         // ==================================================================================================
         // Field
 
