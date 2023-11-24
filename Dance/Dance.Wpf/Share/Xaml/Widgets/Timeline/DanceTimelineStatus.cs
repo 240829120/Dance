@@ -9,7 +9,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线状态
     /// </summary>
-    public enum DanceTimelineToolStatus
+    public enum DanceTimelineStatus
     {
         /// <summary>
         /// 框选

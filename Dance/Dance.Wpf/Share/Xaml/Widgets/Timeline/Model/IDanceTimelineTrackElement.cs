@@ -10,7 +10,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线元素
     /// </summary>
-    public interface IDanceTimelineTrackElement : INotifyPropertyChanged, IDanceJsonObject
+    public interface IDanceTimelineTrackElement : INotifyPropertyChanged
     {
         /// <summary>
         /// 开始时间

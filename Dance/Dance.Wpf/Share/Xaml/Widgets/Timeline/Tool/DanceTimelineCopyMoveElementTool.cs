@@ -41,9 +41,12 @@ namespace Dance.Wpf
         /// </summary>
         private void KeyDown(object sender, KeyEventArgs e)
         {
+            if (this.Timeline.IsReadOnly)
+                return;
+
             if (Keyboard.Modifiers == ModifierKeys.Shift)
             {
-                this.Timeline.ToolStatus = DanceTimelineToolStatus.CopyMoveElement;
+                this.Timeline.Status = DanceTimelineStatus.CopyMoveElement;
                 if (this.Timeline.PART_Scale != null)
                 {
                     this.Timeline.PART_Scale.IsHitTestVisible = false;
@@ -58,7 +61,7 @@ namespace Dance.Wpf
         /// <returns>是否可以移动</returns>
         public bool TryCopyMove(DanceTimelineMoveElementInfo moveInfo)
         {
-            TimeSpan srcWidth = moveInfo.Element.EndTime - moveInfo.Element.BeginTime;
+            TimeSpan srcWidth = moveInfo.EndTime - moveInfo.BeginTime;
             TimeSpan destWidth = moveInfo.WantEndTime - moveInfo.WantBeginTime;
 
             if (srcWidth != destWidth || destWidth <= TimeSpan.Zero)

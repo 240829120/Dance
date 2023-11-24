@@ -1,19 +1,14 @@
-﻿using System;
+﻿using log4net;
+using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 
 namespace Dance.Wpf
 {
@@ -29,6 +24,11 @@ namespace Dance.Wpf
     [TemplatePart(Name = nameof(PART_FrameSelect), Type = typeof(DanceFrameSelect))]
     public class DanceTimeline : ItemsControl
     {
+        /// <summary>
+        /// 日志
+        /// </summary>
+        private static readonly ILog log = LogManager.GetLogger(typeof(DanceTimeline));
+
         static DanceTimeline()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTimeline), new FrameworkPropertyMetadata(typeof(DanceTimeline)));
@@ -118,6 +118,21 @@ namespace Dance.Wpf
         /// 元素选择改变时触发
         /// </summary>
         public event EventHandler<DanceTimelineElementSelectionChangedEventArgs>? ElementSelectionChanged;
+
+        /// <summary>
+        /// 元素开始拖拽时触发
+        /// </summary>
+        public event EventHandler<DanceTimelineElementDragBeginEventArgs>? ElementDragBegin;
+
+        /// <summary>
+        /// 元素拖拽经过时触发
+        /// </summary>
+        public event EventHandler<DanceTimelineElementDragEventArgs>? ElementDragOver;
+
+        /// <summary>
+        /// 元素拖拽放置时触发
+        /// </summary>
+        public event EventHandler<DanceTimelineElementDragEventArgs>? ElementDrop;
 
         // ==========================================================================================================================================
         // Property
@@ -319,6 +334,25 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region IsReadOnly -- 是否只读
+
+        /// <summary>
+        /// 是否只读
+        /// </summary>
+        public bool IsReadOnly
+        {
+            get { return (bool)GetValue(IsReadOnlyProperty); }
+            set { SetValue(IsReadOnlyProperty, value); }
+        }
+
+        /// <summary>
+        /// 是否只读
+        /// </summary>
+        public static readonly DependencyProperty IsReadOnlyProperty =
+            DependencyProperty.Register("IsReadOnly", typeof(bool), typeof(DanceTimeline), new PropertyMetadata(false));
+
+        #endregion
+
         #region IsFollowProgress -- 是否跟随进度
 
         /// <summary>
@@ -338,22 +372,22 @@ namespace Dance.Wpf
 
         #endregion
 
-        #region ToolStatus -- 工具状态
+        #region Status -- 状态
 
         /// <summary>
-        /// 工具状态
+        /// 状态
         /// </summary>
-        public DanceTimelineToolStatus ToolStatus
+        public DanceTimelineStatus Status
         {
-            get { return (DanceTimelineToolStatus)GetValue(ToolStatusProperty); }
-            set { SetValue(ToolStatusProperty, value); }
+            get { return (DanceTimelineStatus)GetValue(StatusProperty); }
+            set { SetValue(StatusProperty, value); }
         }
 
         /// <summary>
-        /// 工具状态
+        /// 状态
         /// </summary>
-        public static readonly DependencyProperty ToolStatusProperty =
-            DependencyProperty.Register("ToolStatus", typeof(DanceTimelineToolStatus), typeof(DanceTimeline), new PropertyMetadata(DanceTimelineToolStatus.FrameSelect));
+        public static readonly DependencyProperty StatusProperty =
+            DependencyProperty.Register("Status", typeof(DanceTimelineStatus), typeof(DanceTimeline), new PropertyMetadata(DanceTimelineStatus.FrameSelect));
 
         #endregion
 
@@ -504,7 +538,14 @@ namespace Dance.Wpf
         /// <param name="selectedTrack">当前选中的轨道</param>
         internal void InvokeTrackSelectionChanged(DanceTimelineTrack? selectedTrack)
         {
-            this.TrackSelectionChanged?.Invoke(this, new DanceTimelineTrackSelectionChangedEventArgs(this, selectedTrack));
+            try
+            {
+                this.TrackSelectionChanged?.Invoke(this, new DanceTimelineTrackSelectionChangedEventArgs(this, selectedTrack));
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         /// <summary>
@@ -512,7 +553,59 @@ namespace Dance.Wpf
         /// </summary>
         internal void InvokeElementSelectionChanged()
         {
-            this.ElementSelectionChanged?.Invoke(this, new DanceTimelineElementSelectionChangedEventArgs(this, this.GetSelectedElements()));
+            try
+            {
+                this.ElementSelectionChanged?.Invoke(this, new DanceTimelineElementSelectionChangedEventArgs(this, this.GetSelectedElements()));
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        /// <summary>
+        /// 执行元素拖拽开始事件
+        /// </summary>
+        internal void InvokeElementDragBegin(DanceTimelineElementDragBeginEventArgs e)
+        {
+            try
+            {
+                this.ElementDragBegin?.Invoke(this, e);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        /// <summary>
+        /// 执行元素拖拽经过事件
+        /// </summary>
+        internal void InvokeElementDragOver(DanceTimelineElementDragEventArgs e)
+        {
+            try
+            {
+                this.ElementDragOver?.Invoke(this, e);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        /// <summary>
+        /// 执行元素拖拽结束事件
+        /// </summary>
+        internal void InvokeElementDrop(DanceTimelineElementDragEventArgs e)
+        {
+            try
+            {
+                this.ElementDrop?.Invoke(this, e);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
         }
 
         /// <summary>
@@ -564,7 +657,7 @@ namespace Dance.Wpf
         {
             base.OnKeyUp(e);
 
-            this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
+            this.Status = DanceTimelineStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
 
             if (this.PART_Scale != null)
@@ -580,7 +673,7 @@ namespace Dance.Wpf
         {
             base.OnLostFocus(e);
 
-            this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
+            this.Status = DanceTimelineStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
 
             if (this.PART_Scale != null)
@@ -616,7 +709,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DanceTimeline_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            this.ToolStatus = DanceTimelineToolStatus.FrameSelect;
+            this.Status = DanceTimelineStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
 
             if (this.PART_Scale != null)

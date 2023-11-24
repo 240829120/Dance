@@ -114,7 +114,7 @@ namespace Dance.Wpf
             if (this.Element == null || this.Element.OwnerTimeline == null)
                 return;
 
-            if (this.Element.OwnerTimeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+            if (this.Element.OwnerTimeline.Status != DanceTimelineStatus.MoveElement)
                 return;
 
             e.Handled = true;
@@ -149,7 +149,7 @@ namespace Dance.Wpf
             if (this.Element == null || this.Element.OwnerTimeline == null || this.MouseLeftButtonDownPoint == null || this.MouseLeftButtonDownTime == null)
                 return;
 
-            if (this.Element.OwnerTimeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+            if (this.Element.OwnerTimeline.Status != DanceTimelineStatus.MoveElement)
                 return;
 
             e.Handled = true;

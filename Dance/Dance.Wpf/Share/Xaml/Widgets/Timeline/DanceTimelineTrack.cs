@@ -79,20 +79,26 @@ namespace Dance.Wpf
         {
             base.OnDragOver(e);
 
-            if (e.Data.GetData(typeof(DanceTimelineElement)) is not DanceTimelineElement element || element.OwnerTrack == null)
+            if (this.OwnerTimeline == null || this.PART_Highlight == null || this.OwnerTimeline.PART_FrameSelect == null || this.OwnerTimeline.PART_HorizontalScrollBar == null)
                 return;
 
-            if (this.PART_Highlight == null || this.OwnerTimeline == null || this.OwnerTimeline.PART_FrameSelect == null || this.OwnerTimeline.PART_HorizontalScrollBar == null)
+            if (this.OwnerTimeline.IsPlaying || this.OwnerTimeline.IsReadOnly)
                 return;
 
-            if (this.OwnerTimeline.IsPlaying || this.OwnerTimeline.GetTool<DanceTimelineCopyMoveTool>() is not DanceTimelineCopyMoveTool tool)
+            if (this.OwnerTimeline.GetTool<DanceTimelineCopyMoveTool>() is not DanceTimelineCopyMoveTool tool)
+                return;
+
+            DanceTimelineElementDragEventArgs args = new(this.OwnerTimeline, this, e);
+            this.OwnerTimeline.InvokeElementDragOver(args);
+
+            if (args.BeginTime == null || args.EndTime == null)
                 return;
 
             Point point = e.GetPosition(this.OwnerTimeline.PART_FrameSelect);
             TimeSpan wantBeginTime = this.OwnerTimeline.GetTimeSpanFromPixel(point.X + this.OwnerTimeline.PART_HorizontalScrollBar.Value);
-            TimeSpan wantEndTime = wantBeginTime + (element.EndTime - element.BeginTime);
+            TimeSpan wantEndTime = wantBeginTime + (args.EndTime.Value - args.BeginTime.Value);
 
-            DanceTimelineMoveElementInfo moveInfo = new(element.OwnerTrack, this, element, wantBeginTime, wantEndTime);
+            DanceTimelineMoveElementInfo moveInfo = new(this, args.BeginTime.Value, args.EndTime.Value, wantBeginTime, wantEndTime);
             if (!tool.TryCopyMove(moveInfo))
             {
                 this.PART_Highlight.BeginX = null;
@@ -130,42 +136,35 @@ namespace Dance.Wpf
         {
             base.OnDrop(e);
 
-            if (this.OwnerTimeline == null || this.OwnerTimeline.PART_HorizontalScrollBar == null || this.PART_Highlight == null)
+            if (this.OwnerTimeline == null || this.PART_Highlight == null || this.OwnerTimeline.PART_FrameSelect == null || this.OwnerTimeline.PART_HorizontalScrollBar == null)
                 return;
+
+            if (this.OwnerTimeline.IsPlaying || this.OwnerTimeline.IsReadOnly)
+                return;
+
+            if (this.OwnerTimeline.GetTool<DanceTimelineCopyMoveTool>() is not DanceTimelineCopyMoveTool tool)
+                return;
+
+            if (this.PART_Highlight.BeginX == null || this.PART_Highlight.EndX == null)
+                return;
+
+            TimeSpan beginTime = this.OwnerTimeline.GetTimeSpanFromPixel(this.OwnerTimeline.PART_HorizontalScrollBar.Value + this.PART_Highlight.BeginX.Value);
+            TimeSpan endTime = this.OwnerTimeline.GetTimeSpanFromPixel(this.OwnerTimeline.PART_HorizontalScrollBar.Value + this.PART_Highlight.EndX.Value);
+
+            DanceTimelineMoveElementInfo moveInfo = new(this, beginTime, endTime, beginTime, endTime);
+            if (tool.TryCopyMove(moveInfo))
+            {
+                DanceTimelineElementDragEventArgs args = new(this.OwnerTimeline, this, e);
+                args.BeginTime = moveInfo.RealBeginTime;
+                args.EndTime = moveInfo.RealEndTime;
+
+                this.OwnerTimeline.InvokeElementDrop(args);
+            }
 
             this.PART_Highlight.BeginX = null;
             this.PART_Highlight.EndX = null;
 
             this.PART_Highlight.InvalidateVisual();
-
-            if (this.OwnerTimeline.IsPlaying || this.OwnerTimeline.GetTool<DanceTimelineCopyMoveTool>() is not DanceTimelineCopyMoveTool tool)
-                return;
-
-            if (e.Data.GetData(typeof(DanceTimelineElement)) is not DanceTimelineElement element || element.OwnerTrack == null)
-                return;
-
-            Point point = e.GetPosition(this.OwnerTimeline.PART_FrameSelect);
-            TimeSpan wantBeginTime = this.OwnerTimeline.GetTimeSpanFromPixel(point.X + this.OwnerTimeline.PART_HorizontalScrollBar.Value);
-            TimeSpan wantEndTime = wantBeginTime + (element.EndTime - element.BeginTime);
-
-            DanceTimelineMoveElementInfo moveInfo = new(element.OwnerTrack, this, element, wantBeginTime, wantEndTime);
-            if (!tool.TryCopyMove(moveInfo))
-            {
-                return;
-            }
-
-            if (element.OwnerTrack == null || element.DataContext is not IDanceTimelineTrackElement src || this.DataContext is not IDanceTimelineTrack destTrack)
-                return;
-
-            IDanceTimelineTrackElement? dest = DanceJsonObjectConverter.Copy<IDanceTimelineTrackElement>(src);
-            if (dest == null)
-                return;
-
-            dest.BeginTime = moveInfo.RealBeginTime;
-            dest.EndTime = moveInfo.RealEndTime;
-            dest.IsSelected = false;
-
-            destTrack.Items.Add(dest);
         }
     }
 }

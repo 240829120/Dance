@@ -52,23 +52,5 @@ namespace Dance
         {
 
         }
-
-        /// <summary>
-        /// 拷贝对象
-        /// </summary>
-        /// <typeparam name="T">对象类型</typeparam>
-        /// <param name="src">源</param>
-        /// <returns>拷贝对象</returns>
-        public static T? Copy<T>(IDanceJsonObject? src) where T : IDanceJsonObject
-        {
-            if (src == null)
-                return default;
-
-            string json = JsonConvert.SerializeObject(src);
-            if (string.IsNullOrWhiteSpace(json))
-                return default;
-
-            return JsonConvert.DeserializeObject<T>(json, new DanceJsonObjectConverter());
-        }
     }
 }

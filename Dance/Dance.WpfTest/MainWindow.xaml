@@ -28,7 +28,10 @@
         </Grid.RowDefinitions>
 
         <Border BorderBrush="Transparent" BorderThickness="1"  Margin="50">
-            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="50" CurrentTime="00:00:00">
+            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="50" CurrentTime="00:00:00" 
+                                 ElementDragBegin="timeline_ElementDragBegin"
+                                 ElementDragOver="timeline_ElementDragOver"
+                                 ElementDrop="timeline_ElementDrop">
                 <dance:DanceTimeline.HeaderTemplate>
                     <DataTemplate>
                         <Border>
@@ -46,7 +49,9 @@
 
         <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal">
             <TextBlock Text="跟随" Margin="20,0,0,0"></TextBlock>
-            <CheckBox x:Name="cbFlow" IsChecked="{Binding ElementName=timeline,Path=IsFollowProgress,Mode=TwoWay}"></CheckBox>
+            <CheckBox IsChecked="{Binding ElementName=timeline,Path=IsFollowProgress,Mode=TwoWay}" VerticalAlignment="Center"></CheckBox>
+            <TextBlock Text="只读" Margin="20,0,0,0"></TextBlock>
+            <CheckBox IsChecked="{Binding ElementName=timeline,Path=IsReadOnly,Mode=TwoWay}" VerticalAlignment="Center"></CheckBox>
 
             <TextBlock Text="Zoom" Margin="20,0,0,0"></TextBlock>
             <TextBlock Text="{Binding ElementName=timeline,Path=Zoom,Mode=OneWay}" Margin="20,0,0,0"></TextBlock>

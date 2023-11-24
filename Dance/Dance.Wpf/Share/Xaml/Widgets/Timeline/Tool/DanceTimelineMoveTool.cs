@@ -69,7 +69,7 @@ namespace Dance.Wpf
         {
             if (Keyboard.IsKeyDown(Key.Space))
             {
-                this.Timeline.ToolStatus = DanceTimelineToolStatus.Move;
+                this.Timeline.Status = DanceTimelineStatus.Move;
                 this.Timeline.Cursor = Cursors.Hand;
             }
         }
@@ -79,7 +79,7 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.Move)
+            if (this.Timeline.Status != DanceTimelineStatus.Move)
                 return;
 
             if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)
@@ -102,7 +102,7 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.Move)
+            if (this.Timeline.Status != DanceTimelineStatus.Move)
                 return;
 
             if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)
@@ -123,7 +123,7 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.Move)
+            if (this.Timeline.Status != DanceTimelineStatus.Move)
                 return;
 
             if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)

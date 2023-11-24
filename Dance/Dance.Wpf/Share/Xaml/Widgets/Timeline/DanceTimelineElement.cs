@@ -128,13 +128,14 @@ namespace Dance.Wpf
             if (e.LeftButton != MouseButtonState.Pressed)
                 return;
 
-            if (this.OwnerTimeline == null || this.OwnerTimeline.ToolStatus != DanceTimelineToolStatus.CopyMoveElement)
+            if (this.OwnerTimeline == null || this.OwnerTrack == null || this.OwnerTimeline.Status != DanceTimelineStatus.CopyMoveElement)
                 return;
 
-            if (this.OwnerTimeline.IsPlaying)
+            if (this.OwnerTimeline.IsPlaying || this.OwnerTimeline.IsReadOnly)
                 return;
 
-            DragDrop.DoDragDrop(this, this, DragDropEffects.Copy);
+            DanceTimelineElementDragBeginEventArgs args = new(this.OwnerTimeline, this.OwnerTrack, this);
+            this.OwnerTimeline.InvokeElementDragBegin(args);
         }
     }
 }

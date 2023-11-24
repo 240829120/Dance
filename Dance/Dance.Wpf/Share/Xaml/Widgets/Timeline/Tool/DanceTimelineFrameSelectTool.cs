@@ -96,10 +96,10 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.FrameSelect)
+            if (this.Timeline.Status != DanceTimelineStatus.FrameSelect)
                 return;
 
-            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)
+            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress || this.Timeline.IsReadOnly)
                 return;
 
             if (this.Timeline.PART_FrameSelect == null)
@@ -117,10 +117,10 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.FrameSelect)
+            if (this.Timeline.Status != DanceTimelineStatus.FrameSelect)
                 return;
 
-            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)
+            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress || this.Timeline.IsReadOnly)
                 return;
 
             if (this.Timeline.PART_HorizontalScrollBar == null || this.Timeline.PART_VerticalScrollBar == null)
@@ -139,10 +139,10 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.FrameSelect)
+            if (this.Timeline.Status != DanceTimelineStatus.FrameSelect)
                 return;
 
-            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)
+            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress || this.Timeline.IsReadOnly)
                 return;
 
             if (this.Timeline.PART_HorizontalScrollBar == null || this.Timeline.PART_VerticalScrollBar == null || this.Timeline.PART_FrameSelect == null)
@@ -164,7 +164,7 @@ namespace Dance.Wpf
         /// </summary>
         private void SelectElementFromFrameSelect()
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.FrameSelect)
+            if (this.Timeline.Status != DanceTimelineStatus.FrameSelect)
                 return;
 
             if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)

@@ -8,13 +8,13 @@
     </ResourceDictionary.MergedDictionaries>
 
     <!-- 工具状态可见性转化器 -->
-    <dance:DanceMappingConverter x:Key="ToolStatusVisibilityConverter_MoveElement">
+    <dance:DanceMappingConverter x:Key="StatusVisibilityConverter_MoveElement">
         <dance:DanceMappingConverter.DefaultConvertValue>
             <Visibility>Collapsed</Visibility>
         </dance:DanceMappingConverter.DefaultConvertValue>
         <dance:DanceMappingConverterItem>
             <dance:DanceMappingConverterItem.From>
-                <dance:DanceTimelineToolStatus>MoveElement</dance:DanceTimelineToolStatus>
+                <dance:DanceTimelineStatus>MoveElement</dance:DanceTimelineStatus>
             </dance:DanceMappingConverterItem.From>
             <dance:DanceMappingConverterItem.To>
                 <Visibility>Visible</Visibility>
@@ -59,9 +59,9 @@
                             <ContentPresenter></ContentPresenter>
                         </Border>
                         <dance:DanceTimelineElementResize HorizontalAlignment="Left" ResizeType="BeginTime"
-                                                          Visibility="{Binding Path=ToolStatus,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource ToolStatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
+                                                          Visibility="{Binding Path=Status,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource StatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
                         <dance:DanceTimelineElementResize HorizontalAlignment="Right" ResizeType="EndTime"
-                                                          Visibility="{Binding Path=ToolStatus,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource ToolStatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
+                                                          Visibility="{Binding Path=Status,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource StatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

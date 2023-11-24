@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharpVectors.Dom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +39,7 @@ namespace Dance.Wpf
         /// </summary>
         protected override void Destroy()
         {
-            if (this.Timeline == null)
+            if (this.Timeline == null || this.Timeline.IsReadOnly)
                 return;
 
             this.Timeline.KeyDown -= KeyDown;
@@ -67,10 +68,11 @@ namespace Dance.Wpf
         /// 尝试移动元素
         /// </summary>
         /// <param name="moveInfo">移动信息</param>
+        /// <param name="element">元素</param>
         /// <returns>是否可以移动</returns>
-        public bool TryMoveElement(DanceTimelineMoveElementInfo moveInfo)
+        public bool TryMoveElement(DanceTimelineMoveElementInfo moveInfo, DanceTimelineElement element)
         {
-            TimeSpan srcWidth = moveInfo.Element.EndTime - moveInfo.Element.BeginTime;
+            TimeSpan srcWidth = moveInfo.EndTime - moveInfo.BeginTime;
             TimeSpan destWidth = moveInfo.WantEndTime - moveInfo.WantBeginTime;
 
             if (srcWidth != destWidth || destWidth <= TimeSpan.Zero)
@@ -93,7 +95,7 @@ namespace Dance.Wpf
 
             foreach (DanceTimelineElement item in destPanel.Children)
             {
-                if (item == moveInfo.Element)
+                if (item == element)
                     continue;
 
                 if (moveInfo.RealBeginTime <= item.EndTime && moveInfo.RealEndTime >= item.EndTime)
@@ -115,7 +117,7 @@ namespace Dance.Wpf
 
             foreach (DanceTimelineElement item in destPanel.Children)
             {
-                if (item == moveInfo.Element)
+                if (item == element)
                     continue;
 
                 if (!(moveInfo.RealEndTime <= item.BeginTime || moveInfo.RealBeginTime >= item.EndTime))
@@ -138,9 +140,12 @@ namespace Dance.Wpf
         /// </summary>
         private void KeyDown(object sender, KeyEventArgs e)
         {
+            if (this.Timeline.IsPlaying || this.Timeline.IsReadOnly)
+                return;
+
             if (Keyboard.Modifiers == ModifierKeys.Alt)
             {
-                this.Timeline.ToolStatus = DanceTimelineToolStatus.MoveElement;
+                this.Timeline.Status = DanceTimelineStatus.MoveElement;
             }
         }
 
@@ -149,10 +154,10 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+            if (this.Timeline.Status != DanceTimelineStatus.MoveElement)
                 return;
 
-            if (this.Timeline.IsPlaying)
+            if (this.Timeline.IsPlaying || this.Timeline.IsReadOnly)
                 return;
 
             if (this.Timeline.PART_FrameSelect == null || this.Timeline.PART_HorizontalScrollBar == null)
@@ -177,10 +182,10 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+            if (this.Timeline.Status != DanceTimelineStatus.MoveElement)
                 return;
 
-            if (this.Timeline.IsPlaying)
+            if (this.Timeline.IsPlaying || this.Timeline.IsReadOnly)
                 return;
 
             if (this.Timeline.PART_FrameSelect == null)
@@ -199,10 +204,10 @@ namespace Dance.Wpf
         /// </summary>
         private void MouseMove(object sender, MouseEventArgs e)
         {
-            if (this.Timeline.ToolStatus != DanceTimelineToolStatus.MoveElement)
+            if (this.Timeline.Status != DanceTimelineStatus.MoveElement)
                 return;
 
-            if (this.Timeline.IsPlaying)
+            if (this.Timeline.IsPlaying || this.Timeline.IsReadOnly)
                 return;
 
             if (this.Timeline.PART_FrameSelect == null)
@@ -226,13 +231,13 @@ namespace Dance.Wpf
                 if (item.Element.OwnerTrack == null)
                     continue;
 
-                DanceTimelineMoveElementInfo moveInfo = new(item.Element.OwnerTrack, item.Element.OwnerTrack, item.Element, item.SelectedBeginTime + offsetTime, item.SelectedEndTime + offsetTime);
+                DanceTimelineMoveElementInfo moveInfo = new(item.Element.OwnerTrack, item.Element.BeginTime, item.Element.EndTime, item.SelectedBeginTime + offsetTime, item.SelectedEndTime + offsetTime);
 
-                if (!this.TryMoveElement(moveInfo))
+                if (!this.TryMoveElement(moveInfo, item.Element))
                     continue;
 
-                moveInfo.Element.BeginTime = moveInfo.RealBeginTime;
-                moveInfo.Element.EndTime = moveInfo.RealEndTime;
+                item.Element.BeginTime = moveInfo.RealBeginTime;
+                item.Element.EndTime = moveInfo.RealEndTime;
             }
 
             this.Timeline.Update();
