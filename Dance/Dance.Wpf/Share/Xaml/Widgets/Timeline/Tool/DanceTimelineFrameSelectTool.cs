@@ -1,10 +1,12 @@
-﻿using System;
+﻿using SharpVectors.Dom;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media.Media3D;
 
 namespace Dance.Wpf
 {
@@ -74,6 +76,44 @@ namespace Dance.Wpf
                 this.Selection.ForEach(p => p.Element.IsSelected = false);
                 this.Selection.Clear();
             }
+        }
+
+        /// <summary>
+        /// 更新选择区域
+        /// </summary>
+        public void UpdateSelection()
+        {
+            if (this.Timeline.Status != DanceTimelineStatus.FrameSelect)
+                return;
+
+            if (this.Timeline.IsPlaying && this.Timeline.IsFollowProgress)
+                return;
+
+            if (this.Timeline.PART_HorizontalScrollBar == null || this.Timeline.PART_VerticalScrollBar == null || this.Timeline.PART_FrameSelect == null)
+                return;
+
+            if (this.BeginPoint == null)
+                return;
+
+            List<DanceTimelineTrackPanel> tracks = this.Timeline.GetVisualTreeDescendants<DanceTimelineTrackPanel>();
+
+            lock (this.Selection)
+            {
+                this.Selection.Clear();
+
+                foreach (DanceTimelineTrackPanel track in tracks)
+                {
+                    foreach (DanceTimelineElement element in track.Children)
+                    {
+                        if (!element.IsSelected)
+                            continue;
+
+                        this.Selection.Add(new DanceTimelineSelectionInfo(element));
+                    }
+                }
+            }
+
+            this.Timeline.InvokeElementSelectionChanged();
         }
 
         /// <summary>
@@ -186,9 +226,9 @@ namespace Dance.Wpf
             List<DanceTimelineTrackPanel> tracks = this.Timeline.GetVisualTreeDescendants<DanceTimelineTrackPanel>();
 
             int trackIndex = 0;
-            bool isAppendSelected = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
+            bool isCtrlDown = Keyboard.IsKeyDown(Key.LeftCtrl) || Keyboard.IsKeyDown(Key.RightCtrl);
 
-            if (!isAppendSelected)
+            if (!isCtrlDown)
             {
                 this.ClearSelection();
             }
@@ -211,8 +251,20 @@ namespace Dance.Wpf
                         if (element.EndTime < left || element.BeginTime > right)
                             continue;
 
-                        element.IsSelected = true;
-                        this.Selection.Add(new DanceTimelineSelectionInfo(element));
+                        if (element.IsSelected)
+                        {
+                            element.IsSelected = false;
+                            DanceTimelineSelectionInfo? info = this.Selection.FirstOrDefault(p => p.Element == element);
+                            if (info != null)
+                            {
+                                this.Selection.Remove(info);
+                            }
+                        }
+                        else
+                        {
+                            element.IsSelected = true;
+                            this.Selection.Add(new DanceTimelineSelectionInfo(element));
+                        }
                     }
 
                     ++trackIndex;

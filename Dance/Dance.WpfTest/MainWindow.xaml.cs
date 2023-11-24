@@ -97,7 +97,7 @@ namespace Dance.WpfTest
             if (e.Element.DataContext is not TimelineTrackItemModel model)
                 return;
 
-            DragDrop.DoDragDrop(e.Timeline, model, DragDropEffects.Copy);
+            e.Data= model;
         }
 
         private void timeline_ElementDragOver(object sender, DanceTimelineElementDragEventArgs e)

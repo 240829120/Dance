@@ -38,5 +38,15 @@ namespace Dance.Wpf
         /// 元素
         /// </summary>
         public DanceTimelineElement Element { get; private set; }
+
+        /// <summary>
+        /// 是否取消
+        /// </summary>
+        public bool IsCancel { get; set; }
+
+        /// <summary>
+        /// 数据
+        /// </summary>
+        public object? Data { get; set; }
     }
 }

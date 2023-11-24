@@ -466,7 +466,7 @@ namespace Dance.Wpf
 
                 DanceDragBeginEventArgs args = new(element);
                 cmd.Execute(args);
-                if (args.IsCancel)
+                if (args.IsCancel || args.Data == null)
                     return;
 
                 SetIsDraging(element, true);

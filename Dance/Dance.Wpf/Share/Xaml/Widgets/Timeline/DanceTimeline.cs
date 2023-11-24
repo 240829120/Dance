@@ -137,6 +137,9 @@ namespace Dance.Wpf
         // ==========================================================================================================================================
         // Property
 
+        // ---------------------------------------------------------------------
+        // Style
+
         #region HeaderTemplate -- 头部模板
 
         /// <summary>
@@ -174,6 +177,91 @@ namespace Dance.Wpf
             DependencyProperty.Register("ElementTemplate", typeof(DataTemplate), typeof(DanceTimeline), new PropertyMetadata(null));
 
         #endregion
+
+        #region ProgressWidth -- 进度条宽度
+
+        /// <summary>
+        /// 进度条宽度
+        /// </summary>
+        public double ProgressWidth
+        {
+            get { return (double)GetValue(ProgressWidthProperty); }
+            set { SetValue(ProgressWidthProperty, value); }
+        }
+
+        /// <summary>
+        /// 进度条宽度
+        /// </summary>
+        public static readonly DependencyProperty ProgressWidthProperty =
+            DependencyProperty.Register("ProgressWidth", typeof(double), typeof(DanceTimeline), new PropertyMetadata(10d, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimeline timeline)
+                    return;
+
+                timeline.Update();
+            })));
+
+        #endregion
+
+        #region ScaleBrush -- 刻度画刷
+
+        /// <summary>
+        /// 刻度画刷
+        /// </summary>
+        public SolidColorBrush ScaleBrush
+        {
+            get { return (SolidColorBrush)GetValue(ScaleBrushProperty); }
+            set { SetValue(ScaleBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// 刻度画刷
+        /// </summary>
+        public static readonly DependencyProperty ScaleBrushProperty =
+            DependencyProperty.Register("ScaleBrush", typeof(SolidColorBrush), typeof(DanceTimeline), new PropertyMetadata(Brushes.Black));
+
+        #endregion
+
+        #region ScaleValueBrush -- 刻度值画刷
+
+        /// <summary>
+        /// 刻度值画刷
+        /// </summary>
+        public SolidColorBrush ScaleValueBrush
+        {
+            get { return (SolidColorBrush)GetValue(ScaleValueBrushProperty); }
+            set { SetValue(ScaleValueBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// 刻度值画刷
+        /// </summary>
+        public static readonly DependencyProperty ScaleValueBrushProperty =
+            DependencyProperty.Register("ScaleValueBrush", typeof(SolidColorBrush), typeof(DanceTimeline), new PropertyMetadata(Brushes.Black));
+
+        #endregion
+
+        #region HighlightBrush -- 高亮画刷
+
+        /// <summary>
+        /// 高亮画刷
+        /// </summary>
+        public Brush HighlightBrush
+        {
+            get { return (Brush)GetValue(HighlightBrushProperty); }
+            set { SetValue(HighlightBrushProperty, value); }
+        }
+
+        /// <summary>
+        /// 高亮画刷
+        /// </summary>
+        public static readonly DependencyProperty HighlightBrushProperty =
+            DependencyProperty.Register("HighlightBrush", typeof(Brush), typeof(DanceTimeline), new PropertyMetadata(Brushes.Red));
+
+        #endregion
+
+        // ---------------------------------------------------------------------
+        // Controller
 
         #region CurrentTime -- 当前时间
 
@@ -250,31 +338,6 @@ namespace Dance.Wpf
         /// </summary>
         public static readonly DependencyProperty ZoomProperty =
             DependencyProperty.Register("Zoom", typeof(double), typeof(DanceTimeline), new PropertyMetadata(1d, new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceTimeline timeline)
-                    return;
-
-                timeline.Update();
-            })));
-
-        #endregion
-
-        #region ProgressWidth -- 进度条宽度
-
-        /// <summary>
-        /// 进度条宽度
-        /// </summary>
-        public double ProgressWidth
-        {
-            get { return (double)GetValue(ProgressWidthProperty); }
-            set { SetValue(ProgressWidthProperty, value); }
-        }
-
-        /// <summary>
-        /// 进度条宽度
-        /// </summary>
-        public static readonly DependencyProperty ProgressWidthProperty =
-            DependencyProperty.Register("ProgressWidth", typeof(double), typeof(DanceTimeline), new PropertyMetadata(5d, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not DanceTimeline timeline)
                     return;
@@ -486,13 +549,15 @@ namespace Dance.Wpf
         }
 
         /// <summary>
-        /// 移除工具
+        /// 更新选择区域，在修改元素选择之后调用更新选择区域的状态
         /// </summary>
-        /// <param name="tool">工具</param>
-        public void RemoveTool(DanceTimelineToolBase tool)
+        public void UpdateSelection()
         {
-            tool.Dispose();
-            this.Tools.Remove(tool);
+            DanceTimelineFrameSelectTool? selectTool = this.GetTool<DanceTimelineFrameSelectTool>();
+            if (selectTool == null)
+                return;
+
+            selectTool.UpdateSelection();
         }
 
         // ==========================================================================================================================================

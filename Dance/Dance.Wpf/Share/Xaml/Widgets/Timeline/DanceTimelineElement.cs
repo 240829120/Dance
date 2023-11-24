@@ -136,6 +136,11 @@ namespace Dance.Wpf
 
             DanceTimelineElementDragBeginEventArgs args = new(this.OwnerTimeline, this.OwnerTrack, this);
             this.OwnerTimeline.InvokeElementDragBegin(args);
+
+            if (args.IsCancel || args.Data == null)
+                return;
+
+            DragDrop.DoDragDrop(this.OwnerTimeline, args.Data, DragDropEffects.Copy);
         }
     }
 }

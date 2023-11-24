@@ -14,11 +14,11 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线进度
     /// </summary>
-    public class DanceTimelineProgress : Border
+    public class DanceTimelineProgress : Control
     {
-        public DanceTimelineProgress()
+        static DanceTimelineProgress()
         {
-            this.Loaded += DanceTimelineProgress_Loaded;
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(DanceTimelineProgress), new FrameworkPropertyMetadata(typeof(DanceTimelineProgress)));
         }
 
         // ==========================================================================================================================================
@@ -121,12 +121,13 @@ namespace Dance.Wpf
         // Private Function
 
         /// <summary>
-        /// 加载
+        /// 应用模板
         /// </summary>
-        private void DanceTimelineProgress_Loaded(object sender, RoutedEventArgs e)
+        public override void OnApplyTemplate()
         {
+            base.OnApplyTemplate();
+
             this.OwnerTimeline = DanceXamlExpansion.GetVisualTreeParent<DanceTimeline>(this);
         }
-
     }
 }
