@@ -29,8 +29,6 @@ namespace Dance.Wpf
             if (this.Timeline.PART_HeaderItems == null)
                 return;
 
-            DanceTimelineTrack? selectedTrack = null;
-
             DanceTimelineTrackHeaderPanel? headerPanel = this.Timeline.PART_HeaderItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
             if (headerPanel != null)
             {
@@ -40,6 +38,9 @@ namespace Dance.Wpf
                     item.IsSelected = index == i++;
                 }
             }
+
+            DanceTimelineTrackHeaderPanel? itemsPanel = this.Timeline.PART_TrackItems.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>().FirstOrDefault();
+            DanceTimelineTrack? selectedTrack = itemsPanel?.Children?.GetItemAt(index) as DanceTimelineTrack;
 
             this.Timeline.InvokeTrackSelectionChanged(selectedTrack);
         }

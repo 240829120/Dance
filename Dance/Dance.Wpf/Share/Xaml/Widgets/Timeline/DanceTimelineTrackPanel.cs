@@ -66,7 +66,7 @@ namespace Dance.Wpf
 
             foreach (UIElement item in this.Children)
             {
-                if (item is not DanceTimelineElement element)
+                if (item is not DanceTimelineElement element || element.BeginTime > element.EndTime)
                     continue;
 
                 double beginX = this.OwnerTimeline.GetPixelFromTimeSpan(element.BeginTime) - this.OwnerTimeline.PART_HorizontalScrollBar.Value;

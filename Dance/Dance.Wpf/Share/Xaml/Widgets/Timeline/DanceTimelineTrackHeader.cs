@@ -82,6 +82,8 @@ namespace Dance.Wpf
             if (tool == null)
                 return;
 
+            e.Handled = true;
+
             int index = this.OwnerPanel.Children.IndexOf(this);
             tool.SelectTrack(index);
         }

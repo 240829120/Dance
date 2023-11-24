@@ -137,7 +137,7 @@ namespace Dance.WpfTest
         #endregion
     }
 
-    public class TimelineTrackModel : DanceModel, IDanceTimelineTrack, IDanceJsonObject
+    public class TimelineTrackModel : DanceModel, IDanceTimelineTrack<IList<IDanceTimelineTrackElement>, IDanceTimelineTrackElement>, IDanceJsonObject
     {
         public string PART_DanceObjectType => this.GetType().AssemblyQualifiedName ?? string.Empty;
 

@@ -45,19 +45,19 @@
     <!-- 元素 -->
     <Style TargetType="dance:DanceTimelineElement">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="BeginTime" Value="{Binding BeginTime,Mode=OneWay}"></Setter>
-        <Setter Property="EndTime" Value="{Binding EndTime,Mode=OneWay}"></Setter>
+        <Setter Property="BeginTime" Value="{Binding BeginTime,Mode=TwoWay}"></Setter>
+        <Setter Property="EndTime" Value="{Binding EndTime,Mode=TwoWay}"></Setter>
         <Setter Property="Background" Value="SkyBlue"></Setter>
-        <Setter Property="BorderBrush" Value="SkyBlue"></Setter>
+        <Setter Property="BorderBrush" Value="Transparent"></Setter>
         <Setter Property="IsSelected" Value="{Binding Path=IsSelected,Mode=TwoWay}"></Setter>
         <Setter Property="BorderThickness" Value="3"></Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineElement">
-                    <Grid>
-                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                            <ContentPresenter></ContentPresenter>
-                        </Border>
+                    <Grid Background="{TemplateBinding Background}">
+                        <ContentPresenter></ContentPresenter>
+                        <Border Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" 
+                                BorderThickness="{TemplateBinding BorderThickness}" IsHitTestVisible="False"></Border>
                         <dance:DanceTimelineElementResize HorizontalAlignment="Left" ResizeType="BeginTime"
                                                           Visibility="{Binding Path=Status,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor},Converter={StaticResource StatusVisibilityConverter_MoveElement}}"></dance:DanceTimelineElementResize>
                         <dance:DanceTimelineElementResize HorizontalAlignment="Right" ResizeType="EndTime"
@@ -94,7 +94,7 @@
     <!-- 轨道 -->
     <Style TargetType="dance:DanceTimelineTrack">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
-        <Setter Property="Background" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"></Setter>
+        <Setter Property="Background" Value="Transparent"></Setter>
         <Setter Property="ItemsSource" Value="{Binding Path=Items}"></Setter>
         <Setter Property="ItemTemplate" Value="{Binding Path=ElementTemplate,RelativeSource={RelativeSource AncestorType=dance:DanceTimeline,Mode=FindAncestor}}"></Setter>
         <Setter Property="AllowDrop" Value="True"></Setter>
@@ -109,8 +109,9 @@
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineTrack">
                     <Border BorderThickness="0" Padding="0,0,0,5" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                        <Border Background="{TemplateBinding Background}" BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
-                            <Grid>
+                        <Border Background="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}" 
+                                BorderThickness="0" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Grid Background="{TemplateBinding Background}">
                                 <ItemsPresenter></ItemsPresenter>
                                 <dance:DanceTimelineTrackHighlight x:Name="PART_Highlight" IsHitTestVisible="False"></dance:DanceTimelineTrackHighlight>
                             </Grid>
@@ -137,8 +138,8 @@
                                     <ColumnDefinition Width="5"></ColumnDefinition>
                                     <ColumnDefinition Width="*"></ColumnDefinition>
                                 </Grid.ColumnDefinitions>
-                                <Rectangle x:Name="select" Fill="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.CHUNK_BAR_BACKGROUND}}"></Rectangle>
-                                <ContentPresenter Grid.Column="1"></ContentPresenter>
+                                <ContentPresenter Grid.ColumnSpan="2"></ContentPresenter>
+                                <Rectangle x:Name="select" Fill="Transparent"></Rectangle>
                             </Grid>
                         </Border>
                     </Border>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线轨道
     /// </summary>
-    public interface IDanceTimelineTrack : INotifyPropertyChanged
+    public interface IDanceTimelineTrack<TCollection, TElement> : INotifyPropertyChanged where TElement : IDanceTimelineTrackElement where TCollection : IList<TElement>
     {
         /// <summary>
         /// 是否被选中
@@ -20,6 +21,6 @@ namespace Dance.Wpf
         /// <summary>
         /// 元素
         /// </summary>
-        IList<IDanceTimelineTrackElement> Items { get; }
+        TCollection Items { get; }
     }
 }
