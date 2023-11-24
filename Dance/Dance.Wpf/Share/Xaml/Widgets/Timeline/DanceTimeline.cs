@@ -560,6 +560,18 @@ namespace Dance.Wpf
             selectTool.UpdateSelection();
         }
 
+        /// <summary>
+        /// 获取视窗宽度
+        /// </summary>
+        /// <returns>视窗宽度</returns>
+        public TimeSpan GetViewportWidth()
+        {
+            if (this.PART_FrameSelect == null)
+                return TimeSpan.Zero;
+
+            return this.GetTimeSpanFromPixel(this.PART_FrameSelect.ActualWidth);
+        }
+
         // ==========================================================================================================================================
         // Internal Function
 

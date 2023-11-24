@@ -55,7 +55,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="dance:DanceTimelineElement">
                     <Grid Background="{TemplateBinding Background}">
-                        <ContentPresenter></ContentPresenter>
+                        <ContentPresenter IsHitTestVisible="False"></ContentPresenter>
                         <Border Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" 
                                 BorderThickness="{TemplateBinding BorderThickness}" IsHitTestVisible="False"></Border>
                         <dance:DanceTimelineElementResize HorizontalAlignment="Left" ResizeType="BeginTime"
