@@ -80,7 +80,13 @@ namespace Dance.Wpf
         /// 开始时间
         /// </summary>
         public static readonly DependencyProperty BeginTimeProperty =
-            DependencyProperty.Register("BeginTime", typeof(TimeSpan), typeof(DanceTimelineElement), new PropertyMetadata(TimeSpan.Zero));
+            DependencyProperty.Register("BeginTime", typeof(TimeSpan), typeof(DanceTimelineElement), new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimelineElement element || element.OwnerTimeline == null)
+                    return;
+
+                element.OwnerTimeline.Update();
+            })));
 
         #endregion
 
@@ -99,7 +105,13 @@ namespace Dance.Wpf
         /// 结束时间
         /// </summary>
         public static readonly DependencyProperty EndTimeProperty =
-            DependencyProperty.Register("EndTime", typeof(TimeSpan), typeof(DanceTimelineElement), new PropertyMetadata(TimeSpan.Zero));
+            DependencyProperty.Register("EndTime", typeof(TimeSpan), typeof(DanceTimelineElement), new PropertyMetadata(TimeSpan.Zero, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTimelineElement element || element.OwnerTimeline == null)
+                    return;
+
+                element.OwnerTimeline.Update();
+            })));
 
         #endregion
 

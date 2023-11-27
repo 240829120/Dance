@@ -75,7 +75,7 @@ namespace Dance.Wpf
         {
             base.OnMouseLeftButtonDown(e);
 
-            if (this.OwnerTimeline == null || this.OwnerPanel == null)
+            if (this.OwnerTimeline == null || this.OwnerPanel == null || this.OwnerTimeline.IsReadOnly)
                 return;
 
             DanceTimelineTrackTool? tool = this.OwnerTimeline.GetTool<DanceTimelineTrackTool>();

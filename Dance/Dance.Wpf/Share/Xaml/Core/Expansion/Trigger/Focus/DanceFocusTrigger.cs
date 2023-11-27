@@ -13,29 +13,29 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceFocusTrigger : DependencyObject
     {
-        #region IsMouseDownFocus -- 鼠标按下时聚焦
+        #region IsMouseUpFocus -- 鼠标抬起时是否聚焦
 
         /// <summary>
-        /// 获取鼠标按下时聚焦
+        /// /获取鼠标抬起时是否聚焦
         /// </summary>
-        public static bool GetIsMouseDownFocus(DependencyObject obj)
+        public static bool GetIsMouseUpFocus(DependencyObject obj)
         {
-            return (bool)obj.GetValue(IsMouseDownFocusProperty);
+            return (bool)obj.GetValue(IsMouseUpFocusProperty);
         }
 
         /// <summary>
-        /// 设置鼠标按下时聚焦
+        /// 设置鼠标抬起时是否聚焦
         /// </summary>
-        public static void SetIsMouseDownFocus(DependencyObject obj, bool value)
+        public static void SetIsMouseUpFocus(DependencyObject obj, bool value)
         {
-            obj.SetValue(IsMouseDownFocusProperty, value);
+            obj.SetValue(IsMouseUpFocusProperty, value);
         }
 
         /// <summary>
-        /// 鼠标按下时聚焦
+        /// 鼠标抬起时是否聚焦
         /// </summary>
-        public static readonly DependencyProperty IsMouseDownFocusProperty =
-            DependencyProperty.RegisterAttached("IsMouseDownFocus", typeof(bool), typeof(DanceFocusTrigger), new PropertyMetadata(false, new PropertyChangedCallback((s, e) =>
+        public static readonly DependencyProperty IsMouseUpFocusProperty =
+            DependencyProperty.RegisterAttached("IsMouseUpFocus", typeof(bool), typeof(DanceFocusTrigger), new PropertyMetadata(false, new PropertyChangedCallback((s, e) =>
             {
                 if (s is not FrameworkElement element)
                     return;
@@ -46,13 +46,16 @@ namespace Dance.Wpf
                     register = newValue;
                 }
 
-                element.MouseUp -= Element_MouseUp;
+                element.MouseUp += Element_MouseUp;
                 if (register)
                 {
                     element.MouseUp += Element_MouseUp;
                 }
             })));
 
+        /// <summary>
+        /// 鼠标抬起
+        /// </summary>
         private static void Element_MouseUp(object sender, MouseButtonEventArgs e)
         {
             if (sender is not FrameworkElement element)

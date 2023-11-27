@@ -470,11 +470,6 @@ namespace Dance.Wpf
             this.PART_Progress = this.Template.FindName(nameof(PART_Progress), this) as DanceTimelineProgress;
             this.PART_FrameSelect = this.Template.FindName(nameof(PART_FrameSelect), this) as DanceFrameSelect;
 
-            if (this.PART_Scale != null)
-            {
-                this.PART_Scale.OwnerTimeline = this;
-            }
-
             this.PART_VerticalScrollBar = this.Template.FindName(nameof(PART_VerticalScrollBar), this) as ScrollBar;
             if (this.PART_VerticalScrollBar != null)
             {
@@ -551,13 +546,37 @@ namespace Dance.Wpf
         /// <summary>
         /// 更新选择区域，在修改元素选择之后调用更新选择区域的状态
         /// </summary>
-        public void UpdateSelection()
+        public void UpdateElementSelection()
         {
             DanceTimelineFrameSelectTool? selectTool = this.GetTool<DanceTimelineFrameSelectTool>();
             if (selectTool == null)
                 return;
 
             selectTool.UpdateSelection();
+        }
+
+        /// <summary>
+        /// 清理轨道选择
+        /// </summary>
+        public void ClearTrackSelection()
+        {
+            DanceTimelineTrackTool? trackTool = this.GetTool<DanceTimelineTrackTool>();
+            if (trackTool == null)
+                return;
+
+            trackTool.SelectTrack(-1);
+        }
+
+        /// <summary>
+        /// 清理元素选择
+        /// </summary>
+        public void ClearElementSelection()
+        {
+            DanceTimelineFrameSelectTool? selectTool = this.GetTool<DanceTimelineFrameSelectTool>();
+            if (selectTool == null)
+                return;
+
+            selectTool.ClearSelection();
         }
 
         /// <summary>
@@ -699,7 +718,7 @@ namespace Dance.Wpf
             double left = this.PART_HorizontalScrollBar.Value - this.GetPixelFromTimeSpan(this.CurrentTime);
             this.PART_Progress.Margin = new Thickness(-left - this.ProgressWidth / 2d, 0, 0, 0);
             this.PART_Progress.Visibility = (-left < 0 || left > this.ProgressWidth) ? Visibility.Collapsed : Visibility.Visible;
-            this.PART_Scale.InvalidateVisual();
+            this.PART_Scale.Update();
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackPanel>(this)?.ForEach(p => p.InvalidateVisual());
             DanceXamlExpansion.GetVisualTreeDescendants<DanceTimelineTrackHeaderPanel>(this)?.ForEach(p => p.InvalidateVisual());
         }
@@ -736,11 +755,6 @@ namespace Dance.Wpf
 
             this.Status = DanceTimelineStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
-
-            if (this.PART_Scale != null)
-            {
-                this.PART_Scale.IsHitTestVisible = true;
-            }
         }
 
         /// <summary>
@@ -752,11 +766,6 @@ namespace Dance.Wpf
 
             this.Status = DanceTimelineStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
-
-            if (this.PART_Scale != null)
-            {
-                this.PART_Scale.IsHitTestVisible = true;
-            }
         }
 
         // ==========================================================================================================================================
@@ -788,11 +797,6 @@ namespace Dance.Wpf
         {
             this.Status = DanceTimelineStatus.FrameSelect;
             this.Cursor = Cursors.Arrow;
-
-            if (this.PART_Scale != null)
-            {
-                this.PART_Scale.IsHitTestVisible = true;
-            }
         }
 
         /// <summary>

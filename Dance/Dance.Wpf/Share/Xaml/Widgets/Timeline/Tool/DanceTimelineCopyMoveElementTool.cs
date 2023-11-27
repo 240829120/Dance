@@ -47,10 +47,6 @@ namespace Dance.Wpf
             if (Keyboard.Modifiers == ModifierKeys.Shift)
             {
                 this.Timeline.Status = DanceTimelineStatus.CopyMoveElement;
-                if (this.Timeline.PART_Scale != null)
-                {
-                    this.Timeline.PART_Scale.IsHitTestVisible = false;
-                }
             }
         }
 

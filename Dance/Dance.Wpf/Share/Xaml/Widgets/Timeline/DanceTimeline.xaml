@@ -172,6 +172,27 @@
         </Setter>
     </Style>
 
+    <Style TargetType="dance:DanceTimelineScale">
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="dance:DanceTimelineScale">
+                    <Grid Background="{x:Null}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <dance:DanceTimelineScaleDrawing x:Name="PART_Drawing"
+                                                         Grid.RowSpan="2" IsHitTestVisible="False"
+                                                         ScaleBrush="{Binding Path=ScaleBrush,RelativeSource={RelativeSource AncestorType=dance:DanceTimelineScale,Mode=FindAncestor}}"
+                                                         ScaleValueBrush="{Binding Path=ScaleValueBrush,RelativeSource={RelativeSource AncestorType=dance:DanceTimelineScale,Mode=FindAncestor}}"></dance:DanceTimelineScaleDrawing>
+                        <Border Background="Transparent"></Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <!-- 时间线 -->
     <Style TargetType="dance:DanceTimeline">
         <Setter Property="FocusVisualStyle" Value="{x:Null}"></Setter>
@@ -246,6 +267,9 @@
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="True">
                 <Setter Property="BorderBrush" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH_SELECTED}}"></Setter>
+            </Trigger>
+            <Trigger Property="IsPlaying" Value="True">
+                <Setter Property="BorderBrush" Value="Red"></Setter>
             </Trigger>
         </Style.Triggers>
     </Style>
