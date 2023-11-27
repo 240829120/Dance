@@ -591,6 +591,23 @@ namespace Dance.Wpf
             return this.GetTimeSpanFromPixel(this.PART_FrameSelect.ActualWidth);
         }
 
+        /// <summary>
+        /// 滚动到时间刻度
+        /// </summary>
+        /// <param name="time">时间</param>
+        public void ScrollTo(TimeSpan time)
+        {
+            if (this.PART_HorizontalScrollBar == null || this.PART_FrameSelect == null)
+                return;
+
+            time = time < TimeSpan.Zero ? TimeSpan.Zero : time;
+            time = time > this.Duration ? this.Duration : time;
+
+            double x = this.GetPixelFromTimeSpan(time);
+            double dest = x - this.PART_FrameSelect.ActualWidth / 2d;
+            this.PART_HorizontalScrollBar.Value = Math.Max(0, dest);
+        }
+
         // ==========================================================================================================================================
         // Internal Function
 
