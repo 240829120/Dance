@@ -202,7 +202,7 @@
         <Setter Property="BorderThickness" Value="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_THICKNESS}}"></Setter>
         <Setter Property="HighlightBrush" Value="#ffF7776F"></Setter>
         <Setter Property="ScaleValueBrush" Value="Black"></Setter>
-        <Setter Property="ScaleBrush" Value="#ff949494"></Setter>
+        <Setter Property="ScaleBrush" Value="#33000000"></Setter>
         <Setter Property="ItemsPanel">
             <Setter.Value>
                 <ItemsPanelTemplate>

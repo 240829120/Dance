@@ -35,9 +35,9 @@ namespace Dance.Wpf
         /// <summary>
         /// 画刷
         /// </summary>
-        public SolidColorBrush Brush
+        public Brush Brush
         {
-            get { return (SolidColorBrush)GetValue(BrushProperty); }
+            get { return (Brush)GetValue(BrushProperty); }
             set { SetValue(BrushProperty, value); }
         }
 
@@ -45,7 +45,7 @@ namespace Dance.Wpf
         /// 画刷
         /// </summary>
         public static readonly DependencyProperty BrushProperty =
-            DependencyProperty.Register("Brush", typeof(SolidColorBrush), typeof(DanceTimelineTrackHighlight), new PropertyMetadata(new SolidColorBrush(Colors.Red)));
+            DependencyProperty.Register("Brush", typeof(Brush), typeof(DanceTimelineTrackHighlight), new PropertyMetadata(new SolidColorBrush(Colors.Red)));
 
         #endregion
 
