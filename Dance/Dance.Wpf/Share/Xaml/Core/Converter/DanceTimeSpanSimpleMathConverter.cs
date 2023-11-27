@@ -11,7 +11,7 @@ namespace Dance.Wpf
     /// <summary>
     /// 算法
     /// </summary>
-    public enum DanceSimpleMathConverterType
+    public enum DanceTimeSpanSimpleMathConverterType
     {
         /// <summary>
         /// 加法
@@ -21,38 +21,32 @@ namespace Dance.Wpf
         /// <summary>
         /// 减法
         /// </summary>
-        Subtract,
-
-        /// <summary>
-        /// 乘法
-        /// </summary>
-        Multiply,
+        Subtract
     }
 
     /// <summary>
-    /// 简单数学算法转化器
+    /// TimeSpan 简单数学转化器
     /// </summary>
-    public class DanceSimpleMathConverter : DanceConverterBase
+    public class DanceTimeSpanSimpleMathConverter : DanceConverterBase
     {
         /// <summary>
         /// 转化方法
         /// </summary>
-        public DanceSimpleMathConverterType ConverterType { get; set; } = DanceSimpleMathConverterType.Add;
+        public DanceTimeSpanSimpleMathConverterType ConverterType { get; set; } = DanceTimeSpanSimpleMathConverterType.Add;
 
         /// <summary>
         /// 转化
         /// </summary>
         public override object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            _ = double.TryParse(value?.ToString(), out double v1);
-            _ = double.TryParse(parameter?.ToString(), out double v2);
+            _ = TimeSpan.TryParse(value?.ToString(), out TimeSpan v1);
+            _ = TimeSpan.TryParse(parameter?.ToString(), out TimeSpan v2);
 
             return this.ConverterType switch
             {
-                DanceSimpleMathConverterType.Add => v1 + v2,
-                DanceSimpleMathConverterType.Subtract => v1 - v2,
-                DanceSimpleMathConverterType.Multiply => v1 * v2,
-                _ => (object)(v1 + v2),
+                DanceTimeSpanSimpleMathConverterType.Add => v1 + v2,
+                DanceTimeSpanSimpleMathConverterType.Subtract => v1 - v2,
+                _ => (v1 + v2),
             };
         }
     }

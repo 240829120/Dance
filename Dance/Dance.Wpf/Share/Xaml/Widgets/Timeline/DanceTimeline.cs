@@ -813,7 +813,11 @@ namespace Dance.Wpf
             if (offset <= TimeSpan.Zero)
                 return;
 
-            this.CurrentTime += offset;
+            TimeSpan dest = this.CurrentTime + offset;
+            dest = dest < TimeSpan.Zero ? TimeSpan.Zero : dest;
+            dest = dest > this.Duration ? this.Duration : dest;
+
+            this.CurrentTime = dest;
             this.LastUpdateTime = DateTime.Now;
         }
 
