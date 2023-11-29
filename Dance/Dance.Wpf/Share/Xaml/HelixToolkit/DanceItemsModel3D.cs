@@ -112,7 +112,27 @@ namespace Dance.Wpf
         /// 命中测试管理器
         /// </summary>
         public static readonly DependencyProperty OctreeManagerProperty =
-            DependencyProperty.Register("OctreeManager", typeof(IOctreeManagerWrapper), typeof(DanceItemsModel3D), new PropertyMetadata(null));
+            DependencyProperty.Register("OctreeManager", typeof(IOctreeManagerWrapper), typeof(DanceItemsModel3D), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceItemsModel3D items)
+                    return;
+
+                if (e.OldValue != null)
+                {
+                    items.RemoveLogicalChild(e.OldValue);
+                }
+
+                if (e.NewValue != null)
+                {
+                    items.AddLogicalChild(e.NewValue);
+                }
+
+                if (items.SceneNode is GroupNode node && e.NewValue is IOctreeManagerWrapper wrapper)
+                {
+                    node.OctreeManager = wrapper.Manager;
+                }
+
+            })));
 
         #endregion
 
@@ -124,7 +144,7 @@ namespace Dance.Wpf
         /// </summary>
         private void SceneNode_Attached(object? sender, EventArgs e)
         {
-            this.Collection_CollectionChanged_Create(this.ItemsSource);
+            this.Collection_CollectionChanged_Add(this.ItemsSource);
         }
 
         /// <summary>
@@ -154,7 +174,7 @@ namespace Dance.Wpf
             }
 
             this.Collection_CollectionChanged_Clear();
-            this.Collection_CollectionChanged_Create(newValue);
+            this.Collection_CollectionChanged_Add(newValue);
 
             if (this.Children.Count > 0 && this.SceneNode is GroupNode group)
             {
@@ -184,7 +204,7 @@ namespace Dance.Wpf
                     break;
                 case NotifyCollectionChangedAction.Reset:
                     this.Collection_CollectionChanged_Clear();
-                    this.Collection_CollectionChanged_Create(e.NewItems);
+                    this.Collection_CollectionChanged_Add(e.NewItems);
                     break;
                 default:
                     break;
@@ -200,32 +220,6 @@ namespace Dance.Wpf
             {
                 this.Children.Clear();
                 this.CacheDic.Clear();
-            }
-        }
-
-        /// <summary>
-        /// 列表改变 -- 创建
-        /// </summary>
-        /// <param name="items">项集合</param>
-        private void Collection_CollectionChanged_Create(IEnumerable? items)
-        {
-            if (items == null)
-                return;
-
-            lock (this.CacheDic)
-            {
-                foreach (object item in items)
-                {
-                    DataTemplate? template = this.ItemTemplateSelector?.SelectTemplate(item, null) ?? this.ItemTemplate;
-                    if (template == null)
-                        continue;
-
-                    if (template.LoadContent() is not Element3D element)
-                        throw new InvalidOperationException("Cannot create a Model3D from ItemTemplate.");
-
-                    this.Children.Add(element);
-                    this.CacheDic.Add(item, element);
-                }
             }
         }
 
@@ -252,6 +246,7 @@ namespace Dance.Wpf
                     if (template.LoadContent() is not Element3D element)
                         continue;
 
+                    element.DataContext = item;
                     this.CacheDic.Add(item, element);
                     this.Children.Add(element);
                 }
