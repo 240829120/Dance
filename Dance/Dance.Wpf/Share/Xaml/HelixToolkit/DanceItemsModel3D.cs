@@ -145,6 +145,11 @@ namespace Dance.Wpf
         private void SceneNode_Attached(object? sender, EventArgs e)
         {
             this.Collection_CollectionChanged_Add(this.ItemsSource);
+
+            if (this.Children.Count > 0 && this.SceneNode is GroupNode group)
+            {
+                group.OctreeManager?.RequestRebuild();
+            }
         }
 
         /// <summary>
