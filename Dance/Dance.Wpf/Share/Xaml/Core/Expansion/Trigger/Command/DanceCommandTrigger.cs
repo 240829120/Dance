@@ -232,6 +232,57 @@ namespace Dance.Wpf
 
         #endregion
 
+        #region PreviewMouseDownCommand -- 鼠标按下命令
+
+        /// <summary>
+        /// 获取鼠标按下命令
+        /// </summary>
+        public static ICommand GetPreviewMouseDownCommand(DependencyObject obj)
+        {
+            return (ICommand)obj.GetValue(PreviewMouseDownCommandProperty);
+        }
+
+        /// <summary>
+        /// 设置鼠标按下命令
+        /// </summary>
+        public static void SetPreviewMouseDownCommand(DependencyObject obj, ICommand value)
+        {
+            obj.SetValue(PreviewMouseDownCommandProperty, value);
+        }
+
+        /// <summary>
+        /// 鼠标按下命令
+        /// </summary>
+        public static readonly DependencyProperty PreviewMouseDownCommandProperty =
+            DependencyProperty.RegisterAttached("PreviewMouseDownCommand", typeof(ICommand), typeof(DanceCommandTrigger), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not FrameworkElement element)
+                    return;
+
+                element.PreviewMouseDown -= Execute_PreviewMouseDown;
+                element.PreviewMouseDown += Execute_PreviewMouseDown;
+            })));
+
+        /// <summary>
+        /// 执行鼠标按下
+        /// </summary>
+        private static void Execute_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                if (sender is not FrameworkElement element || GetPreviewMouseDownCommand(element) is not ICommand command)
+                    return;
+
+                command.Execute(null);
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex);
+            }
+        }
+
+        #endregion
+
         #region DoubleClickCommand -- 双击命令
 
         /// <summary>

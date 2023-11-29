@@ -1001,7 +1001,6 @@
                 <ControlTemplate TargetType="{x:Type avalonDockControls:LayoutAnchorableControl}">
                     <Border x:Name="Bd"
                         Focusable="True"
-                        dance:DanceFocusTrigger.IsMouseUpFocus="True"
 						Background="{TemplateBinding Background}"
                         BorderBrush="{DynamicResource ResourceKey={x:Static Member=dance:DanceResourceKey.BORDER_BRUSH}}"
 						KeyboardNavigation.TabNavigation="Cycle">
