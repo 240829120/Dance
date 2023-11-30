@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Media.Media3D;
 
 namespace Dance.Wpf
 {
@@ -17,5 +18,10 @@ namespace Dance.Wpf
         /// 数据模板
         /// </summary>
         DataTemplate DataTemplate { get; }
+
+        /// <summary>
+        /// 变换
+        /// </summary>
+        MatrixTransform3D Transform { get; set; }
     }
 }
