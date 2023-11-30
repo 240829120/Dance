@@ -29,6 +29,17 @@ using Dance;
 
 namespace Dance.WpfTest
 {
+    public class TestModel : DanceModel, IDanceModel3D
+    {
+        public string PART_DanceObjectType => this.GetType()?.AssemblyQualifiedName ?? string.Empty;
+
+
+        public DataTemplate DataTemplate { get; set; }
+
+
+
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -42,95 +53,17 @@ namespace Dance.WpfTest
             this.Closed += MainWindow_Closed;
         }
 
-        private List<TimelineTrackModel> list = new();
+        public List<TestModel> list = new List<TestModel>();
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            //this.propertyGrid.SelectedObject = new Student();
-
-            Random random = new();
-
-            for (int t = 0; t < 20; t++)
-            {
-                TimelineTrackModel track = new() { Name = $"轨道{t}" };
-
-                TimeSpan beginTime = TimeSpan.FromSeconds(random.Next(0, (int)TimeSpan.FromMinutes(5).TotalSeconds));
-
-                for (int i = 0; i < 100; ++i)
-                {
-                    TimeSpan endTime = TimeSpan.FromSeconds(random.Next((int)beginTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds));
-
-                    if (beginTime >= this.timeline.Duration || endTime >= this.timeline.Duration)
-                        break;
-
-                    TimelineTrackItemModel item = new()
-                    {
-                        BeginTime = beginTime,
-                        EndTime = endTime,
-                        Name = $"{t}_{i}"
-                    };
-
-                    track.Items.Add(item);
-
-                    beginTime = TimeSpan.FromSeconds(random.Next((int)endTime.TotalSeconds, (int)(beginTime + TimeSpan.FromMinutes(5)).TotalSeconds)); ;
-                }
-
-                list.Add(track);
-            }
-
-            this.timeline.ItemsSource = list;
+            this.list.Add
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)
         {
             DanceDomain.Current?.Dispose();
             System.Windows.Application.Current.Shutdown();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            this.timeline.IsPlaying = !this.timeline.IsPlaying;
-        }
-
-        private void timeline_ElementDragBegin(object sender, DanceTimelineElementDragBeginEventArgs e)
-        {
-            if (e.Element.DataContext is not TimelineTrackItemModel model)
-                return;
-
-            e.Data= model;
-        }
-
-        private void timeline_ElementDragOver(object sender, DanceTimelineElementDragEventArgs e)
-        {
-            if (e.EventArgs.Data.GetData(typeof(TimelineTrackItemModel)) is not TimelineTrackItemModel model)
-                return;
-
-            e.BeginTime = model.BeginTime;
-            e.EndTime = model.EndTime;
-        }
-
-        private void timeline_ElementDrop(object sender, DanceTimelineElementDragEventArgs e)
-        {
-            if (e.BeginTime == null || e.EndTime == null)
-                return;
-
-            if (e.Track.DataContext is not TimelineTrackModel tackModel)
-                return;
-
-            if (e.EventArgs.Data.GetData(typeof(TimelineTrackItemModel)) is not TimelineTrackItemModel model)
-                return;
-
-            TimelineTrackItemModel? destModel = model.JsonObjectCopy<TimelineTrackItemModel>();
-            if (destModel == null)
-                return;
-
-            destModel.BeginTime = e.BeginTime.Value;
-            destModel.EndTime = e.EndTime.Value;
-            destModel.IsSelected = false;
-
-            tackModel.Items.Add(destModel);
-
-
         }
     }
 }

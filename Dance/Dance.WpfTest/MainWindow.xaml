@@ -7,63 +7,21 @@
         xmlns:local="clr-namespace:Dance.WpfTest" 
         xmlns:dock="https://github.com/Dirkster99/AvalonDock"
         xmlns:toolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:hx="http://helix-toolkit.org/wpf/SharpDX"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d" Background="White" x:Name="uc"
         Title="MainWindow" Height="800" Width="1400">
 
     <Window.Resources>
+        <DataTemplate x:Key="[Dance.Art.Scene]:Model">
+            <hx:Element3DPresenter Content="{Binding GroupModel,Mode=OneWay}"
+                               Transform="{Binding Path=Transform.TransformGroup,Mode=OneWay}"></hx:Element3DPresenter>
+        </DataTemplate>
     </Window.Resources>
 
     <Grid Background="Transparent">
-        <!--<toolkit:PropertyGrid x:Name="propertyGrid" Margin="20" Background="White" AutoGenerateProperties="True" HideInheritedProperties="True"
-                              FilterWatermark="搜索">
 
-        </toolkit:PropertyGrid>-->
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-            <RowDefinition Height="60"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <Border BorderBrush="Transparent" BorderThickness="1"  Margin="50">
-            <dance:DanceTimeline x:Name="timeline" Duration="01:00:00" Zoom="50" CurrentTime="00:00:00" 
-                                 ElementDragBegin="timeline_ElementDragBegin"
-                                 ElementDragOver="timeline_ElementDragOver"
-                                 ElementDrop="timeline_ElementDrop">
-                <dance:DanceTimeline.HeaderTemplate>
-                    <DataTemplate>
-                        <Border>
-                            <TextBlock Text="{Binding Name}" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,10,0"></TextBlock>
-                        </Border>
-                    </DataTemplate>
-                </dance:DanceTimeline.HeaderTemplate>
-                <dance:DanceTimeline.ElementTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding Path=Name}" VerticalAlignment="Center"></TextBlock>
-                    </DataTemplate>
-                </dance:DanceTimeline.ElementTemplate>
-            </dance:DanceTimeline>
-        </Border>
-
-        <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal">
-            <TextBlock Text="跟随" Margin="20,0,0,0"></TextBlock>
-            <CheckBox IsChecked="{Binding ElementName=timeline,Path=IsFollowProgress,Mode=TwoWay}" VerticalAlignment="Center"></CheckBox>
-            <TextBlock Text="只读" Margin="20,0,0,0"></TextBlock>
-            <CheckBox IsChecked="{Binding ElementName=timeline,Path=IsReadOnly,Mode=TwoWay}" VerticalAlignment="Center"></CheckBox>
-
-            <TextBlock Text="Zoom" Margin="20,0,0,0"></TextBlock>
-            <TextBlock Text="{Binding ElementName=timeline,Path=Zoom,Mode=OneWay}" Margin="20,0,0,0"></TextBlock>
-            <TextBlock Text="CurrentTime" Margin="20,0,0,0"></TextBlock>
-            <TextBlock Text="{Binding ElementName=timeline,Path=CurrentTime,Mode=OneWay}" Margin="20,0,0,0"></TextBlock>
-        </StackPanel>
-        <Slider Grid.Row="2" VerticalAlignment="Center" Minimum="1" Maximum="100" Value="{Binding ElementName=timeline,Path=Zoom,Mode=TwoWay}" Margin="50,0,50,0"
-                SmallChange="1"></Slider>
-
-        <StackPanel Grid.Row="3" Orientation="Horizontal">
-            <Button Width="120" Height="40" Content="播放/停止" Margin="20,0,0,0" Click="Button_Click"></Button>
-        </StackPanel>
 
     </Grid>
 </Window>
