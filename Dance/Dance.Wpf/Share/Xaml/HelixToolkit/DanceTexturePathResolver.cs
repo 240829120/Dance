@@ -1,6 +1,7 @@
 ﻿using HelixToolkit.SharpDX.Core;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -25,7 +26,14 @@ namespace Dance.Wpf
             if (string.IsNullOrWhiteSpace(dir))
                 return string.Empty;
 
-            return Path.Combine(dir, texturePath);
+            Debug.WriteLine($"modelPath: {modelPath}  ||  texturePath: {texturePath}");
+
+            if (Path.IsPathRooted(texturePath))
+                return texturePath;
+
+            string destPath = Path.GetFullPath(Path.Combine(dir, texturePath));
+
+            return destPath;
         }
     }
 }

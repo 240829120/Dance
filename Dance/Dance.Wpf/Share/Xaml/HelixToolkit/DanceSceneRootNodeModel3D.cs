@@ -14,13 +14,18 @@ namespace Dance.Wpf
     /// </summary>
     public class DanceSceneRootNodeModel3D : Element3D
     {
+        public DanceSceneRootNodeModel3D()
+        {
+            this.GroupNode = new() { Tag = this };
+        }
+
         // =======================================================================================================
         // Field
 
         /// <summary>
         /// 分组节点
         /// </summary>
-        private readonly GroupNode GroupNode = new();
+        private readonly GroupNode GroupNode;
 
         // =======================================================================================================
         // Property
