@@ -241,7 +241,7 @@ namespace Dance.Wpf
             {
                 foreach (object item in items)
                 {
-                    if (this.CacheDic.ContainsKey(item))
+                    if (item is not IDanceModel3D model || this.CacheDic.ContainsKey(item))
                         continue;
 
                     DataTemplate? template = this.ItemTemplateSelector?.SelectTemplate(item, null) ?? this.ItemTemplate;
@@ -252,6 +252,7 @@ namespace Dance.Wpf
                         continue;
 
                     element.DataContext = item;
+                    model.Element = element;
                     this.CacheDic.Add(item, element);
                     this.Children.Add(element);
                 }

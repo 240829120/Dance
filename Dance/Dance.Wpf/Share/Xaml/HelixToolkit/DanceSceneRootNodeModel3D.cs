@@ -1,8 +1,12 @@
-﻿using HelixToolkit.SharpDX.Core.Model.Scene;
+﻿using Assimp;
+using HelixToolkit.SharpDX.Core;
+using HelixToolkit.SharpDX.Core.Model.Scene;
 using HelixToolkit.Wpf.SharpDX;
+using SharpDX;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,7 +20,7 @@ namespace Dance.Wpf
     {
         public DanceSceneRootNodeModel3D()
         {
-            this.GroupNode = new() { Tag = this };
+            this.GroupNode = new(this);
         }
 
         // =======================================================================================================
@@ -25,7 +29,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 分组节点
         /// </summary>
-        private readonly GroupNode GroupNode;
+        private readonly DanceGroupNode3D GroupNode;
 
         // =======================================================================================================
         // Property
@@ -56,6 +60,8 @@ namespace Dance.Wpf
                     return;
 
                 element.GroupNode.AddChildNode(node);
+                //scene.Root.Attach(this.viewport.EffectsManager);
+                element.GroupNode.UpdateBoundsAndCenter();
 
             })));
 

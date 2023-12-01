@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HelixToolkit.Wpf.SharpDX;
+using SharpDX;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -23,5 +25,10 @@ namespace Dance.Wpf
         /// 变换
         /// </summary>
         MatrixTransform3D Transform { get; set; }
+
+        /// <summary>
+        /// 所属元素
+        /// </summary>
+        Element3D? Element { get; set; }
     }
 }
