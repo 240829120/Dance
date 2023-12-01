@@ -24,7 +24,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 变换
         /// </summary>
-        MatrixTransform3D Transform { get; set; }
+        Matrix Transform { get; set; }
 
         /// <summary>
         /// 所属元素
