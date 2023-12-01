@@ -17,6 +17,69 @@ namespace Dance.Wpf
     public class DanceTransformManipulator3D : GroupElement3D
     {
         /// <summary>
+        /// 操作类型
+        /// </summary>
+        private enum ManipulationType
+        {
+            None, TranslationX, TranslationY, TranslationZ, RotationX, RotationY, RotationZ, ScaleX, ScaleY, ScaleZ
+        }
+
+        private sealed class AlwaysHitGroupNode : GroupNode
+        {
+            private readonly HashSet<object> models = new();
+            private readonly DanceTransformManipulator3D manipulator;
+            public AlwaysHitGroupNode(DanceTransformManipulator3D manipulator)
+            {
+                this.manipulator = manipulator;
+            }
+
+            protected override bool OnAttach(IEffectsManager effectsManager)
+            {
+                models.Add(manipulator.translationX);
+                models.Add(manipulator.translationY);
+                models.Add(manipulator.translationZ);
+                models.Add(manipulator.rotationX);
+                models.Add(manipulator.rotationY);
+                models.Add(manipulator.rotationZ);
+                models.Add(manipulator.scaleX);
+                models.Add(manipulator.scaleY);
+                models.Add(manipulator.scaleZ);
+                return base.OnAttach(effectsManager);
+            }
+            protected override bool OnHitTest(HitTestContext context, Matrix totalModelMatrix, ref List<HitTestResult> hits)
+            {
+                if (base.OnHitTest(context, totalModelMatrix, ref hits))
+                {
+                    if (hits.Count > 0)
+                    {
+                        var res = new HitTestResult() { Distance = float.MaxValue };
+                        foreach (var hit in hits)
+                        {
+                            if (models.Contains(hit.ModelHit))
+                            {
+                                if (hit.Distance < res.Distance)
+                                {
+                                    res = hit;
+                                }
+                            }
+                        }
+                        res.Distance = 0;
+                    }
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 高亮颜色
+        /// </summary>
+        private static readonly Color4 Highlight_COLOR = Color.Yellow;
+
+        /// <summary>
         /// X轴平移形状
         /// </summary>
         private static readonly Geometry3D TranslationXGeometry;
@@ -60,89 +123,9 @@ namespace Dance.Wpf
             ScalingGeometry.UpdateOctree();
         }
 
-        // =======================================================================================================
-        // Field
-
         /// <summary>
-        /// 平移模型
+        /// 操作组件
         /// </summary>
-        private readonly MeshGeometryModel3D translationX, translationY, translationZ;
-
-        /// <summary>
-        /// 旋转模型
-        /// </summary>
-        private readonly MeshGeometryModel3D rotationX, rotationY, rotationZ;
-
-        /// <summary>
-        /// 缩放模型
-        /// </summary>
-        private readonly MeshGeometryModel3D scaleX, scaleY, scaleZ;
-
-        /// <summary>
-        /// 模型分组
-        /// </summary>
-        private readonly GroupModel3D translationGroup, rotationGroup, scaleGroup, ctrlGroup;
-
-        /// <summary>
-        /// 当前元素模型集合
-        /// </summary>
-        private readonly List<Element3D> models = new();
-
-        // =======================================================================================================
-        // Property
-
-        #region Target -- 目标
-
-        /// <summary>
-        /// 目标
-        /// </summary>
-        public IDanceModel3D? Target
-        {
-            get { return (IDanceModel3D?)GetValue(TargetProperty); }
-            set { SetValue(TargetProperty, value); }
-        }
-
-        /// <summary>
-        /// 目标
-        /// </summary>
-        public static readonly DependencyProperty TargetProperty =
-            DependencyProperty.Register("Target", typeof(IDanceModel3D), typeof(DanceTransformManipulator3D), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
-            {
-                if (s is not DanceTransformManipulator3D manipulator)
-                    return;
-
-                manipulator.OnTargetChanged();
-            })));
-
-        #endregion
-
-        #region Variables
-
-        private readonly Element3D xrayEffect;
-        private Vector3 centerOffset = Vector3.Zero;
-        private Vector3 translationVector = Vector3.Zero;
-        private Matrix rotationMatrix = Matrix.Identity;
-        private Matrix scaleMatrix = Matrix.Identity;
-        private Matrix targetMatrix = Matrix.Identity;
-
-        private Element3D? target;
-        private Viewport3DX? currentViewport;
-        private Vector3 lastHitPosWS;
-        private Vector3 normal;
-
-        private Vector3 direction;
-        private Vector3 currentHit;
-        private bool isCaptured = false;
-        private double sizeScale = 1;
-        private Color4 currentColor;
-        #endregion
-        private enum ManipulationType
-        {
-            None, TranslationX, TranslationY, TranslationZ, RotationX, RotationY, RotationZ, ScaleX, ScaleY, ScaleZ
-        }
-
-        private ManipulationType manipulationType = ManipulationType.None;
-
         public DanceTransformManipulator3D()
         {
             var rotationYMatrix = Matrix.RotationZ((float)Math.PI / 2);
@@ -229,20 +212,103 @@ namespace Dance.Wpf
             }
 
             Children.Add(xrayEffect);
+            SceneNode.Attached -= SceneNode_OnAttached;
             SceneNode.Attached += SceneNode_OnAttached;
-            SceneNode.Detached += SceneNode_OnDetached;
 
-
-            models.Add(this.translationX);
-            models.Add(this.translationY);
-            models.Add(this.translationZ);
-            models.Add(this.rotationX);
-            models.Add(this.rotationY);
-            models.Add(this.rotationZ);
-            models.Add(this.scaleX);
-            models.Add(this.scaleY);
-            models.Add(this.scaleZ);
+            childrenModels.Add(this.translationX);
+            childrenModels.Add(this.translationY);
+            childrenModels.Add(this.translationZ);
+            childrenModels.Add(this.rotationX);
+            childrenModels.Add(this.rotationY);
+            childrenModels.Add(this.rotationZ);
+            childrenModels.Add(this.scaleX);
+            childrenModels.Add(this.scaleY);
+            childrenModels.Add(this.scaleZ);
         }
+
+        // =======================================================================================================
+        // Field
+
+        /// <summary>
+        /// 平移模型
+        /// </summary>
+        private readonly MeshGeometryModel3D translationX, translationY, translationZ;
+
+        /// <summary>
+        /// 旋转模型
+        /// </summary>
+        private readonly MeshGeometryModel3D rotationX, rotationY, rotationZ;
+
+        /// <summary>
+        /// 缩放模型
+        /// </summary>
+        private readonly MeshGeometryModel3D scaleX, scaleY, scaleZ;
+
+        /// <summary>
+        /// 模型分组
+        /// </summary>
+        private readonly GroupModel3D translationGroup, rotationGroup, scaleGroup, ctrlGroup;
+
+        /// <summary>
+        /// 子模型集合
+        /// </summary>
+        private readonly List<Element3D> childrenModels = new();
+
+        /// <summary>
+        /// 当前操作类型
+        /// </summary>
+        private ManipulationType manipulationType = ManipulationType.None;
+
+        // ----------------------------------------------------------------------------
+
+        private readonly Element3D xrayEffect;
+        private Vector3 centerOffset = Vector3.Zero;
+        private Vector3 translationVector = Vector3.Zero;
+        private Matrix rotationMatrix = Matrix.Identity;
+        private Matrix scaleMatrix = Matrix.Identity;
+        private Matrix targetMatrix = Matrix.Identity;
+
+        private Element3D? target;
+        private Viewport3DX? currentViewport;
+        private Vector3 lastHitPosWS;
+        private Vector3 normal;
+
+        private Vector3 direction;
+        private Vector3 currentHit;
+        private bool isCaptured = false;
+        private double sizeScale = 1;
+        private Color4 currentColor;
+
+        // =======================================================================================================
+        // Property
+
+        #region Target -- 目标
+
+        /// <summary>
+        /// 目标
+        /// </summary>
+        public IDanceModel3D? Target
+        {
+            get { return (IDanceModel3D?)GetValue(TargetProperty); }
+            set { SetValue(TargetProperty, value); }
+        }
+
+        /// <summary>
+        /// 目标
+        /// </summary>
+        public static readonly DependencyProperty TargetProperty =
+            DependencyProperty.Register("Target", typeof(IDanceModel3D), typeof(DanceTransformManipulator3D), new PropertyMetadata(null, new PropertyChangedCallback((s, e) =>
+            {
+                if (s is not DanceTransformManipulator3D manipulator)
+                    return;
+
+                manipulator.OnTargetChanged();
+            })));
+
+        #endregion
+
+        // =======================================================================================================
+        // Private Function
 
         /// <summary>
         /// 判断元素是否被命中
@@ -251,35 +317,38 @@ namespace Dance.Wpf
         /// <returns>是否被命中</returns>
         public bool HitTest(Element3D element)
         {
-            return this.models.Contains(element);
+            return this.childrenModels.Contains(element);
         }
 
-        private void SceneNode_OnDetached(object? sender, EventArgs? e)
-        {
-            //if (target != null)
-            //{
-            //    target.SceneNode.OnTransformChanged -= SceneNode_OnTransformChanged;
-            //}
-        }
-
+        /// <summary>
+        /// 附加节点
+        /// </summary>
         private void SceneNode_OnAttached(object? sender, EventArgs? e)
         {
             OnTargetChanged();
         }
 
+        /// <summary>
+        /// 是否可以开始变换
+        /// </summary>
         protected virtual bool CanBeginTransform(MouseDown3DEventArgs? e)
         {
-            return true;
+            return this.IsEnabled;
         }
 
-        #region Handle Translation
+        // ----------------------------------------------------------------------------
+        // 平移处理
+
+        /// <summary>
+        /// 鼠标按下
+        /// </summary>
         private void Translation_Mouse3DDown(object? sender, MouseDown3DEventArgs? e)
         {
             if (e == null || target == null || !CanBeginTransform(e))
             {
                 return;
             }
-            if (!(e.HitTestResult.ModelHit is Element3D elem))
+            if (e.HitTestResult.ModelHit is not Element3D elem)
             {
                 manipulationType = ManipulationType.None;
                 isCaptured = false;
@@ -306,9 +375,13 @@ namespace Dance.Wpf
                 isCaptured = false;
                 return;
             }
-            var material = ((e.HitTestResult.ModelHit as MeshGeometryModel3D).Material as DiffuseMaterial);
-            currentColor = material.DiffuseColor;
-            material.DiffuseColor = Color.Yellow;
+
+            if (e.HitTestResult.ModelHit is MeshGeometryModel3D model && model.Material is DiffuseMaterial material)
+            {
+                this.currentColor = material.DiffuseColor;
+                material.DiffuseColor = Highlight_COLOR;
+            }
+
             currentViewport = e.Viewport;
             var cameraNormal = Vector3.Normalize(e.Viewport.Camera.CameraInternal.LookDirection);
             this.lastHitPosWS = e.HitTestResult.PointHit;
@@ -321,6 +394,9 @@ namespace Dance.Wpf
             }
         }
 
+        /// <summary>
+        /// 鼠标移动
+        /// </summary>
         private void Translation_Mouse3DMove(object? sender, MouseMove3DEventArgs? e)
         {
             if (e == null || !isCaptured)
@@ -347,16 +423,20 @@ namespace Dance.Wpf
                 OnUpdateTargetMatrix();
             }
         }
-        #endregion
 
-        #region Handle Rotation
+        // ----------------------------------------------------------------------------
+        // 旋转处理
+
+        /// <summary>
+        /// 鼠标按下
+        /// </summary>
         private void Rotation_Mouse3DDown(object? sender, MouseDown3DEventArgs? e)
         {
             if (e == null || target == null || !CanBeginTransform(e))
             {
                 return;
             }
-            if (!(e.HitTestResult.ModelHit is Element3D elem))
+            if (e.HitTestResult.ModelHit is not Element3D elem)
             {
                 manipulationType = ManipulationType.None;
                 isCaptured = false;
@@ -383,14 +463,17 @@ namespace Dance.Wpf
                 isCaptured = false;
                 return;
             }
-            var material = ((e.HitTestResult.ModelHit as MeshGeometryModel3D).Material as DiffuseMaterial);
-            currentColor = material.DiffuseColor;
-            material.DiffuseColor = Color.Yellow;
+
+            if (e.HitTestResult.ModelHit is MeshGeometryModel3D model && model.Material is DiffuseMaterial material)
+            {
+                this.currentColor = material.DiffuseColor;
+                material.DiffuseColor = Highlight_COLOR;
+            }
+
             currentViewport = e.Viewport;
             normal = Vector3.Normalize(e.Viewport.Camera.CameraInternal.LookDirection);
             this.lastHitPosWS = e.HitTestResult.PointHit;
-            //var up = Vector3.Cross(cameraNormal, direction);
-            //normal = Vector3.Cross(up, direction);
+
             if (currentViewport.UnProjectOnPlane(e.Position.ToVector2(), lastHitPosWS, normal, out var hit))
             {
                 currentHit = hit;
@@ -398,6 +481,9 @@ namespace Dance.Wpf
             }
         }
 
+        /// <summary>
+        /// 鼠标移动
+        /// </summary>
         private void Rotation_Mouse3DMove(object? sender, MouseMove3DEventArgs? e)
         {
             if (e == null || !isCaptured)
@@ -441,16 +527,20 @@ namespace Dance.Wpf
                 OnUpdateTargetMatrix();
             }
         }
-        #endregion
 
-        #region Handle Scaling
+        // ----------------------------------------------------------------------------
+        // 缩放处理
+
+        /// <summary>
+        /// 鼠标按下
+        /// </summary>
         private void Scaling_Mouse3DDown(object? sender, MouseDown3DEventArgs? e)
         {
             if (e == null || target == null || !CanBeginTransform(e))
             {
                 return;
             }
-            if (!(e.HitTestResult.ModelHit is Element3D elem))
+            if (e.HitTestResult.ModelHit is not Element3D elem)
             {
                 manipulationType = ManipulationType.None;
                 isCaptured = false;
@@ -477,9 +567,13 @@ namespace Dance.Wpf
                 isCaptured = false;
                 return;
             }
-            var material = ((e.HitTestResult.ModelHit as MeshGeometryModel3D).Material as DiffuseMaterial);
-            currentColor = material.DiffuseColor;
-            material.DiffuseColor = Color.Yellow;
+
+            if (e.HitTestResult.ModelHit is MeshGeometryModel3D model && model.Material is DiffuseMaterial material)
+            {
+                this.currentColor = material.DiffuseColor;
+                material.DiffuseColor = Highlight_COLOR;
+            }
+
             currentViewport = e.Viewport;
             var cameraNormal = Vector3.Normalize(e.Viewport.Camera.CameraInternal.LookDirection);
             this.lastHitPosWS = e.HitTestResult.PointHit;
@@ -492,6 +586,9 @@ namespace Dance.Wpf
             }
         }
 
+        /// <summary>
+        /// 鼠标移动
+        /// </summary>
         private void Scaling_Mouse3DMove(object? sender, MouseMove3DEventArgs? e)
         {
             if (e == null || !isCaptured)
@@ -531,29 +628,40 @@ namespace Dance.Wpf
                 OnUpdateTargetMatrix();
             }
         }
-        #endregion
 
+        // ----------------------------------------------------------------------------
+        // 其他
+
+        /// <summary>
+        /// 鼠标抬起
+        /// </summary>
         private void Manipulation_Mouse3DUp(object? sender, MouseUp3DEventArgs? e)
         {
-            if (e == null || isCaptured)
+            if (e == null)
+                return;
+
+            if (isCaptured && e.HitTestResult.ModelHit is MeshGeometryModel3D model && model.Material is DiffuseMaterial material)
             {
-                var material = ((e.HitTestResult.ModelHit as MeshGeometryModel3D).Material as DiffuseMaterial);
                 material.DiffuseColor = currentColor;
             }
+
             manipulationType = ManipulationType.None;
             isCaptured = false;
         }
 
+        /// <summary>
+        /// 重置变换
+        /// </summary>
         private void ResetTransforms()
         {
             scaleMatrix = rotationMatrix = targetMatrix = Matrix.Identity;
             translationVector = Vector3.Zero;
             OnUpdateSelfTransform();
         }
+
         /// <summary>
-        /// Called when [target changed]. Use target boundingbox center as Manipulator center
+        /// 目标改变
         /// </summary>
-        /// <param name="target">The target.</param>
         private void OnTargetChanged()
         {
             if (this.Target == null || this.Target.Element == null)
@@ -568,12 +676,15 @@ namespace Dance.Wpf
                 this.Visibility = Visibility.Visible;
 
                 this.centerOffset = this.target.SceneNode.BoundsSphere.Center;
-                this.sizeScale = this.target.Bounds.Width;
+                this.sizeScale = MathF.Max(this.target.Bounds.Depth, MathF.Max(this.target.Bounds.Width, this.target.Bounds.Height));
 
                 SceneNode_OnTransformChanged(target.SceneNode, new TransformArgs(target.SceneNode.ModelMatrix));
             }
         }
 
+        /// <summary>
+        /// 变换改变
+        /// </summary>
         private void SceneNode_OnTransformChanged(object sender, TransformArgs e)
         {
             var m = e.Transform;
@@ -593,6 +704,9 @@ namespace Dance.Wpf
             //OnUpdateTargetMatrix();
         }
 
+        /// <summary>
+        /// 更新目标变换
+        /// </summary>
         private void OnUpdateTargetMatrix()
         {
             if (target == null)
@@ -604,6 +718,9 @@ namespace Dance.Wpf
 
         }
 
+        /// <summary>
+        /// 更新自身变换
+        /// </summary>
         private void OnUpdateSelfTransform()
         {
             var m = Matrix.Translation(centerOffset + translationVector);
@@ -612,60 +729,12 @@ namespace Dance.Wpf
             ctrlGroup.Transform = new System.Windows.Media.Media3D.MatrixTransform3D(m.ToMatrix3D());
         }
 
+        /// <summary>
+        /// 创建场景节点
+        /// </summary>
         protected override SceneNode OnCreateSceneNode()
         {
             return new AlwaysHitGroupNode(this);
-        }
-
-        private sealed class AlwaysHitGroupNode : GroupNode
-        {
-            private readonly HashSet<object> models = new();
-            private readonly DanceTransformManipulator3D manipulator;
-            public AlwaysHitGroupNode(DanceTransformManipulator3D manipulator)
-            {
-                this.manipulator = manipulator;
-            }
-
-            protected override bool OnAttach(IEffectsManager effectsManager)
-            {
-                models.Add(manipulator.translationX);
-                models.Add(manipulator.translationY);
-                models.Add(manipulator.translationZ);
-                models.Add(manipulator.rotationX);
-                models.Add(manipulator.rotationY);
-                models.Add(manipulator.rotationZ);
-                models.Add(manipulator.scaleX);
-                models.Add(manipulator.scaleY);
-                models.Add(manipulator.scaleZ);
-                return base.OnAttach(effectsManager);
-            }
-            protected override bool OnHitTest(HitTestContext context, Matrix totalModelMatrix, ref List<HitTestResult> hits)
-            {
-                //Set hit distance to 0 so event manipulator is inside the model, hit test still works
-                if (base.OnHitTest(context, totalModelMatrix, ref hits))
-                {
-                    if (hits.Count > 0)
-                    {
-                        var res = new HitTestResult() { Distance = float.MaxValue };
-                        foreach (var hit in hits)
-                        {
-                            if (models.Contains(hit.ModelHit))
-                            {
-                                if (hit.Distance < res.Distance)
-                                {
-                                    res = hit;
-                                }
-                            }
-                        }
-                        res.Distance = 0;
-                    }
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
         }
     }
 }
