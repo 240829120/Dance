@@ -681,7 +681,8 @@ namespace Dance.Wpf
                 this.sizeScale = 1;
                 if (this.Target.Element != null)
                 {
-                    this.sizeScale = MathF.Max(MathF.Max(this.Target.Element.Bounds.Width, this.Target.Element.Bounds.Height), this.Target.Element.Bounds.Depth);
+                    BoundingBox bounds = this.Target.Element is DanceTransformGroupElement3D group ? group.GetTransformBounds() : this.Target.Element.Bounds;
+                    this.sizeScale = MathF.Max(MathF.Max(bounds.Width, bounds.Height), bounds.Depth);
                 }
                 this.Target.PropertyChanged -= Target_PropertyChanged;
                 this.Target.PropertyChanged += Target_PropertyChanged;
