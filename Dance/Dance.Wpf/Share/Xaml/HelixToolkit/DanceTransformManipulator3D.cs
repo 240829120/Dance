@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace Dance.Wpf
 {
@@ -262,13 +263,8 @@ namespace Dance.Wpf
         // ----------------------------------------------------------------------------
 
         private readonly Element3D xrayEffect;
-        private Vector3 centerOffset = Vector3.Zero;
-        private Vector3 translationVector = Vector3.Zero;
-        private Matrix rotationMatrix = Matrix.Identity;
-        private Matrix scaleMatrix = Matrix.Identity;
-        private Matrix targetMatrix = Matrix.Identity;
 
-        private Element3D? target;
+        private Vector3 centerOffset;
         private Viewport3DX? currentViewport;
         private Vector3 lastHitPosWS;
         private Vector3 normal;
@@ -276,7 +272,7 @@ namespace Dance.Wpf
         private Vector3 direction;
         private Vector3 currentHit;
         private bool isCaptured = false;
-        private double sizeScale = 1;
+        private float sizeScale = 1;
         private Color4 currentColor;
 
         // =======================================================================================================
@@ -333,6 +329,9 @@ namespace Dance.Wpf
         /// </summary>
         protected virtual bool CanBeginTransform(MouseDown3DEventArgs? e)
         {
+            if (e == null || e.OriginalInputEventArgs is not MouseButtonEventArgs mouseEventArgs || mouseEventArgs.LeftButton != MouseButtonState.Pressed)
+                return false;
+
             return this.IsEnabled;
         }
 
@@ -344,7 +343,7 @@ namespace Dance.Wpf
         /// </summary>
         private void Translation_Mouse3DDown(object? sender, MouseDown3DEventArgs? e)
         {
-            if (e == null || target == null || !CanBeginTransform(e))
+            if (e == null || this.Target == null || !CanBeginTransform(e))
             {
                 return;
             }
@@ -399,7 +398,7 @@ namespace Dance.Wpf
         /// </summary>
         private void Translation_Mouse3DMove(object? sender, MouseMove3DEventArgs? e)
         {
-            if (e == null || !isCaptured)
+            if (e == null || this.Target == null || !isCaptured)
             {
                 return;
             }
@@ -410,17 +409,15 @@ namespace Dance.Wpf
                 switch (manipulationType)
                 {
                     case ManipulationType.TranslationX:
-                        translationVector += new Vector3(moveDir.X, 0, 0);
+                        this.Target.Transform.TranslationX += moveDir.X;
                         break;
                     case ManipulationType.TranslationY:
-                        translationVector += new Vector3(0, moveDir.Y, 0);
+                        this.Target.Transform.TranslationY += moveDir.Y;
                         break;
                     case ManipulationType.TranslationZ:
-                        translationVector += new Vector3(0, 0, moveDir.Z);
+                        this.Target.Transform.TranslationZ += moveDir.Z;
                         break;
                 }
-                OnUpdateSelfTransform();
-                OnUpdateTargetMatrix();
             }
         }
 
@@ -432,7 +429,7 @@ namespace Dance.Wpf
         /// </summary>
         private void Rotation_Mouse3DDown(object? sender, MouseDown3DEventArgs? e)
         {
-            if (e == null || target == null || !CanBeginTransform(e))
+            if (e == null || this.Target == null || !CanBeginTransform(e))
             {
                 return;
             }
@@ -486,13 +483,13 @@ namespace Dance.Wpf
         /// </summary>
         private void Rotation_Mouse3DMove(object? sender, MouseMove3DEventArgs? e)
         {
-            if (e == null || !isCaptured)
+            if (e == null || this.Target == null || !isCaptured)
             {
                 return;
             }
             if (currentViewport.UnProjectOnPlane(e.Position.ToVector2(), lastHitPosWS, normal, out var hit))
             {
-                var position = this.translationVector + centerOffset;
+                var position = new Vector3(this.Target.Transform.TranslationX, this.Target.Transform.TranslationY, this.Target.Transform.TranslationZ) + centerOffset;
                 var v = Vector3.Normalize(currentHit - position);
                 var u = Vector3.Normalize(hit - position);
                 var currentAxis = Vector3.Cross(u, v);
@@ -515,16 +512,15 @@ namespace Dance.Wpf
                 switch (manipulationType)
                 {
                     case ManipulationType.RotationX:
-                        rotationMatrix *= Matrix.RotationX(theta);
+                        this.Target.Transform.RotationX += theta;
                         break;
                     case ManipulationType.RotationY:
-                        rotationMatrix *= Matrix.RotationY(theta);
+                        this.Target.Transform.RotationY += theta;
                         break;
                     case ManipulationType.RotationZ:
-                        rotationMatrix *= Matrix.RotationZ(theta);
+                        this.Target.Transform.RotationZ += theta;
                         break;
                 }
-                OnUpdateTargetMatrix();
             }
         }
 
@@ -536,7 +532,7 @@ namespace Dance.Wpf
         /// </summary>
         private void Scaling_Mouse3DDown(object? sender, MouseDown3DEventArgs? e)
         {
-            if (e == null || target == null || !CanBeginTransform(e))
+            if (e == null || this.Target == null || !CanBeginTransform(e))
             {
                 return;
             }
@@ -591,7 +587,7 @@ namespace Dance.Wpf
         /// </summary>
         private void Scaling_Mouse3DMove(object? sender, MouseMove3DEventArgs? e)
         {
-            if (e == null || !isCaptured)
+            if (e == null || this.Target == null || !isCaptured)
             {
                 return;
             }
@@ -616,16 +612,26 @@ namespace Dance.Wpf
                         scale = moveDir.Z;
                         break;
                 }
-                var axisX = Vector3.TransformNormal(Vector3.UnitX, rotationMatrix);
-                var axisY = Vector3.TransformNormal(Vector3.UnitY, rotationMatrix);
-                var axisZ = Vector3.TransformNormal(Vector3.UnitZ, rotationMatrix);
-                var dotX = Vector3.Dot(axisX, orgAxis);
-                var dotY = Vector3.Dot(axisY, orgAxis);
-                var dotZ = Vector3.Dot(axisZ, orgAxis);
-                scaleMatrix.M11 += scale * Math.Abs(dotX);
-                scaleMatrix.M22 += scale * Math.Abs(dotY);
-                scaleMatrix.M33 += scale * Math.Abs(dotZ);
-                OnUpdateTargetMatrix();
+                Matrix rotationMatrix = Matrix.RotationX(this.Target.Transform.RotationX) * Matrix.RotationY(this.Target.Transform.RotationY) * Matrix.RotationZ(this.Target.Transform.RotationZ);
+
+                switch (manipulationType)
+                {
+                    case ManipulationType.ScaleX:
+                        var axisX = Vector3.TransformNormal(Vector3.UnitX, rotationMatrix);
+                        var dotX = Vector3.Dot(axisX, orgAxis);
+                        this.Target.Transform.ScaleX += scale * Math.Abs(dotX);
+                        break;
+                    case ManipulationType.ScaleY:
+                        var axisY = Vector3.TransformNormal(Vector3.UnitY, rotationMatrix);
+                        var dotY = Vector3.Dot(axisY, orgAxis);
+                        this.Target.Transform.ScaleY += scale * Math.Abs(dotY);
+                        break;
+                    case ManipulationType.ScaleZ:
+                        var axisZ = Vector3.TransformNormal(Vector3.UnitZ, rotationMatrix);
+                        var dotZ = Vector3.Dot(axisZ, orgAxis);
+                        this.Target.Transform.ScaleZ += scale * Math.Abs(dotZ);
+                        break;
+                }
             }
         }
 
@@ -654,8 +660,6 @@ namespace Dance.Wpf
         /// </summary>
         private void ResetTransforms()
         {
-            scaleMatrix = rotationMatrix = targetMatrix = Matrix.Identity;
-            translationVector = Vector3.Zero;
             OnUpdateSelfTransform();
         }
 
@@ -666,56 +670,32 @@ namespace Dance.Wpf
         {
             if (this.Target == null || this.Target.Element == null)
             {
-                this.target = null;
                 this.Visibility = Visibility.Collapsed;
                 this.ResetTransforms();
             }
             else
             {
-                this.target = this.Target.Element;
                 this.Visibility = Visibility.Visible;
 
-                this.centerOffset = this.target.SceneNode.BoundsSphere.Center;
-                this.sizeScale = MathF.Max(this.target.Bounds.Depth, MathF.Max(this.target.Bounds.Width, this.target.Bounds.Height));
+                this.centerOffset = new Vector3();
+                this.sizeScale = 1;
+                if (this.Target.Element != null)
+                {
+                    this.sizeScale = MathF.Max(MathF.Max(this.Target.Element.Bounds.Width, this.Target.Element.Bounds.Height), this.Target.Element.Bounds.Depth);
+                }
+                this.Target.PropertyChanged -= Target_PropertyChanged;
+                this.Target.PropertyChanged += Target_PropertyChanged;
 
-                SceneNode_OnTransformChanged(target.SceneNode, new TransformArgs(target.SceneNode.ModelMatrix));
+                this.OnUpdateSelfTransform();
             }
         }
 
         /// <summary>
-        /// 变换改变
+        /// 目标属性改变时触发
         /// </summary>
-        private void SceneNode_OnTransformChanged(object sender, TransformArgs e)
+        private void Target_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            var m = e.Transform;
-            m.Decompose(out var scale, out var rotation, out var translation);
-            scaleMatrix = Matrix.Scaling(scale);
-            rotationMatrix = Matrix.RotationQuaternion(rotation);
-            if (centerOffset != Vector3.Zero)
-            {
-                var org = Matrix.Translation(-centerOffset) * scaleMatrix * rotationMatrix * Matrix.Translation(centerOffset);
-                translationVector = translation - org.TranslationVector;
-            }
-            else
-            {
-                translationVector = m.TranslationVector;
-            }
-            OnUpdateSelfTransform();
-            //OnUpdateTargetMatrix();
-        }
-
-        /// <summary>
-        /// 更新目标变换
-        /// </summary>
-        private void OnUpdateTargetMatrix()
-        {
-            if (target == null)
-            {
-                return;
-            }
-            targetMatrix = Matrix.Translation(-centerOffset) * scaleMatrix * rotationMatrix * Matrix.Translation(centerOffset) * Matrix.Translation(translationVector);
-            target.Transform = new System.Windows.Media.Media3D.MatrixTransform3D(targetMatrix.ToMatrix3D());
-
+            this.OnUpdateSelfTransform();
         }
 
         /// <summary>
@@ -723,10 +703,16 @@ namespace Dance.Wpf
         /// </summary>
         private void OnUpdateSelfTransform()
         {
-            var m = Matrix.Translation(centerOffset + translationVector);
-            m.M11 = m.M22 = m.M33 = (float)sizeScale;
-
-            ctrlGroup.Transform = new System.Windows.Media.Media3D.MatrixTransform3D(m.ToMatrix3D());
+            if (this.Target == null)
+            {
+                this.ctrlGroup.Transform = null;
+            }
+            else
+            {
+                Vector3 translation = new(this.Target.Transform.TranslationX, this.Target.Transform.TranslationY, this.Target.Transform.TranslationZ);
+                Matrix transform = Matrix.Scaling(this.sizeScale) * Matrix.Translation(translation + this.centerOffset);
+                this.ctrlGroup.Transform = new System.Windows.Media.Media3D.MatrixTransform3D(transform.ToMatrix3D());
+            }
         }
 
         /// <summary>

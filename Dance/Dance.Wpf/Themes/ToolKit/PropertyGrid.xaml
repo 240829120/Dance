@@ -634,7 +634,7 @@
     </Style>
 
     <!-- 右键菜单 -->
-    <Style TargetType="{x:Type pg:PropertyGridContextMenu}" BasedOn="{x:Type ContextMenu}"></Style>
+    <Style TargetType="{x:Type pg:PropertyGridContextMenu}"></Style>
 
     <!-- 属性表格右键菜单 -->
     <!--<pg:PropertyGridContextMenu x:Key="{ComponentResourceKey TypeInTargetAssembly={x:Type pg:PropertyGrid}, ResourceId=SelectedObjectAdvancedOptionsMenu}">
@@ -839,6 +839,11 @@
                         <DataTrigger Binding="{Binding ElementName=_optionsImage, Path=ToolTip}" Value="{x:Static pg:StringConstants.Default}">
                             <Setter TargetName="_optionsImage" Property="Source" Value="./Images/AdvancedProperties11.png" />
                         </DataTrigger>
+
+                        <Trigger Property="dance:DanceToolkitPropertyGridOption.IsShowLabel" Value="False">
+                            <Setter TargetName="PART_Editor" Property="Grid.Column" Value="0"></Setter>
+                            <Setter TargetName="PART_Editor" Property="Grid.ColumnSpan" Value="2"></Setter>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

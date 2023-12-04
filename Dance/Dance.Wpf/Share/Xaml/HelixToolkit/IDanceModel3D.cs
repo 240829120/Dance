@@ -24,11 +24,16 @@ namespace Dance.Wpf
         /// <summary>
         /// 变换
         /// </summary>
-        DanceMatrix3 Transform { get; set; }
+        DanceTransform3D Transform { get; set; }
 
         /// <summary>
         /// 所属元素
         /// </summary>
         Element3D? Element { get; set; }
+
+        /// <summary>
+        /// 更新变换
+        /// </summary>
+        void UpdateTransform();
     }
 }
