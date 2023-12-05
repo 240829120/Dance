@@ -52,5 +52,16 @@ namespace Dance.UnitTest
 
             var dest = JsonConvert.DeserializeObject<List<StudentBase>>(json, new DanceJsonObjectConverter());
         }
+
+        [TestMethod]
+        public void HttpTest()
+        {
+            string url = "http://127.0.0.1:8082/output/WriteLine";
+            object data = new
+            {
+                msg = "你好"
+            };
+            var a = DanceHttpHelper.Post(url, data, null, null).Result;
+        }
     }
 }
