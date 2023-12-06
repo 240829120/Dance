@@ -62,12 +62,21 @@ namespace Dance.Common
                 controllerBuilder = controllerBuilder.AddApplicationPart(assembly);
             }
 
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("any", builder =>
+                {
+                    builder.SetIsOriginAllowed(_ => true).AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+                });
+            });
+
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
             builder.WebHost.UseUrls(this.Urls.ToArray());
 
             this.WebApp = builder.Build();
+            this.WebApp.UseCors("any");
 
             if (this.IsUseSwagger)
             {

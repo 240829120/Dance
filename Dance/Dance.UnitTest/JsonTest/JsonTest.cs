@@ -53,14 +53,60 @@ namespace Dance.UnitTest
             var dest = JsonConvert.DeserializeObject<List<StudentBase>>(json, new DanceJsonObjectConverter());
         }
 
+        /// <summary>
+        /// 输出日志返回
+        /// </summary>
+        public class WriteLineResponse
+        {
+            /// <summary>
+            /// 消息
+            /// </summary>
+            public string? message { get; set; }
+        }
+
         [TestMethod]
         public void HttpTest()
         {
-            string url = "http://127.0.0.1:8082/output/WriteLine";
+            //string url = "http://127.0.0.1:8082/output/Writeline";
+            //object data = new
+            //{
+            //    msg = "你好"
+            //};
+            //var a = DanceHttpHelper.Post<WriteLineResponse>(url, data, null, null).Result;
+
+            //string url = "http://127.0.0.1:8082/ControlGrid/AddItem";
+
+            //object data = new
+            //{
+            //    id = "ai_1",
+            //    path = "控制面板.art_cg",
+            //    type = "[Dance.Art.ControlGrid]:ScriptButton",
+            //    row = 1,
+            //    column = 0,
+            //};
+
+            //var a = DanceHttpHelper.Post(url, data, null, null).Result;
+
+            //string url = "http://127.0.0.1:8082/ControlGrid/MoveItem";
+
+            //object data = new
+            //{
+            //    path = "控制面板.art_cg",
+            //    id = "ai_1",
+            //    row = 0,
+            //    column = 0,
+            //};
+
+            //var a = DanceHttpHelper.Post(url, data, null, null).Result;
+
+            string url = "http://127.0.0.1:8082/ControlGrid/DeleteItem";
+
             object data = new
             {
-                msg = "你好"
+                path = "控制面板.art_cg",
+                id = "ai_1"
             };
+
             var a = DanceHttpHelper.Post(url, data, null, null).Result;
         }
     }
