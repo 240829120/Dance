@@ -26,12 +26,16 @@ namespace Dance.Wpf
             if (string.IsNullOrWhiteSpace(dir))
                 return string.Empty;
 
-            Debug.WriteLine($"modelPath: {modelPath}  ||  texturePath: {texturePath}");
+            Debug.WriteLine($"------------------------------------------------------------------");
+            Debug.WriteLine($"modelPath: {modelPath}");
+            Debug.WriteLine($"texturePath: {texturePath}");
 
             if (Path.IsPathRooted(texturePath))
                 return texturePath;
 
             string destPath = Path.GetFullPath(Path.Combine(dir, texturePath));
+
+            Debug.WriteLine($"destPath: {destPath}");
 
             return destPath;
         }
