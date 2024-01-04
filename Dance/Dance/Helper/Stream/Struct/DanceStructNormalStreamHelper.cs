@@ -17,8 +17,8 @@ namespace Dance
         /// <summary>
         /// 需要交换顺序的数据类型
         /// </summary>
-        public readonly static List<Type> NEED_SWIP_TYPE_LIST = new()
-        {
+        public readonly static List<Type> NEED_SWIP_TYPE_LIST =
+        [
             typeof(Int16),
             typeof(Int32),
             typeof(Int64),
@@ -28,7 +28,7 @@ namespace Dance
             typeof(float),
             typeof(double),
             typeof(decimal)
-        };
+        ];
 
         /// <summary>
         /// 标准化流辅助类
@@ -36,7 +36,7 @@ namespace Dance
         /// <param name="type">数据结构类型</param>
         public DanceStructNormalStreamHelper(Type type)
         {
-            List<Tuple<int, int>> infos = new();
+            List<Tuple<int, int>> infos = [];
             int index = 0;
 
             foreach (var item in type.GetFields(BindingFlags.Public | BindingFlags.Instance))

@@ -11,20 +11,12 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线工具
     /// </summary>
-    public abstract class DanceTimelineToolBase : DanceObject
+    /// <param name="timeline">时间线</param>
+    public abstract class DanceTimelineToolBase(DanceTimeline timeline) : DanceObject
     {
-        /// <summary>
-        /// 时间线工具
-        /// </summary>
-        /// <param name="timeline">时间线</param>
-        public DanceTimelineToolBase(DanceTimeline timeline)
-        {
-            this.Timeline = timeline;
-        }
-
         /// <summary>
         /// 时间线
         /// </summary>
-        public DanceTimeline Timeline { get; private set; }
+        public DanceTimeline Timeline { get; } = timeline;
     }
 }

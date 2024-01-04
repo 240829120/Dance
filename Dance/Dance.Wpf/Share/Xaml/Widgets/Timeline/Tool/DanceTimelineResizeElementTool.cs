@@ -9,17 +9,9 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线修改宽度工具
     /// </summary>
-    public class DanceTimelineResizeElementTool : DanceTimelineToolBase
+    /// <param name="timeline">时间线</param>
+    public class DanceTimelineResizeElementTool(DanceTimeline timeline) : DanceTimelineToolBase(timeline)
     {
-        /// <summary>
-        /// 时间线修改宽度工具
-        /// </summary>
-        /// <param name="timeline">时间线</param>
-        public DanceTimelineResizeElementTool(DanceTimeline timeline) : base(timeline)
-        {
-
-        }
-
         /// <summary>
         /// 尝试改变元素大小
         /// </summary>

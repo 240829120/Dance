@@ -9,17 +9,9 @@ namespace Dance.Wpf
     /// <summary>
     /// 轨道工具
     /// </summary>
-    public class DanceTimelineTrackTool : DanceTimelineToolBase
+    /// <param name="timeline">时间线</param>
+    public class DanceTimelineTrackTool(DanceTimeline timeline) : DanceTimelineToolBase(timeline)
     {
-        /// <summary>
-        /// 轨道工具
-        /// </summary>
-        /// <param name="timeline">时间线</param>
-        public DanceTimelineTrackTool(DanceTimeline timeline) : base(timeline)
-        {
-
-        }
-
         /// <summary>
         /// 选择轨道
         /// </summary>

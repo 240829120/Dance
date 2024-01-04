@@ -15,7 +15,7 @@ namespace Dance
         /// <summary>
         /// 阻塞信息字典
         /// </summary>
-        private readonly Dictionary<string, DanceBlockingInfo> BlockingInfoDic = new();
+        private readonly Dictionary<string, DanceBlockingInfo> BlockingInfoDic = [];
 
         /// <summary>
         /// 等待

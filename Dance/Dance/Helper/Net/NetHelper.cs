@@ -21,12 +21,14 @@ namespace Dance
         public static int GetActiveProt(int from = 10000, int to = 20000)
         {
             IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
-            List<IPEndPoint> endPoints = new();
-            endPoints.AddRange(properties.GetActiveTcpListeners());
-            endPoints.AddRange(properties.GetActiveUdpListeners());
-            endPoints.AddRange(properties.GetActiveTcpConnections().Select(p => p.LocalEndPoint));
+            List<IPEndPoint> endPoints =
+            [
+                .. properties.GetActiveTcpListeners(),
+                .. properties.GetActiveUdpListeners(),
+                .. properties.GetActiveTcpConnections().Select(p => p.LocalEndPoint),
+            ];
 
-            List<IPEndPoint> query = endPoints.Where(p => p.Port >= from && p.Port <= to).OrderBy(p => p.Port).ToList();
+            List<IPEndPoint> query = [.. endPoints.Where(p => p.Port >= from && p.Port <= to).OrderBy(p => p.Port)];
 
             int target = from;
 

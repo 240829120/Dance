@@ -154,9 +154,11 @@ namespace Dance.Wpf
             DanceTimelineMoveElementInfo moveInfo = new(this, beginTime, endTime, beginTime, endTime);
             if (tool.TryCopyMove(moveInfo))
             {
-                DanceTimelineElementDragEventArgs args = new(this.OwnerTimeline, this, e);
-                args.BeginTime = moveInfo.RealBeginTime;
-                args.EndTime = moveInfo.RealEndTime;
+                DanceTimelineElementDragEventArgs args = new(this.OwnerTimeline, this, e)
+                {
+                    BeginTime = moveInfo.RealBeginTime,
+                    EndTime = moveInfo.RealEndTime
+                };
 
                 this.OwnerTimeline.InvokeElementDrop(args);
             }
