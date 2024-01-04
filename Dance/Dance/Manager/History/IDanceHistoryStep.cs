@@ -9,7 +9,7 @@ namespace Dance
     /// <summary>
     /// 历史记录步骤
     /// </summary>
-    public interface IDanceHistoryStep : IDisposable
+    public interface IDanceHistoryStep
     {
         /// <summary>
         /// 描述

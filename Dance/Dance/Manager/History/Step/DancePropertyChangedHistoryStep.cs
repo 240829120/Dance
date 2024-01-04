@@ -19,32 +19,17 @@ namespace Dance
         /// <param name="property">属性</param>
         /// <param name="oldValue">原始值</param>
         /// <param name="newValue">新值</param>
-        public DancePropertyChangedHistoryStep(object target, PropertyInfo property, object? oldValue, object? newValue)
-        {
-            this.Target = target;
-            this.TargetType = target.GetType();
-            this.Property = property;
-            this.OldValue = oldValue;
-            this.NewValue = newValue;
-        }
-
-        /// <summary>
-        /// 属性改变步骤
-        /// </summary>
-        /// <param name="target">目标</param>
-        /// <param name="property">属性</param>
-        /// <param name="oldValue">原始值</param>
-        /// <param name="newValue">新值</param>
-        public DancePropertyChangedHistoryStep(object target, string property, object? oldValue, object? newValue)
+        /// <param name="detail">描述</param>
+        public DancePropertyChangedHistoryStep(object target, string property, object? oldValue, object? newValue, string detail = "属性改变")
         {
             if (target.GetType().GetProperty(property) is not PropertyInfo propertyInfo)
                 throw new ArgumentException(property);
 
             this.Target = target;
-            this.TargetType = target.GetType();
             this.Property = propertyInfo;
             this.OldValue = oldValue;
             this.NewValue = newValue;
+            this.Detail = detail;
         }
 
         /// <summary>
@@ -56,11 +41,6 @@ namespace Dance
         /// 目标
         /// </summary>
         public object Target { get; }
-
-        /// <summary>
-        /// 模板类型
-        /// </summary>
-        public Type TargetType { get; }
 
         /// <summary>
         /// 属性
@@ -83,7 +63,7 @@ namespace Dance
         /// <param name="manager">历史管理器</param>
         public void Redo(IDanceHistoryManager manager)
         {
-
+            this.Property.SetValue(this.Target, this.NewValue);
         }
 
         /// <summary>
@@ -92,7 +72,7 @@ namespace Dance
         /// <param name="manager">历史管理器</param>
         public void Undo(IDanceHistoryManager manager)
         {
-
+            this.Property.SetValue(this.Target, this.OldValue);
         }
     }
 }

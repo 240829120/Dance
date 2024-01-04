@@ -12,6 +12,11 @@ namespace Dance
     public interface IDanceHistoryManager
     {
         /// <summary>
+        /// 是否启用
+        /// </summary>
+        bool IsEnabled { get; set; }
+
+        /// <summary>
         /// 是否可以重做
         /// </summary>
         /// <returns>是否可以重做</returns>
@@ -32,5 +37,11 @@ namespace Dance
         /// 撤销
         /// </summary>
         void Undo();
+
+        /// <summary>
+        /// 添加步骤
+        /// </summary>
+        /// <param name="step">步骤</param>
+        void Append(IDanceHistoryStep step);
     }
 }
