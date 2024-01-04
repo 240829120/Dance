@@ -84,7 +84,7 @@ namespace Dance.Maui
 
             canvas.StrokeColor = this.StrokeColor;
             canvas.StrokeSize = this.StrokeSize;
-            canvas.StrokeDashPattern = this.StrokeDashPattern.ToArray();
+            canvas.StrokeDashPattern = [.. this.StrokeDashPattern];
             canvas.DrawLine(ropeJoint.WorldAnchorA.X, ropeJoint.WorldAnchorA.Y, ropeJoint.WorldAnchorB.X, ropeJoint.WorldAnchorB.Y);
         }
     }

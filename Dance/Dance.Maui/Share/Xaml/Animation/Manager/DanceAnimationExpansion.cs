@@ -21,8 +21,7 @@ namespace Dance.Maui
         /// <returns>动画构建器</returns>
         public static IDanceAnimationBuilder CreateKeyFrameAnimation(this VisualElement element)
         {
-            if (element == null)
-                throw new ArgumentNullException(nameof(element));
+            ArgumentNullException.ThrowIfNull(element);
 
             return new DanceAnimationKeyFrameBuilder(element);
         }

@@ -20,7 +20,7 @@ public class DanceNavigationView : DanceCollectionView
     /// <summary>
     /// 处理器集合
     /// </summary>
-    private readonly static Dictionary<DanceNavigationSwitchMode, DanceNavigationSwitchProviderBase> ProviderDic = new();
+    private readonly static Dictionary<DanceNavigationSwitchMode, DanceNavigationSwitchProviderBase> ProviderDic = [];
 
     static DanceNavigationView()
     {

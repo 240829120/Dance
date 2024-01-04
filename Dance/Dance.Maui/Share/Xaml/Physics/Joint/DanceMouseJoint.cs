@@ -156,7 +156,7 @@ namespace Dance.Maui
 
             canvas.StrokeColor = this.StrokeColor;
             canvas.StrokeSize = this.StrokeSize;
-            canvas.StrokeDashPattern = this.StrokeDashPattern.ToArray();
+            canvas.StrokeDashPattern = [.. this.StrokeDashPattern];
             canvas.DrawLine(fixedMouseJoint.WorldAnchorA.X, fixedMouseJoint.WorldAnchorA.Y, fixedMouseJoint.WorldAnchorB.X, fixedMouseJoint.WorldAnchorB.Y);
         }
     }

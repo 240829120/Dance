@@ -29,16 +29,16 @@ using Dance;
 
 namespace Dance.WpfTest
 {
-    public class TestModel : DanceModel, IDanceModel3D
-    {
-        public string PART_DanceObjectType => this.GetType()?.AssemblyQualifiedName ?? string.Empty;
+    //public class TestModel : DanceModel, IDanceModel3D
+    //{
+    //    public string PART_DanceObjectType => this.GetType()?.AssemblyQualifiedName ?? string.Empty;
 
 
-        public DataTemplate DataTemplate { get; set; }
+    //    public DataTemplate DataTemplate { get; set; }
 
 
 
-    }
+    //}
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -53,11 +53,11 @@ namespace Dance.WpfTest
             this.Closed += MainWindow_Closed;
         }
 
-        public List<TestModel> list = new List<TestModel>();
+        //   public List<TestModel> list = new List<TestModel>();
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            this.list.Add
+
         }
 
         private void MainWindow_Closed(object? sender, EventArgs e)

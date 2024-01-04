@@ -63,13 +63,13 @@ namespace Dance.Maui
             float right = this.Width / 2f + this.Position.X;
             float bottom = this.Height / 2f + this.Position.Y;
 
-            Vertices vectors = new()
-            {
+            Vertices vectors =
+            [
                 new(left, top),
                 new(right, top),
                 new(right, bottom),
                 new(left, bottom)
-            };
+            ];
 
             PolygonShape shape = new(vectors, this.Density);
             Fixture fixture = new(shape)

@@ -20,8 +20,8 @@ namespace Dance
         /// <returns>Ioc构建器</returns>
         public static DanceIocBuilder AddAssemblys(this DanceIocBuilder builder, string assemblyPrefix)
         {
-            List<string> files = new();
-            List<Assembly> assemblies = new();
+            List<string> files = [];
+            List<Assembly> assemblies = [];
 
             files.AddRange(Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll").Where(p => Path.GetFileName(p).StartsWith(assemblyPrefix)));
 

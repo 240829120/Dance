@@ -42,7 +42,7 @@ namespace Dance.Maui
             if (this.Points.Count == 0)
                 throw new InvalidOperationException("PolygonFixtureElement points not be null");
 
-            Vertices vectors = new();
+            Vertices vectors = [];
             foreach (DancePoint point in this.Points)
             {
                 vectors.Add(new Vector2(point.X, point.Y));

@@ -13,17 +13,9 @@ namespace Dance.Wpf
     /// <summary>
     /// Thickness类型动画构建器
     /// </summary>
-    public class DanceThicknessAnimationBuilder : DanceAnimationBuilderProperty<Thickness>
+    /// <param name="propertyPath">关联属性</param>
+    public class DanceThicknessAnimationBuilder(string propertyPath) : DanceAnimationBuilderProperty<Thickness>(propertyPath)
     {
-        /// <summary>
-        /// 动画构建器项
-        /// </summary>
-        /// <param name="propertyPath">关联属性</param>
-        public DanceThicknessAnimationBuilder(string propertyPath) : base(propertyPath)
-        {
-
-        }
-
         /// <summary>
         /// 构建
         /// </summary>

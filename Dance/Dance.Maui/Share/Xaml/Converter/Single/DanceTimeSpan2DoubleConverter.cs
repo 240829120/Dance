@@ -48,7 +48,10 @@ namespace Dance.Maui
         /// </summary>
         public DanceTimeSpan2DoubleMode Mode { get; set; } = DanceTimeSpan2DoubleMode.Millisecond;
 
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// 转化
+        /// </summary>
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is not TimeSpan timeSpan)
                 return 0d;
@@ -64,7 +67,10 @@ namespace Dance.Maui
             };
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// 反转化
+        /// </summary>
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value is not double number)
                 return TimeSpan.Zero;

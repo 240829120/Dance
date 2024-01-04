@@ -12,9 +12,11 @@ namespace Dance
     /// <summary>
     /// 范围 -- TimeSpan
     /// </summary>
+    /// <param name="minValue">最小值</param>
+    /// <param name="maxValue">最大值</param>
     [DebuggerDisplay("MinValue={MinValue}, MaxValue={MaxValue}")]
     [TypeConverter(typeof(DanceRangeTimeSpanTypeConverter))]
-    public struct DanceRangeTimeSpan
+    public struct DanceRangeTimeSpan(TimeSpan minValue, TimeSpan maxValue)
     {
         /// <summary>
         /// 范围 -- TimeSpan
@@ -25,25 +27,14 @@ namespace Dance
         }
 
         /// <summary>
-        /// 范围 -- TimeSpan
-        /// </summary>
-        /// <param name="minValue">最小值</param>
-        /// <param name="maxValue">最大值</param>
-        public DanceRangeTimeSpan(TimeSpan minValue, TimeSpan maxValue)
-        {
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
-        }
-
-        /// <summary>
         /// 最小值
         /// </summary>
-        public TimeSpan MinValue;
+        public TimeSpan MinValue = minValue;
 
         /// <summary>
         /// 最大值
         /// </summary>
-        public TimeSpan MaxValue;
+        public TimeSpan MaxValue = maxValue;
 
         /// <summary>
         /// 尝试转化

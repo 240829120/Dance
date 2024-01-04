@@ -158,7 +158,7 @@ namespace Dance.Wpf
 
             Pen pen = new(new SolidColorBrush(this.StrokeColor), this.StrokeSize)
             {
-                DashStyle = new DashStyle(this.StrokeDashPattern.Cast<double>(), 0)
+                DashStyle = new DashStyle(this.StrokeDashPattern.Select(p => (double)p), 0)
             };
             Point a = new(fixedMouseJoint.WorldAnchorA.X, fixedMouseJoint.WorldAnchorA.Y);
             Point b = new(fixedMouseJoint.WorldAnchorB.X, fixedMouseJoint.WorldAnchorB.Y);

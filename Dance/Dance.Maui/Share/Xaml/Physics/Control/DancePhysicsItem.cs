@@ -16,8 +16,8 @@ namespace Dance.Maui
     {
         public DancePhysicsItem()
         {
-            this.Joints = new();
-            this.Controllers = new();
+            this.Joints = [];
+            this.Controllers = [];
         }
 
         #region Owner -- 所属

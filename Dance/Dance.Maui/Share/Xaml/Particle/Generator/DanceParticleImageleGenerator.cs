@@ -22,7 +22,7 @@ namespace Dance.Maui
     {
         public DanceParticleImageleGenerator()
         {
-            this.Images = new();
+            this.Images = [];
         }
 
         #region Width -- 宽度
@@ -111,7 +111,7 @@ namespace Dance.Maui
         /// <summary>
         /// 创建SKImage
         /// </summary>
-        /// <param name="uri">地址</param>
+        /// <param name="define">图片粒子定义</param>
         /// <returns>SKImage</returns>
         private static SKImage? CreateSKImage(DanceParticleImageDefine define)
         {

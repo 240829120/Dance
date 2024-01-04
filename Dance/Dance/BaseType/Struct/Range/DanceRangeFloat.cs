@@ -12,9 +12,11 @@ namespace Dance
     /// <summary>
     /// 范围 -- Float
     /// </summary>
+    /// <param name="minValue">最小值</param>
+    /// <param name="maxValue">最大值</param>
     [DebuggerDisplay("MinValue={MinValue}, MaxValue={MaxValue}")]
     [TypeConverter(typeof(DanceRangeFloatTypeConverter))]
-    public struct DanceRangeFloat
+    public struct DanceRangeFloat(float minValue, float maxValue)
     {
         /// <summary>
         /// 范围 -- TimeSpan
@@ -25,25 +27,14 @@ namespace Dance
         }
 
         /// <summary>
-        /// 范围 -- Float
-        /// </summary>
-        /// <param name="minValue">最小值</param>
-        /// <param name="maxValue">最大值</param>
-        public DanceRangeFloat(float minValue, float maxValue)
-        {
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
-        }
-
-        /// <summary>
         /// 最小值
         /// </summary>
-        public float MinValue;
+        public float MinValue = minValue;
 
         /// <summary>
         /// 最大值
         /// </summary>
-        public float MaxValue;
+        public float MaxValue = maxValue;
 
         /// <summary>
         /// 空

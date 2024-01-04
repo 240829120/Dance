@@ -9,26 +9,18 @@ namespace Dance.Maui
     /// <summary>
     /// 动画构建器项
     /// </summary>
-    public class DanceAnimationBuilderProperty<T> : IDanceAnimationBuilderProperty
+    /// <param name="bindableProperty">关联属性</param>
+    public class DanceAnimationBuilderProperty<T>(BindableProperty bindableProperty) : IDanceAnimationBuilderProperty
     {
-        /// <summary>
-        /// 动画构建器项
-        /// </summary>
-        /// <param name="bindableProperty">关联属性</param>
-        public DanceAnimationBuilderProperty(BindableProperty bindableProperty)
-        {
-            this.BindableProperty = bindableProperty;
-        }
-
         /// <summary>
         /// 绑定属性
         /// </summary>
-        public BindableProperty BindableProperty { get; set; }
+        public BindableProperty BindableProperty { get; set; } = bindableProperty;
 
         /// <summary>
         /// 关键帧
         /// </summary>
-        public SortedList<TimeSpan, DanceAnimationKeyFrame<T>> KeyFrames { get; } = new();
+        public SortedList<TimeSpan, DanceAnimationKeyFrame<T>> KeyFrames { get; } = [];
 
         /// <summary>
         /// 变换方法

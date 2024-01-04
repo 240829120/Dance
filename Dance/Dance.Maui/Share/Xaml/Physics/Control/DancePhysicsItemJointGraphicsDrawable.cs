@@ -10,21 +10,13 @@ namespace Dance.Maui
     /// <summary>
     /// 物理关节绘制
     /// </summary>
-    public class DancePhysicsItemJointGraphicsDrawable : IDrawable
+    /// <param name="graphics">绘制控件</param>
+    public class DancePhysicsItemJointGraphicsDrawable(DancePhysicsItemJointGraphics graphics) : IDrawable
     {
-        /// <summary>
-        /// 物理关节绘制
-        /// </summary>
-        /// <param name="graphics">绘制控件</param>
-        public DancePhysicsItemJointGraphicsDrawable(DancePhysicsItemJointGraphics graphics)
-        {
-            this.Graphics = graphics;
-        }
-
         /// <summary>
         /// 绘制控件
         /// </summary>
-        internal DancePhysicsItemJointGraphics Graphics;
+        internal DancePhysicsItemJointGraphics Graphics = graphics;
 
         /// <summary>
         /// 所属

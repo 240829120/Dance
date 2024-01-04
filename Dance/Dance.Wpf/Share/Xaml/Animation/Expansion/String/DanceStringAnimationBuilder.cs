@@ -13,17 +13,9 @@ namespace Dance.Wpf
     /// <summary>
     /// String类型动画构建器
     /// </summary>
-    public class DanceStringAnimationBuilder : DanceAnimationBuilderProperty<string>
+    /// <param name="propertyPath">关联属性</param>
+    public class DanceStringAnimationBuilder(string propertyPath) : DanceAnimationBuilderProperty<string>(propertyPath)
     {
-        /// <summary>
-        /// 动画构建器项
-        /// </summary>
-        /// <param name="propertyPath">关联属性</param>
-        public DanceStringAnimationBuilder(string propertyPath) : base(propertyPath)
-        {
-
-        }
-
         /// <summary>
         /// 构建
         /// </summary>

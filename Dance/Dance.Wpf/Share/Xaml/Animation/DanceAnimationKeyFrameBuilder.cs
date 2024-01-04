@@ -11,26 +11,18 @@ namespace Dance.Wpf
     /// <summary>
     /// 动画构建器
     /// </summary>
-    public class DanceAnimationKeyFrameBuilder : IDanceAnimationBuilder
+    /// <param name="element">元素</param>
+    public class DanceAnimationKeyFrameBuilder(FrameworkElement element) : IDanceAnimationBuilder
     {
-        /// <summary>
-        /// 动画关键帧构建器
-        /// </summary>
-        /// <param name="element">元素</param>
-        public DanceAnimationKeyFrameBuilder(FrameworkElement element)
-        {
-            this.Element = element;
-        }
-
         /// <summary>
         /// 元素
         /// </summary>
-        public FrameworkElement Element { get; }
+        public FrameworkElement Element { get; } = element;
 
         /// <summary>
         /// 属性构建器集合
         /// </summary>
-        public Dictionary<string, IDanceAnimationBuilderProperty> PropertyDic { get; } = new();
+        public Dictionary<string, IDanceAnimationBuilderProperty> PropertyDic { get; } = [];
 
         /// <summary>
         /// 动画

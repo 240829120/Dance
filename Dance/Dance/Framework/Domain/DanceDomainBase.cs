@@ -34,7 +34,7 @@ namespace Dance
         /// <summary>
         /// 构建器集合
         /// </summary>
-        public List<IDanceDomainBuilder> Builders { get; } = new();
+        public List<IDanceDomainBuilder> Builders { get; } = [];
 
         /// <summary>
         /// 消息

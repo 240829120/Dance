@@ -19,7 +19,7 @@ namespace Dance.Maui
     {
         public DanceParticlePanel()
         {
-            this.Controllers = new();
+            this.Controllers = [];
 
             this.PaintSurface += DanceParticlePanel_PaintSurface;
 

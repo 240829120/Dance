@@ -11,21 +11,13 @@ namespace Dance.Maui
     /// <summary>
     /// 物理引擎面板布局管理器
     /// </summary>
-    public class DancePhysicsItemLayoutManager : ILayoutManager
+    /// <param name="owner">所属</param>
+    public class DancePhysicsItemLayoutManager(DancePhysicsItemsControl owner) : ILayoutManager
     {
-        /// <summary>
-        /// 物理引擎面板布局管理器
-        /// </summary>
-        /// <param name="owner">所属</param>
-        public DancePhysicsItemLayoutManager(DancePhysicsItemsControl owner)
-        {
-            this.Owner = owner;
-        }
-
         /// <summary>
         /// 所属
         /// </summary>
-        internal DancePhysicsItemsControl Owner;
+        internal DancePhysicsItemsControl Owner = owner;
 
         /// <summary>
         /// 更新时间

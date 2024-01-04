@@ -9,17 +9,12 @@ namespace Dance.Common
     /// <summary>
     /// Mqtt主题信息
     /// </summary>
-    public class DanceMqttTopicInfo : DanceObject, IDisposable
+    /// <remarks>
+    /// Mqtt主题信息
+    /// </remarks>
+    /// <param name="requestData">请求数据</param>
+    public class DanceMqttTopicInfo(byte[]? requestData) : DanceObject, IDisposable
     {
-        /// <summary>
-        /// Mqtt主题信息
-        /// </summary>
-        /// <param name="requestData">请求数据</param>
-        public DanceMqttTopicInfo(byte[]? requestData)
-        {
-            this.RequestData = requestData;
-        }
-
         /// <summary>
         /// 请求ID
         /// </summary>
@@ -28,7 +23,7 @@ namespace Dance.Common
         /// <summary>
         /// 请求数据
         /// </summary>
-        public byte[]? RequestData { get; private set; }
+        public byte[]? RequestData { get; private set; } = requestData;
 
         /// <summary>
         /// 请求时间

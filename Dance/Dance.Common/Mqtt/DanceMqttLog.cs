@@ -10,17 +10,12 @@ namespace Dance.Common
     /// <summary>
     /// Mqtt日志
     /// </summary>
-    public class DanceMqttLog : IMqttNetLogger
+    /// <remarks>
+    /// Mqtt日志
+    /// </remarks>
+    /// <param name="owner">所有者</param>
+    public class DanceMqttLog(object owner) : IMqttNetLogger
     {
-        /// <summary>
-        /// Mqtt日志
-        /// </summary>
-        /// <param name="owner">所有者</param>
-        public DanceMqttLog(object owner)
-        {
-            this.Owner = owner;
-        }
-
         /// <summary>
         /// 是否启用
         /// </summary>
@@ -29,7 +24,7 @@ namespace Dance.Common
         /// <summary>
         /// 所有者
         /// </summary>
-        public object Owner { get; private set; }
+        public object Owner { get; private set; } = owner;
 
         /// <summary>
         /// 记录日志

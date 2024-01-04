@@ -12,9 +12,11 @@ namespace Dance
     /// <summary>
     /// 范围 -- Int
     /// </summary>
+    /// <param name="minValue">最小值</param>
+    /// <param name="maxValue">最大值</param>
     [DebuggerDisplay("MinValue={MinValue}, MaxValue={MaxValue}")]
     [TypeConverter(typeof(DanceRangeIntTypeConverter))]
-    public struct DanceRangeInt
+    public struct DanceRangeInt(int minValue, int maxValue)
     {
         /// <summary>
         /// 范围 -- Int
@@ -25,25 +27,14 @@ namespace Dance
         }
 
         /// <summary>
-        /// 范围 -- Int
-        /// </summary>
-        /// <param name="minValue">最小值</param>
-        /// <param name="maxValue">最大值</param>
-        public DanceRangeInt(int minValue, int maxValue)
-        {
-            this.MinValue = minValue;
-            this.MaxValue = maxValue;
-        }
-
-        /// <summary>
         /// 最小值
         /// </summary>
-        public int MinValue;
+        public int MinValue = minValue;
 
         /// <summary>
         /// 最大值
         /// </summary>
-        public int MaxValue;
+        public int MaxValue = maxValue;
 
         /// <summary>
         /// 空

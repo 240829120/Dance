@@ -11,26 +11,18 @@ namespace Dance.Wpf
     /// <summary>
     /// 动画构建器项
     /// </summary>
-    public abstract class DanceAnimationBuilderProperty<T> : IDanceAnimationBuilderProperty
+    /// <param name="propertyPath">关联属性</param>
+    public abstract class DanceAnimationBuilderProperty<T>(string propertyPath) : IDanceAnimationBuilderProperty
     {
-        /// <summary>
-        /// 动画构建器项
-        /// </summary>
-        /// <param name="propertyPath">关联属性</param>
-        public DanceAnimationBuilderProperty(string propertyPath)
-        {
-            this.PropertyPath = propertyPath;
-        }
-
         /// <summary>
         /// 绑定属性
         /// </summary>
-        public string PropertyPath { get; set; }
+        public string PropertyPath { get; set; } = propertyPath;
 
         /// <summary>
         /// 关键帧
         /// </summary>
-        public SortedList<TimeSpan, DanceAnimationKeyFrame<T>> KeyFrames { get; } = new();
+        public SortedList<TimeSpan, DanceAnimationKeyFrame<T>> KeyFrames { get; } = [];
 
         /// <summary>
         /// 缓动函数

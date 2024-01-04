@@ -31,15 +31,20 @@ namespace Dance
             return destinationType == typeof(string);
         }
 
+        /// <summary>
+        /// 分隔符
+        /// </summary>
+        private static readonly char[] SEPARATOR = [',', ' '];
+
         public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            DanceFloatCollection list = new();
+            DanceFloatCollection list = [];
 
             string? str = value?.ToString();
             if (string.IsNullOrWhiteSpace(str))
                 return list;
 
-            string[] str_values = str.Split(new char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+            string[] str_values = str.Split(SEPARATOR, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (string str_value in str_values)
             {

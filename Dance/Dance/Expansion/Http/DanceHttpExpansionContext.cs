@@ -9,17 +9,9 @@ namespace Dance
     /// <summary>
     /// Http扩展上下文
     /// </summary>
-    public class DanceHttpExpansionContext
+    /// <param name="url">Url地址</param>
+    public class DanceHttpExpansionContext(string url)
     {
-        /// <summary>
-        /// Http扩展上下文
-        /// </summary>
-        /// <param name="url">Url地址</param>
-        public DanceHttpExpansionContext(string url)
-        {
-            this.Url = url;
-        }
-
         /// <summary>
         /// 总请求ID
         /// </summary>
@@ -33,7 +25,7 @@ namespace Dance
         /// <summary>
         /// Url地址
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; private set; } = url;
 
         /// <summary>
         /// 请求时间

@@ -210,7 +210,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleHour(DrawingContext drawingContext, DanceTimelineScaleDrawingContext context)
         {
-            if (context.HourWidth < DanceTimelineConstants.MIN_SCALE_WIDTH)
+            if (context.HourWidth < DanceTimelineConstants.MIN_SCALE_WIDTH || this.OwnerTimeline == null)
                 return;
 
             int lengthOffset = 15;
@@ -243,7 +243,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleMinute15(DrawingContext drawingContext, DanceTimelineScaleDrawingContext context)
         {
-            if (context.Minute15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
+            if (this.OwnerTimeline == null || context.Minute15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 12;
@@ -279,7 +279,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleMinute(DrawingContext drawingContext, DanceTimelineScaleDrawingContext context)
         {
-            if (context.Minute15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
+            if (this.OwnerTimeline == null || context.Minute15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 10;
@@ -315,7 +315,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleSecond15(DrawingContext drawingContext, DanceTimelineScaleDrawingContext context)
         {
-            if (context.Second15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
+            if (this.OwnerTimeline == null || context.Second15Width < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 8;
@@ -351,7 +351,7 @@ namespace Dance.Wpf
         /// </summary>
         private void DrawScaleSecond(DrawingContext drawingContext, DanceTimelineScaleDrawingContext context)
         {
-            if (context.SecondWidth < DanceTimelineConstants.MIN_SCALE_WIDTH)
+            if (this.OwnerTimeline == null || context.SecondWidth < DanceTimelineConstants.MIN_SCALE_WIDTH)
                 return;
 
             int lengthOffset = 8;

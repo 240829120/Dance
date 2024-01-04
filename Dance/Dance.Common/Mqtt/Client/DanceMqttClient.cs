@@ -15,17 +15,9 @@ namespace Dance.Common
     /// <summary>
     /// Mqtt客户端
     /// </summary>
-    public class DanceMqttClient : DanceMqttClientBase
+    /// <param name="option">设置</param>
+    public class DanceMqttClient(DanceMqttClientOption option) : DanceMqttClientBase(option)
     {
-        /// <summary>
-        /// Mqtt客户端
-        /// </summary>
-        /// <param name="option">设置</param>
-        public DanceMqttClient(DanceMqttClientOption option) : base(option)
-        {
-
-        }
-
         // ===============================================================================================
         // Field
 
@@ -135,7 +127,7 @@ namespace Dance.Common
         {
             try
             {
-                Dictionary<string, string> userProperties = e.ApplicationMessage.UserProperties?.ToDictionary(p => p.Name, p => p.Value) ?? new();
+                Dictionary<string, string> userProperties = e.ApplicationMessage.UserProperties?.ToDictionary(p => p.Name, p => p.Value) ?? [];
                 userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_MESSAGE_TYPE, out string? messageType);
                 userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_REQUEST_ID, out string? requestId);
                 userProperties.TryGetValue(DanceMqttPropertyKeys.DANCE_ROUTE, out string? route);
@@ -144,7 +136,7 @@ namespace Dance.Common
 
                 string topic = e.ApplicationMessage.Topic;
                 string key = $"[{topic}]{route}";
-                byte[]? buffer = e.ApplicationMessage.PayloadSegment.ToArray();
+                byte[]? buffer = [.. e.ApplicationMessage.PayloadSegment];
 
                 // 触发接收到消息
                 this.Received?.Invoke(this, new(topic, userProperties, buffer));
@@ -161,7 +153,7 @@ namespace Dance.Common
                 if (string.Equals(DanceMqttMessageType.MESSAGE, messageType))
                 {
                     this.TopicActionDic.TryGetValue(key, out DanceMqttTopicActionBase? action);
-                    _ = action?.Execute(e.ApplicationMessage.PayloadSegment.ToArray());
+                    _ = action?.Execute([.. e.ApplicationMessage.PayloadSegment]);
 
                     return;
                 }
@@ -170,7 +162,7 @@ namespace Dance.Common
                 if (string.Equals(DanceMqttMessageType.REQUEST, messageType) && !string.IsNullOrWhiteSpace(requestId))
                 {
                     this.TopicActionDic.TryGetValue(key, out DanceMqttTopicActionBase? action);
-                    byte[]? responseBuffer = action?.Execute(buffer) ?? Array.Empty<byte>();
+                    byte[]? responseBuffer = action?.Execute(buffer) ?? [];
 
                     await this.PublishAsync(topic, route ?? string.Empty, sendClientId ?? string.Empty, DanceMqttMessageType.RESPONSE, requestId, responseBuffer);
 
@@ -184,7 +176,7 @@ namespace Dance.Common
                     if (info == null)
                         return;
 
-                    info.ResponseData = e.ApplicationMessage.PayloadSegment.ToArray();
+                    info.ResponseData = [.. e.ApplicationMessage.PayloadSegment];
                     info.ResponseTime = DateTime.Now;
                     info.IsResponse = true;
 
@@ -224,7 +216,7 @@ namespace Dance.Common
             {
                 Topic = topic,
                 PayloadSegment = buffer,
-                UserProperties = new()
+                UserProperties = []
             };
 
             foreach (var kv in userProperties)

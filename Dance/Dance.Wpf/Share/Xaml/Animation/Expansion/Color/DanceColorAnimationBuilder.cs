@@ -14,17 +14,9 @@ namespace Dance.Wpf
     /// <summary>
     /// Color类型动画构建器
     /// </summary>
-    public class DanceColorAnimationBuilder : DanceAnimationBuilderProperty<Color>
+    /// <param name="propertyPath">关联属性</param>
+    public class DanceColorAnimationBuilder(string propertyPath) : DanceAnimationBuilderProperty<Color>(propertyPath)
     {
-        /// <summary>
-        /// 动画构建器项
-        /// </summary>
-        /// <param name="propertyPath">关联属性</param>
-        public DanceColorAnimationBuilder(string propertyPath) : base(propertyPath)
-        {
-
-        }
-
         /// <summary>
         /// 构建
         /// </summary>

@@ -70,11 +70,6 @@ namespace Dance.Wpf
         /// </summary>
         private Point? StartPoint;
 
-        /// <summary>
-        /// 所属窗口
-        /// </summary>
-        private Window? OwnerWindow;
-
         #region ResizeMode -- 缩放模式
 
         /// <summary>
@@ -146,7 +141,7 @@ namespace Dance.Wpf
         /// </summary>
         private void ExecuteLeft(Point start, Point end)
         {
-            Window window = this.OwnerWindow ?? Window.GetWindow(this);
+            Window window = Window.GetWindow(this);
             double x = end.X - start.X;
             if (window.Width + x <= 0)
                 return;
@@ -162,7 +157,7 @@ namespace Dance.Wpf
         /// <param name="end">结束坐标</param>
         private void ExecuteRight(Point start, Point end)
         {
-            Window window = this.OwnerWindow ?? Window.GetWindow(this);
+            Window window = Window.GetWindow(this);
             double x = end.X - start.X;
             if (window.Width + x <= 0)
                 return;
@@ -177,7 +172,7 @@ namespace Dance.Wpf
         /// <param name="end">结束坐标</param>
         private void ExecuteTop(Point start, Point end)
         {
-            Window window = this.OwnerWindow ?? Window.GetWindow(this);
+            Window window = Window.GetWindow(this);
             double y = end.Y - start.Y;
             if (window.Height - y <= 0)
                 return;
@@ -193,7 +188,7 @@ namespace Dance.Wpf
         /// <param name="end">结束坐标</param>
         private void ExecuteBottom(Point start, Point end)
         {
-            Window window = this.OwnerWindow ?? Window.GetWindow(this);
+            Window window = Window.GetWindow(this);
             double y = end.Y - start.Y;
             if (window.Height + y <= 0)
                 return;

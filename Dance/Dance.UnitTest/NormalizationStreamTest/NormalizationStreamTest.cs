@@ -36,13 +36,13 @@ namespace Dance.UnitTest
         {
             DanceStructNormalStreamHelper helper = new(typeof(StudentStruct));
 
-            DanceFixedNormalStream stream = new(10, new byte[] { 1, 1 }, 25);
+            DanceFixedNormalStream stream = new(10, [1, 1], 25);
 
-            stream.Write(new byte[] { 0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            stream.Write(new byte[] { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            stream.Write(new byte[] { 1, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-            stream.Write(new byte[] { 4, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1 });
-            stream.Write(new byte[] { 1, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5 });
+            stream.Write([0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
+            stream.Write([2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
+            stream.Write([1, 1, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]);
+            stream.Write([4, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]);
+            stream.Write([1, 4, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 5]);
 
             byte[]? buffer1 = stream.Read();
             byte[]? buffer2 = stream.Read();
@@ -58,9 +58,9 @@ namespace Dance.UnitTest
         [TestMethod]
         public void StrucTest()
         {
-            DanceStructNormalStream<StudentStruct> stream = new(new byte[] { 1, 1 });
+            DanceStructNormalStream<StudentStruct> stream = new([1, 1]);
 
-            byte[] buffer = new byte[] { 1, 1, 254, 255, 255, 255, 1, 0, 0, 0 };
+            byte[] buffer = [1, 1, 254, 255, 255, 255, 1, 0, 0, 0];
             stream.Write(buffer);
             StudentStruct? student1 = stream.ReadStruct(false);
 
@@ -84,14 +84,11 @@ namespace Dance.UnitTest
         [TestMethod]
         public void LengthTest()
         {
-            byte[] temp = new byte[4] { 1, 2, 3, 4 };
+            byte[] temp = [1, 2, 3, 4];
             var b = BitConverter.ToUInt32(temp);
 
             byte[] bytes = new byte[4];
-            short[] buffer = new short[2];
-            buffer[0] = (short)U32HighWord(b);
-            buffer[1] = (short)U32LowWord(b);
-
+            short[] buffer = [(short)U32HighWord(b), (short)U32LowWord(b)];
             Buffer.BlockCopy(buffer, 0, bytes, 0, 4);
 
 
@@ -117,8 +114,10 @@ namespace Dance.UnitTest
             });
 
             DanceStructNormalStreamHelper helper = new(typeof(StudentSingle));
-            StudentSingle single = new();
-            single.Value = 1;
+            StudentSingle single = new()
+            {
+                Value = 1
+            };
             byte[] bytes = helper.ConvertToByte(single, true);
 
             Task.Delay(2000).Wait();
@@ -130,7 +129,7 @@ namespace Dance.UnitTest
         }
 
         //将short类型数据的高低位进行交换
-        private ushort Swap(ushort x)
+        private static ushort Swap(ushort x)
         {
             ushort highbit;
             ushort lowbit;
@@ -142,7 +141,7 @@ namespace Dance.UnitTest
         }
 
         ///取Uint32的高１６位，并将Uint16的高８位和低８位交换
-        private ushort U32HighWord(uint x)
+        private static ushort U32HighWord(uint x)
         {
             ushort highbit;
 
@@ -153,7 +152,7 @@ namespace Dance.UnitTest
         }
 
         ///取Uint32的低１６位，并将Uint16的高８位和低８位交换
-        private ushort U32LowWord(uint x)
+        private static ushort U32LowWord(uint x)
         {
             ushort lowbit;
             lowbit = (ushort)(x & 0x0000ffff);

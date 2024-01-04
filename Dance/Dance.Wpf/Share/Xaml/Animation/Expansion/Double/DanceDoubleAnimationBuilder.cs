@@ -13,17 +13,9 @@ namespace Dance.Wpf
     /// <summary>
     /// Double类型动画构建器
     /// </summary>
-    public class DanceDoubleAnimationBuilder : DanceAnimationBuilderProperty<double>
+    /// <param name="propertyPath">关联属性</param>
+    public class DanceDoubleAnimationBuilder(string propertyPath) : DanceAnimationBuilderProperty<double>(propertyPath)
     {
-        /// <summary>
-        /// 动画构建器项
-        /// </summary>
-        /// <param name="propertyPath">关联属性</param>
-        public DanceDoubleAnimationBuilder(string propertyPath) : base(propertyPath)
-        {
-
-        }
-
         /// <summary>
         /// 构建
         /// </summary>

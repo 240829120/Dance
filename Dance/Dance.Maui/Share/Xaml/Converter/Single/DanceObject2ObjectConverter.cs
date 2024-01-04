@@ -43,7 +43,10 @@ namespace Dance.Maui
         /// </summary>
         public object? DefaultTo { get; set; }
 
-        public object? Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// 转化
+        /// </summary>
+        public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (this.Maps == null || value == null)
                 return this.DefaultTo;
@@ -51,7 +54,10 @@ namespace Dance.Maui
             return this.Maps.FirstOrDefault(p => value.Equals(p.From))?.To ?? this.DefaultTo;
         }
 
-        public object? ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        /// <summary>
+        /// 反转化
+        /// </summary>
+        public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (this.Maps == null || value == null)
                 return this.DefaultFrom;

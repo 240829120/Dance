@@ -406,7 +406,7 @@ namespace Dance.Maui
         /// <returns>新生成的粒子</returns>
         public virtual IList<IDanceParticle> Generate(TimeSpan dt)
         {
-            List<IDanceParticle> list = new();
+            List<IDanceParticle> list = [];
 
             if (!this.IsEnabled)
             {
@@ -466,7 +466,7 @@ namespace Dance.Maui
         /// <param name="dt">渲染时间</param>
         public void Destory(TimeSpan dt)
         {
-            List<IDanceParticle> removeList = new();
+            List<IDanceParticle> removeList = [];
 
             DateTime now = DateTime.Now;
 

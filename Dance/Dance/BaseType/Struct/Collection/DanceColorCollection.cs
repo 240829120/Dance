@@ -40,7 +40,7 @@ namespace Dance
 
         public override object ConvertFrom(ITypeDescriptorContext? context, CultureInfo? culture, object value)
         {
-            DanceColorCollection list = new();
+            DanceColorCollection list = [];
 
             string? str = value?.ToString();
             if (string.IsNullOrWhiteSpace(str))
