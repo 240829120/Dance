@@ -52,7 +52,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 选择
         /// </summary>
-        public List<DanceTimelineSelectionInfo> Selection { get; private set; } = new();
+        public List<DanceTimelineSelectionInfo> Selection { get; private set; } = [];
 
         /// <summary>
         /// 清理框选

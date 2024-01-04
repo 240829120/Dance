@@ -38,7 +38,7 @@ namespace Dance
         /// <summary>
         /// 子项集合
         /// </summary>
-        public List<DanceServiceRouteNode> Items { get; private set; } = new();
+        public List<DanceServiceRouteNode> Items { get; private set; } = [];
 
         /// <summary>
         /// 节点值

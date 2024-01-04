@@ -208,11 +208,11 @@ namespace Dance.Wpf
                     break;
             }
 
-            List<DancePaginationInfo> items = new()
-            {
+            List<DancePaginationInfo> items =
+            [
                 // 上一页
                 new() { Type = DancePaginationInfoType.PreviousPage, IsEnabled = this.PageNum > 1 }
-            };
+            ];
 
             // 第一页
             if (start >= this.PageMoreNum / 2)

@@ -28,7 +28,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 当前选中的节点集合
         /// </summary>
-        private readonly List<DanceTreeViewItem> SelectedNodes = new();
+        private readonly List<DanceTreeViewItem> SelectedNodes = [];
 
         /// <summary>
         /// 用于标记Shift键的节点
@@ -67,7 +67,7 @@ namespace Dance.Wpf
         /// </summary>
         public List<object> GetSelectedValues()
         {
-            List<object> result = new();
+            List<object> result = [];
 
             if (this.SelectedNodes.Count == 0)
             {
@@ -297,7 +297,7 @@ namespace Dance.Wpf
         /// <returns>查找结果</returns>
         private static List<DanceTreeViewItem> TraversalTreeViewItem(DependencyObject? element)
         {
-            List<DanceTreeViewItem> result = new();
+            List<DanceTreeViewItem> result = [];
 
             if (element == null)
                 return result;

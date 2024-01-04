@@ -21,7 +21,7 @@ namespace Dance.Art
         /// <summary>
         /// 根节点
         /// </summary>
-        private List<DanceServiceRouteNode> Roots = new();
+        private readonly List<DanceServiceRouteNode> Roots = [];
 
         /// <summary>
         /// 构建服务
@@ -53,8 +53,8 @@ namespace Dance.Art
         /// <param name="assemblyPrefix">程序集前缀</param>
         public void Build(string assemblyPrefix)
         {
-            List<string> files = new();
-            List<Assembly> assemblies = new();
+            List<string> files = [];
+            List<Assembly> assemblies = [];
 
             files.AddRange(Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll").Where(p => Path.GetFileName(p).StartsWith(assemblyPrefix)));
 
@@ -83,7 +83,7 @@ namespace Dance.Art
                 throw new Exception("class route is null.");
 
             classRoute = classRoute.Replace("\\", "/");
-            List<string> classRoutes = classRoute.Split('/', StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<string> classRoutes = [.. classRoute.Split('/', StringSplitOptions.RemoveEmptyEntries)];
 
             foreach (MethodInfo method in classType.GetMethods(BindingFlags.Public | BindingFlags.Instance))
             {
@@ -93,13 +93,11 @@ namespace Dance.Art
 
                 string methodRoute = !string.IsNullOrWhiteSpace(methodRouteAtrr.Route) ? methodRouteAtrr.Route : method.Name;
                 methodRoute = methodRoute.Replace("\\", "/");
-                List<string> methodRoutes = methodRoute.Split('/', StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> methodRoutes = [.. methodRoute.Split('/', StringSplitOptions.RemoveEmptyEntries)];
 
-                List<string> routes = new();
-                routes.AddRange(classRoutes);
-                routes.AddRange(methodRoutes);
+                List<string> routes = [.. classRoutes, .. methodRoutes];
 
-                this.CreateRouteNode(routes, this.Roots, instance, method);
+                CreateRouteNode(routes, this.Roots, instance, method);
             }
         }
 
@@ -111,8 +109,8 @@ namespace Dance.Art
         /// <returns>执行结果</returns>
         public object? Invoke(string route, params object?[] args)
         {
-            List<string> parts = route.Split('/', StringSplitOptions.RemoveEmptyEntries).ToList();
-            DanceServiceRouteNode? node = this.FindRouteNode(parts, this.Roots);
+            List<string> parts = [.. route.Split('/', StringSplitOptions.RemoveEmptyEntries)];
+            DanceServiceRouteNode? node = FindRouteNode(parts, this.Roots);
             if (node == null)
                 return null;
 
@@ -127,8 +125,8 @@ namespace Dance.Art
         /// <returns>执行结果</returns>
         public string? InvokeJson(string route, string?[] args)
         {
-            List<string> parts = route.Split('/', StringSplitOptions.RemoveEmptyEntries).ToList();
-            DanceServiceRouteNode? node = this.FindRouteNode(parts, this.Roots);
+            List<string> parts = [.. route.Split('/', StringSplitOptions.RemoveEmptyEntries)];
+            DanceServiceRouteNode? node = FindRouteNode(parts, this.Roots);
             if (node == null)
                 return null;
 
@@ -143,7 +141,7 @@ namespace Dance.Art
         /// <param name="instance">实例</param>
         /// <param name="method">方法</param>
         /// <returns></returns>
-        private void CreateRouteNode(List<string> routes, List<DanceServiceRouteNode> nodes, object instance, MethodInfo method)
+        private static void CreateRouteNode(List<string> routes, List<DanceServiceRouteNode> nodes, object instance, MethodInfo method)
         {
             if (routes.Count == 0)
                 return;
@@ -161,7 +159,7 @@ namespace Dance.Art
 
             routes.RemoveAt(0);
 
-            this.CreateRouteNode(routes, next.Items, instance, method);
+            CreateRouteNode(routes, next.Items, instance, method);
         }
 
         /// <summary>
@@ -169,7 +167,7 @@ namespace Dance.Art
         /// </summary>
         /// <param name="route">路由</param>
         /// <returns>服务实例</returns>
-        private DanceServiceRouteNode? FindRouteNode(List<string> routes, List<DanceServiceRouteNode> nodes)
+        private static DanceServiceRouteNode? FindRouteNode(List<string> routes, List<DanceServiceRouteNode> nodes)
         {
             if (routes.Count == 0)
                 return null;
@@ -187,7 +185,7 @@ namespace Dance.Art
 
             routes.RemoveAt(0);
 
-            return this.FindRouteNode(routes, next.Items);
+            return FindRouteNode(routes, next.Items);
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Dance.Manager
         /// <summary>
         /// 缓存集合
         /// </summary>
-        private readonly List<WeakReference<IDisposable>> Caches = new();
+        private readonly List<WeakReference<IDisposable>> Caches = [];
 
         /// <summary>
         /// 销毁

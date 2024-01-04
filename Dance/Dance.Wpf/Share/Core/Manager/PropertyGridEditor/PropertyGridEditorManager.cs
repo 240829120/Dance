@@ -18,7 +18,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 缓存
         /// </summary>
-        private readonly Dictionary<Type, List<EditorTemplateDefinition>> Cache = new();
+        private readonly Dictionary<Type, List<EditorTemplateDefinition>> Cache = [];
 
         /// <summary>
         /// 获取自定义编辑器列表
@@ -46,7 +46,7 @@ namespace Dance.Wpf
         /// <returns>自定义编辑器列表</returns>
         private List<EditorTemplateDefinition> CreateEditorTemplateDefinitions(Type type)
         {
-            List<EditorTemplateDefinition> list = new();
+            List<EditorTemplateDefinition> list = [];
 
             PropertyInfo[] properties = type.GetProperties(BindingFlags.Instance | BindingFlags.Public);
             foreach (PropertyInfo property in properties)

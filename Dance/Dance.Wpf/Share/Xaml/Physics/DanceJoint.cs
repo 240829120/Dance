@@ -17,7 +17,7 @@ namespace Dance.Wpf
     {
         public DanceJoint()
         {
-            this.StrokeDashPattern = new DanceFloatCollection();
+            this.StrokeDashPattern = [];
         }
 
         /// <summary>

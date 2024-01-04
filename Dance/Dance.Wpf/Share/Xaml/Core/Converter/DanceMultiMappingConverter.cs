@@ -18,7 +18,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 源集合
         /// </summary>
-        public List<object> Froms { get; } = new();
+        public List<object> Froms { get; } = [];
 
         /// <summary>
         /// 目标
@@ -40,7 +40,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 项集合
         /// </summary>
-        public List<DanceMultiMappingConverterItem> Items { get; } = new();
+        public List<DanceMultiMappingConverterItem> Items { get; } = [];
 
         /// <summary>
         /// 转化

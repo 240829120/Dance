@@ -80,7 +80,7 @@ namespace Dance.Wpf
                 return size;
 
             // 统计
-            List<DanceDataGridColumn> starColumns = new();
+            List<DanceDataGridColumn> starColumns = [];
             double stars = 0;
 
             foreach (FrameworkElement element in this.Children)

@@ -24,7 +24,7 @@ namespace Dance.Wpf
     {
         public DanceParticleImageleGenerator()
         {
-            this.Images = new();
+            this.Images = [];
         }
 
         #region Width -- 宽度

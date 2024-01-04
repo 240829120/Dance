@@ -17,7 +17,7 @@ namespace Dance.Wpf
     {
         public DancePolygonFixture()
         {
-            this.Points = new DancePointCollection();
+            this.Points = [];
         }
 
         #region Points -- 点集合
@@ -48,7 +48,7 @@ namespace Dance.Wpf
             if (this.Points.Count == 0)
                 throw new InvalidOperationException("PolygonFixtureElement points not be null");
 
-            Vertices vectors = new();
+            Vertices vectors = [];
             foreach (DancePoint point in this.Points)
             {
                 vectors.Add(new Vector2(point.X, point.Y));

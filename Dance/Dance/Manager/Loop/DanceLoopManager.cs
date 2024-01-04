@@ -16,7 +16,7 @@ namespace Dance
         /// <summary>
         /// 循环信息池
         /// </summary>
-        private readonly Dictionary<string, DanceLoopInfo> pool = new();
+        private readonly Dictionary<string, DanceLoopInfo> pool = [];
 
         /// <summary>
         /// 循环线程

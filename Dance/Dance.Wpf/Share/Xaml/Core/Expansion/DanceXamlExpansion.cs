@@ -105,7 +105,7 @@ namespace Dance.Wpf
         /// <returns>查找结果</returns>
         public static List<DependencyObject> GetVisualTreeDescendants(this DependencyObject? element, Type type)
         {
-            List<DependencyObject> result = new();
+            List<DependencyObject> result = [];
 
             if (element == null)
                 return result;

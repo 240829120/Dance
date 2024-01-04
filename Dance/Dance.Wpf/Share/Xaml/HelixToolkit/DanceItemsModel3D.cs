@@ -29,7 +29,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 缓存字典
         /// </summary>
-        private readonly Dictionary<object, Element3D> CacheDic = new();
+        private readonly Dictionary<object, Element3D> CacheDic = [];
 
         // =========================================================================================================
         // Property

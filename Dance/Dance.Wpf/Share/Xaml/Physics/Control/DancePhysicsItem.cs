@@ -21,8 +21,8 @@ namespace Dance.Wpf
 
         public DancePhysicsItem()
         {
-            this.Joints = new();
-            this.Controllers = new();
+            this.Joints = [];
+            this.Controllers = [];
         }
 
         /// <summary>

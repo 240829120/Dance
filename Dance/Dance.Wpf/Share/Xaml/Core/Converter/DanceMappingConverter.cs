@@ -46,7 +46,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 项集合
         /// </summary>
-        public List<DanceMappingConverterItem> Items { get; } = new();
+        public List<DanceMappingConverterItem> Items { get; } = [];
 
         /// <summary>
         /// 转化

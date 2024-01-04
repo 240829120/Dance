@@ -66,7 +66,7 @@ namespace Dance.Wpf
         /// <returns>新的默认名称</returns>
         public static string GetNewDefaultName(string defaultName, IEnumerable<string?> names, FileDefaultNameOption option)
         {
-            List<int> ids = new();
+            List<int> ids = [];
             Regex? regex = option switch
             {
                 FileDefaultNameOption.SpaceAndParenthesesAndNumber => new($"{defaultName} [(]([0-9]+)[)]"),

@@ -126,7 +126,7 @@ namespace Dance
                 lock (this.lock_object)
                 {
                     DateTime now = DateTime.Now;
-                    List<DanceDelayInfo> removeList = new();
+                    List<DanceDelayInfo> removeList = [];
                     foreach (DanceDelayInfo info in this.pool.Values)
                     {
                         if (info.ExecuteTime > now)

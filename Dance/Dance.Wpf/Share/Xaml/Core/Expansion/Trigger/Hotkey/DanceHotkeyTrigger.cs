@@ -36,7 +36,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 缓存
         /// </summary>
-        private static readonly List<FrameworkElement> Caches = new();
+        private static readonly List<FrameworkElement> Caches = [];
 
         #region HotkeyBindings -- 热键绑定集合
 
@@ -199,10 +199,7 @@ namespace Dance.Wpf
 
             lock (Caches)
             {
-                if (Caches.Contains(element))
-                {
-                    Caches.Remove(element);
-                }
+                Caches.Remove(element);
             }
         }
     }

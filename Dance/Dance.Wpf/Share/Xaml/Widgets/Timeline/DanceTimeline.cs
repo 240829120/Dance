@@ -96,7 +96,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 工具集合
         /// </summary>
-        internal List<DanceTimelineToolBase> Tools = new();
+        internal List<DanceTimelineToolBase> Tools = [];
 
         // -----------------------------------------------------------------------------
         // Field
@@ -522,7 +522,7 @@ namespace Dance.Wpf
         /// <returns>选中的元素集合</returns>
         public List<DanceTimelineElement> GetSelectedElements()
         {
-            List<DanceTimelineElement> result = new();
+            List<DanceTimelineElement> result = [];
 
             DanceTimelineFrameSelectTool? tool = this.GetTool<DanceTimelineFrameSelectTool>();
             if (tool == null)

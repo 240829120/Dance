@@ -19,7 +19,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 项集合
         /// </summary>
-        public List<DanceDataTemplateSelecterMapping> Mappings { get; private set; } = new();
+        public List<DanceDataTemplateSelecterMapping> Mappings { get; private set; } = [];
 
         /// <summary>
         /// 属性名

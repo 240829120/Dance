@@ -21,7 +21,7 @@ namespace Dance
         /// <summary>
         /// 监视执行器集合
         /// </summary>
-        public List<IDanceMonitorExecuter> Executers { get; } = new();
+        public List<IDanceMonitorExecuter> Executers { get; } = [];
 
         /// <summary>
         /// 更新间隔

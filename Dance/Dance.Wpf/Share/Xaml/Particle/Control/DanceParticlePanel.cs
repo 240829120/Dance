@@ -20,7 +20,7 @@ namespace Dance.Wpf
     {
         public DanceParticlePanel()
         {
-            this.Controllers = new();
+            this.Controllers = [];
 
             this.PaintSurface += DanceParticlePanel_PaintSurface;
 

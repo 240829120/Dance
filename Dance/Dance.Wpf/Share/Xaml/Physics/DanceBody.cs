@@ -30,7 +30,7 @@ namespace Dance.Wpf
 
         public DanceBody()
         {
-            this.Fixtures = new();
+            this.Fixtures = [];
         }
 
         #region BodyType -- 类型
