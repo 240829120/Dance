@@ -11,17 +11,9 @@ namespace Dance
     /// <summary>
     /// 线程
     /// </summary>
-    public class DanceThread : DanceObject
+    /// <param name="action">行为</param>
+    public class DanceThread(Action<DanceThreadContext> action) : DanceObject
     {
-        /// <summary>
-        /// 安全线程
-        /// </summary>
-        /// <param name="action">行为</param>
-        public DanceThread(Action<DanceThreadContext> action)
-        {
-            this.Action = action;
-        }
-
         /// <summary>
         /// 上下文
         /// </summary>
@@ -30,7 +22,7 @@ namespace Dance
         /// <summary>
         /// 行为
         /// </summary>
-        public Action<DanceThreadContext> Action { get; private set; }
+        public Action<DanceThreadContext> Action { get; private set; } = action;
 
         /// <summary>
         /// 线程

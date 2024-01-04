@@ -79,11 +79,9 @@ namespace Dance
         /// <returns>实现对象</returns>
         public object Resolve(Type serviceType, object key)
         {
-            if (serviceType == null)
-                throw new ArgumentNullException(nameof(serviceType));
+            ArgumentNullException.ThrowIfNull(serviceType);
 
-            if (key == null)
-                throw new ArgumentNullException(nameof(key));
+            ArgumentNullException.ThrowIfNull(key);
 
             if (!this.Builder.Pool.TryGetValue(serviceType, out var dic))
                 throw new NullReferenceException($"Can not found ServiceType: {serviceType.FullName}");

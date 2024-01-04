@@ -9,42 +9,31 @@ namespace Dance
     /// <summary>
     /// Http辅助类 文件事件参数
     /// </summary>
-    public class DanceHttpHelperFileEventArgs : EventArgs
+    /// <param name="position">位置</param>
+    /// <param name="length">总长度</param>
+    /// <param name="localPath">本地路径</param>
+    /// <param name="url">请求地址</param>
+    public class DanceHttpHelperFileEventArgs(long position, long length, string localPath, string url) : EventArgs
     {
-        /// <summary>
-        /// Http辅助类 文件事件参数
-        /// </summary>
-        /// <param name="position">位置</param>
-        /// <param name="length">总长度</param>
-        /// <param name="localPath">本地路径</param>
-        /// <param name="url">请求地址</param>
-        public DanceHttpHelperFileEventArgs(long position, long length, string localPath, string url)
-        {
-            this.Position = position;
-            this.Length = length;
-            this.LocalPath = localPath;
-            this.Url = url;
-        }
-
         /// <summary>
         /// 位置
         /// </summary>
-        public long Position { get; private set; }
+        public long Position { get; private set; } = position;
 
         /// <summary>
         /// 总长度
         /// </summary>
-        public long Length { get; private set; }
+        public long Length { get; private set; } = length;
 
         /// <summary>
         /// 本地路径
         /// </summary>
-        public string LocalPath { get; private set; }
+        public string LocalPath { get; private set; } = localPath;
 
         /// <summary>
         /// 请求地址
         /// </summary>
-        public string Url { get; private set; }
+        public string Url { get; private set; } = url;
 
         /// <summary>
         /// 是否取消

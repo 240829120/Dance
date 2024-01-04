@@ -9,32 +9,22 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线选择信息
     /// </summary>
-    public class DanceTimelineSelectionInfo
+    /// <param name="element">元素</param>
+    public class DanceTimelineSelectionInfo(DanceTimelineElement element)
     {
-        /// <summary>
-        /// 时间线选择信息
-        /// </summary>
-        /// <param name="element">元素</param>
-        public DanceTimelineSelectionInfo(DanceTimelineElement element)
-        {
-            this.Element = element;
-            this.SelectedBeginTime = element.BeginTime;
-            this.SelectedEndTime = element.EndTime;
-        }
-
         /// <summary>
         /// 元素
         /// </summary>
-        public DanceTimelineElement Element { get; private set; }
+        public DanceTimelineElement Element { get; private set; } = element;
 
         /// <summary>
         /// 选择时的开始时间
         /// </summary>
-        public TimeSpan SelectedBeginTime { get; set; }
+        public TimeSpan SelectedBeginTime { get; set; } = element.BeginTime;
 
         /// <summary>
         /// 选择时的结束时间
         /// </summary>
-        public TimeSpan SelectedEndTime { get; set; }
+        public TimeSpan SelectedEndTime { get; set; } = element.EndTime;
     }
 }

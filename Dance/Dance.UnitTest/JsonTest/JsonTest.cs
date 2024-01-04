@@ -34,8 +34,8 @@ namespace Dance.UnitTest
         [TestMethod]
         public void SingletonTest()
         {
-            List<StudentBase> list = new()
-            {
+            List<StudentBase> list =
+            [
                 new BoyStudent()
                 {
                     ID = "1",
@@ -46,7 +46,7 @@ namespace Dance.UnitTest
                     ID = "2",
                     GirlName = "Girl"
                 }
-            };
+            ];
 
             string json = JsonConvert.SerializeObject(list);
 

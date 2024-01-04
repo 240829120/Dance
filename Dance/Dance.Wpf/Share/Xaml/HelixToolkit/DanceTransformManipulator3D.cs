@@ -25,14 +25,10 @@ namespace Dance.Wpf
             None, TranslationX, TranslationY, TranslationZ, RotationX, RotationY, RotationZ, ScaleX, ScaleY, ScaleZ
         }
 
-        private sealed class AlwaysHitGroupNode : GroupNode
+        private sealed class AlwaysHitGroupNode(DanceTransformManipulator3D manipulator) : GroupNode
         {
-            private readonly HashSet<object> models = new();
-            private readonly DanceTransformManipulator3D manipulator;
-            public AlwaysHitGroupNode(DanceTransformManipulator3D manipulator)
-            {
-                this.manipulator = manipulator;
-            }
+            private readonly HashSet<object> models = [];
+            private readonly DanceTransformManipulator3D manipulator = manipulator;
 
             protected override bool OnAttach(IEffectsManager effectsManager)
             {
@@ -253,7 +249,7 @@ namespace Dance.Wpf
         /// <summary>
         /// 子模型集合
         /// </summary>
-        private readonly List<Element3D> childrenModels = new();
+        private readonly List<Element3D> childrenModels = [];
 
         /// <summary>
         /// 当前操作类型

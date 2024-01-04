@@ -10,28 +10,19 @@ namespace Dance
     /// <summary>
     /// 插件领域
     /// </summary>
-    public class DancePluginDomain : DanceDomainBase<DancePluginDomain>
+    /// <param name="lifescope">插件生命周期</param>
+    /// <param name="pluginInfo">插件信息</param>
+    public class DancePluginDomain(IDancePluginLifescope lifescope, IDancePluginInfo pluginInfo) : DanceDomainBase<DancePluginDomain>
     {
-        /// <summary>
-        /// 插件领域
-        /// </summary>
-        /// <param name="lifescope">插件生命周期</param>
-        /// <param name="pluginInfo">插件信息</param>
-        public DancePluginDomain(IDancePluginLifescope lifescope, IDancePluginInfo pluginInfo)
-        {
-            this.Lifescope = lifescope;
-            this.PluginInfo = pluginInfo;
-        }
-
         /// <summary>
         /// 插件信息
         /// </summary>
-        public IDancePluginInfo PluginInfo { get; private set; }
+        public IDancePluginInfo PluginInfo { get; private set; } = pluginInfo;
 
         /// <summary>
         /// 插件生命周期
         /// </summary>
-        public IDancePluginLifescope Lifescope { get; private set; }
+        public IDancePluginLifescope Lifescope { get; private set; } = lifescope;
 
         /// <summary>
         /// 插件是否初始化完成

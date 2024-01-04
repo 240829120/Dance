@@ -9,21 +9,13 @@ namespace Dance
     /// <summary>
     /// 阻塞信息
     /// </summary>
-    public class DanceBlockingInfo
+    /// <param name="key">键</param>
+    public class DanceBlockingInfo(string key)
     {
-        /// <summary>
-        /// 阻塞信息
-        /// </summary>
-        /// <param name="key">键</param>
-        public DanceBlockingInfo(string key)
-        {
-            this.Key = key;
-        }
-
         /// <summary>
         /// 键
         /// </summary>
-        public string Key { get; private set; }
+        public string Key { get; private set; } = key;
 
         /// <summary>
         /// 是否已经被释放

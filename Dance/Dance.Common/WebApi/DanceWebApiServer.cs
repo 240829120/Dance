@@ -39,12 +39,12 @@ namespace Dance.Common
         /// <summary>
         /// 地址集合
         /// </summary>
-        public List<string> Urls { get; private set; } = new();
+        public List<string> Urls { get; private set; } = [];
 
         /// <summary>
         /// 控制器程序集
         /// </summary>
-        public List<Assembly> Assemblies { get; private set; } = new();
+        public List<Assembly> Assemblies { get; private set; } = [];
 
         /// <summary>
         /// 启动
@@ -54,7 +54,7 @@ namespace Dance.Common
             if (this.WebApp != null)
                 return;
 
-            var builder = WebApplication.CreateBuilder(Array.Empty<string>());
+            var builder = WebApplication.CreateBuilder([]);
 
             var controllerBuilder = builder.Services.AddControllers();
             foreach (Assembly assembly in this.Assemblies)
@@ -73,7 +73,7 @@ namespace Dance.Common
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
-            builder.WebHost.UseUrls(this.Urls.ToArray());
+            builder.WebHost.UseUrls([.. this.Urls]);
 
             this.WebApp = builder.Build();
             this.WebApp.UseCors("any");

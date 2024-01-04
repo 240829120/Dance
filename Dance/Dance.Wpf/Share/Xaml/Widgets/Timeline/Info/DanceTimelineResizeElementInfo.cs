@@ -9,40 +9,29 @@ namespace Dance.Wpf
     /// <summary>
     /// 时间线修改元素宽度信息
     /// </summary>
-    public class DanceTimelineResizeElementInfo
+    /// <param name="element">元素</param>
+    /// <param name="resize">修改元素</param>
+    /// <param name="wantTime">期望时间</param>
+    public class DanceTimelineResizeElementInfo(DanceTimelineElement element, DanceTimelineElementResize resize, TimeSpan wantTime)
     {
-        /// <summary>
-        /// 时间线修改元素宽度信息
-        /// </summary>
-        /// <param name="element">元素</param>
-        /// <param name="resize">修改元素</param>
-        /// <param name="wantTime">期望时间</param>
-        public DanceTimelineResizeElementInfo(DanceTimelineElement element, DanceTimelineElementResize resize, TimeSpan wantTime)
-        {
-            this.Element = element;
-            this.Resize = resize;
-            this.WantTime = wantTime;
-            this.RealTime = wantTime;
-        }
-
         /// <summary>
         /// 元素
         /// </summary>
-        public DanceTimelineElement Element { get; private set; }
+        public DanceTimelineElement Element { get; private set; } = element;
 
         /// <summary>
         /// 修改元素
         /// </summary>
-        public DanceTimelineElementResize Resize { get; private set; }
+        public DanceTimelineElementResize Resize { get; private set; } = resize;
 
         /// <summary>
         /// 期望时间
         /// </summary>
-        public TimeSpan WantTime { get; private set; }
+        public TimeSpan WantTime { get; private set; } = wantTime;
 
         /// <summary>
         /// 真实时间
         /// </summary>
-        public TimeSpan RealTime { get; set; }
+        public TimeSpan RealTime { get; set; } = wantTime;
     }
 }

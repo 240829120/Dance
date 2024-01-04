@@ -10,21 +10,13 @@ namespace Dance.Wpf
     /// <summary>
     /// 拖拽开始事件参数
     /// </summary>
-    public class DanceDragBeginEventArgs : EventArgs
+    /// <param name="element">元素</param>
+    public class DanceDragBeginEventArgs(FrameworkElement element) : EventArgs
     {
-        /// <summary>
-        /// 拖拽开始事件参数
-        /// </summary>
-        /// <param name="element">元素</param>
-        public DanceDragBeginEventArgs(FrameworkElement element)
-        {
-            this.Element = element;
-        }
-
         /// <summary>
         /// 元素
         /// </summary>
-        public FrameworkElement Element { get; private set; }
+        public FrameworkElement Element { get; private set; } = element;
 
         /// <summary>
         /// 数据

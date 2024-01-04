@@ -10,25 +10,15 @@ namespace Dance
     /// <summary>
     /// 固定长度标准化流
     /// </summary>
-    public class DanceFixedNormalStream : DanceNormalStreamBase
+    /// <param name="fixedLength">数据长度</param>
+    /// <param name="header">帧头</param>
+    /// <param name="cacheLength">缓存大小</param>
+    public class DanceFixedNormalStream(int fixedLength, byte[]? header = null, int cacheLength = 1024 * 1024) : DanceNormalStreamBase
     {
-        /// <summary>
-        /// 固定长度标准化流
-        /// </summary>
-        /// <param name="fixedLength">数据长度</param>
-        /// <param name="header">帧头</param>
-        /// <param name="cacheLength">缓存大小</param>
-        public DanceFixedNormalStream(int fixedLength, byte[]? header = null, int cacheLength = 1024 * 1024)
-        {
-            this.FixedLength = fixedLength;
-            this.Header = header;
-            this.Cache = new byte[cacheLength];
-        }
-
         /// <summary>
         /// 缓存
         /// </summary>
-        private readonly byte[] Cache;
+        private readonly byte[] Cache = new byte[cacheLength];
 
         /// <summary>
         /// 开始索引
@@ -43,12 +33,12 @@ namespace Dance
         /// <summary>
         /// 固定长度
         /// </summary>
-        public int FixedLength { get; protected set; }
+        public int FixedLength { get; protected set; } = fixedLength;
 
         /// <summary>
         /// 帧头
         /// </summary>
-        public byte[]? Header { get; protected set; }
+        public byte[]? Header { get; protected set; } = header;
 
         /// <summary>
         /// 读取

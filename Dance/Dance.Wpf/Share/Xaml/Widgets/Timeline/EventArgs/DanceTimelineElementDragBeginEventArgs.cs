@@ -9,35 +9,25 @@ namespace Dance.Wpf
     /// <summary>
     /// 元素拖拽开始事件参数
     /// </summary>
-    public class DanceTimelineElementDragBeginEventArgs : EventArgs
+    /// <param name="timeline">时间线</param>
+    /// <param name="track">轨道</param>
+    /// <param name="element">元素</param>
+    public class DanceTimelineElementDragBeginEventArgs(DanceTimeline timeline, DanceTimelineTrack track, DanceTimelineElement element) : EventArgs
     {
-        /// <summary>
-        /// 元素拖拽开始事件参数
-        /// </summary>
-        /// <param name="timeline">时间线</param>
-        /// <param name="track">轨道</param>
-        /// <param name="element">元素</param>
-        public DanceTimelineElementDragBeginEventArgs(DanceTimeline timeline, DanceTimelineTrack track, DanceTimelineElement element)
-        {
-            this.Timeline = timeline;
-            this.Track = track;
-            this.Element = element;
-        }
-
         /// <summary>
         /// 时间线
         /// </summary>
-        public DanceTimeline Timeline { get; private set; }
+        public DanceTimeline Timeline { get; private set; } = timeline;
 
         /// <summary>
         /// 轨道
         /// </summary>
-        public DanceTimelineTrack Track { get; private set; }
+        public DanceTimelineTrack Track { get; private set; } = track;
 
         /// <summary>
         /// 元素
         /// </summary>
-        public DanceTimelineElement Element { get; private set; }
+        public DanceTimelineElement Element { get; private set; } = element;
 
         /// <summary>
         /// 是否取消

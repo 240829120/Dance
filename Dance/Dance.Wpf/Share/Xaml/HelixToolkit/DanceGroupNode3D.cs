@@ -13,20 +13,12 @@ namespace Dance.Wpf
     /// <summary>
     /// 节点分组
     /// </summary>
-    public class DanceGroupNode3D : GroupNode
+    /// <param name="element">元素</param>
+    public class DanceGroupNode3D(Element3D element) : GroupNode
     {
-        /// <summary>
-        /// 节点分组
-        /// </summary>
-        /// <param name="element">元素</param>
-        public DanceGroupNode3D(Element3D element)
-        {
-            this.element = element;
-        }
-
         #region element -- 所属元素
 
-        private readonly Element3D element;
+        private readonly Element3D element = element;
         /// <summary>
         /// 所属元素
         /// </summary>

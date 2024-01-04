@@ -11,20 +11,12 @@ namespace Dance.Wpf
     /// <summary>
     /// 轻扫事件参数
     /// </summary>
-    public class DanceSwipeGestureRecognizerEventArgs : RoutedEventArgs
+    /// <param name="direction">方向</param>
+    public class DanceSwipeGestureRecognizerEventArgs(DanceSwipeGestureRecognizerDirection direction) : RoutedEventArgs
     {
-        /// <summary>
-        /// 轻扫事件参数
-        /// </summary>
-        /// <param name="direction">方向</param>
-        public DanceSwipeGestureRecognizerEventArgs(DanceSwipeGestureRecognizerDirection direction)
-        {
-            this.Direction = direction;
-        }
-
         /// <summary>
         /// 方向
         /// </summary>
-        public DanceSwipeGestureRecognizerDirection Direction { get; private set; }
+        public DanceSwipeGestureRecognizerDirection Direction { get; private set; } = direction;
     }
 }
