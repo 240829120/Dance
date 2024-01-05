@@ -12,9 +12,9 @@ namespace Dance
     public interface IDanceHistoryManager
     {
         /// <summary>
-        /// 是否启用
+        /// 是否正在执行
         /// </summary>
-        bool IsEnabled { get; set; }
+        bool IsExecuting { get; set; }
 
         /// <summary>
         /// 是否可以重做

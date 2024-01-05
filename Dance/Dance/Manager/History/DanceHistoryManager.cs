@@ -17,9 +17,9 @@ namespace Dance
         private readonly object lock_object = new();
 
         /// <summary>
-        /// 是否启用
+        /// 是否正在执行
         /// </summary>
-        public bool IsEnabled { get; set; }
+        public bool IsExecuting { get; set; }
 
         /// <summary>
         /// 最大撤销次数
@@ -59,7 +59,7 @@ namespace Dance
         /// </summary>
         public void Redo()
         {
-            if (!this.IsEnabled)
+            if (this.IsExecuting)
                 return;
 
             lock (this.lock_object)
@@ -67,7 +67,9 @@ namespace Dance
                 if (!this.RedoStack.TryPop(out IDanceHistoryStep? step))
                     return;
 
+                this.IsExecuting = true;
                 step.Redo(this);
+                this.IsExecuting = false;
 
                 this.UndoStack.Push(step);
             }
@@ -78,7 +80,7 @@ namespace Dance
         /// </summary>
         public void Undo()
         {
-            if (!this.IsEnabled)
+            if (this.IsExecuting)
                 return;
 
             lock (this.lock_object)
@@ -86,7 +88,9 @@ namespace Dance
                 if (!this.UndoStack.TryPop(out IDanceHistoryStep? step))
                     return;
 
+                this.IsExecuting = true;
                 step.Undo(this);
+                this.IsExecuting = false;
 
                 this.RedoStack.Push(step);
             }
@@ -98,7 +102,7 @@ namespace Dance
         /// <param name="step">步骤</param>
         public void Append(IDanceHistoryStep step)
         {
-            if (!this.IsEnabled)
+            if (this.IsExecuting)
                 return;
 
             lock (this.lock_object)
