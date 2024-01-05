@@ -40,6 +40,18 @@ namespace Dance.WpfTest
 
     //}
 
+    public class TestModel(IDanceHistoryManager historyManager) : DanceHistoryModel(historyManager)
+    {
+        private double _value;
+
+        public double Value
+        {
+            get { return _value; }
+            set { this.OnHistoryPropertyChanged(ref _value, value); }
+        }
+
+    }
+
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
@@ -49,9 +61,31 @@ namespace Dance.WpfTest
         {
             InitializeComponent();
 
+            this.Model = new(this.HistoryManager);
+
+            this.slider.DataContext = this.Model;
+            this.slider.GotMouseCapture += Slider_GotMouseCapture;
+            this.slider.LostMouseCapture += Slider_LostMouseCapture;
+
             this.Loaded += MainWindow_Loaded;
             this.Closed += MainWindow_Closed;
         }
+
+        private void Slider_LostMouseCapture(object sender, MouseEventArgs e)
+        {
+            this.HistoryManager.IsExecuting = false;
+            this.HistoryManager.Append(new DancePropertyChangedHistoryStep(this.Model, nameof(TestModel.Value), this.Model.GetCache<double>("Value"), this.Model.Value));
+        }
+
+        private void Slider_GotMouseCapture(object sender, MouseEventArgs e)
+        {
+            this.HistoryManager.IsExecuting = true;
+            this.Model.Cache("Value", this.Model.Value);
+        }
+
+        private readonly DanceHistoryManager HistoryManager = new();
+
+        private readonly TestModel Model;
 
         //   public List<TestModel> list = new List<TestModel>();
 
@@ -64,6 +98,21 @@ namespace Dance.WpfTest
         {
             DanceDomain.Current?.Dispose();
             System.Windows.Application.Current.Shutdown();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click1(object sender, RoutedEventArgs e)
+        {
+            this.HistoryManager.Undo();
+        }
+
+        private void Button_Click2(object sender, RoutedEventArgs e)
+        {
+            this.HistoryManager.Redo();
         }
     }
 }

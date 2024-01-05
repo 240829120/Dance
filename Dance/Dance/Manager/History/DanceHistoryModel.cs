@@ -15,6 +15,11 @@ namespace Dance
     public class DanceHistoryModel(IDanceHistoryManager historyManager) : DanceModel
     {
         /// <summary>
+        /// 缓存池
+        /// </summary>
+        protected readonly Dictionary<string, object?> CachePool = [];
+
+        /// <summary>
         /// 历史管理器
         /// </summary>
         public IDanceHistoryManager HistoryManager { get; } = historyManager;
@@ -53,6 +58,29 @@ namespace Dance
             field = newValue;
 
             base.OnPropertyChanged(propertyName);
+        }
+
+        /// <summary>
+        /// 缓存对象
+        /// </summary>
+        /// <param name="key">键</param>
+        /// <param name="value">值</param>
+        public void Cache<T>(string key, T? value)
+        {
+            this.CachePool[key] = value;
+        }
+
+        /// <summary>
+        /// 获取缓存对象
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="key">键</param>
+        /// <returns>缓存对象</returns>
+        public T? GetCache<T>(string key)
+        {
+            this.CachePool.TryGetValue(key, out object? value);
+
+            return value == null ? default : (T)value;
         }
     }
 }
