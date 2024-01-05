@@ -21,15 +21,7 @@ namespace Dance.UnitTest.UndoRedo
         public string? Name
         {
             get { return name; }
-            set
-            {
-                string? oldValue = name;
-                string? newValue = value;
-
-                name = value;
-
-                this.OnHistoryPropertyChanged(oldValue, newValue);
-            }
+            set { this.OnHistoryPropertyChanged(ref name, value); }
         }
 
         #endregion
@@ -41,15 +33,7 @@ namespace Dance.UnitTest.UndoRedo
         public int Age
         {
             get { return age; }
-            set
-            {
-                int oldValue = age;
-                int newValue = value;
-
-                age = value;
-
-                this.OnHistoryPropertyChanged(oldValue, newValue);
-            }
+            set { this.OnHistoryPropertyChanged(ref age, value); }
         }
 
         #endregion
@@ -123,9 +107,15 @@ namespace Dance.UnitTest.UndoRedo
         {
             DanceHistoryManager historyManager = new();
 
-            DanceHistoryObservableCollection<int> list = new(historyManager) { 1, 2, 3, 4, 5 };
-
-            list.Add(6);
+            DanceHistoryObservableCollection<int> list = new(historyManager)
+            {
+                1,
+                2,
+                3,
+                4,
+                5,
+                6
+            };
 
             historyManager.Undo();
             Assert.IsTrue(list.Count == 5);

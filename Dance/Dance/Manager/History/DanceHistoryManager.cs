@@ -9,7 +9,8 @@ namespace Dance
     /// <summary>
     /// 历史记录管理器
     /// </summary>
-    public class DanceHistoryManager : IDanceHistoryManager
+    /// <param name="maximumUndo">最大撤销次数</param>
+    public class DanceHistoryManager(int maximumUndo = 50) : IDanceHistoryManager
     {
         /// <summary>
         /// 锁对象
@@ -24,17 +25,17 @@ namespace Dance
         /// <summary>
         /// 最大撤销次数
         /// </summary>
-        public int MaximumUndo { get; set; } = 50;
+        public int MaximumUndo { get; set; } = maximumUndo;
 
         /// <summary>
         /// 重做栈
         /// </summary>
-        public readonly Stack<IDanceHistoryStep> RedoStack = new();
+        public readonly List<IDanceHistoryStep> RedoStack = new();
 
         /// <summary>
         /// 撤销栈
         /// </summary>
-        public readonly Stack<IDanceHistoryStep> UndoStack = new();
+        public readonly List<IDanceHistoryStep> UndoStack = new();
 
         /// <summary>
         /// 是否可以重做
@@ -64,14 +65,17 @@ namespace Dance
 
             lock (this.lock_object)
             {
-                if (!this.RedoStack.TryPop(out IDanceHistoryStep? step))
+                if (this.RedoStack.Count <= 0)
                     return;
+
+                IDanceHistoryStep step = this.RedoStack[^1];
+                this.RedoStack.RemoveAt(this.RedoStack.Count - 1);
 
                 this.IsExecuting = true;
                 step.Redo(this);
                 this.IsExecuting = false;
 
-                this.UndoStack.Push(step);
+                this.UndoStack.Add(step);
             }
         }
 
@@ -85,14 +89,17 @@ namespace Dance
 
             lock (this.lock_object)
             {
-                if (!this.UndoStack.TryPop(out IDanceHistoryStep? step))
+                if (this.UndoStack.Count <= 0)
                     return;
+
+                IDanceHistoryStep step = this.UndoStack[^1];
+                this.UndoStack.RemoveAt(this.UndoStack.Count - 1);
 
                 this.IsExecuting = true;
                 step.Undo(this);
                 this.IsExecuting = false;
 
-                this.RedoStack.Push(step);
+                this.RedoStack.Add(step);
             }
         }
 
@@ -107,7 +114,12 @@ namespace Dance
 
             lock (this.lock_object)
             {
-                this.UndoStack.Push(step);
+                this.UndoStack.Add(step);
+                if (this.UndoStack.Count > this.MaximumUndo)
+                {
+                    this.UndoStack.RemoveAt(0);
+                }
+
                 this.RedoStack.Clear();
             }
         }
